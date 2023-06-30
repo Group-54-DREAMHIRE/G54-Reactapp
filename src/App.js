@@ -1,9 +1,9 @@
-import './App.css';
+import './assets/styles/main.scss';
 
 function App() {
   return (
     <>
-    
+
     </>
   );
 }
