@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;0,800;1,100;1,300;1,400;1,600&family=Quicksand:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,400;0,500;1,100&family=Sora:wght@300;400;600;700;800&family=Wix+Madefor+Display&display=swap');
+// font-family: 'Poppins', sans-serif;
+// font-family: 'Quicksand', sans-serif;
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Sora', sans-serif;
+// font-family: 'Wix Madefor Display', sans-serif;
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+input{
+    background-color: $input-bg;
+    padding-left: 5px;
+    outline: none;
+    border: none;
+}
+::placeholder{
+    color: $placeholder-font-color;
+}
+
+input:hover{
+    border: 2px solid $primary;
+}
+
+button{
+    padding: 10px 20px;
+    background-color: $primary;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover{
+    background-color:rgba($primary,0.9);
+    scale: 1.1;
+}
