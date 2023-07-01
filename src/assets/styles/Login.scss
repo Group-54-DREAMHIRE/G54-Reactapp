@@ -1,0 +1,244 @@
+.login-main-con-w{
+    display: flex;
+    .pic-con-w{
+        width: 40%;
+        height: 100vh;
+        background-color: $primary;
+    }
+
+    .form-con-main{
+        width: 60%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        .form-con{
+            width: 55%;
+            h2{
+                margin-bottom: 30px;
+            }
+            form{
+                width: 100%;
+               
+                .usernpass-w{
+                    font-size: medium;
+                }
+                .inputu{
+                    font-size: medium;
+                    margin: 10px 0 15px; 
+                    padding: 8px 10px; 
+                    background-color: rgb(245,247,252);
+                }
+                .inputp{
+                    background-color: rgb(245,247,252);
+                    input{
+                        padding: 5px 0;
+                        background-color: rgb(245,247,252);
+                    }
+                    input::placeholder{
+                    font-size: medium;
+                    }   
+                }
+                .inputp{
+                    margin: 10px 0 15px; 
+                }
+                input:hover{
+                    
+                    
+                }
+                .forget-w{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    span{
+                        color: $primary;
+                        font-size: medium;
+                        cursor: pointer;
+                    }
+                    span:hover{
+                        scale: 1.06;
+                    }
+                }
+                button{
+                    width: 100%;
+                    padding: 10px 0;
+                    font-size: large;
+                    
+                }
+                .usernpass-w{
+                    margin: 10px 0;
+                }
+            }
+        }
+        .sign-up-w{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        label{
+            margin: 0 5px;
+            font-size: medium;
+        }
+        .signup-w{
+            color: $primary;
+            
+        }
+        .signup-w:hover{
+            scale: 1.07;
+            
+        }
+    }
+}
+
+@media screen and (max-width:950px) {
+
+    .login-main-con-w{
+        
+        .pic-con-w{
+            width: 40%;
+            height: 100vh;
+            background-color: $primary;
+        }
+    
+        .form-con-main{
+            width: 60%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            .form-con{
+                width: 70%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:650px) {
+
+    .login-main-con-w{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        .pic-con-w{
+            display: none;
+        }
+    
+        .form-con-main{
+            
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .form-con{
+                width: 60%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:500px) {
+
+    .login-main-con-w{
+        
+        .pic-con-w{
+           
+        }
+    
+        .form-con-main{
+           
+            .form-con{
+                width: 70%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:400px) {
+    .login-main-con-w{
+        
+        .pic-con-w{
+            
+        }
+    
+        .form-con-main{
+            
+            .form-con{
+                width: 80%;
+                h2{
+                    margin-bottom: 30px;
+                }
+                form
+                    .usernpass-w{
+                        font-size: small;
+                    }
+                    .inputu{
+                        font-size: small;
+                        margin: 10px 0 15px; 
+                        padding: 8px 10px; 
+                        background-color: rgb(245,247,252);
+                    }
+                    .inputp{
+                        background-color: rgb(245,247,252);
+                        input{
+                            padding: 5px 0;
+                            background-color: rgb(245,247,252);
+                        }
+                        input::placeholder{
+                        font-size: small;
+                        }   
+                    }
+                    .inputp{
+                        margin: 10px 0 15px; 
+                    }
+                    input:hover{
+                        
+                        
+                    }
+                    .forget-w{
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        span{
+                            color: $primary;
+                            font-size: small;
+                            cursor: pointer;
+                        }
+                        span:hover{
+                            scale: 1.06;
+                        }
+                    }
+                    button{
+                        width: 100%;
+                        padding: 10px 0;
+                        font-size: small;
+                        
+                    }
+                    .usernpass-w{
+                        margin: 10px 0;
+                    }
+                }
+            }
+            .sign-up-w{
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+            label{
+                margin: 0 5px;
+                font-size: small;
+            }
+            .signup-w{
+                color: $primary;
+                font-size: smaller;
+                
+            }
+            .signup-w:hover{
+                scale: 1.07;
+                
+            }
+        }
+    }

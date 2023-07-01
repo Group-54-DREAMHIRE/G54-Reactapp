@@ -4,11 +4,19 @@ import RootLayout from "./layouts/RootLayout";
 import Home from './pages/Home';
 import ChangePassword from "./pages/ChangePassword";
 import Profile from './pages/Profile'
+import Login from "./pages/Login";
+import { useState } from "react";
 
 function App() {
+  const [isloggedin,SetIsloggedin] = useState(false);
+  const handleLogin = () =>{
+    SetIsloggedin(!isloggedin);
+  }
   return (
-    <div>
-        <BrowserRouter>
+    <>
+      {!isloggedin &&<Login handleLogin={handleLogin}/>}
+        {isloggedin &&
+          <BrowserRouter>
           <Routes>
               <Route path='/' element={<RootLayout/>}>
                 <Route path='/' index element={<Home/>}/>
@@ -21,7 +29,8 @@ function App() {
               </Route>
           </Routes>
         </BrowserRouter>
-    </div>
+        }
+    </>
   );
 }
 
