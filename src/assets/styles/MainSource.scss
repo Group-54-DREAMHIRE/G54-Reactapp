@@ -26,10 +26,6 @@ input{
     color: $placeholder-font-color;
 }
 
-input:hover{
-    border: 2px solid $primary;
-}
-
 button{
     padding: 10px 20px;
     background-color: $primary;
@@ -41,5 +37,5 @@ button{
 
 button:hover{
     background-color:rgba($primary,0.9);
-    scale: 1.1;
+    scale: 1.01;
 }

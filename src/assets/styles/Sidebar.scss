@@ -87,16 +87,19 @@
     padding: 5px 10px;
     border-right: 4px solid transparent;
     transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
     .link_text {
-
       white-space: nowrap;
       font-size: 15px;
       padding: 10px 10px;
       color: $dark;
     }
+    label{
+      font-size: larger;
+    }
+    label:hover{
+      scale: 1.2;
+    }
   }
-
   .sidebar-link-w:hover {
 
     color: $primary;
@@ -121,15 +124,19 @@
 
   .menu_item {
     display: flex;
+    font-size: larger;
     justify-content: space-between;
     align-items: center;
+    label:hover{
+      scale: 1.2;
+    }
 
     .link_text-w {
       white-space: nowrap;
       font-size: 15px;
       padding: 10px 0px;
       padding-left: 10px;
-
+      
     }
 
     .active {

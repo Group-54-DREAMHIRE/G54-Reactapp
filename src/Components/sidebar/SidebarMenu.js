@@ -23,7 +23,7 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
     <>
       <div className="sidebar-menu-w" onClick={toggleMenu}>
         <div className="menu_item">
-          {route.icon}
+          <label>{route.icon}</label>
           <AnimatePresence>
             {isOpen && (
               <motion.div

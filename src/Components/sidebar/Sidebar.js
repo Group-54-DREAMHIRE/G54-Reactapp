@@ -78,7 +78,7 @@ const showAnimation = Animations.showAnimation;
                   key={index}
                   className="sidebar-link-w"
                   activeClassName="active">
-                  {route.icon}
+                 <label> {route.icon}</label>
                   <AnimatePresence>
                     {isOpen && (
                       <motion.div
