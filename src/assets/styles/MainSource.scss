@@ -6,12 +6,14 @@
 // font-family: 'Wix Madefor Display', sans-serif;
 *{
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
 }
 
 body{
-    box-sizing: border-box;
+    
     padding: 0;
     margin: 0;
+   
 }
 
 input{
@@ -22,10 +24,6 @@ input{
 }
 ::placeholder{
     color: $placeholder-font-color;
-}
-
-input:hover{
-    border: 2px solid $primary;
 }
 
 button{
@@ -39,5 +37,5 @@ button{
 
 button:hover{
     background-color:rgba($primary,0.9);
-    scale: 1.1;
+    scale: 1.01;
 }
