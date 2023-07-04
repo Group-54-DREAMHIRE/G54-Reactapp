@@ -23,6 +23,28 @@
     padding: 0 10px;
     overflow-y: auto;
     height: 90vh;
+    .logout-con-w{
+     
+    display: flex;
+    white-space: nowrap;
+    font-size: 15px;
+    padding: 10px 10px;
+    color: $dark;
+    align-items: center;
+    border-right: 4px solid transparent;
+    transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    }
+    .logout-w{
+      padding: 5px 0;
+      padding-left: 10px;
+      font-size: medium;
+    }
+    .logout-con-w:hover{
+      color: $primary;
+      background-color: rgba($secondary, 0.1);
+      transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+      cursor: pointer;
+    }
    
   }
 
@@ -37,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 10px;
+    
   }
 
   .bars {
@@ -89,12 +112,12 @@
     transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     .link_text {
       white-space: nowrap;
-      font-size: 15px;
+      font-size: medium;
       padding: 10px 10px;
       color: $dark;
     }
     label{
-      font-size: larger;
+      font-size: medium;
     }
     label:hover{
       scale: 1.2;
@@ -136,6 +159,8 @@
       font-size: 15px;
       padding: 10px 0px;
       padding-left: 10px;
+     
+     
       
     }
 
@@ -183,5 +208,8 @@
 
     }
   }
-
+  
+ 
 }
+
+  

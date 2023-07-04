@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '../Components/sidebar/Sidebar';
 
 
-function RootLayout() {
+function RootLayout({handleLogin}) {
   return (
     <>
 
@@ -29,7 +29,7 @@ function RootLayout() {
       <Row>
         <Col span={24} >
           <div className="rootlayout-main-w" >
-            <Sidebar />
+            <Sidebar handleLogin={handleLogin} />
             <div className="out">
               <Outlet />
             </div>
