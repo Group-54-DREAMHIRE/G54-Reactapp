@@ -1,8 +1,10 @@
 import { Checkbox, Form, Input, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ForgetPassword from '../Components/models/forget password/ForgetPassword';
 import { AnimatePresence } from 'framer-motion';
 import SignUp from './SignUp';
+
+
 
 function Login({ handleLogin }) {
     const [isOpenFoget, setIsOpenForget] = useState(false);
@@ -20,7 +22,7 @@ function Login({ handleLogin }) {
     const onCloseSignUp = () => {
         setIsOpenSignUp(false);
     };
-    const [jwt, setJwt] = useState("","jwt");
+    const [jwt, setJwt] = useState("");
     const [username, SetUsername] = useState("");
     const [password, SetPassword] = useState("");
 
@@ -37,19 +39,19 @@ function Login({ handleLogin }) {
         method: "post",
         body: JSON.stringify(reqBody),
     })
-        .then((reponse)=>{
-            console.log(reponse.data);
-            if(reponse.status === 200){
-               
-                return Promise.all([reponse.json(), reponse.headers]);
+        .then((response)=>{
+            console.log(response);
+            if(response.status === 200){
+                return Promise.all([response.json(), response.headers]);
             }
                 
             else return Promise.reject("Invalid login attempt");
         })
         .then(([body, headers])=>{
-            setJwt(headers.get("authorization"));
-            console.log(headers.get("authorization"));
-           console.log( body.authorities[0].authority);
+            
+            console.log(headers.get('Authorization'));
+        //     console.log(body);
+        //    console.log( body.authorities[0].authority);
             
             
         })

@@ -11,7 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Quizes from "./pages/Quizes";
 
 function App() {
-  const [isloggedin,SetIsloggedin] = useState(false);
+  const [isloggedin,SetIsloggedin] = useState(true);
  
   const handleLogin = () =>{
     
@@ -29,6 +29,8 @@ function App() {
                 <Route path='/quizes'element={<Quizes/>}/>
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/changepassword' element={<AnimatePresence><ChangePassword/></AnimatePresence>}/>
+                <Route path='/blogs'/>
+                <Route path='/jobs'/>
                 <Route path='/logout' />
               </Route>
           </Routes>

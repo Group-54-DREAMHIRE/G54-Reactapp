@@ -23,7 +23,7 @@ function ChangePassword() {
             <input type="password" />
             <label >Confirm Password</label>
             <input type="password" />
-            <button>Update</button>
+            <button>Confirm</button>
           </form>
         </div>
       </motion.div>

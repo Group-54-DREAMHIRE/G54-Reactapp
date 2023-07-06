@@ -10,17 +10,18 @@ import { Animations } from './SidebarAnimations';
 
 const Sidebar = ({ handleLogin }) => {
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const inputAnimation = Animations.inputAnimation;
   const showAnimation = Animations.showAnimation;
+ 
 
   return (
     <>
       <div className="sidebar-main-container-w">
         <motion.div
           animate={{
-            width: isOpen ? "250px" : "40px",
+            width: isOpen ? "250px" : "50px",
             transition: {
               duration: 0.5,
               type: "spring",
