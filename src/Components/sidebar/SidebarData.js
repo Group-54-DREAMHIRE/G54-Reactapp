@@ -8,21 +8,25 @@ import { BiAnalyse } from "react-icons/bi";
 export const routes = [
     
     {
+        id:0,
         path: "/",
         name: "Home",
         icon: <FaHome />,
     },
     {
+        id:1,
         path: "/dashboard",
         name: "Dashboard",
         icon: <AiFillDashboard/>,
     },
     {
+        id:2,
         path: "/quizes",
         name: "Quizes",
         icon: <IoExtensionPuzzleSharp/>,
     },
     {
+        id:3,
         path: "",
         name: "Account",
         icon: <FaUser />,
@@ -30,6 +34,7 @@ export const routes = [
         subRoutes: [
             
             {
+                id:4,
                 path: "/profile",
                 name: "Profile",
                 icon: <FaUser />,
@@ -38,12 +43,14 @@ export const routes = [
     },
     
     {
+        id:5,
         path: "",
         name: "Settings",
         icon: <BiCog />,
         exact: true,
         subRoutes: [
             {
+                id:6,
                 path: "/changepassword",
                 name: "Change Password",
                 icon: <FaLock />,
@@ -52,6 +59,7 @@ export const routes = [
         ],
     },
     {
+        id:7,
         path: "/logout",
         name: "Log out",
         icon: <IoLogOut/>,

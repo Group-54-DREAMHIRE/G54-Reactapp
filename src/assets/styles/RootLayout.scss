@@ -1,15 +1,27 @@
 .rootlayout-header-w{
-    
-    height: 10vh;
+    position:sticky;
+    top: 0;
+    left: 0;
+    background-color: $light;
     width: 100%;
-    background-color: $primary;
-    position: -webkit-sticky;
+    margin-left: 0;
+    height: 10vh;  
+}
+.side-bar-w{
     position: sticky;
-    top:0;
+    top: 10vh;
+    left: 0;
+    height: 90vh;
 }
-.rootlayout-main-w{
+.side{
     display: flex;
-    .out{
-        width: 100%;
-    }
+    flex-direction: row;
 }
+.content-w{
+    width: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+
+

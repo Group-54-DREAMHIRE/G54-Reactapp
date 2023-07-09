@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
+import {pageanimation} from '../assets/animations/pageanimation';
 function ChangePassword() {
   return (
+    
     <>
 
-<motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  exit={{ opacity: 0 }}
-
-     className="change-main-w">
+      <motion.div
+        variants={pageanimation}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{duration:0.6}}
+        className="change-main-w">
         <h1>Change Password</h1>
         <p className='ready'>Ready to jump back in?</p>
         <div className="form-con-w">
@@ -20,7 +23,7 @@ function ChangePassword() {
             <input type="password" />
             <label >Confirm Password</label>
             <input type="password" />
-            <button>Update</button>
+            <button>Confirm</button>
           </form>
         </div>
       </motion.div>

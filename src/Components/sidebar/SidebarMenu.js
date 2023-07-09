@@ -33,6 +33,7 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
                 exit="hidden"
                 className="link_text-w"
                 activeClassName="active"
+                
               >
                 {route.name}
               </motion.div>
@@ -64,9 +65,9 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
           >
             {route.subRoutes.map((subRoute, i) => (
               <motion.div variants={menuItemAnimation} key={i} custom={i}>
-                <NavLink to={subRoute.path} className="sidebar-link-w">
-                  <div className="icon">{subRoute.icon}</div>
-                  <motion.div className="sub-link_text-w">{subRoute.name}</motion.div>
+                <NavLink to={subRoute.path} className="sidebar-link-w" key={i}>
+                  <div key={i} className="icon">{subRoute.icon}</div>
+                  <motion.div key={i} className="sub-link_text-w">{subRoute.name}</motion.div>
                 </NavLink>
               </motion.div>
             ))}
