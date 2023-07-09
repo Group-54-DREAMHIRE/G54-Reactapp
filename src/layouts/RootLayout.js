@@ -1,46 +1,42 @@
-import { Col, Layout, Row } from 'antd';
-import { Outlet } from 'react-router-dom';
+import Footer from '../Components/footer/Footer';
 import Sidebar from '../Components/sidebar/Sidebar';
-
+import Navbar from '../Components/navbar/Navbar';
+import { Outlet } from 'react-router-dom';
+import { Layout,theme } from 'antd';
+const { Content } = Layout;
 
 function RootLayout() {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
   return (
     <>
-
-      {/* <div className='rootlayout-header-w'>
-
-      </div>
-
-      <div className='rootlayout-main-w'>
-        <div className='rootlayout-sidebar-con-w'>
-          <Sidebar />
+      <Layout>
+        <div className="rootlayout-header-w">
+          <Navbar />
         </div>
-        <div className='rootlayout-con-w'>
-          <div className='rootlayout-outlet-con-w'>
-            <Outlet />
-          </div>
-          <div className='rootlayout-footer-w'>
-           This is footer
-          </div>
-        </div>
-      </div> */}
-      <div className="rootlayout-header-w">
-      </div>
-      <Row>
-        <Col span={24} >
-          <div className="rootlayout-main-w" >
+        <Layout className='side'>
+          <div className="side-bar-w">
             <Sidebar />
-            <div className="out">
-              <Outlet />
-            </div>
           </div>
-        </Col>
-      </Row>
-
-
-
+          <div className="content-w">
+            <Content
+              style={{
+                padding: 0,
+                margin: 30,
+                minHeight: 280,
+                background: colorBgContainer,
+              }}
+            >
+              <Outlet />
+            </Content>
+            <Footer />
+          </div>
+        </Layout>
+      </Layout>
     </>
   )
 }
 
 export default RootLayout
+

@@ -66,6 +66,9 @@
                     font-size: large;
                     
                 }
+                button:hover{
+                    cursor: pointer;
+                }
                 .usernpass-w{
                     margin: 10px 0;
                 }
@@ -79,6 +82,7 @@
         label{
             margin: 0 5px;
             font-size: medium;
+
         }
         .signup-w{
             color: $primary;
@@ -86,6 +90,7 @@
         }
         .signup-w:hover{
             scale: 1.07;
+            cursor: pointer;
             
         }
     }

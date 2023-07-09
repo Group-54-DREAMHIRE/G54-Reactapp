@@ -6,30 +6,28 @@ import ChangePassword from "./pages/ChangePassword";
 import Profile from './pages/Profile'
 import Login from "./pages/Login";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import Dashboard from "./pages/Dashboard";
+import Quizes from "./pages/Quizes";
 
 function App() {
-  const [isloggedin,SetIsloggedin] = useState(false);
-  const handleLogin = () =>{
-    SetIsloggedin(!isloggedin);
-  }
   return (
     <>
-      {!isloggedin &&<Login handleLogin={handleLogin}/>}
-        {isloggedin &&
-          <BrowserRouter>
-          <Routes>
-              <Route path='/' element={<RootLayout/>}>
-                <Route path='/' index element={<Home/>}/>
-                <Route path='/dashboard'/>
-                <Route path='/quizes'/>
-                <Route path='/profile' element={<Profile/>}/>
-                <Route path='/changepassword' element={<ChangePassword/>}/>
-                <Route path='/logout'/>
-
-              </Route>
-          </Routes>
-        </BrowserRouter>
-        }
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<RootLayout />}>
+            <Route path='/' index element={<Home />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/quizes' element={<Quizes />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/changepassword' element={<AnimatePresence><ChangePassword /></AnimatePresence>} />
+            <Route path='/blogs' />
+            <Route path='/jobs' />
+            <Route path='/logout' />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
