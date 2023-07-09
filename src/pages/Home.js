@@ -4,11 +4,12 @@ import { pageanimation } from '../assets/animations/pageanimation';
 function Home() {
   return (
     <>
-     <motion.div variants={pageanimation}
+      <motion.div variants={pageanimation}
         initial="hidden"
         animate="visible"
         exit="exit"
         transition={{duration:0.6}}>
+        
         <h1>This is home</h1>
      </motion.div>
     </>

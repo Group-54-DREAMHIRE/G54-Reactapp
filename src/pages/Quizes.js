@@ -1,7 +1,6 @@
 import { Col, Layout, Row } from 'antd';
 import { motion } from 'framer-motion';
 import { pageanimation } from '../assets/animations/pageanimation';
-
 function Quizes() {
   return (
     <>
@@ -10,7 +9,7 @@ function Quizes() {
         animate="visible"
         exit="exit"
         transition={{duration:0.6}}>
-        <h1>This is Quzes</h1>
+       <h1>This is quizes</h1>
      </motion.div>
     </>
   )

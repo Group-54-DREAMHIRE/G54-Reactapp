@@ -8,7 +8,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Space } from 'antd';
 
 function Navbar() {
-   
+
     return (
         <>
             <div className="navbar-main-con-w">
@@ -23,13 +23,11 @@ function Navbar() {
                                     {item.name}
                                 </NavLink>
                             )
-
                         })}
                     </div>
                     <div className="dp-name-con-w">
                     <IoNotificationsOutline className='noti-icon-w'/>
                         <div className="dp-con-w">
-                      
                             {/* <img src={dula} alt="" /> */}
                         </div>
                         <span>Dulanjana</span>

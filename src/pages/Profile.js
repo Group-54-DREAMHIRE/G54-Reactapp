@@ -1,7 +1,6 @@
 import { Col, Layout, Row } from 'antd';
 import { motion } from 'framer-motion';
 import { pageanimation } from '../assets/animations/pageanimation';
-
 function Profile() {
   return (
     <>
@@ -10,7 +9,8 @@ function Profile() {
         animate="visible"
         exit="exit"
         transition={{duration:0.6}}>
-        <h1>This is Profile</h1>
+        
+        <h1>This is profile</h1>
      </motion.div>
     </>
   )

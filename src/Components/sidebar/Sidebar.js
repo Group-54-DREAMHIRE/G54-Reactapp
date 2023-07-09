@@ -14,7 +14,7 @@ const Sidebar = ({ handleLogin }) => {
   const toggle = () => setIsOpen(!isOpen);
   const inputAnimation = Animations.inputAnimation;
   const showAnimation = Animations.showAnimation;
- 
+
 
   return (
     <>
@@ -99,23 +99,26 @@ const Sidebar = ({ handleLogin }) => {
               );
             })}
           </section>
-          <div
-            className="logout-con-w"
-            onClick={handleLogin}>
-            <label> <IoLogOut /></label>
-            <AnimatePresence>
-              (
-              <motion.div
-                variants={showAnimation}
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-                className="logout-w">
-                Logout
-              </motion.div>
-              )
-            </AnimatePresence>
-          </div>
+          {
+            isOpen &&
+            <div
+              className="logout-con-w"
+              onClick={handleLogin}>
+              <label> <IoLogOut /></label>
+              <AnimatePresence>
+                (
+                <motion.div
+                  variants={showAnimation}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  className="logout-w">
+                  Logout
+                </motion.div>
+                )
+              </AnimatePresence>
+            </div>
+          }
         </motion.div>
       </div>
     </>

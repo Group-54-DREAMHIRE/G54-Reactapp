@@ -9,7 +9,9 @@ function Dashboard() {
         animate="visible"
         exit="exit"
         transition={{duration:0.6}}>
+       
         <h1>This is Dashboard</h1>
+       
      </motion.div>
     </>
   )
