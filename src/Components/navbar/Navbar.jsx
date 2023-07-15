@@ -58,11 +58,15 @@ const Navbar = () => {
                     },
                 }}>
                 <Spin spinning={isSpin}>
-                <Row className='navbar-main-w' align='middle'>
+                <Row align='middle' style={{height:'13vh',
+                                            width: '100%',
+                                            background: 'white'}}>
                     <Col span={24}>
                         <Row justify='space-between' align='middle'>
                             <Col span={4} >
-                                <img src={logo} alt="logo" />
+                                <img src={logo} alt="logo" style={{
+                                    width: '100%'
+                                }} />
                             </Col>
 
                             <Col span={20}>
