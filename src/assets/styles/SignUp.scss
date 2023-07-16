@@ -1,0 +1,17 @@
+.user-type-w{
+    display: flex !important;
+    justify-content: space-between !important;
+    label{
+        display: flex !important;
+        justify-content: space-between !important;
+        margin: 0;
+        padding:20px 48px;
+        border-radius: 5px !important;
+        align-items: center;
+
+    }
+    span{
+        border-left: none !important;
+       
+    }
+}   

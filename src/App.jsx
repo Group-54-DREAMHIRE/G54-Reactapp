@@ -3,6 +3,7 @@ import './assets/styles/main.scss';
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import DefaultMainLayout from './layouts/DefaultMainLayout';
 
 
 
@@ -11,7 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/login'/>
+          <Route path='/' index element={<DefaultMainLayout/>}/>
           <Route path='/'  element={<RootLayout/>}>
             <Route path='/' index element={<Home/>}/>
             <Route path='/dashboard' element={<Dashboard/>} />

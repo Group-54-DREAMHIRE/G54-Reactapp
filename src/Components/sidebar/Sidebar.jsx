@@ -1,4 +1,4 @@
-import { Button, Menu, Row, Col, Switch, Avatar } from 'antd';
+import { Button, Menu, Row, Col, Switch, Avatar,  ConfigProvider } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -72,17 +72,23 @@ const Sidebar = () => {
     };
     return (
         <>
+         <ConfigProvider
+                theme={{
+                    token: {
+                        colorPrimary: 'rgba(25,103,210,255)',
+                    },
+                }}>
             <Row style={{
                 display: 'flex',
                 flexDirection: 'column',
-                paddingLeft: '7px',
                 boxShadow: 'revert-layer',
                 position: 'sticky',
                 background: 'white',
                 top: '13vh',
-                width: collapsed ? '60px' : "300px",
+                minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                height: '87vh'
+                height: '87vh',
+                boxShadow: '1px 0px 8px #aaaaaa',
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{
@@ -126,7 +132,7 @@ const Sidebar = () => {
                     </Row>
                 </Col>
             </Row>
-
+            </ConfigProvider>
         </>
     )
 }

@@ -75,7 +75,8 @@ const Navbar = () => {
                     <Row align='middle' style={{
                         height: '13vh',
                         width: '100%',
-                        background: 'white'
+                        background: 'white',
+                        boxShadow: '1px 0px 8px #aaaaaa',
                     }}>
                         <Col span={24}>
                             <Row justify='space-between' align='middle'>
@@ -141,12 +142,14 @@ const Navbar = () => {
                                                 </Col>
                                                 <Col>
                                                     <Button type='primary'
+                                                    shape='round'
                                                         onClick={showSignIn}>
                                                         Sign In
                                                     </Button>
                                                 </Col>
                                                 <Col>
                                                     <Button type='primary'
+                                                             shape='round'
                                                       onClick={showSignUp}>
                                                         Sign up
                                                     </Button>
