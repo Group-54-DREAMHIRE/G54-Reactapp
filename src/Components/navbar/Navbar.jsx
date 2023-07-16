@@ -8,7 +8,8 @@ import {
 import logo from '../../assets/images/logo.png'
 import { navitems } from './NavbarData';
 import { useNavigate } from 'react-router-dom';
-import Login from '../../pages/Login';
+import SignIn from '../../pages/SignIn';
+import SignUp from '../../pages/SignUp';
 
 
 const items = [
@@ -47,17 +48,20 @@ const Navbar = () => {
             clearTimeout();
         }, 500, 1000);
     };
-    const [open, setOpen] = useState(false);
-    const showModal = () => {
-        setOpen(true);
+    const [signIn, setSignIn] = useState(false);
+    const [signUp, setSignUp] = useState(false);
+    const showSignIn = () => {
+        setSignIn(true);
     };
-    const handleCancel = () => {
-        console.log('Clicked cancel button');
-        setOpen(false);
+    const cancelSignIn = () => {
+        setSignIn(false);
       };
 
-    const handleOk = () => {
-          setOpen(false);
+    const showSignUp = () => {
+        setSignUp(true);
+    };
+    const cancelSignUp = () => {
+        setSignUp(false);
       };
     return (
         <>
@@ -109,7 +113,7 @@ const Navbar = () => {
                                                     </Badge>
                                                 </Col>
                                                 <Col>
-                                                    <Badge count={3}
+                                                    <Badge count={5}
                                                         size='small'>
                                                         <span
                                                             style={{
@@ -137,13 +141,13 @@ const Navbar = () => {
                                                 </Col>
                                                 <Col>
                                                     <Button type='primary'
-                                                        onClick={showModal}>
+                                                        onClick={showSignIn}>
                                                         Sign In
                                                     </Button>
                                                 </Col>
                                                 <Col>
                                                     <Button type='primary'
-                                                        onClick={showModal}>
+                                                      onClick={showSignUp}>
                                                         Sign up
                                                     </Button>
                                                 </Col>
@@ -154,7 +158,8 @@ const Navbar = () => {
                             </Row>
                         </Col>
                     </Row>
-                    <Login open={open} handleCancel={handleCancel} handleOk={handleOk}/>
+                    <SignIn signIn={signIn} cancelSignIn={cancelSignIn}/>
+                    <SignUp signUp={signUp} cancelSignUp={cancelSignUp}/> 
                 </Spin>
             </ConfigProvider>
         </>

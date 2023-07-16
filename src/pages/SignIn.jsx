@@ -3,15 +3,14 @@ import { Form, Input, Button, Modal, Checkbox, Row, Col, Typography, } from 'ant
 const { Text, Link, Title } = Typography;
 
 
-const Login = ({ open, handleCancel, handleOk }) => {
+const SignIn = ({ signIn, cancelSignIn}) => {
 
   return (
     <>
       <Modal
         style={{top: '4vh'}}      
-        open={open}
-        onCancel={handleCancel}
-        onOk={handleOk}
+        open={signIn}
+        onCancel={cancelSignIn}
         footer={[]}
       >
         <Row block style={{padding: '30px'}}>
@@ -37,8 +36,7 @@ const Login = ({ open, handleCancel, handleOk }) => {
                 <Input style={{
                   padding: '10px 15px 10px',
                   marginBottom: '15px',
-                  fontSize: 'medium'
-                }}
+                  fontSize: 'medium'}}
                   allowClear />
               </Form.Item>
 
@@ -49,8 +47,7 @@ const Login = ({ open, handleCancel, handleOk }) => {
                   style={{
                     padding: '10px 15px 10px',
                     marginBottom: '15px',
-                    fontSize: 'medium'
-                  }}
+                    fontSize: 'medium'}}
                   allowClear />
               </Form.Item>
 
@@ -67,15 +64,13 @@ const Login = ({ open, handleCancel, handleOk }) => {
 
               <Form.Item
                 wrapperCol={{
-                  span: 24,
-                }}>
+                  span: 24,}}>
                 <Button block type='primary'
                   style={{
                     padding: '10px 0 35px',
                     fontSize: 'medium',
                     fontWeight: '500',
-                    marginBottom: '10px'
-                  }}>
+                    marginBottom: '10px'}}>
                   Log In
                 </Button>
               </Form.Item>
@@ -88,8 +83,7 @@ const Login = ({ open, handleCancel, handleOk }) => {
                     fontSize: 'medium',
                     fontWeight: '400'
                   }}
-              block
-              >
+              block>
                 Sign in with Google
               </Button>
             </Row>
@@ -99,5 +93,5 @@ const Login = ({ open, handleCancel, handleOk }) => {
     </>
   )
 }
-export default Login
+export default SignIn
 
