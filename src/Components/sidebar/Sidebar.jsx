@@ -1,4 +1,4 @@
-import { Button, Menu, Row, Col, Switch, Avatar,  ConfigProvider } from 'antd';
+import { Button, Menu, Row, Col, Switch,ConfigProvider } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -70,6 +70,7 @@ const Sidebar = () => {
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+
     return (
         <>
          <ConfigProvider
@@ -88,7 +89,7 @@ const Sidebar = () => {
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
                 height: '87vh',
-                boxShadow: '1px 0px 8px #aaaaaa',
+                boxShadow: '0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)',
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{

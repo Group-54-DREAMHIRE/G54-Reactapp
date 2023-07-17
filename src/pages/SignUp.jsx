@@ -5,11 +5,9 @@ import {
   Input,
   Button,
   Modal,
-  Checkbox,
   Row,
   Col,
   Typography,
-  Menu,
   Radio,
 } from "antd";
 const { Text, Link, Title } = Typography;
@@ -54,10 +52,8 @@ const SignUp = ({ signUp, cancelSignUp }) => {
                   style={{
                     padding: "10px 15px 10px",
                     marginBottom: "15px",
-                    fontSize: "medium",
-                  }}
-                  allowClear
-                />
+                    fontSize: "medium",}}
+                  allowClear/>
               </Form.Item>
 
               <Form.Item label="Password" name="password">
@@ -73,9 +69,7 @@ const SignUp = ({ signUp, cancelSignUp }) => {
 
               <Form.Item
                 wrapperCol={{
-                  span: 24,
-                }}
-              >
+                  span: 24,}}>
                 <Button
                   block
                   type="primary"
@@ -83,9 +77,7 @@ const SignUp = ({ signUp, cancelSignUp }) => {
                     padding: "10px 0 35px",
                     fontSize: "medium",
                     fontWeight: "500",
-                    marginBottom: "10px",
-                  }}
-                >
+                    marginBottom: "10px",}}>
                   Log In
                 </Button>
               </Form.Item>
@@ -96,10 +88,8 @@ const SignUp = ({ signUp, cancelSignUp }) => {
                 style={{
                   padding: "15px 0 40px",
                   fontSize: "medium",
-                  fontWeight: "400",
-                }}
-                block
-              >
+                  fontWeight: "400",}}
+                block>
                 Sign in with Google
               </Button>
             </Row>
