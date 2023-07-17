@@ -10,11 +10,11 @@ const Footer = () => {
                     borderBottom: 'none',
                     padding: '30px 0 60px',
                     width: '100%',
-                    backgroundColor: 'rgb(248,249,250)'}}>
+                    backgroundColor: '#F2FAFA'}}>
         <Col>
           <Row 
             justify= 'space-between'
-            style={{padding: '0 80px 0'}}>
+            style={{padding: '0 10% 0'}}>
             <Col span={7} >
               <Row  gutter={[10,15]} >
                 <Col>
