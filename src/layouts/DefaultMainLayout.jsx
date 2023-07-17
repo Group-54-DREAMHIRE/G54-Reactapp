@@ -3,6 +3,7 @@ import LandingNavbar from "../Components/navbar/LandingNavbar";
 
 import { Layout, theme, Row, Col } from "antd";
 import { useState } from "react";
+import LandingHome from "../pages/landing/LandingHome";
 
 const { Content } = Layout;
 
@@ -23,14 +24,13 @@ function DefaultMainLayout() {
         <Row
         justify="center"
         align="middle"
-        style={{
-          height: "13vh",
-          position: "sticky",
-          top: "0",
-          left: "0",
-          display: "flex",
-          width: "100% !important",
-          alignItems: "center",}}>
+        style={{ 
+        position: 'sticky',
+        top: '0',
+        height: '13vh',
+        background: "#F2FAFA",
+        zIndex: '2',
+        padding: '4vh'}}>
         <Col span={24}>
           <LandingNavbar sectionID={sectionID} onNavigate={onNavigate} />
         </Col>
@@ -41,13 +41,15 @@ function DefaultMainLayout() {
           minHeight: 280,
           background: colorBgContainer,
         }}>
-        <h1>fjkygru</h1>
+      <Row>
+        <LandingHome/>
+      </Row>
       </Content>
       <Row
         justify="center"
         align="middle"
-        style={{
-          }}>
+        style={{ 
+          backgroundColor: '#F2FAFA !important'}}>
         <Col span={24}>
           <Footer />
         </Col>
