@@ -72,13 +72,18 @@ const Navbar = () => {
                     },
                 }}>
                 <Spin spinning={isSpin}>
-                    <Row align='middle' style={{
+                    <Row align='middle' justify='center' style={{
                         height: '13vh',
                         width: '100%',
-                        background: 'white',
-                        boxShadow: '1px 0px 8px #aaaaaa',
+                        background: '#F2FAFA',
+                        // boxShadow: '1px 0px 8px #aaaaaa',
                     }}>
-                        <Col span={24}>
+                        <Col 
+                        span={20} style={{background: 'red',
+                                            padding: '7px 0px 7px 20px',
+                                            borderRadius: '45px',
+                                            backgroundColor: 'rgba(242, 250, 250, 1)',
+                                            boxShadow: '0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)',}}>
                             <Row justify='space-between' align='middle'>
                                 <Col span={4} >
                                     <img src={logo} alt="logo" style={{
@@ -93,7 +98,9 @@ const Navbar = () => {
                                             <Row align='middle'
                                                 justify='space-between' >
                                                 <Col span={24}>
-                                                    <Menu items={navitems}
+                                                    <Menu 
+                                                        style={{ backgroundColor: 'rgba(242, 250, 250, 1)',}}
+                                                        items={navitems}
                                                         mode='horizontal'
                                                         onClick={onClick}
                                                     >
@@ -102,7 +109,7 @@ const Navbar = () => {
                                             </Row>
                                         </Col>
                                         <Col >
-                                            <Row justify='space-around' align='middle' gutter={20}>
+                                            <Row justify='space-between' align='middle' gutter={20}>
                                                 <Col>
                                                     <   Badge count={3}
                                                         size='small'>
@@ -125,7 +132,7 @@ const Navbar = () => {
                                                 </Col>
                                                 <Col>
                                                     <Avatar
-                                                        size={53}
+                                                        size={45}
                                                         icon={<UserOutlined />} />
                                                 </Col>
                                                 <Col>
@@ -140,7 +147,7 @@ const Navbar = () => {
                                                         </Space>
                                                     </Dropdown>
                                                 </Col>
-                                                <Col>
+                                                {/* <Col>
                                                     <Button type='primary'
                                                     shape='round'
                                                         onClick={showSignIn}>
@@ -153,7 +160,7 @@ const Navbar = () => {
                                                       onClick={showSignUp}>
                                                         Sign up
                                                     </Button>
-                                                </Col>
+                                                </Col> */}
                                             </Row>
                                         </Col>
                                     </Row>

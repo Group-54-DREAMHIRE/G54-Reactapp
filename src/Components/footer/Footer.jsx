@@ -1,12 +1,12 @@
 import logo from "../../assets/images/logo.png";
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Layout, theme, Row, Col, Typography } from "antd";
-const { Text, Link } = Typography;
+import { Row, Col} from "antd";
+
 
 const Footer = () => {
   return (
     <>
-      <Row style={{ boxShadow: '1px 0px 8px #aaaaaa',
+      <Row style={{  boxShadow: '0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)',
                     borderBottom: 'none',
                     padding: '30px 0 60px',
                     width: '100%',
@@ -15,7 +15,7 @@ const Footer = () => {
           <Row 
             justify= 'space-between'
             style={{padding: '0 80px 0'}}>
-            <Col span={5} >
+            <Col span={7} >
               <Row  gutter={[10,15]} >
                 <Col>
                   <img src={logo} style={{ width: "50%" }} />
@@ -28,13 +28,13 @@ const Footer = () => {
                   </label>
                 </Col>
                 <Col span={24}>
-                  <label htmlFor="">
-                    <MailOutlined /> dreamhire@gmail.com
+                  <label>
+                    <MailOutlined />&nbsp;&nbsp; dreamhire@gmail.com
                   </label>
                 </Col>
                 <Col span={24}>
-                  <label htmlFor="">
-                    <PhoneOutlined />+12 3456 7890
+                  <label>
+                    <PhoneOutlined />&nbsp;&nbsp; +12 3456 7890
                   </label>
                 </Col>
               </Row>
@@ -44,9 +44,11 @@ const Footer = () => {
               <Row gutter={[10,15]}>
                 <Col span={24}>
                   <label 
-                  style={{fontSize: '18px',
-                        fontWeight: '500',
-                        color: 'rgb(146,152,159)'}}>Services</label>
+                    style={{fontSize: '18px',
+                        fontWeight: '400',
+                        color: 'rgb(146,152,159)'}}>
+                    Services
+                  </label>
                 </Col>
                 <Col span={24}>
                   <label>Web Hosting</label>
@@ -70,8 +72,10 @@ const Footer = () => {
               <Row gutter={[10,15]}>
                 <Col span={24}>
                   <label  style={{fontSize: '18px',
-                        fontWeight: '500',
-                        color: 'rgb(146,152,159)'}}>Support</label>
+                        fontWeight: '400',
+                        color: 'rgb(146,152,159)'}}>
+                    Support
+                  </label>
                 </Col>
                 <Col span={24}>
                   <label>Pricing Plan</label>
@@ -92,8 +96,10 @@ const Footer = () => {
               <Row gutter={[10,15]}>
                 <Col span={24}>
                   <label  style={{fontSize: '18px',
-                        fontWeight: '500',
-                        color: 'rgb(146,152,159)'}}>Company</label>
+                        fontWeight: '400',
+                        color: 'rgb(146,152,159)'}}>
+                    Company
+                  </label>
                 </Col>
                 <Col span={24}>
                   <label>About</label>
@@ -117,8 +123,10 @@ const Footer = () => {
               <Row gutter={[10,15]}>
                 <Col span={24}>
                   <label  style={{fontSize: '18px',
-                        fontWeight: '500',
-                        color: 'rgb(146,152,159)'}}>Legal</label>
+                        fontWeight: '400',
+                        color: 'rgb(146,152,159)'}}>
+                      Legal
+                  </label>
                 </Col>
                 <Col span={24}>
                   <label>Claim</label>
