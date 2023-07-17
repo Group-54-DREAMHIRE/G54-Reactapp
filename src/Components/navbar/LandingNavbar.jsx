@@ -57,15 +57,18 @@ const LandingNavbar = ({ onNavigate,sectionID }) => {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: "rgba(25,103,210,255)",},}}>
+            colorPrimary: "rgb(30,136,229)",},}}>
         <Row
           className="landing-nav-w"
           align="middle"
           justify="center"
           style={{
-            height: "13vh",
-            width: "100%",
-            background: "#F2FAFA",}}>
+            position: 'sticky',
+            top: '0',
+            height: '13vh',
+            background: "#F2FAFA",
+            zIndex: '2',
+            }}>
           <Col
             span={20}
             style={{
