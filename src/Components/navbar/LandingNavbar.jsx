@@ -6,37 +6,33 @@ import logo from "../../assets/images/logo.png";
 import React, { useState } from "react";
 import { Link } from "react-scroll";
 
-
-import { Row, ConfigProvider, Col, Button, Menu } from "antd";
-
-
-
+import { Row, Col, Button } from "antd";
 
 
 const navitems = [
   {
     label: "Home",
-    key: "1",
+    key: "1home",
   },
   {
-    label: "Blogs",
-    key: "2",
+    label: "About Us",
+    key: "2about",
   },
   {
-    label: "About",
-    key: "3",
+    label: "Blog",
+    key: "3blog",
   },
   {
     label: "Pricing",
-    key: "4",
+    key: "4pricing",
   },
   {
     label: "Contact Us",
-    key: "5",
-  },
+    key: "5contact"
+  }
 ];
 
-const LandingNavbar = ({ onNavigate,sectionID }) => {
+const LandingNavbar = () => {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const showSignIn = () => {
@@ -54,21 +50,16 @@ const LandingNavbar = ({ onNavigate,sectionID }) => {
   };
   return (
     <>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "rgb(30,136,229)",},}}>
         <Row
           className="landing-nav-w"
           align="middle"
           justify="center"
           style={{
-            position: 'sticky',
-            top: '0',
-            height: '13vh',
+            position: "sticky",
+            top: "0",
+            height: "13vh",
             background: "#F2FAFA",
-            zIndex: '2',
-            }}>
+            zIndex: "2",}}>
           <Col
             span={20}
             style={{
@@ -88,17 +79,17 @@ const LandingNavbar = ({ onNavigate,sectionID }) => {
               <Col span={20}>
                 <Row justify="space-around" align="middle">
                   <Col span={14}>
-                    <Row justify="center">
-                      <Link to={sectionID}>
-                        <Menu
-                          style={{
-                            whiteSpace: "nowrap",
-                            background: "#F2FAFA",}}
-                          items={navitems}
-                          mode="horizontal"
-                          inlineIndent="100"
-                          onClick={onNavigate}/>
-                      </Link>
+                    <Row justify="center" className="nav-menu-w">
+                        {navitems.map((item)=>{
+                               return(
+                                <Link 
+                                    to={item.key} smooth={true} duration={500}
+                                    activeStyle={{backgroundColor: 'red !important'}}
+                                    style={{
+                                      margin: '0 20px 0',
+                                      color: 'rgb(103,103,103)',
+                                      fontSize: 'medium',}}>
+                                    {item.label}</Link>)})}                 
                     </Row>
                   </Col>
                   <Col span={6}>
@@ -128,7 +119,6 @@ const LandingNavbar = ({ onNavigate,sectionID }) => {
         </Row>
         <SignIn signIn={signIn} cancelSignIn={cancelSignIn} />
         <SignUp signUp={signUp} cancelSignUp={cancelSignUp} />
-      </ConfigProvider>
     </>
   );
 };

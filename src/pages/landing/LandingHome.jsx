@@ -1,20 +1,16 @@
-import { Typography, Input, Row, Col, Button, ConfigProvider } from "antd";
+import { Typography, Input, Row, Col, Button } from "antd";
 import landing1 from "../../assets/images/landing-1.png";
 import landing2 from "../../assets/images/landing2.png";
 import landing3 from "../../assets/images/landing3.png";
 import landing4 from "../../assets/images/landing4.png";
 import landing5 from "../../assets/images/landing5.png";
 import search from '../../assets/images/search.png';
-import { SearchOutlined } from "@ant-design/icons";
+
 const { Title } = Typography;
 
 const LandingHome = () => {
   return (
     <>
-    <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "rgb(30,136,229)",},}}>
       <Row style={{ backgroundColor: "#F2FAFA", 
                     padding: "0 10% 0" ,
                     zIndex: '1'}}>
@@ -100,16 +96,16 @@ const LandingHome = () => {
                   <Row >
                     <Col>
                       <Row justify= 'center'>
-                        <img src={landing2} style={{width:'40%'}} />
+                        <img src={landing2} style={{width:'55%'}} />
                       </Row>
                       <Row>
                         <Title level={2}>Create Account</Title>
                       </Row>
                       <Row justify= 'center'>
-                        <label>
-                          First you have to create a
+                      <label>
+                      First you have to create an<br/>
+                       account  here
                         </label>
-                        <label>account here</label>
                       </Row>
                     </Col>
                   </Row>
@@ -206,7 +202,6 @@ const LandingHome = () => {
           </Row>
         </Col>
       </Row>
-      </ConfigProvider>
     </>
   );
 };
