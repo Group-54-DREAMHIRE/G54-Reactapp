@@ -1,9 +1,13 @@
-import Footer from "../Components/footer/Footer";
 import LandingNavbar from "../Components/navbar/LandingNavbar";
 
-import { Layout, theme, Row, Col } from "antd";
-import { useState } from "react";
 import LandingHome from "../pages/landing/LandingHome";
+import LandingAboutUs from "../pages/landing/LandingAboutUs";
+
+import Footer from "../Components/footer/Footer";
+
+import { Layout, theme, Row, Col, ConfigProvider } from "antd";
+
+
 
 const { Content } = Layout;
 
@@ -11,16 +15,12 @@ function DefaultMainLayout() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
-  const [sectionID, setSectionID] = useState("1");
-  const onNavigate = ({ key }) => {
-    console.log(key);
-    setSectionID(key);
-   
-  };
-
   return (
     <>
+    <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "rgb(30,136,229)",},}}>
         <Row
         justify="center"
         align="middle"
@@ -30,19 +30,22 @@ function DefaultMainLayout() {
         height: '13vh',
         background: "#F2FAFA",
         zIndex: '2',
-        padding: '4vh'}}>
+        marginTop: '4vh'}}>
         <Col span={24}>
-          <LandingNavbar sectionID={sectionID} onNavigate={onNavigate} />
+          <LandingNavbar/>
         </Col>
       </Row>
       <Content
         style={{
           padding: 0,
           minHeight: 280,
-          background: colorBgContainer,
+          background:'#F2FAFA',
         }}>
-      <Row>
+      <Row id="1home">
         <LandingHome/>
+      </Row>
+      <Row id="2about" style={{paddingTop:'10%'}}>
+       <LandingAboutUs/>
       </Row>
       </Content>
       <Row
@@ -54,6 +57,7 @@ function DefaultMainLayout() {
           <Footer />
         </Col>
       </Row>
+      </ConfigProvider>
     </>
   );
 }
