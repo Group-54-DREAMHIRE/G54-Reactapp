@@ -2,25 +2,29 @@ import LandingNavbar from "../Components/navbar/LandingNavbar";
 
 import LandingHome from "../pages/landing/LandingHome";
 import LandingAboutUs from "../pages/landing/LandingAboutUs";
+import LandingContactUs from "../pages/landing/LandingContactUs";
 
 import Footer from "../Components/footer/Footer";
 
-import { Layout, theme, Row, Col, ConfigProvider } from "antd";
+import { Layout, Row, Col, ConfigProvider } from "antd";
+import { LandingBlogs } from "../pages/landing/LandingBlogs";
 
 
 
 const { Content } = Layout;
 
 function DefaultMainLayout() {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+
+
+
+
   return (
     <>
     <ConfigProvider
         theme={{
           token: {
-            colorPrimary: "rgb(30,136,229)",},}}>
+            colorPrimary: "rgb(30,136,229)",},}}
+        >
         <Row
         justify="center"
         align="middle"
@@ -46,6 +50,12 @@ function DefaultMainLayout() {
       </Row>
       <Row id="2about" style={{paddingTop:'10%'}}>
        <LandingAboutUs/>
+      </Row>
+      <Row id="3blog" style={{paddingTop:'5%'}}>
+       <LandingBlogs/>
+      </Row>
+      <Row id="5contact" style={{paddingTop:'10%'}}>
+       {/* <LandingContactUs/> */}
       </Row>
       </Content>
       <Row

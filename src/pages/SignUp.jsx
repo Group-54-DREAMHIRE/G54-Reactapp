@@ -12,13 +12,13 @@ import {
 } from "antd";
 const { Text, Link, Title } = Typography;
 
-const optionsWithDisabled = [
+const options = [
   { label: "Candidate", value: "candidate" },
   { label: "Company", value: "company" },
 ];
 
 const SignUp = ({ signUp, cancelSignUp }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("candidate");
   const onChange = ({ target: { value } }) => {
     console.log(value);
     setValue(value);
@@ -38,7 +38,7 @@ const SignUp = ({ signUp, cancelSignUp }) => {
             </Row>
             <Row block justify="center">
               <Radio.Group
-                options={optionsWithDisabled}
+                options={options}
                 onChange={onChange}
                 value={value}
                 optionType="button"

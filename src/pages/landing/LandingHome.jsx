@@ -1,4 +1,4 @@
-import { Typography, Input, Row, Col, Button } from "antd";
+import { Typography, Input, Row, Col, Button, Image } from "antd";
 import landing1 from "../../assets/images/landing-1.png";
 import landing2 from "../../assets/images/landing2.png";
 import landing3 from "../../assets/images/landing3.png";
@@ -82,7 +82,7 @@ const LandingHome = () => {
               </Row>
             </Col>
             <Col span={10}>
-              <img src={landing1} style={{ width: "80%" }} />
+              <Image preview={false} src={landing1}/>
             </Col>
           </Row>
           <Row style={{marginTop: '80px'}} >
@@ -96,10 +96,10 @@ const LandingHome = () => {
                   <Row >
                     <Col>
                       <Row justify= 'center'>
-                        <img src={landing2} style={{width:'55%'}} />
+                        <Image preview={false} src={landing2}/>
                       </Row>
                       <Row>
-                        <Title level={2}>Create Account</Title>
+                        <Title  level={2}>Create Account</Title>
                       </Row>
                       <Row justify= 'center'>
                       <label>
@@ -115,7 +115,7 @@ const LandingHome = () => {
                   <Row justify="center">
                     <Col span={24}>
                       <Row justify="center">
-                        <img src={landing3} style={{width:'40%'}} />
+                        <Image preview={false} src={landing3} />
                       </Row>
                       <Row justify="center">
                         <Title level={2}>Search Jobs</Title>
@@ -134,7 +134,7 @@ const LandingHome = () => {
                   <Row justify="center">
                     <Col span={24}>
                       <Row justify="center">
-                        <img src={landing4} style={{width:'40%'}}/>
+                        <Image preview={false} src={landing4}/>
                       </Row>
                       <Row justify="center">
                         <Title level={2}>Apply</Title>
@@ -153,7 +153,7 @@ const LandingHome = () => {
           </Row>
           <Row style={{marginTop: '12%'}}>
             <Col span={14}>
-              <img src={landing5} style={{width: '100%'}} />
+              <Image preview={false} src={landing5} />
             </Col>
 
             <Col span={10}>

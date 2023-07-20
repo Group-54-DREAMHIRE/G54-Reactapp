@@ -56,7 +56,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <Row>
+      <Row justify='center'>
         <Col
           span={20}
           style={{

@@ -12,14 +12,14 @@ function RootLayout() {
   return (
     <>
       <Layout>
-        <Row
-          style={{
+        <Row align='middle'            justify='center'        
+            style={{
             height: "13vh",
             position: "sticky",
             top: "0",
             left: "0",
-            display: "flex",
-            alignItems: "center",}}>
+            width: '100%'
+           }}>
           <Col span={24}>
             <Navbar />
           </Col>
