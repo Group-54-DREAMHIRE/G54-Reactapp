@@ -4,6 +4,7 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import DefaultMainLayout from "./layouts/DefaultMainLayout";
+import { Profile } from "./pages/candidate/Profile";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
             <Route path="/" index element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/quizes" />
-            <Route path="/profile" />
+            <Route path="/profile" element={ <Profile/>}/>
             <Route path="/blog" />
             <Route path="/jobs" />
             <Route path="/logout" />

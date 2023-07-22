@@ -32,9 +32,9 @@ function DefaultMainLayout() {
         position: 'sticky',
         top: '0',
         height: '13vh',
-        background: "#F2FAFA",
+        backgroundColor: "rgba(242, 250, 250, 1)",
         zIndex: '2',
-        marginTop: '4vh'}}>
+        paddingTop: '4vh'}}>
         <Col span={24}>
           <LandingNavbar/>
         </Col>
@@ -45,7 +45,7 @@ function DefaultMainLayout() {
           minHeight: 280,
           background:'#F2FAFA',
         }}>
-      <Row id="1home">
+      <Row id="1home" style={{paddingTop:'5%'}}>
         <LandingHome/>
       </Row>
       <Row id="2about" style={{paddingTop:'10%'}}>

@@ -14,8 +14,7 @@ const BlogCard = ({ image, title }) => {
           height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          
+          justifyContent: "center",          
         }}
       >
         <Image src={image} preview={false} width={250} height={200} style={{margin: '0 !important', padding: '0'}}/>

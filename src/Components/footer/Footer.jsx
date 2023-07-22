@@ -6,11 +6,11 @@ import { Row, Col} from "antd";
 const Footer = () => {
   return (
     <>
-      <Row style={{  boxShadow: '0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)',
-                    borderBottom: 'none',
+      <Row style={{ borderBottom: 'none',
+                    boxShadow: '0 0 10px 0 rgba(0,24,128,.1)',
                     padding: '30px 0 60px',
                     width: '100%',
-                    backgroundColor: '#F2FAFA'}}>
+                    backgroundColor: 'rgba(242, 250, 250, 1)',}}>
         <Col>
           <Row 
             justify= 'space-between'

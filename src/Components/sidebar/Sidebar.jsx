@@ -67,7 +67,7 @@ const Sidebar = () => {
     };
 
     const [collapsed, setCollapsed] = useState(false);
-    const toggleCollapsed = () => {
+    const toggleCollapsed = (e) => {
         setCollapsed(!collapsed);
     };
 
@@ -82,19 +82,22 @@ const Sidebar = () => {
             <Row style={{
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: 'revert-layer',
                 position: 'sticky',
-                background: 'white',
-                top: '13vh',
+                backgroundColor: 'white',
+                top: '12vh',
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                height: '87vh',
-                boxShadow: '0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)',
+                height: '88vh',
+                boxShadow: '0 10px 8px  rgba(30,136,229,.4)',
+            //     boxShadow:
+            //   "0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)",
+          
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{
                         display: 'flex',
                         justifyContent: collapsed ? 'center' : 'end',
+                        
                     }}>
                         <Col span={24} >
                             <Row >
@@ -111,11 +114,12 @@ const Sidebar = () => {
                         </Col>
 
                     </Row>
-                    <Row>
-                        <Col span={24}>
+                    <Row > 
+                        <Col span={24} >
                             <Menu
                                 style={{width: '100%',
-                                        height: '100%' }}      
+                                        height: '100%',backgroundColor: 'white',
+                                       }}      
                                 defaultSelectedKeys={['1']}
                                 defaultOpenKeys={['sub1']}
                                 mode="inline"
@@ -123,13 +127,6 @@ const Sidebar = () => {
                                 items={items}
                                 onClick={onClick} />
                         </Col>
-                    </Row>
-                    <Row justify='center' style={{ marginTop: '15px' }}>
-                        <Switch
-                            checked={theme === 'dark'}
-                            onChange={changeTheme}
-                            checkedChildren="Dark"
-                            unCheckedChildren="Light" />
                     </Row>
                 </Col>
             </Row>

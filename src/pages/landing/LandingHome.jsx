@@ -63,7 +63,8 @@ const LandingHome = () => {
                                                      borderRadius: '50%',
                                                     textAlign: 'right'}}/>}
                         style={{width: '150px',
-                        height: '50px'}}
+                        height: '50px',
+                        boxShadow: '0 0 10px 0 rgba(0,24,128,.1)',}}
                       />
                     </Col>
 

@@ -88,7 +88,7 @@ const LandingNavbar = () => {
                     {navitems.map((item) => {
                       return (
                         <Link
-                        
+                          key={item.index}
                           to={item.key}
                           smooth={true}
                           duration={500}
@@ -108,7 +108,7 @@ const LandingNavbar = () => {
                 <Col span={6}>
                   <Row align="middle" gutter={20}>
                     <Col>
-                      <Button type="primary" shape="round" onClick={showSignIn}>
+                      <Button type="primary" shape="round"  onClick={showSignIn}>
                         Sign In
                       </Button>
                     </Col>
