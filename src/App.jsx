@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/styles/main.scss";
 import RootLayout from "./layouts/RootLayout";
-import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DefaultMainLayout from "./layouts/DefaultMainLayout";
-import { Profile } from "./pages/candidate/Profile";
+
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" index element={<DefaultMainLayout />} />
           <Route path="/" element={<RootLayout />}>
-            <Route path="/" index element={<Home />} />
+            <Route path="/" index />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/quizes" />
             <Route path="/profile" element={ <Profile/>}/>
