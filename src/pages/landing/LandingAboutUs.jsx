@@ -1,5 +1,5 @@
 import landing6 from "../../assets/images/landing-6.png";
-import { Row, Col, Typography } from "antd";
+import { Row, Col, Typography, Image } from "antd";
 const { Title } = Typography;
 
 const LandingAboutUs = () => {
@@ -36,7 +36,7 @@ const LandingAboutUs = () => {
             </Col>
 
             <Col span={9}>
-              <img src={landing6} style={{ width: "100%" }} />
+                <Image preview={false} src={landing6} />
             </Col>
           </Row>
         </Col>

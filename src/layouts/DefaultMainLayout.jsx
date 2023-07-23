@@ -2,25 +2,29 @@ import LandingNavbar from "../Components/navbar/LandingNavbar";
 
 import LandingHome from "../pages/landing/LandingHome";
 import LandingAboutUs from "../pages/landing/LandingAboutUs";
+import LandingContactUs from "../pages/landing/LandingContactUs";
 
 import Footer from "../Components/footer/Footer";
 
-import { Layout, theme, Row, Col, ConfigProvider } from "antd";
+import { Layout, Row, Col, ConfigProvider } from "antd";
+import { LandingBlogs } from "../pages/landing/LandingBlogs";
 
 
 
 const { Content } = Layout;
 
 function DefaultMainLayout() {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+
+
+
+
   return (
     <>
     <ConfigProvider
         theme={{
           token: {
-            colorPrimary: "rgb(30,136,229)",},}}>
+            colorPrimary: "rgb(30,136,229)",},}}
+        >
         <Row
         justify="center"
         align="middle"
@@ -28,9 +32,9 @@ function DefaultMainLayout() {
         position: 'sticky',
         top: '0',
         height: '13vh',
-        background: "#F2FAFA",
+        backgroundColor: "rgba(242, 250, 250, 1)",
         zIndex: '2',
-        marginTop: '4vh'}}>
+        paddingTop: '4vh'}}>
         <Col span={24}>
           <LandingNavbar/>
         </Col>
@@ -41,11 +45,17 @@ function DefaultMainLayout() {
           minHeight: 280,
           background:'#F2FAFA',
         }}>
-      <Row id="1home">
+      <Row id="1home" style={{paddingTop:'5%'}}>
         <LandingHome/>
       </Row>
       <Row id="2about" style={{paddingTop:'10%'}}>
        <LandingAboutUs/>
+      </Row>
+      <Row id="3blog" style={{paddingTop:'5%'}}>
+       <LandingBlogs/>
+      </Row>
+      <Row id="5contact" style={{paddingTop:'10%'}}>
+       {/* <LandingContactUs/> */}
       </Row>
       </Content>
       <Row

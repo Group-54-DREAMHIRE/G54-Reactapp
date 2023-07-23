@@ -56,17 +56,19 @@ const Navbar = () => {
   };
   return (
     <>
-      <Row>
+      <Row justify='center'>
         <Col
           span={20}
-          style={{
-            background: "red",
+          style={{ 
             padding: "7px 0px 7px 20px",
             borderRadius: "45px",
-            backgroundColor: "rgba(242, 250, 250, 1)",
-            boxShadow:
-              "0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)",
-          }}
+            backgroundColor: "white",
+            boxShadow: '0 0 10px 0 rgba(30,136,229,.2)',
+          
+            // boxShadow:
+            //   "0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)",
+          
+            }}
         >
           <Row justify="space-between" align="middle">
             <Col span={4}>
@@ -85,7 +87,6 @@ const Navbar = () => {
                   <Row align="middle" justify="space-between">
                     <Col span={24}>
                       <Menu
-                        style={{ backgroundColor: "rgba(242, 250, 250, 1)" }}
                         items={navitems}
                         mode="horizontal"
                         onClick={onClick}
