@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import { Link } from "react-scroll";
 
 import { Row, Col, Button } from "antd";
+import { useDispatch } from "react-redux";
+import {  openSignIn, openSignUp } from "../../store/models/modelsSlice";
 
 const navitems = [
   {
@@ -32,21 +34,7 @@ const navitems = [
 ];
 
 const LandingNavbar = () => {
-  const [signIn, setSignIn] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const showSignIn = () => {
-    setSignIn(true);
-  };
-  const cancelSignIn = () => {
-    setSignIn(false);
-  };
-
-  const showSignUp = () => {
-    setSignUp(true);
-  };
-  const cancelSignUp = () => {
-    setSignUp(false);
-  };
+  const dispatch = useDispatch();
   return (
     <>
       <Row
@@ -108,12 +96,12 @@ const LandingNavbar = () => {
                 <Col span={6}>
                   <Row align="middle" gutter={20}>
                     <Col>
-                      <Button type="primary" shape="round"  onClick={showSignIn}>
+                      <Button type="primary" shape="round"  onClick={()=>dispatch(openSignIn())}>
                         Sign In
                       </Button>
                     </Col>
                     <Col>
-                      <Button type="primary" shape="round" onClick={showSignUp}>
+                      <Button type="primary" shape="round" onClick={()=>dispatch(openSignUp())}>
                         Sign up
                       </Button>
                     </Col>
@@ -132,8 +120,8 @@ const LandingNavbar = () => {
           </Row>
         </Col>
       </Row>
-      <SignIn signIn={signIn} cancelSignIn={cancelSignIn} />
-      <SignUp signUp={signUp} cancelSignUp={cancelSignUp} />
+      <SignIn/>
+      <SignUp/>
     </>
   );
 };

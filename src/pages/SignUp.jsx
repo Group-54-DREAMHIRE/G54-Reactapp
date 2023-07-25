@@ -10,6 +10,8 @@ import {
   Typography,
   Radio,
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSignUp } from "../store/models/modelsSlice";
 const { Text, Link, Title } = Typography;
 
 const options = [
@@ -17,7 +19,9 @@ const options = [
   { label: "Company", value: "company" },
 ];
 
-const SignUp = ({ signUp, cancelSignUp }) => {
+const SignUp = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state)=> state.models.signUp);
   const [value, setValue] = useState("candidate");
   const onChange = ({ target: { value } }) => {
     console.log(value);
@@ -27,8 +31,8 @@ const SignUp = ({ signUp, cancelSignUp }) => {
     <>
       <Modal
         style={{ top: "4vh" }}
-        open={signUp}
-        onCancel={cancelSignUp}
+        open={isOpen}
+        onCancel={()=> dispatch(closeSignUp())}
         footer={[]}
       >
         <Row block style={{ padding: "30px" }}>

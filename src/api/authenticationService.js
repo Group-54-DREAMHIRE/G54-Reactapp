@@ -1,7 +1,4 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../store/userSlice";
-
 
 
 export const getToken = () => {
@@ -9,11 +6,11 @@ export const getToken = () => {
 };
 
 export const userRegister = (authRequest) => {
-  return axios.post("api/v1/auth/register", authRequest);
+  return  axios.post("api/v1/auth/register", authRequest);
 };
 
-export const userLogin = async (authRequest) => {
-  return await axios.post("api/v1/auth/login", authRequest);
+export const userLogin = (authRequest) => {
+  return axios.post("api/v1/auth/login", authRequest);
   }
 
 

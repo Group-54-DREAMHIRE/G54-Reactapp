@@ -1,13 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from 'framer-motion';
+import ApplyJob from "./candidate/ApplyJob";
 import { pageanimation } from '../assets/animations/pageanimation';
 import { EditOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
+
 import ImgCrop from "antd-img-crop";
-import { useSelector } from "react-redux";
-
-
-
 import {
   Row,
   Col,
@@ -20,7 +19,8 @@ import {
   DatePicker,
   Button,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+import { closeApplyJob, openApplyJob } from "../store/models/modelsSlice";
+
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -108,8 +108,8 @@ const ages = [
 
 const Profile =()=>{
 
+  const user = useSelector((state)=>state.user.user);
   const [company, setCompany] = useState(true);
-  const navigate = useNavigate();
   const [name, setName] = useState("Dulanjana Weeasinghe");
   const [languages, setLanguages] = useState([]);
   const [birthday, setBirthday] = useState(null);
@@ -154,6 +154,8 @@ const Profile =()=>{
       </div>
     </div>
   );
+
+  const dispatch = useDispatch();
   return(
 
   
@@ -163,6 +165,11 @@ const Profile =()=>{
           animate="visible"
           exit="exit"
           transition={{duration:1}}>
+            <Button 
+            onClick={()=> dispatch(openApplyJob())} 
+            type="primary">Apply</Button>
+
+            
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -371,6 +378,7 @@ const Profile =()=>{
             </Row>
           </Col>
         </Row>
+        <ApplyJob/>
         </motion.div>
       </>
     )
