@@ -1,28 +1,15 @@
 .sidebar-main-w{
-  ul {
-    
+  ul {  
     .ant-menu-item{
     height: 45px;
-    
-        
-    }
-    .ant-menu-item:hover{
-      background-color: rgba(30,136,229,.3) !important;
     }
     svg{
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
+      width: 18px;
+      height: 18px;
     }
-
-
 .ant-menu-item-selected{
             font-weight: 600;
-            background-color: rgba(30,136,229,.3);
         }
-   
-
-  
 }
 
 }

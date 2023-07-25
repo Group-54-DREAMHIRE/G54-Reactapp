@@ -5,6 +5,8 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DefaultMainLayout from "./layouts/DefaultMainLayout";
 import AddJobPost  from "./pages/company/AddJobPost";
+import ChangePassword from "./pages/ChangePassword";
+
 
 
 function App() {
@@ -30,11 +32,9 @@ function App() {
             <Route path="/comments" />
             <Route path="/appearence" />
             <Route path="/settings" />
-            <Route path="/changepassword" />
+            <Route path="/changepassword" element={<ChangePassword/>}/>
           </Route>
-         </Routes>
-        
-        
+         </Routes>   
       </BrowserRouter>
     </>
   );
