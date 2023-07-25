@@ -12,6 +12,7 @@ function RootLayout() {
         theme={{
           token: {
             colorPrimary: "rgb(30,136,229)",
+            colorBgContainer: 'white',
           },
         }}
       >

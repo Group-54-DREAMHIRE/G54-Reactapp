@@ -4,16 +4,17 @@ import RootLayout from "./layouts/RootLayout";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DefaultMainLayout from "./layouts/DefaultMainLayout";
+import AddJobPost  from "./pages/company/AddJobPost";
 
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" index element={<DefaultMainLayout />} />
-          <Route path="/" element={<RootLayout />}>
-            <Route path="/" index />
+         <Routes>
+         <Route path="/" index  element={<DefaultMainLayout />}/>
+         <Route path="/" element={<RootLayout/>}>
+            <Route path="/home" index element={<Profile/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/quizes" />
             <Route path="/profile" element={ <Profile/>}/>
@@ -22,7 +23,7 @@ function App() {
             <Route path="/logout" />
             <Route path="/contact" />
             <Route path="/about" />
-            <Route path="/faq" />
+            <Route path="/addjobpost" element={<AddJobPost/>} />
             <Route path="/more" />
             <Route path="/posts" />
             <Route path="/media" />
@@ -31,7 +32,9 @@ function App() {
             <Route path="/settings" />
             <Route path="/changepassword" />
           </Route>
-        </Routes>
+         </Routes>
+        
+        
       </BrowserRouter>
     </>
   );

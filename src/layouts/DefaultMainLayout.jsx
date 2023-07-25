@@ -23,7 +23,9 @@ function DefaultMainLayout() {
     <ConfigProvider
         theme={{
           token: {
-            colorPrimary: "rgb(30,136,229)",},}}
+            
+             colorPrimary: "rgb(30,136,229)",
+          },}}
         >
         <Row
         justify="center"
