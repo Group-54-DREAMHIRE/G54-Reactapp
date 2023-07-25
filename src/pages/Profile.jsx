@@ -4,6 +4,8 @@ import { pageanimation } from '../assets/animations/pageanimation';
 import { EditOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
+import { useSelector } from "react-redux";
+
 
 
 import {
@@ -16,7 +18,9 @@ import {
   Divider,
   Select,
   DatePicker,
+  Button,
 } from "antd";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -103,8 +107,9 @@ const ages = [
 ];
 
 const Profile =()=>{
-  const [company, setCompany] = useState(true);
 
+  const [company, setCompany] = useState(true);
+  const navigate = useNavigate();
   const [name, setName] = useState("Dulanjana Weeasinghe");
   const [languages, setLanguages] = useState([]);
   const [birthday, setBirthday] = useState(null);
@@ -153,14 +158,11 @@ const Profile =()=>{
 
   
       <>
-      {/* <motion.div variants={pageanimation}
+      <motion.div variants={pageanimation}
           initial="hidden"
           animate="visible"
           exit="exit"
-          transition={{duration:0.6}}>
-          
-          <h1>This is profile</h1>
-       </motion.div> */}
+          transition={{duration:1}}>
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -369,6 +371,7 @@ const Profile =()=>{
             </Row>
           </Col>
         </Row>
+        </motion.div>
       </>
     )
 }
