@@ -111,6 +111,7 @@ const Profile =()=>{
   const user = useSelector((state)=>state.user.user);
   const [company, setCompany] = useState(true);
   const [name, setName] = useState("Dulanjana Weeasinghe");
+  const [title, setTitle] = useState("Software Engineer");
   const [languages, setLanguages] = useState([]);
   const [birthday, setBirthday] = useState(null);
   const [website, setWebsite] = useState("www.dstyles.com");
@@ -214,6 +215,24 @@ const Profile =()=>{
                             suffix={<EditOutlined />}
                           />
                         </Col>
+                        {!company && <Col span={11}>
+                          <Title level={4} style={{ marginBottom: "0" }}>
+                          Professional title:
+                          </Title>
+                          <Input
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            style={{
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              marginTop: "10px",
+                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                              borderRadius: "0",
+                              fontSize: "large",
+                            }}
+                            suffix={<EditOutlined />}
+                          />
+                        </Col>}
   
                         {!company &&<Col span={11}>
                           <Title level={4} style={{}}>
@@ -240,6 +259,7 @@ const Profile =()=>{
                             Birthday:
                           </Title>
                           <DatePicker 
+                          style={{boxShadow: "0 0 10px 0 rgba(30,136,229,.3)", height: '40px'}}
                           onChange={(date, dateString)=> setBirthday(date)}/>
                         </Col>}
                         {company && <Col span={11}>
