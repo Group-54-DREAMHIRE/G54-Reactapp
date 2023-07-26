@@ -14,10 +14,12 @@ import {
   Spin,
 } from "antd";
 import logo from "../../assets/images/logo.png";
-import { navitems } from "./NavbarData";
 import { useNavigate } from "react-router-dom";
 import SignIn from "../../pages/SignIn";
 import SignUp from "../../pages/SignUp";
+
+
+
 
 const items = [
   {
@@ -36,10 +38,7 @@ const items = [
     label: "Dulanjana",
     key: "/profile",
   },
-  {
-    label: "Dulanjana",
-    key: "/faq",
-  },
+ 
 ];
 
 const Navbar = () => {
@@ -87,7 +86,8 @@ const Navbar = () => {
                   <Row align="middle" justify="space-between">
                     <Col span={24}>
                       <Menu
-                        items={navitems}
+                        style={{whiteSpace: 'nowrap !important',display: 'inline-block'}}
+                        items={items}
                         mode="horizontal"
                         onClick={onClick}
                       ></Menu>

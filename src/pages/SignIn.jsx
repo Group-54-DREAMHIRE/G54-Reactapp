@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   Typography,
+  Alert,
 } from "antd";
 import { loginUser } from "../store/auth/userSlice";
 const { Text, Link, Title } = Typography;
@@ -21,7 +22,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {loading, error} = useSelector((state)=> state.user)
+  const {loading, error, message} = useSelector((state)=> state.user)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -118,7 +119,8 @@ const SignIn = () => {
                 </Button>
               </Form.Item>
             </Form>
-            {{error} && <p> {error}</p>}
+            { message && <Alert message={message} type="success" showIcon />}
+           { error && <Alert message={error} type="error" showIcon/> }
           </Col>
         </Row>
       </Modal>

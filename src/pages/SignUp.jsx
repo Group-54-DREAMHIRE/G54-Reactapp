@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { GoogleOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSignUp } from "../store/models/modelsSlice";
+import { registerUser } from "../store/auth/userSlice";
+import { useNavigate } from "react-router-dom";
 import {
   Form,
   Input,
@@ -9,9 +12,9 @@ import {
   Col,
   Typography,
   Radio,
+  Alert,
 } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { closeSignUp } from "../store/models/modelsSlice";
+
 const { Text, Link, Title } = Typography;
 
 const options = [
@@ -20,13 +23,30 @@ const options = [
 ];
 
 const SignUp = () => {
+
+   const navigate = useNavigate();
+  const {loading, error, message} = useSelector((state)=> state.user)
   const dispatch = useDispatch();
   const isOpen = useSelector((state)=> state.models.signUp);
-  const [value, setValue] = useState("candidate");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("candidate");
   const onChange = ({ target: { value } }) => {
-    console.log(value);
-    setValue(value);
+    setUserType(value);
   };
+  const userRegister = async (e) =>{
+    console.log("clicked");
+    let register = {
+        email,
+        password,
+        userType,
+    }
+    dispatch(registerUser(register)).then((result)=>{
+        navigate("/profile")
+    })
+
+
+  }
   return (
     <>
       <Modal
@@ -44,15 +64,19 @@ const SignUp = () => {
               <Radio.Group
                 options={options}
                 onChange={onChange}
-                value={value}
+                value={userType}
                 optionType="button"
                 buttonStyle="solid"
                 style={{ width: "100%", margin: "10px 0 30px" }}
                 className="user-type-w"/>
             </Row>
-            <Form layout="vertical" onFinish onFinishFailed autoComplete="off">
+            <Form layout="vertical"
+             onFinish={userRegister}
+             autoComplete="off">
               <Form.Item label="Email" name="email">
                 <Input
+                  value={email}
+                  onChange={(e)=> setEmail(e.target.value)}
                   style={{
                     padding: "10px 15px 10px",
                     marginBottom: "15px",
@@ -62,6 +86,8 @@ const SignUp = () => {
 
               <Form.Item label="Password" name="password">
                 <Input.Password
+                  value={password}
+                  onChange={(e)=> setPassword(e.target.value)}
                   style={{
                     padding: "10px 15px 10px",
                     marginBottom: "15px",
@@ -75,8 +101,10 @@ const SignUp = () => {
                 wrapperCol={{
                   span: 24,}}>
                 <Button
+                  htmlType="submit"
                   block
                   type="primary"
+                  loading={loading}
                   style={{
                     padding: "10px 0 35px",
                     fontSize: "medium",
@@ -86,17 +114,8 @@ const SignUp = () => {
                 </Button>
               </Form.Item>
             </Form>
-            <Row block>
-              <Button
-                icon={<GoogleOutlined />}
-                style={{
-                  padding: "15px 0 40px",
-                  fontSize: "medium",
-                  fontWeight: "400",}}
-                block>
-                Sign in with Google
-              </Button>
-            </Row>
+            { message && <Alert message={message} type="success" showIcon />}
+           { error && <Alert message={error} type="error" showIcon/> }
           </Col>
         </Row>
       </Modal>
