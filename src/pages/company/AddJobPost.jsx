@@ -273,7 +273,7 @@ function AddJobPost() {
                         borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
-                      options={years}
+                      options={salary}
                     />
                   </Col>
                   <Col span={11}>
@@ -294,7 +294,7 @@ function AddJobPost() {
                         borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
-                      options={years}
+                      options={salary}
                     />
                   </Col>
                 </Row>

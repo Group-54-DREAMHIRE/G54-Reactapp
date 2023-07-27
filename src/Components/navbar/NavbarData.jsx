@@ -1,26 +1,18 @@
 export const navitems = [
     {
-        label: "Home",
-        key: "/"
+        label: "Jobs",
+        key: "1"
     },
     {
-        label: "About",
-        key: "/about"
+        label: "Company",
+        key: "3"
     }, 
     {
-        label: "FAQ's",
-        key: "/faq"
+        label: "Candidates",
+        key: "4"
     }, 
     {
-        label: "Blog",
-        key: "/blog",
+        label: "Events",
+        key: "5",
     }, 
-    {
-        label: "Contact Us",
-        key: "/contact"
-    },
-    {
-        label: "More",
-        key: "/more"
-    }
 ]

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from 'framer-motion';
+import ApplyJob from "./candidate/ApplyJob";
 import { pageanimation } from '../assets/animations/pageanimation';
 import { EditOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
+
 import ImgCrop from "antd-img-crop";
-import { useSelector } from "react-redux";
-
-
-
 import {
   Row,
   Col,
@@ -20,7 +19,8 @@ import {
   DatePicker,
   Button,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+import { closeApplyJob, openApplyJob } from "../store/models/modelsSlice";
+
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -108,9 +108,10 @@ const ages = [
 
 const Profile =()=>{
 
+  const user = useSelector((state)=>state.user.user);
   const [company, setCompany] = useState(true);
-  const navigate = useNavigate();
   const [name, setName] = useState("Dulanjana Weeasinghe");
+  const [title, setTitle] = useState("Software Engineer");
   const [languages, setLanguages] = useState([]);
   const [birthday, setBirthday] = useState(null);
   const [website, setWebsite] = useState("www.dstyles.com");
@@ -154,6 +155,8 @@ const Profile =()=>{
       </div>
     </div>
   );
+
+  const dispatch = useDispatch();
   return(
 
   
@@ -163,6 +166,11 @@ const Profile =()=>{
           animate="visible"
           exit="exit"
           transition={{duration:1}}>
+            <Button 
+            onClick={()=> dispatch(openApplyJob())} 
+            type="primary">Apply</Button>
+
+            
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -207,6 +215,24 @@ const Profile =()=>{
                             suffix={<EditOutlined />}
                           />
                         </Col>
+                        {!company && <Col span={11}>
+                          <Title level={4} style={{ marginBottom: "0" }}>
+                          Professional title:
+                          </Title>
+                          <Input
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            style={{
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              marginTop: "10px",
+                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                              borderRadius: "0",
+                              fontSize: "large",
+                            }}
+                            suffix={<EditOutlined />}
+                          />
+                        </Col>}
   
                         {!company &&<Col span={11}>
                           <Title level={4} style={{}}>
@@ -233,6 +259,7 @@ const Profile =()=>{
                             Birthday:
                           </Title>
                           <DatePicker 
+                          style={{boxShadow: "0 0 10px 0 rgba(30,136,229,.3)", height: '40px'}}
                           onChange={(date, dateString)=> setBirthday(date)}/>
                         </Col>}
                         {company && <Col span={11}>
@@ -371,6 +398,7 @@ const Profile =()=>{
             </Row>
           </Col>
         </Row>
+        <ApplyJob/>
         </motion.div>
       </>
     )

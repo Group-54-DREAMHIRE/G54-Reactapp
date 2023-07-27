@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { userLogin } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { closeSignIn } from "../store/models/modelsSlice";
 
 import { GoogleOutlined } from "@ant-design/icons";
 import {
@@ -11,41 +13,41 @@ import {
   Row,
   Col,
   Typography,
+  Alert,
 } from "antd";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../store/userSlice";
-import { useNavigate } from "react-router-dom";
-
+import { loginUser } from "../store/auth/userSlice";
 const { Text, Link, Title } = Typography;
 
-const SignIn = ({ signIn, cancelSignIn }) => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const {loading, error, message} = useSelector((state)=> state.user)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const isOpen = useSelector((state)=> state.models.signIn);
   const submitHandler = async (e) => {
     let userCredentials = {
       email,
       password,
     };
-    // const response = await  userLogin(userCredentials);
-    // if (response.status == 200) {
-    //   dispatch(setCredentials(response.data.user.email));
-    //   // console.log(response.data.user.email);
-      
-    //   navigate("/profile");
-    // }
-    navigate("/home");
+    dispatch(loginUser(userCredentials)).then((result)=> {
+      if(result.payload){
+        setEmail('');
+        setPassword('');
+        navigate("/home");
+      }
+    })
+   
   };
 
   return (
     <>
       <Modal
         style={{ top: "4vh" }}
-        open={signIn}
-        onCancel={cancelSignIn}
+        open={isOpen}
+        onCancel={()=>dispatch(closeSignIn())}
         footer={[]}
       >
         <Row block style={{ padding: "30px" }}>
@@ -102,6 +104,7 @@ const SignIn = ({ signIn, cancelSignIn }) => {
                 }}
               >
                 <Button
+                loading={loading}
                   block
                   type="primary"
                   htmlType="submit"
@@ -116,19 +119,8 @@ const SignIn = ({ signIn, cancelSignIn }) => {
                 </Button>
               </Form.Item>
             </Form>
-            <Row block>
-              <Button
-                icon={<GoogleOutlined />}
-                style={{
-                  padding: "15px 0 40px",
-                  fontSize: "medium",
-                  fontWeight: "400",
-                }}
-                block
-              >
-                Sign in with Google
-              </Button>
-            </Row>
+            { message && <Alert message={message} type="success" showIcon />}
+           { error && <Alert message={error} type="error" showIcon/> }
           </Col>
         </Row>
       </Modal>
