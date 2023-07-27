@@ -5,6 +5,8 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DefaultMainLayout from "./layouts/DefaultMainLayout";
 import AddJobPost  from "./pages/company/AddJobPost";
+import SavedJobs from "./pages/SavedJobs";
+import CompanyAvertisementList from "./pages/CompanyAdvertisementList";
 import ChangePassword from "./pages/ChangePassword";
 
 
@@ -32,6 +34,8 @@ function App() {
             <Route path="/comments" />
             <Route path="/appearence" />
             <Route path="/settings" />
+            <Route path="/savedjobs" element={<SavedJobs/>} />
+            <Route path="/companyAdvertisementList" element={<CompanyAvertisementList/>} />
             <Route path="/changepassword" element={<ChangePassword/>}/>
           </Route>
          </Routes>   
