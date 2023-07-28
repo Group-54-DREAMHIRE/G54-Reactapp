@@ -240,7 +240,7 @@ function AddJobPost() {
                           defaultValue={"USD$"}
                           allowClear
                           value={currency}
-                          onChange={(e)=>setCurrency(e.target.value)}
+                          onChange={(value)=>setCurrency(value)}
                           // mode="tags"
                           style={{
                             width: "100%",
@@ -263,7 +263,7 @@ function AddJobPost() {
                       defaultValue={"500"}
                       allowClear
                       value={minsalary}
-                      onChange={(e)=>setMinSalary(e.target.value)}
+                      onChange={(value)=>setMinSalary(value)}
                       // mode="tags"
                       style={{
                         width: "100%",
@@ -282,7 +282,7 @@ function AddJobPost() {
                     </Title>
                     <Select
                      value={maxSalary}
-                     onChange={(e)=>setMaxSalary(e.target.value)}
+                     onChange={(value)=>setMaxSalary(value)}
                       defaultValue={"600"}
                       allowClear
                       // mode="tags"

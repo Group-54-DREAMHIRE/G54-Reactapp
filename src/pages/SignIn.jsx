@@ -29,8 +29,8 @@ const SignIn = () => {
   const isOpen = useSelector((state)=> state.models.signIn);
   const submitHandler = async (e) => {
     let userCredentials = {
-      email,
-      password,
+      email: email,
+      password: password,
     };
     dispatch(loginUser(userCredentials)).then((result)=> {
       if(result.payload){

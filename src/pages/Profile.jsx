@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import ApplyJob from "./candidate/ApplyJob";
-import { pageanimation } from '../assets/animations/pageanimation';
+import { pageanimation } from "../assets/animations/pageanimation";
 import { EditOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
-
+import { getUser } from '../store/auth/userSlice';
 import ImgCrop from "antd-img-crop";
 import {
   Row,
@@ -20,9 +20,61 @@ import {
   Button,
 } from "antd";
 import { closeApplyJob, openApplyJob } from "../store/models/modelsSlice";
-
 const { TextArea } = Input;
 const { Title } = Typography;
+const currencies = [
+  {
+    value: "USD",
+    label: "USD$",
+  },
+  {
+    value: "EURO",
+    label: "EURO€",
+  },
+  {
+    value: "AUD",
+    label: "AUD$",
+  },
+  {
+    value: "GPB",
+    label: "GBP£",
+  },
+];
+
+const salary = [
+  {
+    value: "300",
+    label: "300",
+  },
+  {
+    value: "400",
+    label: "400",
+  },
+  {
+    value: "500",
+    label: "500",
+  },
+  {
+    value: "600",
+    label: "600",
+  },
+  {
+    value: "700",
+    label: "700",
+  },
+  {
+    value: "800",
+    label: "800",
+  },
+  {
+    value: "900",
+    label: "900",
+  },
+  {
+    value: "1000",
+    label: "1000",
+  },
+];
 
 const languages = [
   {
@@ -106,22 +158,27 @@ const ages = [
   },
 ];
 
-const Profile =()=>{
+const Profile = () => {
+  const [company, setCompany] = useState(false);
+  const dispatch = useDispatch();
+   const user = useSelector(getUser);
+  // console.log(user);
 
-  const user = useSelector((state)=>state.user.user);
-  const [company, setCompany] = useState(true);
   const [name, setName] = useState("Dulanjana Weeasinghe");
   const [title, setTitle] = useState("Software Engineer");
   const [languages, setLanguages] = useState([]);
   const [birthday, setBirthday] = useState(null);
+  const [currency, setCuurency] = useState("USD$");
+  const [minSalary, setMinSalary] = useState("500");
+  const [maxSalary, setMaxSalary] = useState("600");
   const [website, setWebsite] = useState("www.dstyles.com");
   const [description, setDiscription] = useState("");
   const [phone, setPhone] = useState("071 290 50 22");
-  const [email, setEmail] = useState("dpsweerasinghe98@gmail.com");
+  const [email, setEmail] = useState("");
   const [city, setCity] = useState("Matara");
   const [address, setAddress] = useState("Galhena, Bathigama, Dickwella.");
   const [country, setCountry] = useState("SriLanka");
-  
+
   const [fileList, setFileList] = useState([
     {
       //   uid: '-1',
@@ -156,21 +213,19 @@ const Profile =()=>{
     </div>
   );
 
-  const dispatch = useDispatch();
-  return(
+  return (
+    <>
+      <motion.div
+        variants={pageanimation}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ duration: 0.5 }}
+      >
+        <Button onClick={() => dispatch(openApplyJob())} type="primary">
+          Apply
+        </Button>
 
-  
-      <>
-      <motion.div variants={pageanimation}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{duration:1}}>
-            <Button 
-            onClick={()=> dispatch(openApplyJob())} 
-            type="primary">Apply</Button>
-
-            
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -186,7 +241,7 @@ const Profile =()=>{
                 </Upload>
               </ImgCrop>
             </Row>
-  
+
             <Row justify="center">
               <Col span={23}>
                 <Form layout="vertical">
@@ -215,78 +270,157 @@ const Profile =()=>{
                             suffix={<EditOutlined />}
                           />
                         </Col>
-                        {!company && <Col span={11}>
-                          <Title level={4} style={{ marginBottom: "0" }}>
-                          Professional title:
-                          </Title>
-                          <Input
-                            onChange={(e) => setTitle(e.target.value)}
-                            value={title}
-                            style={{
-                              paddingTop: "5px",
-                              paddingBottom: "5px",
-                              marginTop: "10px",
-                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                              borderRadius: "0",
-                              fontSize: "large",
-                            }}
-                            suffix={<EditOutlined />}
-                          />
-                        </Col>}
-  
-                        {!company &&<Col span={11}>
-                          <Title level={4} style={{}}>
-                            Languages:
-                          </Title>
-                          <Select
-                            onChange={(e) => setLanguages(e.target.value)}
-                            defaultValue={"English"}
-                            mode="tags"
-                            style={{
-                              width: "100%",
-                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                              borderRadius: "0",
-                              fontSize: "medium",
-                              borderRadius: "0 !important",
-                              fontFamily: "arial",
-                            }}
-                            options={languages}
-                          />
-                        </Col>}
-  
-                       { !company && <Col span={11}>
-                          <Title level={4} style={{}}>
-                            Birthday:
-                          </Title>
-                          <DatePicker 
-                          style={{boxShadow: "0 0 10px 0 rgba(30,136,229,.3)", height: '40px'}}
-                          onChange={(date, dateString)=> setBirthday(date)}/>
-                        </Col>}
-                        {company && <Col span={11}>
-                          <Title level={4} style={{ marginBottom: "0" }}>
-                            Website:
-                          </Title>
-                          <Input
-                            onChange={(e) => setWebsite(e.target.value)}
-                            value={website}
-                            style={{
-                              paddingTop: "5px",
-                              paddingBottom: "5px",
-                              marginTop: "10px",
-                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                              borderRadius: "0",
-                              fontSize: "large",
-                            }}
-                            suffix={<EditOutlined />}
-                          />
-                        </Col>}
+                        {!company && (
+                          <Col span={11}>
+                            <Title level={4} style={{ marginBottom: "0" }}>
+                              Professional title:
+                            </Title>
+                            <Input
+                              onChange={(e) => setTitle(e.target.value)}
+                              value={title}
+                              style={{
+                                paddingTop: "5px",
+                                paddingBottom: "5px",
+                                marginTop: "10px",
+                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                borderRadius: "0",
+                                fontSize: "large",
+                              }}
+                              suffix={<EditOutlined />}
+                            />
+                          </Col>
+                        )}
+
+                        {!company && (
+                          <Col span={11}>
+                            <Title level={4} style={{}}>
+                              Languages:
+                            </Title>
+                            <Select
+                              onChange={(e) => setLanguages(e.target.value)}
+                              defaultValue={"English"}
+                              mode="tags"
+                              style={{
+                                width: "100%",
+                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                borderRadius: "0",
+                                fontSize: "medium",
+                                borderRadius: "0 !important",
+                                fontFamily: "arial",
+                              }}
+                              options={languages}
+                            />
+                          </Col>
+                        )}
+
+                        {!company && (
+                          <Col span={11}>
+                            <Title level={4} style={{}}>
+                              Birthday:
+                            </Title>
+                            <DatePicker
+                              style={{
+                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                height: "40px",
+                              }}
+                              onChange={(date, dateString) => setBirthday(date)}
+                            />
+                          </Col>
+                        )}
+
+                        {company && (
+                          <Col span={11}>
+                            <Title level={4} style={{ marginBottom: "0" }}>
+                              Website:
+                            </Title>
+                            <Input
+                              onChange={(e) => setWebsite(e.target.value)}
+                              value={website}
+                              style={{
+                                paddingTop: "5px",
+                                paddingBottom: "5px",
+                                marginTop: "10px",
+                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                borderRadius: "0",
+                                fontSize: "large",
+                              }}
+                              suffix={<EditOutlined />}
+                            />
+                          </Col>
+                        )}
+
+                        <Col span={24}>
+                          {!company && (
+                            <Row justify="space-between">
+                              <Col span={3}>
+                                <Title level={4} style={{}}>
+                                  Currency:
+                                </Title>
+                                <Select
+                                  defaultValue={"USD$"}
+                                  allowClear
+                                  value={currency}
+                                  onChange={(value)=>setCuurency(value)}
+                                  // mode="tags"
+                                  style={{
+                                    width: "100%",
+                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    borderRadius: "0",
+                                    fontSize: "medium",
+                                    borderRadius: "0 !important",
+                                    fontFamily: "arial",
+                                  }}
+                                  options={currencies}
+                                />
+                              </Col>
+                              <Col span={9}>
+                                <Title level={4} style={{}}>
+                                  Minimum Salary:
+                                </Title>
+                                <Select
+                                  allowClear
+                                  value={minSalary}
+                                  onChange={(value)=>setMinSalary(value)}
+                                  // mode="tags"
+                                  style={{
+                                    width: "100%",
+                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    borderRadius: "0",
+                                    fontSize: "medium",
+                                    borderRadius: "0 !important",
+                                    fontFamily: "arial",
+                                  }}
+                                  options={salary}
+                                />
+                              </Col>
+                              <Col span={9}>
+                                <Title level={4} style={{}}>
+                                  Maximum Salary:
+                                </Title>
+                                <Select
+                                value={maxSalary}
+                                onChange={(value)=>setMaxSalary(value)}
+                                  allowClear
+                                  // mode="tags"
+                                  style={{
+                                    width: "100%",
+                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    borderRadius: "0",
+                                    fontSize: "medium",
+                                    borderRadius: "0 !important",
+                                    fontFamily: "arial",
+                                  }}
+                                  options={salary}
+                                />
+                              </Col>
+                            </Row>
+                          )}
+                        </Col>
                       </Row>
                     </Col>
                   </Row>
                   <Row>
-                    <Title level={4}>
-                      Descreption:
-                    </Title>
+                    <Title level={4}>Descreption:</Title>
                     <TextArea
                       onChange={(e) => setDiscription(e.target.value)}
                       value={description}
@@ -335,7 +469,7 @@ const Profile =()=>{
                         suffix={<EditOutlined />}
                       />
                     </Col>
-  
+
                     <Col span={11}>
                       <Title level={4} style={{ marginBottom: "0" }}>
                         City:
@@ -373,35 +507,37 @@ const Profile =()=>{
                       />
                     </Col>
                   </Row>
-                  {company && <Row>
-                    <Col span={11}>
-                      <Title level={4} style={{ marginBottom: "0" }}>
-                        Country:
-                      </Title>
-                      <Input
-                        onChange={(e) => setCountry(e.target.value)}
-                        value={country}
-                        style={{
-                          paddingTop: "5px",
-                          paddingBottom: "5px",
-                          marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                          borderRadius: "0",
-                          fontSize: "large",
-                        }}
-                        suffix={<EditOutlined />}
-                      />
-                    </Col>
-                  </Row>}
+                  {company && (
+                    <Row>
+                      <Col span={11}>
+                        <Title level={4} style={{ marginBottom: "0" }}>
+                          Country:
+                        </Title>
+                        <Input
+                          onChange={(e) => setCountry(e.target.value)}
+                          value={country}
+                          style={{
+                            paddingTop: "5px",
+                            paddingBottom: "5px",
+                            marginTop: "10px",
+                            boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                            borderRadius: "0",
+                            fontSize: "large",
+                          }}
+                          suffix={<EditOutlined />}
+                        />
+                      </Col>
+                    </Row>
+                  )}
                 </Form>
               </Col>
             </Row>
           </Col>
         </Row>
-        <ApplyJob/>
-        </motion.div>
-      </>
-    )
-}
+        <ApplyJob />
+      </motion.div>
+    </>
+  );
+};
 
-export default Profile
+export default Profile;

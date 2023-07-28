@@ -33,21 +33,59 @@ import { closeApplyJob } from "../../store/models/modelsSlice";
       label: "GBP£",
     },
   ];
-
-  const handleApply =()=>{
-
-  }
+  const salary = [
+    {
+      value: "300",
+      label: "300",
+    },
+    {
+      value: "400",
+      label: "400",
+    },
+    {
+      value: "500",
+      label: "500",
+    },
+    {
+      value: "600",
+      label: "600",
+    },
+    {
+      value: "700",
+      label: "700",
+    },
+    {
+      value: "800",
+      label: "800",
+    },
+    {
+      value: "900",
+      label: "900",
+    },
+    {
+      value: "1000",
+      label: "1000",
+    },
+  ];
   
+  
+  
+ 
 export default function ApplyJob() {
+  const isOpen = useSelector((state)=> state.models.applyJob);
+  const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [city, setCity] = useState("");
     const [currency, setCurrency] = useState("USD$");
-    const [salary, setSalary] = useState("600")
+    const [exsalary, setExSalary] = useState("600")
     const [tags, setTags] = useState([]);
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const dispatch = useDispatch();
-    const isOpen = useSelector((state)=> state.models.applyJob);
+    
+    const handleApply =()=>{
+      dispatch(closeApplyJob());
+    }
+    
   return (
     <>
       <Modal
@@ -95,15 +133,13 @@ export default function ApplyJob() {
                         <Select
                           value={currency}
                           onChange={(value)=>setCurrency(value)}
-                          defaultValue={"USD$"}
                           style={{
                             width: "100%",
                             boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
                             borderRadius: "0",
                             fontSize: "medium",
                             borderRadius: "0 !important",
-                            fontFamily: "arial",
-                            
+                            fontFamily: "arial", 
                           }}
                           options={currencies}
                         />
@@ -112,20 +148,20 @@ export default function ApplyJob() {
                     <Title level={5} style={{textAlign: 'right'}}>
                       Expect Salary
                     </Title>
-                    <Select
-                    value={salary}
-                    onChange={(e)=>setSalary(e.target.value)}
-                     suffix={currency}
+                    <Select          
+                      allowClear
+                      value={exsalary}
+                      onChange={(values)=>setExSalary(values)}
+                      options={salary}
                       // mode="tags"
                       style={{
                         width: "100%",
                         boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
                         borderRadius: "0",
                         fontSize: "medium",
+                        borderRadius: "0 !important",
                         fontFamily: "arial",
-                       
-                      }}
-                      
+                      }}   
                     />
                   </Col>
                   <Col span={24}>
@@ -141,8 +177,7 @@ export default function ApplyJob() {
                         boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
                         borderRadius: '0'
                       }}
-                      placeholder="Select Tags"
-                      
+                      placeholder="Select Tags"                    
                     />
                   </Col>
                   <Col span={24}>
