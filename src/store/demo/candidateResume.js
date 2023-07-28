@@ -5,7 +5,7 @@ export const items = [
       name: "Dulanajna Weerasighe",
       title: "UI/UX Designer",
       company: "Cloud Solution",
-      address: "Matara, Dickwella.",
+      address: "Matara, Dickwella",
       salary: "$2500",
       image: dula,
       tags: [
@@ -32,7 +32,7 @@ export const items = [
       name: "Dulanajna Weerasighe",
       title: "UI/UX Designer",
       company: "Cloud Solution",
-      address: "Matara, Dickwella.",
+      address: "Matara, Dickwella",
       salary: "$2500",
       image: dula,
       tags: [
@@ -55,11 +55,11 @@ export const items = [
       ]
     },
     {
-        id: 2,
+        id: 3,
         name: "Dulanajna Weerasighe",
         title: "UI/UX Designer",
         company: "Cloud Solution",
-        address: "Matara, Dickwella.",
+        address: "Matara, Dickwella",
         salary: "$2500",
         image: dula,
         tags: [
@@ -83,11 +83,11 @@ export const items = [
       },
   
       {
-        id: 2,
+        id: 4,
         name: "Dulanajna Weerasighe",
         title: "UI/UX Designer",
         company: "Cloud Solution",
-        address: "Matara, Dickwella.",
+        address: "Matara, Dickwella",
         salary: "$2500",
         image: dula,
         tags: [
@@ -111,11 +111,11 @@ export const items = [
       },
   
       {
-        id: 2,
+        id: 5,
         name: "Dulanajna Weerasighe",
         title: "UI/UX Designer",
         company: "Cloud Solution",
-        address: "Matara, Dickwella.",
+        address: "Matara, Dickwella",
         salary: "$2500",
         image: dula,
         tags: [
@@ -139,11 +139,11 @@ export const items = [
       },
   
       {
-        id: 2,
+        id: 6,
         name: "Dulanajna Weerasighe",
         title: "UI/UX Designer",
         company: "Cloud Solution",
-        address: "Matara, Dickwella.",
+        address: "Matara, Dickwella",
         salary: "$2500",
         image: dula,
         tags: [

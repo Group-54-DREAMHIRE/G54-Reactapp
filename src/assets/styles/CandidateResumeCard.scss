@@ -1,16 +1,21 @@
-.resume-card-w:hover{
+.resume-card-w{
    
     &:hover{
         scale: 1.02;
         border-left: 5px solid rgba(30,136,229,1);
     }
-
+    .view-w{
+        &:hover{
+            scale: 1.08;
+            background-color:rgba(30,136,229,.5) ;
+        }
+    }
     .reject-w{
        
         
         &:hover{
-            background-color:rgba(102, 112, 133, 0.65);
-            color: #667085;
+            background-color:rgba(255,47,47,.5);
+            scale: 1.08;
         }
         
     }
@@ -18,11 +23,20 @@
     .approve-w{
 
         &:hover{
-            background-color:rgba(102, 112, 133, 0.65);
-            color: #667085;
+            background-color:rgba(0,128,0,.5);
+            scale: 1.08;
+        }
+        }
+        
+    }
+    .addtopending-w{
+
+        &:hover{
+            background-color: rgba(250,173,20,.5);     
+            scale: 1.08;
         }
         
     }
     
-}
+
 

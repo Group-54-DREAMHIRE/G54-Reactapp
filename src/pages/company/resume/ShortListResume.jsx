@@ -6,6 +6,7 @@ export default function ShortListResume() {
     let status = {
         reject: false,
         approve: false,
+        pending: true,
     }
   return (
     <>

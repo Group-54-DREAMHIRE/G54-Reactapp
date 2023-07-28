@@ -18,12 +18,12 @@ export default function CandidatResumes() {
       <Title level={2}>RESUME</Title>
       <Divider style={{ margin: "0" }} />
     </Row>
-     <Tabs
+    <Tabs
     onChange={onChange}
     type="card"
-    items={[{label: "Pending", key: "/pending"},
+    items={[{label: "Pending List", key: "/pending"},
     {label: "Short List", key: "/shortlist"},
-    {label: "Reject", key: "/reject"}]}
+    {label: "Rejected List", key: "/reject"}]}
     />
     <Outlet/>
     </>

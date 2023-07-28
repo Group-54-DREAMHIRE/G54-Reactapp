@@ -6,6 +6,7 @@ export default function RejectResume() {
     let status = {
         reject: false,
         approve: true,
+        pending: true,
     }
   return (
     <>

@@ -1,4 +1,5 @@
 import { FaMapMarkerAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { IoMdAddCircle } from "react-icons/io";
 import {
   ExclamationCircleFilled,
   CloseCircleFilled,
@@ -10,12 +11,25 @@ const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 export default function CandidateResumeCard({ items, status }) {
+  const showPendingConfirm = () => {
+    confirm({
+      title: 'Are you sure?',
+      icon: <ExclamationCircleFilled />,
+      content: '',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
   
   const showApproveConfirm = () => {
     confirm({
       title: 'Are you sure?',
       icon: <ExclamationCircleFilled />,
-      content: 'Some descriptions',
+      content: '',
       onOk() {
         console.log('OK');
       },
@@ -28,7 +42,7 @@ export default function CandidateResumeCard({ items, status }) {
     confirm({
       title: 'Are you sure reject this resume?',
       icon: <ExclamationCircleFilled />,
-      content: 'Some descriptions',
+      content: '',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -88,7 +102,8 @@ export default function CandidateResumeCard({ items, status }) {
             return (
               <Button
                 style={{
-                  backgroundColor: "rgba(30,136,229,.19)",
+                  backgroundColor: "rgba(30,136,229,.25)",
+                  fontWeight: '600',
                   color: "rgba(30,136,229,1)",
                   margin: "2px",
                 }}
@@ -100,9 +115,13 @@ export default function CandidateResumeCard({ items, status }) {
           })}
         </Row>
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
-          {/* <Col>
-            <Button style={{ backgroundColor: "yellow" }}>Pending</Button>
-          </Col> */}
+          <Col>
+            <Button 
+            className="view-w"
+            style={{border: '1px solid rgba(30,136,229,1)',
+                            color: 'rgba(30,136,229,1)',
+                            fontWeight: '600'}}> View </Button>
+          </Col>
          {status.approve && <Col>
             <Button
               icon={
@@ -111,21 +130,41 @@ export default function CandidateResumeCard({ items, status }) {
               onClick={showApproveConfirm}
               className="approve-w"
               style={{
-                backgroundColor: "rgba(67, 138, 254, 0.12)",
-                border: "1px solid #2196F3",
+               
+                border: "1px solid green",
+                color: 'green',
+                fontWeight: '600',
               }}
             >
               Approve
             </Button>
           </Col>}
+          {status.pending && <Col>
+            <Button
+              icon={<IoMdAddCircle />}
+              className="addtopending-w"
+              onClick={showPendingConfirm}
+              style={{
+                
+                border: "1px solid rgb(250,173,20)",
+                color: 'rgb(250,173,20)',
+                fontWeight: '600',
+              }}
+            >
+              Add to Pending
+            </Button> 
+          </Col>}
+
          {status.reject && <Col>
             <Button
               icon={<CloseCircleFilled />}
               className="reject-w"
               onClick={showRejectConfirm}
               style={{
-                backgroundColor: "rgba(102, 112, 133, 0.25",
-                border: "1px solid #BBB",
+                
+                border: "1px solid red",
+                color:'red',
+                fontWeight: '600',
               }}
             >
               Reject

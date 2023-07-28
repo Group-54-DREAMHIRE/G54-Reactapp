@@ -6,6 +6,7 @@ export default function PendingResumes() {
   let status = {
     reject: true,
     approve: true,
+    pending: false,
   }
   return (
     <>
