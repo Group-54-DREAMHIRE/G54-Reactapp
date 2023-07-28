@@ -9,18 +9,41 @@ import { Card, Col, Row, Typography, Button, Image, Modal } from "antd";
 const { confirm } = Modal;
 const { Title, Text } = Typography;
 
-export default function CandidateResumeCard({ items }) {
-  const showPromiseConfirm = () => {
+export default function CandidateResumeCard({ items, status }) {
+  
+  const showApproveConfirm = () => {
     confirm({
-      title: "Do you want to reject?",
+      title: 'Are you sure?',
       icon: <ExclamationCircleFilled />,
-      content: "",
+      content: 'Some descriptions',
       onOk() {
-        return new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log("Oops errors!"));
+        console.log('OK');
       },
-      onCancel() {},
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+  const showRejectConfirm = () => {
+    confirm({
+      title: 'Are you sure reject this resume?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        setTimeout(
+          () => {
+            console.log("yhrhy");
+          },
+          500,
+          4000
+        );
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
     });
   };
 
@@ -77,14 +100,15 @@ export default function CandidateResumeCard({ items }) {
           })}
         </Row>
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
-          <Col>
+          {/* <Col>
             <Button style={{ backgroundColor: "yellow" }}>Pending</Button>
-          </Col>
-          <Col>
+          </Col> */}
+         {status.approve && <Col>
             <Button
               icon={
                 <CheckCircleFilled style={{ width: "100%", height: "100%" }} />
               }
+              onClick={showApproveConfirm}
               className="approve-w"
               style={{
                 backgroundColor: "rgba(67, 138, 254, 0.12)",
@@ -93,20 +117,20 @@ export default function CandidateResumeCard({ items }) {
             >
               Approve
             </Button>
-          </Col>
-          <Col>
+          </Col>}
+         {status.reject && <Col>
             <Button
               icon={<CloseCircleFilled />}
               className="reject-w"
-              onClick={showPromiseConfirm}
+              onClick={showRejectConfirm}
               style={{
                 backgroundColor: "rgba(102, 112, 133, 0.25",
                 border: "1px solid #BBB",
               }}
             >
               Reject
-            </Button>
-          </Col>
+            </Button> 
+          </Col>}
         </Row>
       </Card>
     </>

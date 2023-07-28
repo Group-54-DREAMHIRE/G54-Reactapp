@@ -8,7 +8,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
-import { sidebarItem } from '../../store/demo/sidebarItems';
+import {sidebarItems} from '../../store/demo/sidebarItems';
 const Sidebar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const Sidebar = () => {
                                        }}      
                                 mode="inline"
                                 inlineCollapsed={collapsed}
-                                items={sidebarItem}
+                                items={sidebarItems}
                                 onClick={onClick} />
                         </Col>
                     </Row>
