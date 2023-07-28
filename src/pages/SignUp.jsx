@@ -37,11 +37,12 @@ const SignUp = () => {
   const userRegister = async (e) =>{
     console.log("clicked");
     let register = {
-        email,
-        password,
-        userType,
+        email: email,
+        password: password,
+        userType: userType,
     }
     dispatch(registerUser(register)).then((result)=>{
+      console.log(result);
         navigate("/profile")
     })
 

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 
 
 export const getToken = () => {
@@ -11,8 +13,15 @@ export const userRegister = (authRequest) => {
 
 export const userLogin = (authRequest) => {
   return axios.post("api/v1/auth/login", authRequest);
-  }
+  };
 
+export const userChangePassword = (change) =>{
+  return axios.put("api/v1/systemUser/changePassword", change, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+  });
+};
 
 export const fetchUserData = (authRequest) => {
   if (authRequest.method === "post") {

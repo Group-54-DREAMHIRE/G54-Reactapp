@@ -3,7 +3,6 @@ import { UserOutlined, BellFilled, DownOutlined } from "@ant-design/icons";
 import { BsFillChatTextFill } from "react-icons/bs";
 import {
   Row,
-  ConfigProvider,
   Col,
   Avatar,
   Menu,
@@ -11,15 +10,9 @@ import {
   Button,
   Space,
   Dropdown,
-  Spin,
 } from "antd";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import SignIn from "../../pages/SignIn";
-import SignUp from "../../pages/SignUp";
-
-
-
 
 const items = [
   {
@@ -63,10 +56,6 @@ const Navbar = () => {
             borderRadius: "45px",
             backgroundColor: "white",
             boxShadow: '0 0 10px 0 rgba(30,136,229,.2)',
-          
-            // boxShadow:
-            //   "0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)",
-          
             }}
         >
           <Row justify="space-between" align="middle">

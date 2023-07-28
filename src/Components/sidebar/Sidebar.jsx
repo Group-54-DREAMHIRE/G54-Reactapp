@@ -1,68 +1,27 @@
-import { Button, Menu, Row, Col, Switch,ConfigProvider } from 'antd';
+import { Button, Menu, Row, Col,ConfigProvider } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    DashboardFilled,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    MessageFilled,
-    SettingFilled,
-    SketchSquareFilled,
-    LockFilled,
-    PushpinFilled,
-    CrownFilled,
 } from '@ant-design/icons';
 
-
-const items = [
-    {
-        label: 'Dashboard',
-        key: '/dashboard',
-        icon: <DashboardFilled />,
-    },
-    {
-        label: 'Posts',
-        key: '/posts',
-        icon: <PushpinFilled />,
-    }, {
-        label: 'Media',
-        key: '/media',
-        icon: <CrownFilled />,
-    },
-    {
-        label: 'Comments',
-        key: '/comments',
-        icon: <MessageFilled />,
-    },
-    {
-        label: 'Appearance',
-        key: '/appearence',
-        icon: <SketchSquareFilled />,
-    },
-    {
-        label: 'Settings',
-        key: '/settings',
-        icon: <SettingFilled />,
-        children: [
-            {
-                label: 'ChangePassword',
-                key: '/changepassword',
-                icon: <LockFilled />,
-            },
-
-        ]
-    }
-];
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/auth/userSlice';
+import { sidebarItem } from '../../store/demo/sidebarItems';
 const Sidebar = () => {
-
-    const [theme, setTheme] = useState('light');
-
-    const changeTheme = (value) => {
-        setTheme(value ? 'dark' : 'light');
-
-    };
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+   
     const onClick = ({ key }) => {
+        if(key=="logout"){
+            dispatch(logout());
+            localStorage.clear();
+            navigate("/");
+            window.location.reload();
+            console.log("Log out Succesfully!")
+
+        }
         navigate(key);
     };
 
@@ -120,11 +79,9 @@ const Sidebar = () => {
                                 style={{width: '100%',
                                         height: '100%',backgroundColor: 'white',
                                        }}      
-                                defaultSelectedKeys={['1']}
-                                defaultOpenKeys={['sub1']}
                                 mode="inline"
                                 inlineCollapsed={collapsed}
-                                items={items}
+                                items={sidebarItem}
                                 onClick={onClick} />
                         </Col>
                     </Row>
