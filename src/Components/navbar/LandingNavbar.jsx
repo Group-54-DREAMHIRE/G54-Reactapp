@@ -9,6 +9,7 @@ import { Link } from "react-scroll";
 import { Row, Col, Button } from "antd";
 import { useDispatch } from "react-redux";
 import {  openSignIn, openSignUp } from "../../store/models/modelsSlice";
+import { useNavigate } from "react-router-dom";
 
 const navitems = [
   {
@@ -20,7 +21,7 @@ const navitems = [
     key: "2about",
   },
   {
-    label: "Blog",
+    label: "Jobs",
     key: "3blog",
   },
   {
@@ -35,6 +36,7 @@ const navitems = [
 
 const LandingNavbar = () => {
   const dispatch = useDispatch();
+  const navigete = useNavigate();
   return (
     <>
       <Row
@@ -96,12 +98,12 @@ const LandingNavbar = () => {
                 <Col span={6}>
                   <Row align="middle" gutter={20}>
                     <Col>
-                      <Button type="primary" shape="round"  onClick={()=>dispatch(openSignIn())}>
+                      <Button  shape="round" style={{border: '0', backgroundColor: '#F2FAFA'}} onClick={()=> navigete("/login")}>
                         Sign In
                       </Button>
                     </Col>
                     <Col>
-                      <Button type="primary" shape="round" onClick={()=>dispatch(openSignUp())}>
+                      <Button  shape="round" style={{border: '1px solid black', backgroundColor: '#F2FAFA'}} onClick={()=>dispatch(openSignUp())}>
                         Sign up
                       </Button>
                     </Col>

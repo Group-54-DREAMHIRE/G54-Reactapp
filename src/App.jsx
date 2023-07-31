@@ -1,10 +1,12 @@
+import { BrowserRouter } from "react-router-dom";
 import "./assets/styles/main.scss";
-import Routes from './routes/MainRoutes';
+import Routes from "./routes/MainRoutes";
 function App() {
-
   return (
     <>
-      <Routes/>
+       <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </>
   );
 }

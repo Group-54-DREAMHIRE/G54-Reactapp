@@ -19,7 +19,7 @@ import {
   DatePicker,
   Button,
 } from "antd";
-import { closeApplyJob, openApplyJob } from "../store/models/modelsSlice";
+import { openApplyJob } from "../store/models/modelsSlice";
 const { TextArea } = Input;
 const { Title } = Typography;
 const currencies = [
@@ -159,10 +159,11 @@ const ages = [
 ];
 
 const Profile = () => {
-  const [company, setCompany] = useState(false);
+  const userType = "company";
+  const [company, setCompany] = useState(userType === "company"?true:false);
   const dispatch = useDispatch();
    const user = useSelector(getUser);
-  // console.log(user);
+   
 
   const [name, setName] = useState("Dulanjana Weeasinghe");
   const [title, setTitle] = useState("Software Engineer");
@@ -529,6 +530,11 @@ const Profile = () => {
                       </Col>
                     </Row>
                   )}
+                  <Row style={{marginTop: '25px'}}>
+                    <Col>
+                        <Button htmlType="submit" type="primary" size="large">Save</Button>
+                    </Col>
+                  </Row>
                 </Form>
               </Col>
             </Row>

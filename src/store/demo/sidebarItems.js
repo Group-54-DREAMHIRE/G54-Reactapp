@@ -24,7 +24,13 @@ export const sidebarItems = [
         label: 'Profile',
         key: '/profile',
         icon: <PushpinFilled />,
-    }, {
+    },
+    {
+        label: 'Resume',
+        key: '/resume',
+        icon: <PushpinFilled />,
+    },
+     {
         label: 'Add Job Post',
         key: '/addjobpost',
         icon: <CrownFilled />,
