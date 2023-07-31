@@ -1,10 +1,8 @@
-import 'antd/dist/reset.css';
-import "../assets/styles/Tables.scss";
 import { Table, Typography, Button, Row, Col, Divider, Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { pageanimation } from '../assets/animations/pageanimation';
+import { pageanimation } from '../../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;

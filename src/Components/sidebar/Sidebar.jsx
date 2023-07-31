@@ -8,18 +8,19 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
-import { sidebarItems } from '../../store/demo/sidebarItems';
+import  sidebarItems from '../../store/demo/sidebarItems';
 const Sidebar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
    
     const onClick = ({ key }) => {
-        if(key=="logout"){
+        if(key === "logout"){
             dispatch(logout());
             localStorage.clear();
             navigate("/");
             window.location.reload();
-            console.log("Log out Succesfully!")
+            console.log("Log out Succesfully!");
+           
 
         }
         navigate(key);
@@ -83,6 +84,7 @@ const Sidebar = () => {
                                 inlineCollapsed={collapsed}
                                 items={sidebarItems}
                                 onClick={onClick} />
+                                
                         </Col>
                     </Row>
                 </Col>

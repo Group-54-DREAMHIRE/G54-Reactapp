@@ -1,45 +1,33 @@
 import { Routes, Route } from "react-router-dom";
 
-import RootLayout from "../layouts/RootLayout";
-import Profile from "../pages/Profile";
+import CandidateRoutes from "./CandidateRoutes";
+import CompanyRoutes from "./CompanyRoutes";
+import AdminRoutes from "./AdminRoutes";
 import DefaultMainLayout from "../layouts/DefaultMainLayout";
-import AddJobPost  from "../pages/company/AddJobPost";
-import ChangePassword from "../pages/ChangePassword";
-import CandidatResumes from "../pages/company/CandidatResumes";
-import PendingResume from '../pages/company/resume/PendingResume';
-import RejectResume from "../pages/company/resume/RejectResume";
-import ShortListResume from "../pages/company/resume/ShortListResume";
-import Resume from "../pages/candidate/Resume";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 
-
 export default function MainRoutes() {
+  const userType = "admin";
 
+  if (userType == "candidate") {
+    return <CandidateRoutes />;
+  }
 
-   
-      return(
-        <>
-        <Routes>
-        <Route path="/" index  element={<DefaultMainLayout />}/>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<SignUp/>} />
-        { <Route element={<RootLayout/>}  >
-           <Route path="/addjobpost" index element={<AddJobPost/>} />
-           <Route path="/dashboard" />
-           <Route path="/profile" element={ <Profile/>}/>
-           <Route element={<CandidatResumes/>}>
-             <Route path="/pending" element={<PendingResume/>} />
-             <Route path="/reject" element={<RejectResume/>}/>
-             <Route path="/shortlist" element={<ShortListResume/>}/>
-           </Route>
-           
-           <Route path="/resume" element={<Resume/>} />
-           <Route path="/changepassword" element={<ChangePassword/>}/>
-         </Route>}
-        </Routes>  
-        <Routes >
-         </Routes> 
-     </>
-      )  
+  if (userType == "company") {
+    return <CompanyRoutes />;
+  }
+
+  if (userType == "admin") {
+    return <AdminRoutes />;
+  }
+  else {
+    return (
+      <Routes>
+        <Route path="/" index element={<DefaultMainLayout />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    );
+  }
 }

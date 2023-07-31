@@ -159,7 +159,7 @@ const ages = [
 ];
 
 const Profile = () => {
-  const userType = "company";
+  const userType = "campany";
   const [company, setCompany] = useState(userType === "company"?true:false);
   const dispatch = useDispatch();
    const user = useSelector(getUser);
@@ -247,12 +247,12 @@ const Profile = () => {
               <Col span={23}>
                 <Form layout="vertical">
                   <Row justify="start">
-                    <Title level={2}>Basic Information</Title>
+                    <Title level={2} style={{margin: '30px 0'}}>Basic Information</Title>
                     <Divider style={{ margin: "0" }} />
                   </Row>
-                  <Row>
+                  <Row >
                     <Col span={24}>
-                      <Row justify="space-between">
+                      <Row justify="space-between" gutter={[0,35]}>
                         <Col span={11}>
                           <Title level={4} style={{ marginBottom: "0" }}>
                             Your Name:
@@ -263,7 +263,7 @@ const Profile = () => {
                             style={{
                               paddingTop: "5px",
                               paddingBottom: "5px",
-                              marginTop: "10px",
+                              marginTop: "15px",
                               boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
                               borderRadius: "0",
                               fontSize: "large",
@@ -420,7 +420,7 @@ const Profile = () => {
                       </Row>
                     </Col>
                   </Row>
-                  <Row>
+                  <Row style={{marginTop: '30px', marginBottom: '30px'}}>
                     <Title level={4}>Descreption:</Title>
                     <TextArea
                       onChange={(e) => setDiscription(e.target.value)}
@@ -433,7 +433,7 @@ const Profile = () => {
                     <Title level={2}>Contact Information</Title>
                     <Divider style={{ margin: "0" }} />
                   </Row>
-                  <Row justify="space-between">
+                  <Row justify="space-between" gutter={[0,35]}>
                     <Col span={11}>
                       <Title level={4} style={{ marginBottom: "0" }}>
                         Phone:

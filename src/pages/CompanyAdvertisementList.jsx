@@ -1,5 +1,3 @@
-import 'antd/dist/reset.css';
-import "../assets/styles/Tables.scss";
 import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
