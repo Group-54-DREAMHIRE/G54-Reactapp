@@ -1,6 +1,3 @@
-import SignIn from "../../pages/SignIn";
-import SignUp from "../../pages/SignUp";
-
 import logo from "../../assets/images/logo.png";
 
 import React, { useState } from "react";
@@ -8,7 +5,6 @@ import { Link } from "react-scroll";
 
 import { Row, Col, Button } from "antd";
 import { useDispatch } from "react-redux";
-import {  openSignIn, openSignUp } from "../../store/models/modelsSlice";
 import { useNavigate } from "react-router-dom";
 
 const navitems = [
@@ -98,12 +94,12 @@ const LandingNavbar = () => {
                 <Col span={6}>
                   <Row align="middle" gutter={20}>
                     <Col>
-                      <Button  shape="round" style={{border: '0', backgroundColor: '#F2FAFA'}} onClick={()=> navigete("/login")}>
+                      <Button  shape="round" className="signIn-w" onClick={()=> navigete("/login")}>
                         Sign In
                       </Button>
                     </Col>
                     <Col>
-                      <Button  shape="round" style={{border: '1px solid black', backgroundColor: '#F2FAFA'}} onClick={()=>dispatch(openSignUp())}>
+                      <Button  shape="round" className="signUp-w" onClick={()=> navigete("/signup")}>
                         Sign up
                       </Button>
                     </Col>
@@ -122,8 +118,6 @@ const LandingNavbar = () => {
           </Row>
         </Col>
       </Row>
-      <SignIn/>
-      <SignUp/>
     </>
   );
 };

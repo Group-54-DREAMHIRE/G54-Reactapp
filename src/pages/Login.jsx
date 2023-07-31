@@ -110,6 +110,7 @@ export default function Login() {
                         loading={loading}
                         type="primary"
                         htmlType="submit"
+                        block
                         style={{
                           padding: "5px 0 30px",
                           fontSize: "medium",
@@ -121,7 +122,7 @@ export default function Login() {
                       </Button>
                     </Form.Item>
                   </Form>
-                  <Button>Back to Home</Button>
+                  <Button onClick={()=>navigate("/")}>Back to Home</Button>
                   {message && (
                     <Alert message={message} type="success" showIcon />
                   )}
