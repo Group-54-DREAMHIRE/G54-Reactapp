@@ -1,101 +1,89 @@
 import 'antd/dist/reset.css';
 import "../assets/styles/Tables.scss";
-import { Table, Typography, Button, Row, Col, Divider, Input } from 'antd';
+import "../assets/styles/variables.scss";
+
+import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag } from 'antd';
 import { useState, useEffect } from 'react';
-import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined, ForwardOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
-function SavedJobs() {
+function CompanyList() {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const columns = [
         {
-            title: 'Job Position',
-            dataIndex: 'jobPosition',
+            title: 'Company Name',
+            dataIndex: 'companyName',
             key: 'key',
-            render: (text) => <b>{text}</b>
         },
         {
-            title: 'Company',
-            dataIndex: 'company',
+            title: 'View Profile',
             key: 'key',
-            render: (text) => <a>{text}</a>
-        },
-        {
-            title: 'Date',
-            dataIndex: 'date',
-            key: 'key'
-        },
-        {
-            key: 'key',
-            title: 'Action',
             render: () => {
                 return (
                     <>
-                        <CheckCircleOutlined
-                            style={{
-                                backgroundColor: "rgba(30,136,229,.5)",
-                                color: "white",
-                                padding: "5px",
-                                borderRadius: "5px"
-                            }} />
-
-                        <DeleteOutlined
-                            style={{
-                                backgroundColor: "red",
-                                color: "white",
-                                marginLeft: 12,
-                                padding: "5px",
-                                borderRadius: "5px"
-                            }}
-                        />
+                        <Button type="primary">View</Button>
                     </>
                 )
             }
-        }];
+        },
+        {
+            title: 'Website',
+            key: 'key',
+            render: () => {
+                return (
+                    <>
+                        <Button type="primary">Visit</Button>
+                    </>
+                )
+            }
+        },
+        {
+            title: 'Advertisements',
+            key: 'key',
+            render: () => {
+                return (
+                    <>
+                        <ForwardOutlined 
+                            style={{
+                                backgroundColor: 'rgba(25,103,210,255)',
+                                color: 'white',
+                                marginLeft: 12,
+                                padding: "5px",
+                                borderRadius: "5px"
+                            }} />
+                    </>
+                )
+            }
+        }
+        ];
 
     const [dataSource, setDataSource] = useState([
+
         {
             key: '1',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            companyName: 'Virtusa',
+
         },
         {
             key: '2',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            companyName: 'Creative Software',
         },
         {
             key: '3',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            companyName: '99x',
         },
         {
             key: '4',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            companyName: 'LSEG',
         },
 
-    ]);
 
-    const onAddJobs = () => {
-        const newJob = {
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2023'
-        }
-        setDataSource(pre => {
-            return [...pre, newJob]
-        })
-    }
+    ]);
 
     return (
         <>
@@ -108,7 +96,7 @@ function SavedJobs() {
                     <Row style={{
                         marginTop: "10px",
                     }}>
-                        <Col span={6} style={{
+                        <Col span={12} style={{
                             display: 'flex',
                             justifyContent: 'left',
                             alignItems: 'center',
@@ -117,23 +105,18 @@ function SavedJobs() {
                                 fontSize: '25px',
                                 fontWeight: 600,
                             }}>
-                                SAVED JOBS
+                                Company List
                             </Title>
                         </Col>
-                        <Col span={6} offset={6} style={{
+                        <Col span={6}>
+                        </Col>
+
+                        <Col span={6} style={{
                             display: 'flex',
                             justifyContent: 'right',
                             alignItems: 'center'
                         }}>
                             <Search placeholder="Search company name" enterButton />
-                        </Col>
-
-                        <Col span={6} style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Button type="primary" onClick={onAddJobs} >+ Add Job</Button>
                         </Col>
                     </Row>
                     <Divider />
@@ -165,4 +148,4 @@ function SavedJobs() {
 
 
 
-export default SavedJobs;
+export default CompanyList;

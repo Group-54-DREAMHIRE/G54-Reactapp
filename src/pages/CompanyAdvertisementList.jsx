@@ -143,9 +143,8 @@ function AdvertisementList() {
                             justifyContent: 'right',
                             alignItems: 'center'
                         }}>
-                            <Button type="primary" style={{
-                                backgroundColor: 'rgba(30,136,229,.7)'
-                            }} >+ Add Job</Button>
+                            <Button type="primary" 
+                             >+ Add Job</Button>
                         </Col>
                     </Row>
                     <Divider />
