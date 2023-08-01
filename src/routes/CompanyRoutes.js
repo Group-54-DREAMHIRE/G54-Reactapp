@@ -18,7 +18,8 @@ import CandidateResumes from '../pages/company/CandidatResumes';
 import PendingResume from '../pages/company/resume/PendingResume';
 import RejectResume from '../pages/company/resume/RejectResume';
 import ShortListResume from '../pages/company/resume/ShortListResume';
-
+import Registration from '../pages/company/Registration';
+import Users from "../pages/company/Users";
 export default function CandidateRoutes() {
   return (
     <>
@@ -26,6 +27,7 @@ export default function CandidateRoutes() {
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<CompanyDashboard/>}/>
           <Route path="/profile" element={<Profile/>}/>
+          <Route path="/registration" element={<Registration/>}/>
           <Route path="/postedjobs" element={<PostedJobs/>}/>
 
           <Route element={<CandidateResumes/>}>
@@ -43,6 +45,7 @@ export default function CandidateRoutes() {
           <Route path="/companies" element={<Companies/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
+          <Route path="/users" element={<Users/>}/>
           <Route path="/changepassword" element={<ChangePassword/>}/>
         </Route>
       </Routes>

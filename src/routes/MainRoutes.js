@@ -10,15 +10,15 @@ import SignUp from "../pages/SignUp";
 export default function MainRoutes() {
   const userType = "admin";
 
-  if (userType == "candidate") {
+  if (userType === "candidate") {
     return <CandidateRoutes />;
   }
 
-  if (userType == "company") {
+  if (userType === "company") {
     return <CompanyRoutes />;
   }
 
-  if (userType == "admin") {
+  if (userType === "admin") {
     return <AdminRoutes />;
   }
   else {

@@ -10,7 +10,11 @@ import Candidates from '../pages/Candidates';
 import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
 import SendNotifications from '../pages/company/SendNotification';
-import Users from '../pages/admin/Users';
+import RegistrationRequest from '../pages/admin/RegistrationRequest';
+import Payments from '../pages/admin/Payments';
+import HandleCompany from '../pages/admin/HandleCompany';
+import HandleCandidate from '../pages/admin/HandleCanidate';
+import EditLandingPage from '../pages/admin/EditLandingPage';
 
 export default function AdminRoutes() {
   return (
@@ -19,7 +23,11 @@ export default function AdminRoutes() {
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<AdminDashboard/>}/>
           <Route path="/profile" element={<AdminProfile/>}/>
-          <Route path="/users" element={<Users/>}/>
+          <Route path="/payments" element={<Payments/>}/>
+          <Route path="/registration" element={<RegistrationRequest/>}/>
+          <Route path="/handlecompanies" element={<HandleCompany/>}/>
+          <Route path="/handlecandidates" element={<HandleCandidate/>}/>
+          <Route path="/editlanding" element={<EditLandingPage/>}/>
           <Route path="/events" element={<Events/>}/>
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
