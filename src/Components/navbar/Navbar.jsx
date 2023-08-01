@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UserOutlined, BellFilled, DownOutlined } from "@ant-design/icons";
 import { BsFillChatTextFill } from "react-icons/bs";
+import { navItems } from "../../store/demo/navbaritems";
 import {
   Row,
   Col,
@@ -16,11 +17,11 @@ import { useNavigate } from "react-router-dom";
 
 const items = [
   {
-    label: "Dula",
-    key: "/",
+    label: "Events",
+    key: "/events",
   },
   {
-    label: "Dulanjana",
+    label: "",
     key: "/about",
   },
   {
@@ -48,7 +49,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <Row justify='center'>
+      <Row justify='center' className="navbar-w">
         <Col
           span={20}
           style={{ 
@@ -75,8 +76,8 @@ const Navbar = () => {
                   <Row align="middle" justify="space-between">
                     <Col span={24}>
                       <Menu
-                        style={{whiteSpace: 'nowrap !important',display: 'inline-block'}}
-                        items={items}
+                        style={{whiteSpace: 'nowrap !important',display: 'inline-block',}}
+                        items={navItems}
                         mode="horizontal"
                         onClick={onClick}
                       ></Menu>
@@ -84,8 +85,8 @@ const Navbar = () => {
                   </Row>
                 </Col>
                 <Col>
-                  <Row justify="space-between" align="middle" gutter={20}>
-                    <Col>
+                  <Row justify="space-between" align="middle" gutter={30}>
+                    {/* <Col>
                       <Badge count={3} size="small">
                         <span
                           style={{
@@ -95,9 +96,9 @@ const Navbar = () => {
                           <BsFillChatTextFill />
                         </span>
                       </Badge>
-                    </Col>
+                    </Col> */}
                     <Col>
-                      <Badge count={5} size="small">
+                      <Badge onClick={()=> navigate("/notifications")} count={5} size="small">
                         <span
                           style={{
                             fontSize: "25px",

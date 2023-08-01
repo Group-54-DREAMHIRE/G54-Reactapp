@@ -1,67 +1,73 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSignUp } from "../store/models/modelsSlice";
-import { registerUser } from "../store/auth/userSlice";
 import { useNavigate } from "react-router-dom";
+import loginPic from '../assets/images/landing-1.png';
+import { registerUser } from "../store/auth/userSlice";
+import { loginUser } from "../store/auth/userSlice";
+
 import {
   Form,
+  Image,
   Input,
   Button,
-  Modal,
+  Checkbox,
+  Radio,
   Row,
   Col,
   Typography,
-  Radio,
   Alert,
 } from "antd";
+const {Link, Title } = Typography;
 
-const { Text, Link, Title } = Typography;
 
-const options = [
-  { label: "Candidate", value: "candidate" },
-  { label: "Company", value: "company" },
-];
+export default function SignUp() {
 
-const SignUp = () => {
-
-   const navigate = useNavigate();
-  const {loading, error, message} = useSelector((state)=> state.user)
-  const dispatch = useDispatch();
-  const isOpen = useSelector((state)=> state.models.signUp);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const options = [
+    { label: "Candidate", value: "candidate" },
+    { label: "Company", value: "company" },
+  ];
   const [userType, setUserType] = useState("candidate");
   const onChange = ({ target: { value } }) => {
     setUserType(value);
   };
-  const userRegister = async (e) =>{
-    console.log("clicked");
-    let register = {
-        email: email,
-        password: password,
-        userType: userType,
-    }
-    dispatch(registerUser(register)).then((result)=>{
-      console.log(result);
-        navigate("/profile")
-    })
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    const {loading, error, message} = useSelector((state)=> state.user)
 
-  }
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userRegister = async (e) =>{
+      console.log("clicked");
+      let register = {
+          email: email,
+          password: password,
+          userType: userType,
+      }
+      dispatch(registerUser(register)).then((result)=>{
+        console.log(result);
+          navigate("/profile")
+      })
+    }  
+  
   return (
     <>
-      <Modal
-        style={{ top: "4vh" }}
-        open={isOpen}
-        onCancel={()=> dispatch(closeSignUp())}
-        footer={[]}
-      >
-        <Row block style={{ padding: "30px" }}>
-          <Col span={24}>
-            <Row block justify="center" style={{ margin: "0px 0px 10px" }}>
-              <Title level={2}>REGISTER TO DREAMHIRE</Title>
-            </Row>
-            <Row block justify="center">
+      <Row style={{height: '100vh',backgroundColor: '#F2FAFA'}} align='middle'>
+        <Col span={24}>
+          <Row>
+            <Col span={11}>
+                <Image preview={false} src={loginPic}/>
+            </Col>
+            <Col span={12} >
+              <Row justify='center' align='middle' style={{paddingTop: '8%'}}>
+                <Col span={18} style={{padding: '5% ',backgroundColor:  'white',borderRadius: '15px' ,boxShadow:
+              "0px 24px 83px 0px rgba(0, 0, 0, 0.10), 0px 5px 18px 0px rgba(0, 0, 0, 0.06), 0px 2px 6px 0px rgba(0, 0, 0, 0.04)",}}>
+                  <Row
+                    style={{ marginBottom: "20px" }}
+                  >
+                    <Title style={{marginTop: '15px'}} level={2}>LOGIN TO DREAMHIRE</Title>
+                  </Row>
+                  <Row block justify="center">
               <Radio.Group
                 options={options}
                 onChange={onChange}
@@ -115,12 +121,17 @@ const SignUp = () => {
                 </Button>
               </Form.Item>
             </Form>
-            { message && <Alert message={message} type="success" showIcon />}
-           { error && <Alert message={error} type="error" showIcon/> }
-          </Col>
-        </Row>
-      </Modal>
+                  <Button onClick={()=>navigate("/")}>Back to Home</Button>
+                  {message && (
+                    <Alert message={message} type="success" showIcon />
+                  )}
+                  {error && <Alert message={error} type="error" showIcon />}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </>
   );
-};
-export default SignUp;
+}

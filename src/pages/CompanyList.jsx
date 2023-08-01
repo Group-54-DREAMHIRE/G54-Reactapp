@@ -1,110 +1,85 @@
+import 'antd/dist/reset.css';
+import "../assets/styles/Tables.scss";
+import "../assets/styles/variables.scss";
+
 import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag } from 'antd';
 import { useState, useEffect } from 'react';
-import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined, ForwardOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
-function AdvertisementList() {
+function CompanyList() {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const columns = [
         {
-            title: 'Job Position',
-            dataIndex: 'jobPosition',
-            key: 'jobPosition',
-            // render: (text, record) => (
-            //     <>
-            //         <b>{text}</b>
-            //         <br />
-            //         {record.tags.map((tag, index) => (
-            //             <Tag key={index} color="blue">{tag}</Tag>
-            //         ))}
-            //     </>
-            // )
+            title: 'Company Name',
+            dataIndex: 'companyName',
+            key: 'key',
         },
         {
-            title: 'No of Vacancies',
-            dataIndex: 'vacancies',
-            key: 'vacancies',
-        },
-        {
-            title: 'Closing Date',
-            dataIndex: 'cdate',
-            key: 'cdate'
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status'
-        },
-        {
-            key: 'action',
-            title: 'Action',
+            title: 'View Profile',
+            key: 'key',
             render: () => {
                 return (
                     <>
-                        <EyeOutlined
+                        <Button type="primary">View</Button>
+                    </>
+                )
+            }
+        },
+        {
+            title: 'Website',
+            key: 'key',
+            render: () => {
+                return (
+                    <>
+                        <Button type="primary">Visit</Button>
+                    </>
+                )
+            }
+        },
+        {
+            title: 'Advertisements',
+            key: 'key',
+            render: () => {
+                return (
+                    <>
+                        <ForwardOutlined 
                             style={{
-                                backgroundColor: "green",
-                                color: "white",
+                                backgroundColor: 'rgba(25,103,210,255)',
+                                color: 'white',
                                 marginLeft: 12,
                                 padding: "5px",
                                 borderRadius: "5px"
                             }} />
-                        <EditOutlined
-                            style={{
-                                backgroundColor: "rgba(30,136,229,.5)",
-                                color: "white",
-                                marginLeft: 10,
-                                padding: "5px",
-                                borderRadius: "5px"
-                            }} />
-                        <DeleteOutlined
-                            style={{
-                                backgroundColor: "red",
-                                color: "white",
-                                marginLeft: 10,
-                                padding: "5px",
-                                borderRadius: "5px"
-                            }}
-                        />
                     </>
                 )
             }
-        }];
+        }
+        ];
 
     const [dataSource, setDataSource] = useState([
+
         {
             key: '1',
-            jobPosition: 'Software Engineer',
-            vacancies: 10,
-            cdate: 'December 15, 2022',
-            status: 'pending',
-            tags: ['Tag1','tag2']
+            companyName: 'Virtusa',
+
         },
         {
             key: '2',
-            jobPosition: 'Software Engineer',
-            vacancies: 10,
-            cdate: 'December 15, 2022',
-            status: 'pending',
+            companyName: 'Creative Software',
         },
         {
             key: '3',
-            jobPosition: 'Software Engineer',
-            vacancies: 10,
-            cdate: 'December 15, 2022',
-            status: 'pending',
+            companyName: '99x',
         },
         {
             key: '4',
-            jobPosition: 'Software Engineer',
-            vacancies: 10,
-            cdate: 'December 15, 2022',
-            status: 'pending',
+            companyName: 'LSEG',
         },
 
 
@@ -130,7 +105,7 @@ function AdvertisementList() {
                                 fontSize: '25px',
                                 fontWeight: 600,
                             }}>
-                                Advertisement List
+                                Company List
                             </Title>
                         </Col>
                         <Col span={6}>
@@ -141,8 +116,7 @@ function AdvertisementList() {
                             justifyContent: 'right',
                             alignItems: 'center'
                         }}>
-                            <Button type="primary" 
-                             >+ Add Job</Button>
+                            <Search placeholder="Search company name" enterButton />
                         </Col>
                     </Row>
                     <Divider />
@@ -174,4 +148,4 @@ function AdvertisementList() {
 
 
 
-export default AdvertisementList;
+export default CompanyList;

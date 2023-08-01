@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import ApplyJob from "./candidate/ApplyJob";
-import { pageanimation } from "../assets/animations/pageanimation";
+import { pageanimation } from "../../assets/animations/pageanimation";
 import { EditOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
-import { getUser } from '../store/auth/userSlice';
 import ImgCrop from "antd-img-crop";
 import {
   Row,
@@ -24,12 +22,11 @@ import {
   salary,
   languages,
   ages,
- } from "../store/demo/profile";
-import { openApplyJob } from "../store/models/modelsSlice";
+ } from "../../store/demo/profile";
 const { TextArea } = Input;
 const { Title } = Typography;
 
-const Profile = () => {
+const AdminProfile = () => {
   const userType = "campany";
   const [company, setCompany] = useState(userType === "company"?true:false);
   const dispatch = useDispatch();
@@ -92,10 +89,6 @@ const Profile = () => {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
-        <Button onClick={() => dispatch(openApplyJob())} type="primary">
-          Apply
-        </Button>
-
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -140,7 +133,6 @@ const Profile = () => {
                             suffix={<EditOutlined />}
                           />
                         </Col>
-                        {!company && (
                           <Col span={11}>
                             <Title level={4} style={{ marginBottom: "0" }}>
                               Professional title:
@@ -159,133 +151,6 @@ const Profile = () => {
                               suffix={<EditOutlined />}
                             />
                           </Col>
-                        )}
-
-                        {!company && (
-                          <Col span={11}>
-                            <Title level={4} style={{}}>
-                              Languages:
-                            </Title>
-                            <Select
-                              onChange={(e) => setLanguages(e.target.value)}
-                              defaultValue={"English"}
-                              mode="tags"
-                              style={{
-                                width: "100%",
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                borderRadius: "0",
-                                fontSize: "medium",
-                                borderRadius: "0 !important",
-                                fontFamily: "arial",
-                              }}
-                              options={languages}
-                            />
-                          </Col>
-                        )}
-
-                        {!company && (
-                          <Col span={11}>
-                            <Title level={4} style={{}}>
-                              Birthday:
-                            </Title>
-                            <DatePicker
-                              style={{
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                height: "40px",
-                              }}
-                              onChange={(date, dateString) => setBirthday(date)}
-                            />
-                          </Col>
-                        )}
-
-                        {company && (
-                          <Col span={11}>
-                            <Title level={4} style={{ marginBottom: "0" }}>
-                              Website:
-                            </Title>
-                            <Input
-                              onChange={(e) => setWebsite(e.target.value)}
-                              value={website}
-                              style={{
-                                paddingTop: "5px",
-                                paddingBottom: "5px",
-                                marginTop: "10px",
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                borderRadius: "0",
-                                fontSize: "large",
-                              }}
-                              suffix={<EditOutlined />}
-                            />
-                          </Col>
-                        )}
-
-                        <Col span={24}>
-                          {!company && (
-                            <Row justify="space-between">
-                              <Col span={3}>
-                                <Title level={4} style={{}}>
-                                  Currency:
-                                </Title>
-                                <Select
-                                  defaultValue={"USD$"}
-                                  allowClear
-                                  value={currency}
-                                  onChange={(value)=>setCuurency(value)}
-                                  // mode="tags"
-                                  style={{
-                                    width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                    borderRadius: "0",
-                                    fontSize: "medium",
-                                    borderRadius: "0 !important",
-                                    fontFamily: "arial",
-                                  }}
-                                  options={currencies}
-                                />
-                              </Col>
-                              <Col span={9}>
-                                <Title level={4} style={{}}>
-                                  Minimum Salary:
-                                </Title>
-                                <Select
-                                  allowClear
-                                  value={minSalary}
-                                  onChange={(value)=>setMinSalary(value)}
-                                  // mode="tags"
-                                  style={{
-                                    width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                    borderRadius: "0",
-                                    fontSize: "medium",
-                                    borderRadius: "0 !important",
-                                    fontFamily: "arial",
-                                  }}
-                                  options={salary}
-                                />
-                              </Col>
-                              <Col span={9}>
-                                <Title level={4} style={{}}>
-                                  Maximum Salary:
-                                </Title>
-                                <Select
-                                value={maxSalary}
-                                onChange={(value)=>setMaxSalary(value)}
-                                  allowClear
-                                  // mode="tags"
-                                  style={{
-                                    width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                    borderRadius: "0",
-                                    fontSize: "medium",
-                                    borderRadius: "0 !important",
-                                    fontFamily: "arial",
-                                  }}
-                                  options={salary}
-                                />
-                              </Col>
-                            </Row>
-                          )}
-                        </Col>
                       </Row>
                     </Col>
                   </Row>
@@ -377,28 +242,6 @@ const Profile = () => {
                       />
                     </Col>
                   </Row>
-                  {company && (
-                    <Row>
-                      <Col span={11}>
-                        <Title level={4} style={{ marginBottom: "0" }}>
-                          Country:
-                        </Title>
-                        <Input
-                          onChange={(e) => setCountry(e.target.value)}
-                          value={country}
-                          style={{
-                            paddingTop: "5px",
-                            paddingBottom: "5px",
-                            marginTop: "10px",
-                            boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                            borderRadius: "0",
-                            fontSize: "large",
-                          }}
-                          suffix={<EditOutlined />}
-                        />
-                      </Col>
-                    </Row>
-                  )}
                   <Row style={{marginTop: '25px'}}>
                     <Col>
                         <Button htmlType="submit" type="primary" size="large">Save</Button>
@@ -409,10 +252,9 @@ const Profile = () => {
             </Row>
           </Col>
         </Row>
-        <ApplyJob />
       </motion.div>
     </>
   );
 };
 
-export default Profile;
+export default AdminProfile;

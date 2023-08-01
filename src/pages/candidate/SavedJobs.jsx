@@ -1,10 +1,8 @@
-import 'antd/dist/reset.css';
-import "../assets/styles/Tables.scss";
 import { Table, Typography, Button, Row, Col, Divider, Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { pageanimation } from '../assets/animations/pageanimation';
+import { pageanimation } from '../../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -110,7 +108,7 @@ function SavedJobs() {
                     }}>
                         <Col span={6} style={{
                             display: 'flex',
-                            justifyContent: 'center',
+                            justifyContent: 'left',
                             alignItems: 'center',
                         }}>
                             <Title style={{
@@ -122,7 +120,7 @@ function SavedJobs() {
                         </Col>
                         <Col span={6} offset={6} style={{
                             display: 'flex',
-                            justifyContent: 'center',
+                            justifyContent: 'right',
                             alignItems: 'center'
                         }}>
                             <Search placeholder="Search company name" enterButton />
@@ -133,9 +131,7 @@ function SavedJobs() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <Button type="primary" style={{
-                                backgroundColor: 'rgba(30,136,229,.7)'
-                            }} onClick={onAddJobs} >+ Add Job</Button>
+                            <Button type="primary" onClick={onAddJobs} >+ Add Job</Button>
                         </Col>
                     </Row>
                     <Divider />

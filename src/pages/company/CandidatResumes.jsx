@@ -1,9 +1,6 @@
-
-import {Row,Col, Divider, Typography, Tabs} from 'antd';
-import { items } from "../../store/demo/candidateResume";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import {Row, Divider, Typography, Tabs} from 'antd';
+import { Outlet, useNavigate } from "react-router-dom";
 const { Title, } = Typography;
-
 
 export default function CandidatResumes() {
   const navigate = useNavigate();
@@ -21,10 +18,11 @@ export default function CandidatResumes() {
     <Tabs
     onChange={onChange}
     type="card"
-    items={[{label: "Pending List", key: "/pending"},
-    {label: "Short List", key: "/shortlist"},
-    {label: "Rejected List", key: "/reject"}]}
-    />
+    items={[
+    {label: "Pending List", key: "/pendingresumes"},
+    {label: "Short List", key: "/shortlistresumes"},
+    {label: "Rejected List", key: "/rejectresumes"}
+    ]}/>
     <Outlet/>
     </>
   )
