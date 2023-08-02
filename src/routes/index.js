@@ -6,22 +6,27 @@ import AdminRoutes from "./AdminRoutes";
 import DefaultMainLayout from "../layouts/DefaultMainLayout";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import { useSelector } from "react-redux";
+import { getUser } from "../store/auth/userSlice";
+import { useEffect, useState } from "react";
 
 export default function MainRoutes() {
-  const userType = "admin";
+
+  const userType = localStorage.getItem("USERTYPE");
+
 
   if (userType === "candidate") {
     return <CandidateRoutes />;
   }
 
-  if (userType === "company") {
+  else if (userType === "company") {
     return <CompanyRoutes />;
   }
 
-  if (userType === "admin") {
+  else if (userType === "admin") {
     return <AdminRoutes />;
   }
-  else {
+  else if(userType === null) {
     return (
       <Routes>
         <Route path="/" index element={<DefaultMainLayout />} />

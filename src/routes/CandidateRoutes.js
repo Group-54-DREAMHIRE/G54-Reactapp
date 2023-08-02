@@ -14,7 +14,8 @@ import Companies from '../pages/Companies';
 import Candidates from '../pages/Candidates';
 import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
-
+import Interview from '../pages/candidate/Interview';
+import SelectionTest from '../pages/candidate/SelectionTest';
 export default function CandidateRoutes() {
   return (
     <>
@@ -24,6 +25,8 @@ export default function CandidateRoutes() {
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/resume" element={<Resume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
+          <Route path="/interview" element={<Interview/>}/>
+          <Route path="/selectiontest" element={<SelectionTest/>}/>
           <Route path="/savedjobs" element={<SavedJobs/>}/>
           <Route path="/appliedevents" element={<AppliedEvents/>}/>
           <Route path="/savedevents" element={<SavedEvents/>}/>

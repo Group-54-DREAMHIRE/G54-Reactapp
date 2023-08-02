@@ -9,15 +9,9 @@ import Footer from "../Components/footer/Footer";
 import { Layout, Row, Col, ConfigProvider } from "antd";
 import { LandingBlogs } from "../pages/landing/LandingBlogs";
 
-
-
 const { Content } = Layout;
 
 function DefaultMainLayout() {
-
-
-
-
   return (
     <>
     <ConfigProvider

@@ -13,38 +13,21 @@ import {
   Typography,
   Input,
   Divider,
-  Select,
-  DatePicker,
   Button,
 } from "antd";
-import { 
-  currencies,
-  salary,
-  languages,
-  ages,
- } from "../../store/demo/profile";
 const { TextArea } = Input;
 const { Title } = Typography;
 
 const AdminProfile = () => {
-  const userType = "campany";
-  const [company, setCompany] = useState(userType === "company"?true:false);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("Dulanjana Weeasinghe");
   const [title, setTitle] = useState("Software Engineer");
-  const [languages, setLanguages] = useState([]);
-  const [birthday, setBirthday] = useState(null);
-  const [currency, setCuurency] = useState("USD$");
-  const [minSalary, setMinSalary] = useState("500");
-  const [maxSalary, setMaxSalary] = useState("600");
-  const [website, setWebsite] = useState("www.dstyles.com");
   const [description, setDiscription] = useState("");
   const [phone, setPhone] = useState("071 290 50 22");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("Matara");
   const [address, setAddress] = useState("Galhena, Bathigama, Dickwella.");
-  const [country, setCountry] = useState("SriLanka");
 
   const [fileList, setFileList] = useState([
     {

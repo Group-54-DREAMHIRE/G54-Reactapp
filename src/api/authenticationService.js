@@ -1,7 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-
-
 
 export const getToken = () => {
   return localStorage.getItem("TOKEN");
