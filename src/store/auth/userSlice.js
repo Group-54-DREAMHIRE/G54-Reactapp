@@ -9,8 +9,9 @@ export const loginUser = createAsyncThunk(
         const user = response.data.user;
         const token = response.data.accessToken;
         localStorage.setItem('USER',JSON.stringify(user));
+        localStorage.setItem("USERTYPE",user.userType);
         localStorage.setItem("TOKEN",token)
-        return token;
+        return response.status;
     }
 )
 
@@ -18,7 +19,7 @@ export const registerUser = createAsyncThunk(
     'user/registerUser',
     async(userCredentials) => {
         const response = await userRegister(userCredentials);
-        return response;
+        return response.status;
     }
 )
 
@@ -27,7 +28,7 @@ export const changePasswordUser = createAsyncThunk(
     async(change) => {
         const response = await userChangePassword(change);
         console.log(response);
-        return response;
+        return response.status;
     }
 )
 
@@ -47,6 +48,10 @@ const userSlice = createSlice({
             state.user = null
             state.token = null
         },
+        success: (state)=>{
+            state.error = null
+            state.message = null
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -117,6 +122,6 @@ const userSlice = createSlice({
         }
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, success } = userSlice.actions;
 export const getUser = (state) => state.user.user;
 export default userSlice.reducer;

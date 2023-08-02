@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import ApplyJob from "./candidate/ApplyJob";
@@ -29,8 +29,12 @@ import { openApplyJob } from "../store/models/modelsSlice";
 const { TextArea } = Input;
 const { Title } = Typography;
 
-const Profile = () => {
-  const userType = "campany";
+export default function Profile()  {
+
+
+  const user = JSON.parse(useSelector(getUser))
+
+  const userType = user.userType;
   const [company, setCompany] = useState(userType === "company"?true:false);
   const dispatch = useDispatch();
 
@@ -44,7 +48,7 @@ const Profile = () => {
   const [website, setWebsite] = useState("www.dstyles.com");
   const [description, setDiscription] = useState("");
   const [phone, setPhone] = useState("071 290 50 22");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(user.email);
   const [city, setCity] = useState("Matara");
   const [address, setAddress] = useState("Galhena, Bathigama, Dickwella.");
   const [country, setCountry] = useState("SriLanka");
@@ -95,7 +99,7 @@ const Profile = () => {
         <Button onClick={() => dispatch(openApplyJob())} type="primary">
           Apply
         </Button>
-
+        {user.userType}
         <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -415,4 +419,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+

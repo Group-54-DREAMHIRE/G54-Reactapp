@@ -46,7 +46,7 @@ export default function SignUp() {
       }
       dispatch(registerUser(register)).then((result)=>{
         console.log(result);
-          navigate("/profile")
+          navigate("/login")
       })
     }  
   
@@ -65,7 +65,7 @@ export default function SignUp() {
                   <Row
                     style={{ marginBottom: "20px" }}
                   >
-                    <Title style={{marginTop: '15px'}} level={2}>LOGIN TO DREAMHIRE</Title>
+                    <Title style={{marginTop: '15px'}} level={2}>REGISTER TO DREAMHIRE</Title>
                   </Row>
                   <Row block justify="center">
               <Radio.Group
@@ -117,7 +117,7 @@ export default function SignUp() {
                     fontSize: "medium",
                     fontWeight: "500",
                     marginBottom: "10px",}}>
-                  Log In
+                  Register
                 </Button>
               </Form.Item>
             </Form>

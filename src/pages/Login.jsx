@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginPic from '../assets/images/landing-1.png';
 
+import { success } from "../store/auth/userSlice";
 import { loginUser } from "../store/auth/userSlice";
 
 import {
@@ -27,16 +28,25 @@ export default function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const submitHandler = async (e) => {
+    const submitHandler = async () => {
       let userCredentials = {
         email: email,
-        password: password,
+        password: password
       };
       dispatch(loginUser(userCredentials)).then((result)=> {
         if(result.payload){
           setEmail('');
           setPassword('');
-          navigate("/home");
+          setTimeout(
+            () => {
+              dispatch(success());
+              clearTimeout();
+            },
+            500,
+            1000
+          );
+          navigate("/dashboard");
+          window.location.reload();
         }
       })
     };
@@ -61,7 +71,6 @@ export default function Login() {
                   <Form
                     layout="vertical"
                     onFinish={submitHandler}
-                    onFinishFailed
                     autoComplete="off"
                   >
                     <Form.Item label="Email" name="email">
