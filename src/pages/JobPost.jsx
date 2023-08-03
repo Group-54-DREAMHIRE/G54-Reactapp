@@ -1,11 +1,15 @@
 import jobpost1 from "../assets/images/jobpost1.jpg";
 import { FiMapPin } from "react-icons/fi";
 import { BsCurrencyDollar } from "react-icons/bs";
-import { Col, Image, Row, Typography } from "antd";
+import ApplyJob from '../pages/candidate/ApplyJob';
+import { Button, Col, Image, Row, Typography } from "antd";
+import { useDispatch } from "react-redux";
+import { openApplyJob } from "../store/models/modelsSlice";
 
 const { Title, Text } = Typography;
 export default function JobPost() {
 
+  const dispatch = useDispatch(); 
 
   let items = {
     title: 'Sofaware Engineer',
@@ -28,6 +32,7 @@ export default function JobPost() {
       ]
   }
   return (
+    
     <>
       <Row style={{ padding: "5%" }} justify='space-between' className="jobpost-w" gutter={10}>
         <Col span={8}>
@@ -169,13 +174,21 @@ export default function JobPost() {
                       fontWeight: '400'}} key={index}> {index + 1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item}.</Text> 
                     <br/>
                     </>
-                    
                   )
-                  
                 })
               }
             </Col>
           </Row>
+          <Row style={{marginTop: '30px'}}>
+            <Button 
+              size="large" 
+              style={{borderRadius: '0'}} 
+              type="primary"
+              onClick={()=>dispatch(openApplyJob())}
+              >Apply This Job
+            </Button>
+          </Row>
+          <ApplyJob/>
         </Col>
       </Row>
     </>
