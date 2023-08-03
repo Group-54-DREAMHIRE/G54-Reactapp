@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import RootLayout from '../layouts/RootLayout';
 import CandidateDashboard from '../pages/candidate/CandidateDashboard';
-import Profile from '../pages/Profile';
+import CandidateProfile from '../pages/candidate/CandidateProfile';
 import Resume from "../pages/candidate/Resume";
 import AppliedJobs from '../pages/candidate/AppliedJobs';
 import SavedJobs from '../pages/candidate/SavedJobs';
@@ -22,7 +22,7 @@ export default function CandidateRoutes() {
         <Routes>
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<CandidateDashboard/>}/>
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile" element={<CandidateProfile/>}/>
           <Route path="/resume" element={<Resume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
           <Route path="/interview" element={<Interview/>}/>

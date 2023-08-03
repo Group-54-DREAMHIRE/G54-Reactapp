@@ -49,12 +49,12 @@ const Navbar = () => {
   };
   return (
     <>
-      <Row justify='center' className="navbar-w">
+      <Row justify='end' className="navbar-w">
         <Col
           span={20}
           style={{ 
             padding: "7px 0px 7px 20px",
-            borderRadius: "45px",
+            borderRadius: "0px",
             backgroundColor: "white",
             boxShadow: '0 0 10px 0 rgba(30,136,229,.2)',
             }}

@@ -14,13 +14,6 @@ const { Content } = Layout;
 function DefaultMainLayout() {
   return (
     <>
-    <ConfigProvider
-        theme={{
-          token: {
-            colorBgTextActive:"rgb(30,136,229)",
-             colorPrimary: "rgb(30,136,229)",
-          },}}
-        >
         <Row
         justify="center"
         align="middle"
@@ -63,7 +56,6 @@ function DefaultMainLayout() {
           <Footer />
         </Col>
       </Row>
-      </ConfigProvider>
     </>
   );
 }
