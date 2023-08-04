@@ -1,3 +1,5 @@
+import job from '../../assets/images/jobpost1.jpg';
+
 export const items = [
     {
       id: 1,
@@ -5,24 +7,15 @@ export const items = [
       title: "UI/UX Designer",
       address: "Matara, Dickwella",
       salary: "$2500",
+      image: job,
+      status: "pending",
       tags: [
-          {
-              id: 1,
-              label: "REACT",
-          },
-          {
-              id: 2,
-              label: "JAVA",
-          },
-          {
-              id: 3,
-              label: "PYTHON",
-          },
-          {
-              id: 4,
-              label: "SCALA",
-          },
-      ]
+        "react",
+        "angular",
+        "java",
+        "python"
+       
+    ]
     },
     {
         id: 2,
@@ -30,23 +23,14 @@ export const items = [
         title: "UI/UX Designer",
         address: "Matara, Dickwella",
         salary: "$2500",
+        image: job,
+        status: "reject",
         tags: [
-            {
-                id: 1,
-                label: "REACT",
-            },
-            {
-                id: 2,
-                label: "JAVA",
-            },
-            {
-                id: 3,
-                label: "PYTHON",
-            },
-            {
-                id: 4,
-                label: "SCALA",
-            },
+            "react",
+            "angular",
+            "java",
+            "python"
+           
         ]
       },
       {
@@ -55,23 +39,14 @@ export const items = [
         title: "UI/UX Designer",
         address: "Matara, Dickwella",
         salary: "$2500",
+        image: job,
+        status: "shortList",
         tags: [
-            {
-                id: 1,
-                label: "REACT",
-            },
-            {
-                id: 2,
-                label: "JAVA",
-            },
-            {
-                id: 3,
-                label: "PYTHON",
-            },
-            {
-                id: 4,
-                label: "SCALA",
-            },
+            "react",
+            "angular",
+            "java",
+            "python"
+           
         ]
       },
       {
@@ -80,24 +55,32 @@ export const items = [
         title: "UI/UX Designer",
         address: "Matara, Dickwella",
         salary: "$2500",
+        image: job,
+        status: "close",
         tags: [
-            {
-                id: 1,
-                label: "REACT",
-            },
-            {
-                id: 2,
-                label: "JAVA",
-            },
-            {
-                id: 3,
-                label: "PYTHON",
-            },
-            {
-                id: 4,
-                label: "SCALA",
-            },
+            "react",
+            "angular",
+            "java",
+            "python"
+           
         ]
       },
+      {
+        id: 5,
+        name: "Cloud Solution",
+        title: "UI/UX Designer",
+        address: "Matara, Dickwella",
+        salary: "$2500",
+        image: job,
+        status: "shortList",
+        tags: [
+            "react",
+            "angular",
+            "java",
+            "python"
+           
+        ]
+      },
+   
    
   ];

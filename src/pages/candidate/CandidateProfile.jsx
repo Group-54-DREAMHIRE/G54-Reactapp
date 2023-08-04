@@ -76,7 +76,6 @@ export default function Profile()  {
 
   return (
     <>
-    <input type="file" />
       <motion.div
         variants={pageanimation}
         initial="hidden"
@@ -121,7 +120,7 @@ export default function Profile()  {
                               paddingTop: "5px",
                               paddingBottom: "5px",
                               marginTop: "15px",
-                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                              boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                               borderRadius: "0",
                               fontSize: "large",
                             }}
@@ -139,7 +138,7 @@ export default function Profile()  {
                                 paddingTop: "5px",
                                 paddingBottom: "5px",
                                 marginTop: "10px",
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                 borderRadius: "0",
                                 fontSize: "large",
                               }}
@@ -157,7 +156,7 @@ export default function Profile()  {
                               defaultActiveFirstOption
                               style={{
                                 width: "100%",
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                 borderRadius: "0",
                                 fontSize: "medium",
                                 borderRadius: "0 !important",
@@ -174,7 +173,7 @@ export default function Profile()  {
                             </Title>
                             <DatePicker
                               style={{
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                 height: "40px",
                               }}
                               onChange={(date) => setBirthday(date)}
@@ -196,10 +195,9 @@ export default function Profile()  {
                                   // mode="tags"
                                   style={{
                                     width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                     borderRadius: "0",
                                     fontSize: "medium",
-                                    borderRadius: "0 !important",
                                     fontFamily: "arial",
                                   }}
                                   options={currencies}
@@ -215,7 +213,7 @@ export default function Profile()  {
                                   // mode="tags"
                                   style={{
                                     width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                     borderRadius: "0",
                                     fontSize: "medium",
                                     borderRadius: "0 !important",
@@ -234,7 +232,7 @@ export default function Profile()  {
                                   // mode="tags"
                                   style={{
                                     width: "100%",
-                                    boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                                    boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                                     borderRadius: "0",
                                     fontSize: "medium",
                                     borderRadius: "0 !important",
@@ -254,7 +252,7 @@ export default function Profile()  {
                       onChange={(e) => setDiscription(e.target.value)}
                       value={description}
                       rows={4}
-                      style={{ boxShadow: "0 0 10px 0 rgba(30,136,229,.3)" }}
+                      style={{ boxShadow: '0px 0px 5px  rgba(0,0,0,.1)', }}
                     />
                   </Row>
                   <Row justify="start">
@@ -273,7 +271,7 @@ export default function Profile()  {
                           paddingTop: "5px",
                           paddingBottom: "5px",
                           marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                          boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                           borderRadius: "0",
                           fontSize: "large",
                         }}
@@ -291,7 +289,7 @@ export default function Profile()  {
                           paddingTop: "5px",
                           paddingBottom: "5px",
                           marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                          boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                           borderRadius: "0",
                           fontSize: "large",
                         }}
@@ -310,7 +308,7 @@ export default function Profile()  {
                           paddingTop: "5px",
                           paddingBottom: "5px",
                           marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                          boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                           borderRadius: "0",
                           fontSize: "large",
                         }}
@@ -328,7 +326,7 @@ export default function Profile()  {
                           paddingTop: "5px",
                           paddingBottom: "5px",
                           marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                          boxShadow: '0px 0px 5px  rgba(0,0,0,.1)',
                           borderRadius: "0",
                           fontSize: "large",
                         }}
@@ -338,7 +336,13 @@ export default function Profile()  {
                   </Row>
                   <Row style={{marginTop: '25px'}}>
                     <Col>
-                        <Button htmlType="submit" type="primary" size="large">Save</Button>
+                        <Button
+                        style={{borderRadius: '0'}}
+                         htmlType="submit" 
+                         type="primary" 
+                         size="large">
+                          Save
+                        </Button>
                     </Col>
                   </Row>
                 </Form>

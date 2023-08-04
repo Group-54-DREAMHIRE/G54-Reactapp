@@ -12,7 +12,7 @@ export default function JobPost() {
   const dispatch = useDispatch(); 
 
   let items = {
-    title: 'Sofaware Engineer',
+    title: 'Software Engineer',
     education: 'BSc in Computer Science',
     deadline: '25th January 2023',
     country: 'New York',

@@ -31,11 +31,11 @@ function RootLayout() {
             <Layout style={{ backgroundColor: "white" }}>
               <Content
                 style={{
-                  padding: 0,
-                  margin: 30,
+                  padding: 30,
+                  margin:10,
                   minHeight: 280,
                   backgroundColor: "white",
-                  boxShadow: '0px 0px 5px  rgba(30,136,229,.4)',
+                  boxShadow: '0px 0px 5px  rgba(0,0,0,.2)',
                 }}
               >
                 <Outlet />
