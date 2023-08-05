@@ -16,7 +16,7 @@ import { BsBuildingUp } from "react-icons/bs";
 import { FiSlack, FiUsers } from "react-icons/fi";
 import { FaEnvelopeOpenText } from "react-icons/fa";
 
-const userType = "admin";
+const userType = "company";
 const sidebarItems = [
   {
     id: 1,
