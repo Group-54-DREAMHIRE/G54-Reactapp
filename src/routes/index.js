@@ -11,6 +11,7 @@ import { getUser } from "../store/auth/userSlice";
 import { useEffect, useState } from "react";
 
 export default function MainRoutes() {
+  
 
   // const userType = localStorage.getItem("USERTYPE");
 

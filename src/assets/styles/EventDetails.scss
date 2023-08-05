@@ -1,0 +1,111 @@
+.event-profile-card-n {
+  width: 90%;
+  margin: 20px auto;
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .header {
+    text-align: center;
+  }
+  
+  .event-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 10px;
+  }
+  
+  .event-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .content {
+    margin-top: 20px;
+  }
+  
+  .details-container {
+    margin-bottom: 10px;
+  }
+  .venue-date{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .time-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .contact-details{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .venue, .date
+  .time {
+    font-size: 16px;
+    color: #888888;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .description {
+    font-size: 18px;
+    color: #555555;
+  }
+  
+  .contact,
+  .website {
+    font-size: 16px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+  .website a {
+    color: #003366;
+    text-decoration: underline;
+  }
+  
+  .website a:hover {
+    color: #f57c00;
+  }
+  
+  .edit-button {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .ant-modal-content {
+    border-radius: 8px;
+  }
+  
+  .ant-modal-header {
+    background-color: #003366;
+    color: #ffffff;
+  }
+  
+  .ant-modal-title {
+    color: #ffffff;
+  }
+  
+  .ant-modal-footer {
+    border-top: none;
+  }
+  
+  .ant-btn-primary {
+    background-color: #003366;
+    border-color: #003366;
+  }
+  
+  .ant-btn-primary:hover {
+    background-color: #f57c00;
+    border-color: #f57c00;
+  }
+}
