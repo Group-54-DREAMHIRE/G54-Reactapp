@@ -17,6 +17,7 @@ import ChangePassword from "../pages/ChangePassword";
 import Interview from '../pages/candidate/Interview';
 import SelectionTest from '../pages/candidate/SelectionTest';
 import JobPost from "../pages/JobPost";
+import AppliedJob from '../pages/candidate/AppliedJob';
 export default function CandidateRoutes() {
   return (
     <>
@@ -26,6 +27,7 @@ export default function CandidateRoutes() {
           <Route path="/profile" element={<CandidateProfile/>}/>
           <Route path="/resume" element={<Resume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
+          <Route path="/appliedjob" element={<AppliedJob/>}/>
           <Route path="/interview" element={<Interview/>}/>
           <Route path="/selectiontest" element={<SelectionTest/>}/>
           <Route path="/savedjobs" element={<SavedJobs/>}/>

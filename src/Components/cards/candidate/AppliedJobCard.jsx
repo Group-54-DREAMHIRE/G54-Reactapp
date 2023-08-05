@@ -21,20 +21,12 @@ import {
 } from "antd";
 import Link from "antd/es/typography/Link";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 export default function AppliedJobCard({ items }) {
-  const [pending, setPending] = useState(
-    items.status === "pending" ? true : false
-  );
-  const [reject, setReject] = useState(
-    items.status === "reject" ? true : false
-  );
-  const [shortList, setShortList] = useState(
-    items.status === "shortList" ? true : false
-  );
-  const [close, setClose] = useState(items.status === "close" ? true : false);
+  const navigate = useNavigate();
   return (
     <>
       <Card
@@ -85,6 +77,7 @@ export default function AppliedJobCard({ items }) {
           </Col>
           <Col>
             <Button
+            onClick={()=>navigate("/appliedjob")}
               className="view-w"
               type="primary"
               style={{
