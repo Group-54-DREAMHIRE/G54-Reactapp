@@ -12,9 +12,9 @@ import { useEffect, useState } from "react";
 
 export default function MainRoutes() {
 
-  const userType = localStorage.getItem("USERTYPE");
+  // const userType = localStorage.getItem("USERTYPE");
 
-
+  const userType = "candidate";
   if (userType === "candidate") {
     return <CandidateRoutes />;
   }
@@ -26,7 +26,7 @@ export default function MainRoutes() {
   else if (userType === "admin") {
     return <AdminRoutes />;
   }
-  else if(userType === null) {
+  else if (userType === null) {
     return (
       <Routes>
         <Route path="/" index element={<DefaultMainLayout />} />
