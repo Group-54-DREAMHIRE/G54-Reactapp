@@ -22,15 +22,13 @@ import {
 import { 
   currencies,
   salary,
-  languages,
-  ages,
+  language,
  } from "../store/demo/profile";
 import { openApplyJob } from "../store/models/modelsSlice";
 const { TextArea } = Input;
 const { Title } = Typography;
 
 export default function Profile()  {
-
 
   const user = JSON.parse(useSelector(getUser))
 
@@ -171,9 +169,9 @@ export default function Profile()  {
                               Languages:
                             </Title>
                             <Select
-                              onChange={(e) => setLanguages(e.target.value)}
-                              defaultValue={"English"}
+                              onChange={(value) => setLanguages(value)}
                               mode="tags"
+                              defaultActiveFirstOption
                               style={{
                                 width: "100%",
                                 boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
@@ -182,7 +180,7 @@ export default function Profile()  {
                                 borderRadius: "0 !important",
                                 fontFamily: "arial",
                               }}
-                              options={languages}
+                              options={language}
                             />
                           </Col>
                         )}
@@ -197,7 +195,7 @@ export default function Profile()  {
                                 boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
                                 height: "40px",
                               }}
-                              onChange={(date, dateString) => setBirthday(date)}
+                              onChange={(date) => setBirthday(date)}
                             />
                           </Col>
                         )}
@@ -232,7 +230,6 @@ export default function Profile()  {
                                 </Title>
                                 <Select
                                   defaultValue={"USD$"}
-                                  allowClear
                                   value={currency}
                                   onChange={(value)=>setCuurency(value)}
                                   // mode="tags"
@@ -252,7 +249,6 @@ export default function Profile()  {
                                   Minimum Salary:
                                 </Title>
                                 <Select
-                                  allowClear
                                   value={minSalary}
                                   onChange={(value)=>setMinSalary(value)}
                                   // mode="tags"
@@ -274,7 +270,6 @@ export default function Profile()  {
                                 <Select
                                 value={maxSalary}
                                 onChange={(value)=>setMaxSalary(value)}
-                                  allowClear
                                   // mode="tags"
                                   style={{
                                     width: "100%",

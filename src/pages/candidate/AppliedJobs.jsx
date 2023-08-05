@@ -17,7 +17,7 @@ export default function AppliedJobs() {
           <Row style={{ padding: "2%" }} gutter={[20, 20]}>
             {items.map((item) => {
               return (
-                <Col span={18}>
+                <Col span={12}>
                   <AppliedJobCard items={item} />
                 </Col>
               );

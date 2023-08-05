@@ -65,16 +65,15 @@ export default function CandidateResumeCard({ items, status }) {
     <>
       <Card
         className="resume-card-w"
-        style={{ boxShadow: "0 0 8px 0 rgba(30,136,229,.4)" }}
+        style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }}
         hoverable
       >
         <Row justify="space-between">
-          <Col span={13}>
+          <Col span={16}>
             <Title level={4} style={{ marginBottom: "18px", marginTop: "0" }}>
               {items.name}
             </Title>
-            <Text style={{ color: "rgb(30,136,229)" }}>{items.title}</Text>{" "}
-            <Text>{items.company}.</Text> <br />
+            <Text style={{ color: "rgb(30,136,229)" }}>{items.title}</Text>
             <Title level={5} style={{ marginTop: "8px" }}>
               <Text
                 style={{
@@ -83,22 +82,14 @@ export default function CandidateResumeCard({ items, status }) {
                   color: "rgb(30,136,229)",
                 }}
               >
-                <FaMapMarkerAlt /> {items.address}.
+                <FaMapMarkerAlt /> {items.address}.{" "}
               </Text>
               <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
                 <FaMoneyBillAlt /> {items.salary}
               </Text>
             </Title>
-          </Col>
-          <Col span={8}>
-            <Image
-              src={items.image}
-              style={{ borderRadius: "10px", height: "100%", width: "100%" }}
-            />
-          </Col>
-        </Row>
-        <Row style={{ marginTop: "13px" }}>
-          {items.tags.slice(0, 4).map((tag) => {
+            <Col style={{marginTop: '25px'}}>
+            {items.tags.slice(0, 4).map((tag) => {
             return (
               <Button
                 style={{
@@ -113,6 +104,17 @@ export default function CandidateResumeCard({ items, status }) {
               </Button>
             );
           })}
+            </Col>
+          </Col>
+          <Col span={8}>
+            <Image
+              src={items.image}
+              style={{ borderRadius: "10px", height: "100%", width: "100%" }}
+            />
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "13px" }}>
+          
         </Row>
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
           <Col>

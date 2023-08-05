@@ -2,23 +2,12 @@ import Navbar from "../Components/navbar/Navbar";
 import Sidebar from "../Components/sidebar/Sidebar";
 import Footer from "../Components/footer/Footer";
 import { Outlet } from "react-router-dom";
-import { Layout, Row, Col,ConfigProvider } from "antd";
+import { Layout, Row, Col } from "antd";
 const { Content } = Layout;
 
 function RootLayout() {
   return (
     <>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "rgb(30,136,229)",
-            colorBgContainer: 'white',
-            colorBgTextHover: 'rgba(30,136,229,.1)',
-            colorBgTextActive: 'rgba(30,136,229,.1)',
-            
-          },
-        }}
-      >
         <Layout>
           <Row
             justify="center"
@@ -42,11 +31,11 @@ function RootLayout() {
             <Layout style={{ backgroundColor: "white" }}>
               <Content
                 style={{
-                  padding: 0,
-                  margin: 30,
+                  padding: 30,
+                  margin:10,
                   minHeight: 280,
                   backgroundColor: "white",
-                  boxShadow: '0px 0px 5px  rgba(30,136,229,.4)',
+                  boxShadow: '0px 0px 5px  rgba(0,0,0,.2)',
                 }}
               >
                 <Outlet />
@@ -55,7 +44,6 @@ function RootLayout() {
             </Layout>
           </Layout>
         </Layout>
-      </ConfigProvider>
     </>
   );
 }

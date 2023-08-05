@@ -43,21 +43,16 @@ const Navbar = () => {
         navigate(key);
         clearTimeout();
       },
-      500,
+      200,
       1000
     );
   };
   return (
     <>
-      <Row justify='center' className="navbar-w">
+      <Row justify='end' className="navbar-w">
         <Col
-          span={20}
-          style={{ 
-            padding: "7px 0px 7px 20px",
-            borderRadius: "45px",
-            backgroundColor: "white",
-            boxShadow: '0 0 10px 0 rgba(30,136,229,.2)',
-            }}
+          span={24}
+          
         >
           <Row justify="space-between" align="middle">
             <Col span={4}>
@@ -71,7 +66,12 @@ const Navbar = () => {
             </Col>
 
             <Col span={20}>
-              <Row justify="space-around" align="middle">
+              <Row justify="space-around" style={{ 
+            padding: "7px 0px 7px 20px",
+            // borderRadius: "0px",
+            // backgroundColor: "white",
+            // boxShadow: '0 0 10px 0 rgba(30,136,229,.2)',
+            }} align="middle">
                 <Col>
                   <Row align="middle" justify="space-between">
                     <Col span={24}>
