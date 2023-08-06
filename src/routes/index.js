@@ -13,9 +13,8 @@ import { useEffect, useState } from "react";
 export default function MainRoutes() {
   
 
-  // const userType = localStorage.getItem("USERTYPE");
+  const userType = localStorage.getItem("USERTYPE");
 
-  const userType = "candidate";
   if (userType === "candidate") {
     return <CandidateRoutes />;
   }
