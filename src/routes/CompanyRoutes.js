@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
 import RootLayout from '../layouts/RootLayout';
-import Profile from '../pages/Profile';
 import CompanyDashboard from '../pages/company/CompanyDashboard';
 import PostedEvents from '../pages/company/PostedEvents';
 import EventDetails from '../pages/company/EventDetails';
@@ -29,17 +28,21 @@ import RejectResume from '../pages/company/resume/RejectResume';
 import ShortListResume from '../pages/company/resume/ShortListResume';
 import Registration from '../pages/company/Registration';
 import Users from "../pages/company/Users";
+import CompanyProfile from "../pages/company/CompanyProfile";
+import AddJobPost from "../pages/company/AddJobPost";
+import JobPost from '../pages/JobPost';
 export default function CandidateRoutes() {
   return (
     <>
         <Routes>
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<CompanyDashboard/>}/>
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile" element={<CompanyProfile/>}/>
           <Route path="/registration" element={<Registration/>}/>
 
           <Route path="/postedjobs" element={<PostedJobs/>}/>
-          <Route path="/postedjobs/jobpost" element={<JobPost />} />
+          <Route path="/addjobpost" element={<AddJobPost/>}/>
+          <Route path="/jobpost" element={<JobPost/>}/>
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes" index element={<PendingResume/>} />

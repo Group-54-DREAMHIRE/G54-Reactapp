@@ -1,8 +1,10 @@
+import CompanyPage from "./CompanyPage";
 
 export default function Companies() {
   return (
     <>
-    <h1>This is Companies Page</h1>
+    <CompanyPage/>
+    {/* <h1>This is Companies Page</h1> */}
     </>
   )
 }
