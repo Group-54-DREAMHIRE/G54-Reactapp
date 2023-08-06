@@ -30,7 +30,6 @@ import Registration from '../pages/company/Registration';
 import Users from "../pages/company/Users";
 import CompanyProfile from "../pages/company/CompanyProfile";
 import AddJobPost from "../pages/company/AddJobPost";
-import JobPost from '../pages/JobPost';
 export default function CandidateRoutes() {
   return (
     <>
