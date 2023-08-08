@@ -1,15 +1,12 @@
 import {
   Calendar,
   Card,
-  Checkbox,
   Col,
   Row,
   Space,
   Typography,
   Image,
   Avatar,
-  Divider,
-  Tooltip,
 } from "antd";
 import db1 from "../../assets/images/db1.png";
 import db2 from "../../assets/images/db2.png";
@@ -105,12 +102,15 @@ export default function CandidateDashboard() {
             <Col span={10}>
               <Row justify="center">
                 <Col span={20} style={{ padding: " 0 2%" }}>
-                  <Card>
+                  <Card style={{boxShadow: '0 0 8px rgba(0,0,0,.1)'}}>
                     <Row>
                       <Col span={3}>
-                        <Image src={db5} />
+                        <Image preview={false} src={db5} />
+                        <Image preview={false} src={db2} />
                       </Col>
                       <Col span={21}>
+                        <Row>
+                        <Col span={24}>
                         <Row align="bottom" gutter={[0, 10]}>
                           <Col span={24}>
                             <Row justify="space-between" align="bottom">
@@ -131,7 +131,7 @@ export default function CandidateDashboard() {
                         <Row
                           style={{ marginTop: "30px" }}
                           justify="space-between"
-                          gutter={[0, 30]}
+                          gutter={[0, 50]}
                         >
                           <Col>
                             <Avatar.Group>
@@ -142,10 +142,10 @@ export default function CandidateDashboard() {
                             </Avatar.Group>
                           </Col>
                           <Col>
-                            <Image src={db4} />
+                            <Image src={db4} preview={false}/>
                           </Col>
                           <Col span={24}>
-                            <Image src={db3} />
+                            <Image src={db3} preview={false} />
                             <Title
                               level={4}
                               style={{
@@ -175,8 +175,75 @@ export default function CandidateDashboard() {
                           </Col>
                         </Row>
                       </Col>
-                      
+                      <Col span={24}>
+                        <Row align="bottom" gutter={[0, 10]}>
+                          <Col span={24}>
+                            <Row justify="space-between" align="bottom">
+                              <Text
+                                style={{ fontSize: "20px", fontWeight: "500" }}
+                              >
+                                Interview Creative Software
+                              </Text>
+                              <Text style={{ fontWeight: "500" }}>
+                                9:00 AM
+                              </Text>
+                            </Row>
+                          </Col>
+                          <Col>
+                            <Text style={{ fontWeight: "400", fontSize: '16px' }}>HR Interview</Text>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{ marginTop: "30px" }}
+                          justify="space-between"
+                          gutter={[0, 50]}
+                        >
+                          <Col>
+                            <Avatar.Group>
+                              <Avatar src={user2} />
+                              <Avatar src={user1} />
+                              <Avatar src={user3} />
+                              <Avatar src={user4} />
+                            </Avatar.Group>
+                          </Col>
+                          <Col>
+                            <Image src={db4} preview={false} />
+                          </Col>
+                          <Col span={24}>
+                            <Image src={db3} preview={false}/>
+                            <Title
+                              level={4}
+                              style={{
+                                color: "rgba(255,255,255,.8)",
+                                margin: "0",
+                                position: "absolute",
+                                top: "10px",
+                                left: "20px",
+                                display: "inline-block",
+                              }}
+                            >
+                              With Mr.Dulanjana 
+                            </Title>
+
+                            <Text
+                              style={{
+                                color: "rgba(255,255,255,.7)",
+                                marginBottom: "0",
+                                position: "absolute",
+                                top: "40px",
+                                left: "20px",
+                                fontSize: "16px",
+                              }}
+                            >
+                              Creative Software
+                            </Text>
+                          </Col>
+                        </Row>
+                      </Col>
+                        </Row>
+                      </Col>
                     </Row>
+                    
                   </Card>
                 </Col>
               </Row>

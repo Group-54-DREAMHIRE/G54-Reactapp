@@ -67,8 +67,8 @@ export default function AppliedJobCard({ items }) {
               })}
             </Space>
           </Col>
-          <Col span={9}>
-            <Image preview={false} width={200} height={130} src={items.image} />
+          <Col span={8}>
+            <Image preview={false} width={150} height={100} src={items.image} />
           </Col>
         </Row>
         <Row style={{ marginTop: "0px" }} align="bottom" gutter={40} justify="end">
