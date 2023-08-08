@@ -6,9 +6,6 @@ import AdminRoutes from "./AdminRoutes";
 import DefaultMainLayout from "../layouts/DefaultMainLayout";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import { useSelector } from "react-redux";
-import { getUser } from "../store/auth/userSlice";
-import { useEffect, useState } from "react";
 
 export default function MainRoutes() {
   
