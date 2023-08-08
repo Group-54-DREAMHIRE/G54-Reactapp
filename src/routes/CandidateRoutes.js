@@ -14,10 +14,11 @@ import Companies from '../pages/Companies';
 import Candidates from '../pages/Candidates';
 import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
-import Interview from '../pages/candidate/Interview';
+import Interviews from '../pages/candidate/Interviews';
 import SelectionTest from '../pages/candidate/SelectionTest';
 import JobPost from "../pages/JobPost";
 import AppliedJob from '../pages/candidate/AppliedJob';
+import InterviewDetails from "../pages/candidate/InterviewDetails";
 export default function CandidateRoutes() {
   return (
     <>
@@ -28,7 +29,8 @@ export default function CandidateRoutes() {
           <Route path="/resume" element={<Resume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
           <Route path="/appliedjob" element={<AppliedJob/>}/>
-          <Route path="/interview" element={<Interview/>}/>
+          <Route path="/interview" element={<Interviews/>}/>
+          <Route path="/interviewdetails" element={<InterviewDetails/>}/>
           <Route path="/selectiontest" element={<SelectionTest/>}/>
           <Route path="/savedjobs" element={<SavedJobs/>}/>
           <Route path="/appliedevents" element={<AppliedEvents/>}/>

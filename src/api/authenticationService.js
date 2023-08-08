@@ -20,6 +20,15 @@ export const userChangePassword = (change) =>{
   });
 };
 
+export const updateProfileData = (authRequest) => {
+  if (authRequest.method === "post") {
+    return axios.post(`${authRequest.url}`, authRequest.data, {
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    });
+  }}
+
 export const fetchUserData = (authRequest) => {
   if (authRequest.method === "post") {
     return axios.post(`${authRequest.url}`, authRequest.data, {
@@ -41,3 +50,4 @@ export const fetchUserData = (authRequest) => {
     });
   }
 };
+

@@ -6,6 +6,7 @@ import {
   PhoneOutlined,
   PlusOutlined,
   EditOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
@@ -23,16 +24,26 @@ import {
   Select,
   DatePicker,
   Button,
-  message,
+  Alert,
+  Image,
 } from "antd";
-import { currencies, salary, language } from "../../store/demo/profile";
+import { currencies, salary } from "../../store/demo/profile";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../store/auth/userSlice";
+import {
+  fetchUserData,
+  updateProfileData,
+} from "../../api/authenticationService";
 const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const [name, setName] = useState(candidateDetails.name);
+  const [file, setFile] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [title, setTitle] = useState(candidateDetails.title);
-  const [birthday, setBirthday] = useState(null);
+  const [birthday, setBirthday] = useState();
   const [currency, setCuurency] = useState("USD$");
   const [minSalary, setMinSalary] = useState(candidateDetails.minSalary);
   const [maxSalary, setMaxSalary] = useState(candidateDetails.maxSalary);
@@ -44,6 +55,12 @@ export default function Profile() {
   const [facebook, setFacebook] = useState(candidateDetails.facebook);
   const [twitter, setTwitter] = useState(candidateDetails.twitter);
   const [linkedIn, setLinkedIn] = useState(candidateDetails.linkedIn);
+  const [message, setMessage] = useState(null);
+
+  const hasPicture = profilePicture===null? false: true;
+
+  const user = JSON.parse(useSelector(getUser));
+  const id = user.id;
 
   const handleName = (value) => {
     setName(value);
@@ -53,6 +70,7 @@ export default function Profile() {
   };
   const handleDescription = (value) => {
     setDiscription(value);
+    console.log(value);
   };
   const handlePhone = (value) => {
     setPhone(value);
@@ -76,12 +94,6 @@ export default function Profile() {
     setLinkedIn(value);
   };
 
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
-
-  const handleChange = (info) => {
-    console.log(info.file.name);
-  };
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
@@ -93,19 +105,63 @@ export default function Profile() {
     }
     return isJpgOrPng && isLt2M;
   };
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
+  
+
+  const handleFileChange = (info) => {
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+      setFile(info.file.originFileObj);
+
+
+      // Display image preview
+      setProfilePicture(URL.createObjectURL(info.file.originFileObj));
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  };
+
+  const handleSubmit = async () => {
+    let candidateData = {
+      userId: id,
+      name,
+      profilePicture,
+      title,
+      birthday,
+      description,
+      phone,
+      email,
+      city,
+      address,
+      facebook,
+      twitter,
+      linkedIn,
+    };
+    const formData = new FormData();
+    formData.append("data", candidateData);
+    
+    if (file) {
+      formData.append("profilePicture", file);
+    }
+    let data = {
+      url: `/api/v1/candidate/save/${id}`,
+      data: candidateData,
+      method: "post",
+    };
+    const response = await updateProfileData(data);
+    console.log(response.data);
+    if (response.status === 200) {
+      setMessage(response.data);
+      setTimeout(
+        () => {
+          setMessage(null);
+          clearTimeout();
+        },
+        500,
+        2000
+      );
+    }
+  };
   return (
     <>
       <motion.div
@@ -120,32 +176,33 @@ export default function Profile() {
             <Row>
               <ImgCrop rotationSlider>
                 <Upload
-                  name="avatar"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  beforeUpload={beforeUpload}
-                  onChange={handleChange}
+                  onChange={handleFileChange}
+                  beforeUpload={() => false}
+                  accept="image/*"
+                  listType="picture"
+                  // showUploadList={false}
                 >
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  ) : (
-                    uploadButton
-                  )}
+                  {!hasPicture &&
+                    (<Button icon={<UploadOutlined />}>
+                    Upload Profile Picture
+                  </Button>)}
+                  {hasPicture&& (
+                  <Image
+                    src={profilePicture}
+                    alt="Profile Preview"
+                    style={{ maxWidth: "200px", marginTop: "10px" }}
+                  />
+                )}
+
                 </Upload>
+
+                
               </ImgCrop>
             </Row>
 
             <Row justify="center">
               <Col span={23}>
-                <Form layout="vertical">
+                <Form layout="vertical" onFinish={handleSubmit}>
                   <Row justify="start">
                     <Title level={2} style={{ margin: "30px 0" }}>
                       Basic Information
@@ -185,17 +242,21 @@ export default function Profile() {
                             Birthday:
                           </Title>
                           <DatePicker
+                            value={birthday}
                             style={{
                               boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
                               height: "40px",
                             }}
-                            onChange={(date) => setBirthday(date)}
+                            onChange={(date) => {
+                              setBirthday(date);
+                              console.log(date);
+                            }}
                           />
                         </Col>
 
                         <Col span={24}>
                           <Row justify="space-between">
-                            {/* <Col span={3}>
+                            <Col span={3}>
                               <Title level={4} style={{}}>
                                 Currency:
                               </Title>
@@ -203,7 +264,6 @@ export default function Profile() {
                                 defaultValue={"USD$"}
                                 value={currency}
                                 onChange={(value) => setCuurency(value)}
-                                // mode="tags"
                                 style={{
                                   width: "100%",
                                   boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -213,7 +273,7 @@ export default function Profile() {
                                 }}
                                 options={currencies}
                               />
-                            </Col> */}
+                            </Col>
                             <Col span={9}>
                               <Title level={4} style={{}}>
                                 Minimum Salary:
@@ -221,7 +281,6 @@ export default function Profile() {
                               <Select
                                 value={minSalary}
                                 onChange={(value) => setMinSalary(value)}
-                                // mode="tags"
                                 style={{
                                   width: "100%",
                                   boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -240,7 +299,6 @@ export default function Profile() {
                               <Select
                                 value={maxSalary}
                                 onChange={(value) => setMaxSalary(value)}
-                                // mode="tags"
                                 style={{
                                   width: "100%",
                                   boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -401,14 +459,18 @@ export default function Profile() {
                       </Row>
                     </Col>
                   </Row>
-                  <Row style={{padding: '0 2%'}}>
+                  <Row style={{ padding: "0 2%" }}>
                     <Button
-                    htmlType="submit"
-                    size="large"
-                    type="primary"
-                    style={{borderRadius: '0'}}> 
+                      htmlType="submit"
+                      size="large"
+                      type="primary"
+                      style={{ borderRadius: "0" }}
+                    >
                       Save
                     </Button>
+                    {message && (
+                      <Alert message="Success Tips" type="success" showIcon />
+                    )}
                   </Row>
                 </Form>
               </Col>

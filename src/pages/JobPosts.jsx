@@ -1,10 +1,8 @@
 import JobPostCard from "../Components/cards/JobPostCard";
 import { Row, Col, Divider, Typography, Select, Space, Button } from "antd";
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
-import AddJobPost from '../pages/company/AddJobPost';
 import { salary } from "../store/demo/profile";
 import { items } from "../store/demo/jobPosts";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 
@@ -146,7 +144,6 @@ export default function JobPosts() {
             })}
           </Row>
         </Col>
-        <AddJobPost/>
       </Row>
     </>
   );

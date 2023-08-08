@@ -338,7 +338,7 @@ function AddJobPost() {
                     type="primary" 
                     style={{borderRadius: '0'}}
                     onClick={handleAddInput}>
-                    Add Input
+                    Add More
                   </Button>
                   </Col>
                 </Row>

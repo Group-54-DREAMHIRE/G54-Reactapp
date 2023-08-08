@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
 
-const EventCard = () => {
+export default function EventCard ({event}) {
+
   return (
+  
     <Card
       cover={
         <img
@@ -10,28 +12,39 @@ const EventCard = () => {
           alt="Card Cover"
         />
       }
-      style={{ width: "900px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
     >
-      <a href="your_link_url">Creative Software</a>
-      <h3>Career Fair - UCSC</h3>
+      
+      <a href="your_link_url">{event.company}</a>
+      <h3>{event.title}</h3>
       <p>
-        Come explore the endless career opportunities at our career fair with
-        SimCentric Technologies! Don't miss out on the chance to turn your
-        dreams into ...
+        {event.description}
       </p>
 
       
       <div style={{ marginBottom: "12px" }}>
-        <Tag color="blue">Creative software</Tag>
-        <Tag color="green">Belvantage</Tag>
-        <Tag color="purple">LayUp</Tag>
-        {/* Add more tags as needed */}
+        {event.participates.map((item, index)=>{
+          return(
+            <Tag color="blue" key={index}>
+              {item}
+            </Tag>
+          )
+        })}
       </div>
-      <Button type="primary" style={{ marginTop: "8px" }}>
-        Register
+      <Button 
+        size="large" 
+        type="primary" 
+        style={{ 
+          marginTop: "8px", 
+          marginRight: '20px',
+          borderRadius: '0' }}>
+        Save
+      </Button>
+      <Button size="large" type="primary" style={{ marginTop: "8px", borderRadius: '0' }}>
+        View More..
       </Button>
     </Card>
   );
 };
 
-export default EventCard;
+
