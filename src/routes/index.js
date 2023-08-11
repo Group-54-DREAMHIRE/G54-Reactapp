@@ -11,23 +11,16 @@ import { getUser } from "../store/auth/userSlice";
 import { useEffect, useState } from "react";
 
 export default function MainRoutes() {
-  
-
   // const userType = localStorage.getItem("USERTYPE");
 
-  const userType = "candidate";
+  const userType = "admin";
   if (userType === "candidate") {
     return <CandidateRoutes />;
-  }
-
-  else if (userType === "company") {
+  } else if (userType === "company") {
     return <CompanyRoutes />;
-  }
-
-  else if (userType === "admin") {
+  } else if (userType === "admin") {
     return <AdminRoutes />;
-  }
-  else if (userType === null) {
+  } else if (userType === null) {
     return (
       <Routes>
         <Route path="/" index element={<DefaultMainLayout />} />

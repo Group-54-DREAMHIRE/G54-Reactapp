@@ -18,7 +18,7 @@ import { FaEnvelopeOpenText } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
-const userType = "candidate";
+const userType = "admin";
 const sidebarItems = [
   {
     id: 1,
@@ -32,7 +32,6 @@ const sidebarItems = [
     key: "/profile",
     icon: <UserOutlined />,
   },
- 
 ];
 
 if (userType === "candidate") {
@@ -97,7 +96,7 @@ if (userType === "candidate") {
       label: "Logout",
       key: "logout",
       icon: <BiLogOutCircle />,
-    },
+    }
   );
 } else if (userType === "company") {
   sidebarItems.push(
@@ -161,63 +160,61 @@ if (userType === "candidate") {
       label: "Logout",
       key: "logout",
       icon: <BiLogOutCircle />,
-    },
+    }
   );
 } else if (userType === "admin") {
   sidebarItems.push(
     {
-    id: 3,
-    label: "Payments",
-    key: "/payments",
-    icon: <FiUsers />,
-  },
-  {
-    id: 4,
-    label: "Regaistration Requests",
-    key: "/registration",
-    icon: <FiUsers />,
-  },
-  {
-    id: 5,
-    label: "Companies",
-    key: "/handlecompanies",
-    icon: <FiUsers />,
-  },
-  {
-    id: 6,
-    label: "Candidates",
-    key: "/handlecandidates",
-    icon: <FiUsers />,
-  },
-  {
-    id: 7,
-    label: "Edit Landing Page",
-    key: "/editlanding",
-    icon: <FiUsers />,
-  },
-  {
-    id: 10,
-    label: "Settings",
-    key: "/settings",
-    icon: <SettingFilled />,
-    children: [
-      {
-        label: "ChangePassword",
-        key: "/changepassword",
-        icon: <LockFilled />,
-      },
-    ],
-  },
-  {
-    id: 11,
-    label: "Logout",
-    key: "logout",
-    icon: <BiLogOutCircle />,
-  },
+      id: 3,
+      label: "Payments",
+      key: "/payments",
+      icon: <FiUsers />,
+    },
+    {
+      id: 4,
+      label: "Regaistration Requests",
+      key: "/registration",
+      icon: <FiUsers />,
+    },
+    {
+      id: 5,
+      label: "Companies",
+      key: "/handlecompanies",
+      icon: <FiUsers />,
+    },
+    {
+      id: 6,
+      label: "Candidates",
+      key: "/handlecandidates",
+      icon: <FiUsers />,
+    },
+    {
+      id: 7,
+      label: "Edit Landing Page",
+      key: "/editlanding",
+      icon: <FiUsers />,
+    },
+    {
+      id: 10,
+      label: "Settings",
+      key: "/settings",
+      icon: <SettingFilled />,
+      children: [
+        {
+          label: "ChangePassword",
+          key: "/changepassword",
+          icon: <LockFilled />,
+        },
+      ],
+    },
+    {
+      id: 11,
+      label: "Logout",
+      key: "logout",
+      icon: <BiLogOutCircle />,
+    }
   );
-}
-
-else if(userType === null){
+} else if (userType === null) {
   sidebarItems.push(null);
 }
 
