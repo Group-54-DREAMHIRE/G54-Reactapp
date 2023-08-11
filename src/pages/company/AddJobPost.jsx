@@ -108,44 +108,56 @@ const currencies = [
 
 const tagitems = [
   {
-    value: 'react',
-    label: 'REACT'
+    value: "react",
+    label: "REACT",
   },
   {
-    value: 'angular',
-    label: 'ANGULAR'
+    value: "angular",
+    label: "ANGULAR",
   },
   {
-    value: 'java',
-    label: 'JAVA'
+    value: "java",
+    label: "JAVA",
   },
   {
-    value: 'node',
-    label: 'NODE.JS'
+    value: "node",
+    label: "NODE.JS",
   },
   {
-    value: 'python',
-    label: 'PYTHON'
+    value: "python",
+    label: "PYTHON",
   },
   {
-    value: 'javascript',
-    label: 'JAVASCRIPT'
+    value: "javascript",
+    label: "JAVASCRIPT",
   },
-]
+];
 
 function AddJobPost() {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [experience, setExperience] = useState("");
-  const [location, setLocation] = useState("");
-  const [currency, setCurrency] = useState("");
   const [minsalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
   const [description, setDescription] = useState("");
   const [apply, setApply] = useState("");
-  const [requirements, SetRequirements] = useState("");
+  const [requirements, setRequirements] = useState([""]);
   const [tags, setTags] = useState([]);
-  const [customTag, setCustomTag] = useState("");
+  const [deadline, setDeadline] = useState(null);
+  const [education, setEducation] = useState("");
+
+  const handleAddInput = () => {
+    const newInput = "";
+    setRequirements([...requirements, newInput]);
+  };
+
+  const handleInputChange = (e, index) => {
+
+    const updatedValue = [...requirements];
+    updatedValue[index] = e.target.value;
+    setRequirements(updatedValue);
+    console.log(requirements);
+  };
   return (
     <>
       <Row justify="center" className="addjob-w">
@@ -159,18 +171,16 @@ function AddJobPost() {
                 </Row>
                 <Row justify="space-between">
                   <Col span={11}>
-                    <Title level={4}>
-                      Job Title:
-                    </Title>
+                    <Title level={4}>Job Title:</Title>
                     <Input
                       allowClear
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
                         fontSize: "large",
                       }}
                       value={title}
-                      onChange={(e)=>setTitle(e.target.value)}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
                   </Col>
                   <Col span={11}>
@@ -179,13 +189,12 @@ function AddJobPost() {
                     </Title>
                     <Select
                       defaultValue={"Full Time"}
-                      // mode="tags"
                       value={type}
-                      onChange={(e)=>setType(e.target.value)}
+                      onChange={(e) => setType(e.target.value)}
                       allowClear
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
                         fontSize: "medium",
                         borderRadius: "0 !important",
@@ -201,15 +210,14 @@ function AddJobPost() {
                     <Select
                       defaultValue={"1 Year"}
                       value={experience}
-                      onChange={(e)=>setExperience(e.target.value)}
+                      onChange={(e) => setExperience(e.target.value)}
                       // mode="tags"
                       allowClear
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
                         fontSize: "medium",
-                        borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
                       options={years}
@@ -217,43 +225,22 @@ function AddJobPost() {
                   </Col>
                   <Col span={11}>
                     <Title level={4} style={{}}>
-                      Location:
+                      Education:
                     </Title>
-                    <Input
+                    <Select
+                      value={education}
+                      onChange={(value) => setEducation(value)}
+                      defaultValue={"600"}
                       allowClear
-                      value={location}
-                      onChange={(e)=>setLocation(e.target.value)}
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        width: "100%",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
-                        fontSize: "large",
+                        fontSize: "medium",
+                        fontFamily: "arial",
                       }}
+                      options={[{label:"BSc in Computer Science", value: "BSc in Computer Science"}]}
                     />
-                  </Col>
-                  <Col span={24}>
-                    <Title level={4} style={{ display: "block" }}>
-                      Select Curency:
-                    </Title>
-                    <Row>
-                      <Col span={2}>
-                        <Select
-                          defaultValue={"USD$"}
-                          allowClear
-                          value={currency}
-                          onChange={(value)=>setCurrency(value)}
-                          // mode="tags"
-                          style={{
-                            width: "100%",
-                            boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                            borderRadius: "0",
-                            fontSize: "medium",
-                            borderRadius: "0 !important",
-                            fontFamily: "arial",
-                          }}
-                          options={currencies}
-                        />
-                      </Col>
-                    </Row>
                   </Col>
                   <Col span={11}>
                     <Title level={4} style={{}}>
@@ -263,14 +250,12 @@ function AddJobPost() {
                       defaultValue={"500"}
                       allowClear
                       value={minsalary}
-                      onChange={(value)=>setMinSalary(value)}
-                      // mode="tags"
+                      onChange={(value) => setMinSalary(value)}
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
                         fontSize: "medium",
-                        borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
                       options={salary}
@@ -281,98 +266,114 @@ function AddJobPost() {
                       Maximum Salary:
                     </Title>
                     <Select
-                     value={maxSalary}
-                     onChange={(value)=>setMaxSalary(value)}
+                      value={maxSalary}
+                      onChange={(value) => setMaxSalary(value)}
                       defaultValue={"600"}
                       allowClear
-                      // mode="tags"
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
                         borderRadius: "0",
                         fontSize: "medium",
-                        borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
                       options={salary}
                     />
+                  </Col>
+                  
+                  <Col span={11}>
+                    <Title level={4} style={{}}>
+                      Deadline:
+                    </Title>
+                    <DatePicker
+                            style={{
+                              boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                              height: "40px",
+                            }}
+                            onChange={(date) => setDeadline(date)}
+                          />
                   </Col>
                 </Row>
 
                 <Row>
                   <Title level={4}>Job Descreption:</Title>
                   <TextArea
+                    value={description}
                     allowClear
                     rows={4}
-                    style={{ boxShadow: "0 0 10px 0 rgba(30,136,229,.3)" }}
+                    style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)" }}
                   />
                 </Row>
                 <Row>
                   <Title level={4}>How To Apply:</Title>
                   <TextArea
-                   value={apply}
-                   onChange={(e)=>setApply(e.target.value)}
-                  allowClear
-                    rows={4}
-                    style={{ boxShadow: "0 0 10px 0 rgba(30,136,229,.3)" }}
-                  />
-                </Row>
-                <Row>
-                  <Title level={4}>Job Requirements:</Title>
-                  <TextArea
-                   value={requirements}
-                   onChange={(e)=>SetRequirements(e.target.value)}
+                    value={apply}
+                    onChange={(e) => setApply(e.target.value)}
                     allowClear
                     rows={4}
-                    style={{ boxShadow: "0 0 10px 0 rgba(30,136,229,.3)" }}
+                    style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)" }}
                   />
                 </Row>
-                <Row justify='space-between' style={{marginBottom: '3%'}}> 
+                <Row gutter={[20,10]}>
+                 <Col span={24}> 
+                 <Title level={4}>Job Requirements:</Title>
+                 </Col>
+                  <Col span={12}>
+                  {requirements.map((item, index) => (
+                    <Input
+                    style={{
+                      boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
+                      borderRadius: "0",
+                      fontSize: "large",
+                      marginBottom: "20px"
+                    }}
+                      key={index}
+                      value={item}
+                      onChange={(e) => handleInputChange(e, index)}
+                    />
+                  ))}
+                  </Col>
+                  <Col span={24}>
+                  <Button 
+                    type="primary" 
+                    style={{borderRadius: '0'}}
+                    onClick={handleAddInput}>
+                    Add More
+                  </Button>
+                  </Col>
+                </Row>
+                <Row justify="space-between" style={{ marginBottom: "3%" }}>
                   <Col span={15}>
-                  <Title level={4}>
-                    Tags:
-                  </Title>
+                    <Title level={4}>Tags:</Title>
                     <Select
-                       value={tags}
-                       onChange={(values)=>{setTags(values)}}
+                      value={tags}
+                      onChange={(values) => {
+                        setTags(values);
+                      }}
                       mode="multiple"
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                        borderRadius: '0'
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
+                        borderRadius: "0",
                       }}
                       placeholder="Select Tags"
                       options={tagitems}
                     />
                   </Col>
-                  <Col span={7}>
-                  <Title level={4}>
-                   Add Custom Tags:
-                  </Title>
-                  <Input
-                       value={customTag}
-                       onChange={(e)=>setCustomTag(e.target.value)}
-                      allowClear
-                      style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                        width: '60%',
-                        borderRadius: "0",
-                        fontSize: "large",
-                        marginRight: '5%',
-                      }}
-                    />
-                    <Button type="primary" size="large"> Add</Button>
-                  </Col>
                 </Row>
                 <Row>
-                    <Button type="primary" 
-                            size="large"
-                            style={{
-                              marginBottom: '3%',
-                            }}> 
-                      Post Job 
-                    </Button>
-                  </Row>
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    size="large"
+                    style={{
+                      marginBottom: "3%",
+                      borderRadius: "0",
+                    }}
+                  >
+                    Post Job
+                  </Button>
+                </Row>
               </Form>
             </Col>
           </Row>

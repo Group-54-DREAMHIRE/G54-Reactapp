@@ -1,0 +1,73 @@
+.D_Admin_Profile_form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;}
+
+    .D_Admin_Profile_title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .D_Admin_Profile_profile-picture {
+    //   background-color: #1890ff;
+    }
+  .D_Admin_Profile_input-field{
+    box-shadow: 0 0 10px 0 rgba(30, 136, 229, 0.3);
+    border-radius: 2;
+    &:hover {
+        box-shadow: 0 0 15px 0 rgba(30, 136, 229, 0.5); /* Adjust the shadow on hover */
+      }
+    }
+
+  .D_Admin_Profile_save-button {
+    margin-left: 10px;
+  }
+
+  .D_Admin_Profile_change-password-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+
+  .profile-picture {
+    /* ... existing styles ... */
+    position: relative;
+    cursor: pointer;
+    opacity: 5;
+  }
+  
+  .upload-overlay {
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // width: auto;
+    // height: auto;
+    // background-color: rgba(0, 0, 0, 0.6);
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    // opacity: 0;
+    // transition: opacity 0.3s ease;
+    // cursor: pointer;
+  
+    &:hover {
+      opacity: 1;
+    }
+  
+    .upload-text {
+      color: #ffffff;
+      margin-top: 4px;
+    }
+  }
+  
+
+
+
+
+
+
+

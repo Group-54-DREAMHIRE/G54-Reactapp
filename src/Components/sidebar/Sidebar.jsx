@@ -41,11 +41,11 @@ const Sidebar = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'sticky',
-                backgroundColor: 'white',
                 top: '12vh',
+                backgroundColor: 'white',
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                height: '88vh'
+                height: '100vh'
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{
