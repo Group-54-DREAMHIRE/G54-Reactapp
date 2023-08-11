@@ -1,0 +1,48 @@
+.L_Company_Details_content {
+    padding: 2%;
+  }
+  
+  .L_Company_Details_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .L_Company_Details_table-container {
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .L_Company_Details_table-cell {
+    background-color: lightblue;
+    padding: 8px 16px;
+    border-right: 1px solid white;
+  }
+  
+  .L_Company_Details_data-table {
+    margin-top: 20px;
+  }
+  
+  .L_Company_Details_view-button {
+    background-color: #1890ff; /* Dark blue color */
+    border-color: #1890ff;
+  }
+  
+  .L_Company_Details_view-button:hover,
+  .L_Company_Details_view-button:focus {
+    background-color: #096dd9; /* Slightly darker shade on hover/focus */
+    border-color: #096dd9;
+  }
+  .L_Company_Details_remove-button {
+    background-color: #ff4d4f; /* Red color */
+    border-color: #ff4d4f;
+  }
+  
+  .L_Company_Details_remove-button:hover,
+  .L_Company_Details_remove-button:focus {
+    background-color: #d9363e; /* Slightly darker shade on hover/focus */
+    border-color: #d9363e;
+  }
