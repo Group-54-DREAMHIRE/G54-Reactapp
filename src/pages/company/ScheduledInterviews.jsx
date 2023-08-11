@@ -2,15 +2,21 @@ import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { spaceChildren } from 'antd/es/button';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
-function AdvertisementList() {
+function ScheduledInterviews() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const columns = [
+    {
+        title: 'Interview ID',
+        dataIndex: 'interviewId',
+        key: 'interviewId',
+    },
     {
       title: 'Job Title',
       dataIndex: 'jobTitle',
@@ -29,21 +35,38 @@ function AdvertisementList() {
       ),
     },
     {
-      title: 'No. of vacancies',
-      dataIndex: 'vacancies',
-      key: 'vacancies',
-    },
+        title: "Assigned Candidates",
+        key: "assifnedCandidates",
+        render: (record) => (
+          <Button type="primary">
+            <Link to={`/scheduledinterviews/assignedcandidates`}>{record.assignedCandidates}</Link>
+          </Button>
+        ),
+      },
     {
-      title: 'No. of Applications',
-      dataIndex: 'applications',
-      key: 'applications',
-    },
-    {
-      title: "Schedule Interview",
-      key: "scheduleInterview",
-      render: (text, record) => (
+      title: "Pending Timeslots",
+      key: "pendingTimeslots",
+      render: (record) => (
         <Button type="primary">
-          <Link to={`/interviews/scheduleinterviews`}>Shedule</Link>
+          <Link to={`/scheduledinterviews/pendingtimeslots`}>{record.pendingTimeSlots}</Link>
+        </Button>
+      ),
+    },
+    {
+      title: "Selected Timeslots",
+      key: "selectedTimeSlots",
+      render: (record) => (
+        <Button type="primary">
+          <Link to={`/scheduledinterviews/selectedtimeslots`}>{record.selectedTimeSlots}</Link>
+        </Button>
+      ),
+    },
+    {
+      title: "Rejected Candidates",
+      key: "rejectedCandidates",
+      render: (record) => (
+        <Button type="primary">
+          <Link to={`/scheduledinterviews/rejectedcandidates`}>{record.rejectedCandidates}</Link>
         </Button>
       ),
     },
@@ -52,37 +75,52 @@ function AdvertisementList() {
   const [dataSource, setDataSource] = useState([
     {
       key: '1',
+      interviewId: '001',
       jobTitle: 'Software Engineer',
-      vacancies: 20,
-      applications: 15,
+      assignedCandidates: 10,
+      selectedTimeSlots: 2,
+      pendingTimeSlots: 3,
+      rejectedCandidates: 4,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '2',
+      interviewId: '002',
       jobTitle: 'Software Engineer',
-      vacancies: 13,
-      applications: 10,
+      assignedCandidates: 10,
+      selectedTimeSlots: 2,
+      pendingTimeSlots: 3,
+      rejectedCandidates: 4,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '3',
+      interviewId: '003',
       jobTitle: 'Web Developer',
-      vacancies: 8,
-      applications: 4,
+      assignedCandidates: 10,
+      selectedTimeSlots: 2,
+      pendingTimeSlots: 3,
+      rejectedCandidates: 4,
       skills: ["HTML", "CSS", "JavaScript"],
     },
     {
       key: '4',
+      interviewId: '004',
       jobTitle: 'Software Engineer',
-      vacancies: 5,
-      applications: 3,
+      assignedCandidates: 10,
+      selectedTimeSlots: 2,
+      pendingTimeSlots: 3,
+      rejectedCandidates: 4,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '5',
+      interviewId: '005',
       jobTitle: 'Web Developer',
-      vacancies: 20,
-      applications: 4,
+      assignedCandidates: 10,
+      selectedTimeSlots: 2,
+      pendingTimeSlots: 3,
+      rejectedCandidates: 4,
       skills: ["HTML", "CSS", "JavaScript"],
     },
   ]);
@@ -107,7 +145,7 @@ function AdvertisementList() {
                 fontSize: '25px',
                 fontWeight: 600,
               }}>
-                Schedule Interviews
+                Scheduled Interviews
               </Title>
             </Col>
             <Col span={6}>
@@ -150,4 +188,4 @@ function AdvertisementList() {
 
 
 
-export default AdvertisementList;
+export default ScheduledInterviews;

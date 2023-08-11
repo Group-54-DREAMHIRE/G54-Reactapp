@@ -15,7 +15,7 @@ export default function MainRoutes() {
 
   // const userType = localStorage.getItem("USERTYPE");
 
-  const userType = "candidate";
+  const userType = "company";
   if (userType === "candidate") {
     return <CandidateRoutes />;
   }
