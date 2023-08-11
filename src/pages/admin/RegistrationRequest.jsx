@@ -1,8 +1,17 @@
 
+import ApprovalsCard from "../../Components/cards/admin/ApprovalsCard"
+
 export default function RegistrationRequest() {
   return (
     <>
-        <h1>This is Registration requests in admin side</h1>
+    <div className=".D_Aprproval_Card_page">
+    
+        <ApprovalsCard/>
+
+        
+        <ApprovalsCard/>
+       
+        </div>
     </>
   )
 }
