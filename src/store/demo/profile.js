@@ -1,18 +1,18 @@
 export const currencies = [
     {
-      value: "USD",
+      value: "USD$",
       label: "USD$",
     },
     {
-      value: "EURO",
+      value: "EURO€",
       label: "EURO€",
     },
     {
-      value: "AUD",
+      value: "AUD$",
       label: "AUD$",
     },
     {
-      value: "GPB",
+      value: "GBP£",
       label: "GBP£",
     },
   ];
@@ -52,19 +52,5 @@ export const currencies = [
     },
   ];
 
-  export const language = [
-    {
-      value: "english",
-      label: "English",
-    },
-    {
-      value: "sinhala",
-      label: "Sinhala",
-    },
-    {
-      value: "tamil",
-      label: "Tamil",
-    },
-  ];
-  
+ 
   

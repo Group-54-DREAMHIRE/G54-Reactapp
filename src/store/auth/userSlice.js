@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
         const user = response.data.user;
         const token = response.data.accessToken;
         localStorage.setItem('USER',JSON.stringify(user));
-        localStorage.setItem("USERTYPE",user.userType);
+        localStorage.setItem("USERTYPE",response.data.userType);
         localStorage.setItem("TOKEN",token)
         return response.status;
     }
