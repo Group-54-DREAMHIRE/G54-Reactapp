@@ -4,18 +4,43 @@ import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
 import { items } from "../store/demo/jobPosts";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { fetchUserData, getData } from "../api/authenticationService";
 const { Title } = Typography;
 
 export default function JobPosts() {
+
+  const [allJobList, setAllJobList] = useState([]);
+
+  useEffect(() => {
+   
+    getData('/api/v1/jobpost/getalljobs')
+    .then((response) => {
+      console.log(response.data);
+      setAllJobList(response.data);
+    })
+    .catch((error) => {
+      //setError("Invalid data");
+      console.error("Error fetching user profile:", error);
+    });
+    console.log(allJobList);
+
+  }, []);
+
+  
+
   const navigate = useNavigate();
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const userType = localStorage.getItem("USERTYPE");
+
   let status = {
-    save: true,
+    save: userType === "candidate"? true:false,
     more: true,
   };
-  const company = localStorage.getItem("USERTYPE") === "company" ? true : false;
+const auth = userType === "company"? true:false;
   return (
     <>
       <Row style={{ padding: "1%" }}>
@@ -26,10 +51,13 @@ export default function JobPosts() {
                 <Col>
                   <Title style={{ marginTop: "0" }}>Jobs</Title>
                 </Col>
-                {company && (
+              
+                {auth && (
                   <Col>
+                  {allJobList.companyName}
                     <Button 
                       icon={<PlusOutlined />}
+                      
                       size="large" 
                       type="primary"
                       onClick={()=> navigate("/addjobpost")}
@@ -135,10 +163,10 @@ export default function JobPosts() {
             </Space>
           </Row>
           <Row style={{ marginTop: "20px" }} gutter={[25, 25]}>
-            {items.map((item) => {
+            {allJobList.map((item, index) => {
               return (
                 <Col span={8}>
-                  <JobPostCard items={item} status={status} />
+                  <JobPostCard key={index} items={item} status={status} />
                 </Col>
               );
             })}

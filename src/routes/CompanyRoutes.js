@@ -13,7 +13,7 @@ import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
 
 import PostedJobs from '../pages/company/PostedJobs';
-import JobPost from '../pages/company/JobPost';
+import JobPost from '../pages/JobPost';
 
 import Interviews from '../pages/company/Interviews';
 import ScheduleInterviews from '../pages/company/ScheduleInterviews'
@@ -41,7 +41,7 @@ export default function CandidateRoutes() {
 
           <Route path="/postedjobs" element={<PostedJobs/>}/>
           <Route path="/addjobpost" element={<AddJobPost/>}/>
-          <Route path="/jobpost" element={<JobPost/>}/>
+          <Route path='/jobpost/:id' element={<JobPost/>}/>
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes" index element={<PendingResume/>} />

@@ -7,6 +7,8 @@ import c6 from '../../assets/images/C6.png';
 
 export const companyDetails = {
   name: "Crative Software",
+  logo: "",
+  images: "",
   description:
     "Creative Software builds and manages high-performing software development teams to bring big ideas to life.Whether you want to extend your in-house team or need assistance with developing, quality assuring, or supporting your application, we can help.",
   about:

@@ -110,7 +110,8 @@ export default function ApplyJob() {
                       onChange={(e)=>setName(e.target.value)}
                      
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "35px",
                       }}
                     />
@@ -121,7 +122,8 @@ export default function ApplyJob() {
                       value={city}
                       onChange={(e)=>setCity(e.target.value)}
                       style={{
-                        boxShadow: " 0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "35px",
                       }}
                     />
@@ -135,10 +137,9 @@ export default function ApplyJob() {
                           onChange={(value)=>setCurrency(value)}
                           style={{
                             width: "100%",
-                            boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                            borderRadius: "0",
+                            boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                            borderRadius: '0',
                             fontSize: "medium",
-                            borderRadius: "0 !important",
                             fontFamily: "arial", 
                           }}
                           options={currencies}
@@ -156,10 +157,9 @@ export default function ApplyJob() {
                       // mode="tags"
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                        borderRadius: "0",
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         fontSize: "medium",
-                        borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}   
                     />
@@ -174,8 +174,8 @@ export default function ApplyJob() {
                       mode="multiple"
                       style={{
                         width: "100%",
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                        borderRadius: '0'
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                       }}
                       placeholder="Select Tags"                    
                     />
@@ -187,7 +187,8 @@ export default function ApplyJob() {
                    onChange={(e)=>setPhone(e.target.value)}
                     
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "35px",
                       }}
                     />
@@ -199,7 +200,8 @@ export default function ApplyJob() {
                    onChange={(e)=>setEmail(e.target.value)}
                      
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "35px",
                         marginBottom: '5%'
                       }}
