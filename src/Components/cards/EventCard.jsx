@@ -8,8 +8,9 @@ export default function EventCard ({event}) {
     <Card
       cover={
         <img
-          src="https://images.unsplash.com/photo-1516882058351-3601a7f420cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lkZSUyMGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+          src={imageUrl}
           alt="Card Cover"
+          style={{ objectFit: "cover", height: "200px" }}
         />
       }
       style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
@@ -21,7 +22,6 @@ export default function EventCard ({event}) {
         {event.description}
       </p>
 
-      
       <div style={{ marginBottom: "12px" }}>
         {event.participates.map((item, index)=>{
           return(
