@@ -1,17 +1,18 @@
 
-import ApprovalsCard from "../../Components/cards/admin/ApprovalsCard"
+import { Col, Row } from "antd";
+import ApprovalsCard from "../../Components/cards/admin/ApprovalsCard";
 
 export default function RegistrationRequest() {
   return (
     <>
-    <div className=".D_Aprproval_Card_page">
-    
+      <Row gutter={[0,30]}>
+        <Col span={14}>
         <ApprovalsCard/>
-
-        
+        </Col>
+        <Col span={14}>
         <ApprovalsCard/>
-       
-        </div>
+        </Col>
+      </Row>
     </>
   )
 }

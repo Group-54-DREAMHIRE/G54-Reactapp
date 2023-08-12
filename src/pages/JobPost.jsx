@@ -213,7 +213,7 @@ export default function JobPost() {
               >Apply This Job
             </Button>
           </Row>
-          <ApplyJob/>
+          <ApplyJob jobID={id}/>
         </Col>
       </Row>
     </>

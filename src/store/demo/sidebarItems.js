@@ -195,6 +195,12 @@ if (userType === "candidate") {
       icon: <FiUsers />,
     },
     {
+      id: 8,
+      label: "Complaints",
+      key: "/complaints",
+      icon: <FiUsers />,
+    },
+    {
       id: 10,
       label: "Settings",
       key: "/settings",

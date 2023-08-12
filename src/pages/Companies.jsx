@@ -1,10 +1,14 @@
-import CompanyPage from "./CompanyPage";
+import { Col, Row } from "antd";
+
 
 export default function Companies() {
   return (
     <>
-    <CompanyPage/>
-    {/* <h1>This is Companies Page</h1> */}
+      <Row>
+        <Col>
+        
+        </Col>
+      </Row>
     </>
   )
 }
