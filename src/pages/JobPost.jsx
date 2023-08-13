@@ -5,38 +5,46 @@ import ApplyJob from '../pages/candidate/ApplyJob';
 import moment from "moment/moment";
 import { useParams } from 'react-router-dom';
 import { Button, Col, Image, Row, Typography } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openApplyJob } from "../store/models/modelsSlice";
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import { useState, useEffect } from "react";
 import { getData } from "../api/authenticationService";
+import { getJobPost } from "../store/jobpost/jobSlice";
 
 const { Title, Text } = Typography;
 export default function JobPost() {
   const { id } = useParams();
   const dispatch = useDispatch(); 
 
+
   const [jobPost, setJobPost] = useState([]);
   const [deadline, setDeadline] = useState();
   const [postDate, setPostDate] = useState();
   const [listRequirements, setListRequirements] = useState([""]);
 
+  const job = dispatch(getJobPost);
+
   useEffect(() => {
-   
-    getData(`/api/v1/jobpost/getjobpost/${id}`)
+    
+    if(job === null){
+      getData(`/api/v1/jobpost/getjobpost/${id}`)
     .then((response) => {
       console.log(response.data);
       setJobPost(response.data);
     })
     .catch((error) => {
-      //setError("Invalid data");
       console.error("Error fetching user profile:", error);
     });
-    console.log(jobPost) }, []);
+    console.log(jobPost)
+    }else{
+      setJobPost(job)
+    }
+   
+     }, []);
 
     useEffect(() => {
       if(jobPost){
-       
         if (typeof jobPost.jobRequirements === 'string') {
           const val = jobPost.jobRequirements.split(', ');
           setListRequirements(val);
@@ -44,14 +52,10 @@ export default function JobPost() {
         } else {
           setListRequirements([]);
         }
-
         const dateObj = moment(jobPost.deadline);
         setDeadline(dateObj.format("MMM DD YYYY"));
         const date = moment(jobPost.postedDate);
         setPostDate(date.format("MMM DD YYYY"));
-
-       
-        
       }
  }, [jobPost]);
   

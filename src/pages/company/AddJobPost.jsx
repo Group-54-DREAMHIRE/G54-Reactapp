@@ -17,9 +17,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { jobtypes, tagItems, years } from "../../store/demo/addJobPost";
 import { useState, useEffect } from "react";
 import { fetchUserData, getProfileData } from "../../api/authenticationService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/auth/userSlice";
 import { currencies, salary } from "../../store/demo/profile";
+import { addJobPost } from "../../store/jobpost/jobSlice";
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -27,6 +28,7 @@ function AddJobPost() {
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
+  const dispatch = useDispatch();
   const [companyName, setCompanyName] = useState("");
   const [profileData, setProfileData] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
@@ -85,20 +87,22 @@ function AddJobPost() {
   };
 
   const handleImage = (info) =>{
-        setImageUpload(info.file);
-        console.log(imageUpload);
+        setImageUpload(info.file.originFileObj);
+        console.log(imageUpload,"Dulaaaaaa");
   }
 
   const saveImage = () =>{
     console.log("Out If");
     if (imageUpload) {
+      console.log(imageUpload,"test");
+      console.log(imageUpload);
       console.log("In If");
       const imageRef = ref(storage, `dreamhire/companies/${companyName}/${imageUpload.name}`);
-
       uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);
         getDownloadURL(imageRef)
           .then((url) => {
+            console.log(imageUpload);
             setImageUrl(url);
             setCover(url);
             console.log(imageUrl);
@@ -107,10 +111,9 @@ function AddJobPost() {
           .catch((error) => {
             console.log(error.message);
           })
-          .catch((error) => {
-            console.log(error.message);
-          });
+          
       });
+      console.log("end")
     }
   }
 
@@ -145,11 +148,10 @@ function AddJobPost() {
     const response = await fetchUserData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setMessage(response.data);
+      dispatch(addJobPost(response.data));
       setTimeout(
         () => {
-          setMessage(null);
-          clearTimeout();
+
         },
         500,
         2000
@@ -321,7 +323,7 @@ function AddJobPost() {
                       name="image"
                       action="/upload" 
                       listType="picture"
-                      beforeUpload={() => false} 
+                      beforeUpload={()=>false}
                     >
                       <Button icon={<UploadOutlined />}>Select Image</Button>
                       

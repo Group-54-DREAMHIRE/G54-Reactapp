@@ -1,19 +1,21 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import job from '../../assets/images/jobpost1.jpg';
 
-export default function EventCard ({event}) {
-
+export default function EventCard ({event,status}) {
+  const navigate = useNavigate();
   return (
   
     <Card
       cover={
         <img
-          src={imageUrl}
+          src={job}
           alt="Card Cover"
-          style={{ objectFit: "cover", height: "200px" }}
+          style={{ objectFit: "cover", height: "220px" }}
         />
       }
-      style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)" }}
     >
       
       <a href="your_link_url">{event.company}</a>
@@ -31,7 +33,7 @@ export default function EventCard ({event}) {
           )
         })}
       </div>
-      <Button 
+      {status.save && <Button 
         size="large" 
         type="primary" 
         style={{ 
@@ -39,10 +41,18 @@ export default function EventCard ({event}) {
           marginRight: '20px',
           borderRadius: '0' }}>
         Save
-      </Button>
-      <Button size="large" type="primary" style={{ marginTop: "8px", borderRadius: '0' }}>
+      </Button>}
+      { status.more && 
+      <Button 
+      size="large" 
+      type="primary" 
+      style={{ 
+        marginTop: "8px", 
+        borderRadius: '0' 
+        }}
+      onClick={()=> navigate("/event")}>
         View More..
-      </Button>
+      </Button>}
     </Card>
   );
 };

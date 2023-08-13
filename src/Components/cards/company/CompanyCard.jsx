@@ -1,56 +1,42 @@
 import React from "react";
-import { Card, Row, Col, Button } from "antd";
-
+import { Card, Row, Col, Button, Image, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
+const { Title } = Typography;
 const { Meta } = Card;
 
-const CompanyCard = ({ title, paragraph, imageUrl }) => {
+const CompanyCard = ({ item }) => {
+  const navigate = useNavigate();
   return (
-    <Col
-      xs={24}
-      md={window.innerWidth < 766 ? 24 : 12}
-      style={{ marginBottom: "16px" }}
-    >
+    <Col style={{ marginBottom: "16px" }}>
       <Card
         hoverable
         style={{
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          borderRadius: "8px",
-          width: "100%",
-          height: "100%",
         }}
       >
-        <Row>
-          <Col span={16}>
+        <Row justify='space-between'>
+          <Col span={15}>
             <Meta
-              title={<h2 style={{ fontSize: "28px", margin: 0 }}>{title}</h2>}
-              description={
-                <p style={{ fontSize: "16px", margin: "8px 0" }}>{paragraph}</p>
+              title={
+                <Title level={2} style={{ marginBottom: '10px', marginTop: '0' }}>
+                  {item.name}
+                </Title>
               }
+              description={<span>{item.description}</span>}
             />
-            <Button type="primary" style={{ marginTop: "16px" }}>
-              View More
-            </Button>
+           
           </Col>
           <Col span={8}>
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+            <Image alt="Card" src={item.cover} />
+            <Row justify='end'>
+            <Button
+            onClick={()=>navigate("/company")}
+              type="primary"
+              style={{ marginTop: "20px", borderRadius: "0" }}
             >
-              <img
-                alt="Card"
-                src={imageUrl}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
-              />
-            </div>
+              View More
+            </Button>
+            </Row>
           </Col>
         </Row>
       </Card>

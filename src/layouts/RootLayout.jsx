@@ -33,7 +33,7 @@ function RootLayout() {
                 style={{
                   padding: 30,
                   margin:10,
-                  minHeight: 280,
+                  minHeight: '85vh',
                   backgroundColor: "white",
                   boxShadow: '0px 0px 5px  rgba(0,0,0,.2)',
                 }}

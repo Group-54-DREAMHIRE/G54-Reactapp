@@ -132,7 +132,7 @@ if (userType === "candidate") {
     },
     {
       id: 8,
-      label: "Send Notifications",
+      label: "Send Annoucements",
       key: "/sendnotifications",
       icon: <BellOutlined />,
     },

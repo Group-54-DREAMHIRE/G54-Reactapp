@@ -2,8 +2,8 @@ import React from "react";
 import { Card, Space, Button } from "antd";
 import { DollarOutlined, HomeOutlined } from "@ant-design/icons";
 
-function CandidateCard(props) {
-  const { profileImageUrl, name, jobTitle, skills, location, salary } = props;
+function CandidateCard({items}) {
+  
 
   const cardStyle = {
     width: "300px", // Adjusted width
@@ -65,15 +65,15 @@ function CandidateCard(props) {
       <Card style={cardStyle}>
         <div>
           <img
-            src={profileImageUrl}
+            src={items.profileImageUrl}
             alt="Profile"
             style={{ ...imageStyle, marginBottom: "15px" }}
           />
         </div>
-        <div style={titleStyle}>{name}</div>
-        <div style={descriptionStyle}>{jobTitle}</div>
+        <div style={titleStyle}>{items.name}</div>
+        <div style={descriptionStyle}>{items.jobTitle}</div>
         <div style={tagContainerStyle}>
-          {skills.map((skill, index) => (
+          {items.skills.map((skill, index) => (
             <div key={index} style={tagStyle}>
               {skill}
             </div>
@@ -83,9 +83,9 @@ function CandidateCard(props) {
         <div style={additionalTextStyle}>
           <Space>
             <HomeOutlined />
-            <span>{location}</span>
+            <span>{items.location}</span>
             <DollarOutlined />
-            <span>{salary}</span>
+            <span>{items.salary}</span>
           </Space>
         </div>
         <Button type="primary" style={buttonStyle}>

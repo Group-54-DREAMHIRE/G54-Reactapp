@@ -178,7 +178,6 @@ export default function Profile() {
     console.log(info.file.originFileObj);
   };
 
-  const uploadImage = () => {};
 
   const handleSubmit = async () => {
     if (imageUpload) {

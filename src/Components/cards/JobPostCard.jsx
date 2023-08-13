@@ -37,7 +37,8 @@ export default function JobPostCard({ items, status }) {
             <Image
               preview={false}
               src={items.cover}
-              style={{ height: "100%", width: "100%" }}
+              height={160}
+              width={325}
             />
           </Col>
         </Row>

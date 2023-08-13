@@ -6,25 +6,33 @@ import { items } from "../store/demo/jobPosts";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchUserData, getData } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
 const { Title } = Typography;
 
 export default function JobPosts() {
 
+  const dispatch = useDispatch();
   const [allJobList, setAllJobList] = useState([]);
+  const jobPosts = useSelector(getAllJobPosts);
 
   useEffect(() => {
-   
-    getData('/api/v1/jobpost/getalljobs')
+    console.log(jobPosts,"Dula");
+    if(jobPosts===null){
+      getData('/api/v1/jobpost/getalljobs')
     .then((response) => {
       console.log(response.data);
       setAllJobList(response.data);
+      console.log(jobPosts);
+      dispatch(setJobPosts(response.data))
     })
     .catch((error) => {
-      //setError("Invalid data");
       console.error("Error fetching user profile:", error);
     });
     console.log(allJobList);
-
+    }else{
+      setAllJobList(jobPosts);
+    }
   }, []);
 
   
@@ -49,15 +57,14 @@ const auth = userType === "company"? true:false;
             <Col span={24}>
               <Row justify="space-between">
                 <Col>
-                  <Title style={{ marginTop: "0" }}>Jobs</Title>
+                  <Title style={{ marginTop: "0", marginBottom: '0' }}>Jobs</Title>
+                  
                 </Col>
               
                 {auth && (
                   <Col>
-                  {allJobList.companyName}
                     <Button 
                       icon={<PlusOutlined />}
-                      
                       size="large" 
                       type="primary"
                       onClick={()=> navigate("/addjobpost")}
@@ -67,7 +74,9 @@ const auth = userType === "company"? true:false;
                   </Col>
                 )}
               </Row>
-              <Divider />
+             <Col span={24}>
+             <hr />
+             </Col>
             </Col>
           </Row>
           <Row justify="end" style={{ margin: "20px 0 30px" }}>
