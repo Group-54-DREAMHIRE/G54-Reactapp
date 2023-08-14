@@ -13,7 +13,7 @@ import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
 
 import PostedJobs from '../pages/company/PostedJobs';
-import JobPost from '../pages/company/JobPost';
+import JobPost from '../pages/JobPost';
 
 import Interviews from '../pages/company/Interviews';
 import ScheduleInterviews from '../pages/company/ScheduleInterviews'
@@ -30,6 +30,8 @@ import Registration from '../pages/company/Registration';
 import Users from "../pages/company/Users";
 import CompanyProfile from "../pages/company/CompanyProfile";
 import AddJobPost from "../pages/company/AddJobPost";
+import OneFullCard from "../pages/OneFullEvent";
+import EventForm from "../Components/cards/company/EventForm";
 export default function CandidateRoutes() {
   return (
     <>
@@ -41,7 +43,7 @@ export default function CandidateRoutes() {
 
           <Route path="/postedjobs" element={<PostedJobs/>}/>
           <Route path="/addjobpost" element={<AddJobPost/>}/>
-          <Route path="/jobpost" element={<JobPost/>}/>
+          <Route path='/jobpost/:id' element={<JobPost/>}/>
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes" index element={<PendingResume/>} />
@@ -55,6 +57,8 @@ export default function CandidateRoutes() {
 
           <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
           <Route path="/events" element={<Events/>}/>
+          <Route path="/event" element={< OneFullCard/>}/>
+          <Route path="/addevent" element={<EventForm/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
           <Route path="/sheduletests" element={<SheduleTests/>}/>
           <Route path="/sheduletests/createtest" element={<CreateTest/>}/>

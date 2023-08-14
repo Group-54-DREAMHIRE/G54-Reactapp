@@ -133,7 +133,7 @@ if (userType === "candidate") {
     },
     {
       id: 8,
-      label: "Send Notifications",
+      label: "Send Annoucements",
       key: "/sendnotifications",
       icon: <BellOutlined />,
     },
@@ -193,6 +193,12 @@ if (userType === "candidate") {
       id: 7,
       label: "Edit Landing Page",
       key: "/editlanding",
+      icon: <FiUsers />,
+    },
+    {
+      id: 8,
+      label: "Complaints",
+      key: "/complaints",
       icon: <FiUsers />,
     },
     {

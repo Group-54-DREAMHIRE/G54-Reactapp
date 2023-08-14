@@ -19,6 +19,7 @@ import SelectionTest from '../pages/candidate/SelectionTest';
 import JobPost from "../pages/JobPost";
 import AppliedJob from '../pages/candidate/AppliedJob';
 import InterviewDetails from "../pages/candidate/InterviewDetails";
+import CompanyPage from '../pages/CompanyPage';
 export default function CandidateRoutes() {
   return (
     <>
@@ -37,8 +38,9 @@ export default function CandidateRoutes() {
           <Route path="/savedevents" element={<SavedEvents/>}/>
           <Route path="/events" element={<Events/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
-          <Route path="/jobpost" element={<JobPost/>}/>
+          <Route path="/jobpost/:id" element={<JobPost/>}/>
           <Route path="/companies" element={<Companies/>}/>
+          <Route path="/company" element={<CompanyPage/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
           <Route path="/changepassword" element={<ChangePassword/>}/>

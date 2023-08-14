@@ -1,0 +1,75 @@
+.D_Approval_card {
+    display: flex;
+    justify-content:space-evenly;
+    
+    align-items: center;
+    
+    // height: 100vh;
+    }
+  .D_Approval_card_card {
+    width: 70%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    margin-block: 20px;
+    
+  
+    &:hover {
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .D_Approval_card_content {
+      display: flex;
+      padding: 24px; 
+     flex-wrap: wrap;
+      }
+  
+  .D_Approval_card_left-content {
+        flex: 1;
+      min-width: 0; }
+  
+  .D_Approval_card_title {
+    font-size: 24px;
+    margin-top: -10px;
+    margin-bottom: 12px;
+    }
+  
+  .D_Approval_card_paragraph {
+    margin-bottom: 10px;
+    }
+  
+  .D_Approval_card_buttons {
+    margin-top: 12px;
+  
+    button {
+      margin: 5px;
+      background-color: red($color: #921111);
+  
+    }
+    // &.ant-btn-primary {
+    //   background-color: #040f19; // Change this color to your desired primary color
+    //   border-color: #1890ff; // Change border color to match background color
+    // }
+          
+    }
+  
+        .D_Approval_card_right-content {
+          flex: 1;
+          display: flex;
+          align-items: center;
+         justify-content: center;
+        min-width: 0;}
+  
+          .D_Approval_card_image {
+           max-width: 300px;
+           max-height: 300px;
+           width: auto;
+           height: auto;
+           box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);}
+  
+          
+        
+      
+    
+  
+  

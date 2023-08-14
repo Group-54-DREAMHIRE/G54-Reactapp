@@ -4,18 +4,51 @@ import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
 import { items } from "../store/demo/jobPosts";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { fetchUserData, getData } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
 const { Title } = Typography;
 
 export default function JobPosts() {
+
+  const dispatch = useDispatch();
+  const [allJobList, setAllJobList] = useState([]);
+  const jobPosts = useSelector(getAllJobPosts);
+
+  useEffect(() => {
+    console.log(jobPosts,"Dula");
+    if(jobPosts===null){
+      getData('/api/v1/jobpost/getalljobs')
+    .then((response) => {
+      console.log(response.data);
+      setAllJobList(response.data);
+      console.log(jobPosts);
+      dispatch(setJobPosts(response.data))
+    })
+    .catch((error) => {
+      console.error("Error fetching user profile:", error);
+    });
+    console.log(allJobList);
+    }else{
+      setAllJobList(jobPosts);
+    }
+  }, []);
+
+  
+
   const navigate = useNavigate();
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const userType = localStorage.getItem("USERTYPE");
+
   let status = {
-    save: true,
+    save: userType === "candidate"? true:false,
     more: true,
   };
-  const company = localStorage.getItem("USERTYPE") === "company" ? true : false;
+const auth = userType === "company"? true:false;
   return (
     <>
       <Row style={{ padding: "1%" }}>
@@ -24,9 +57,11 @@ export default function JobPosts() {
             <Col span={24}>
               <Row justify="space-between">
                 <Col>
-                  <Title style={{ marginTop: "0" }}>Jobs</Title>
+                  <Title style={{ marginTop: "0", marginBottom: '0' }}>Jobs</Title>
+                  
                 </Col>
-                {company && (
+              
+                {auth && (
                   <Col>
                     <Button 
                       icon={<PlusOutlined />}
@@ -39,7 +74,9 @@ export default function JobPosts() {
                   </Col>
                 )}
               </Row>
-              <Divider />
+             <Col span={24}>
+             <hr />
+             </Col>
             </Col>
           </Row>
           <Row justify="end" style={{ margin: "20px 0 30px" }}>
@@ -135,10 +172,10 @@ export default function JobPosts() {
             </Space>
           </Row>
           <Row style={{ marginTop: "20px" }} gutter={[25, 25]}>
-            {items.map((item) => {
+            {allJobList.map((item, index) => {
               return (
                 <Col span={8}>
-                  <JobPostCard items={item} status={status} />
+                  <JobPostCard key={index} items={item} status={status} />
                 </Col>
               );
             })}

@@ -29,6 +29,23 @@ export const updateProfileData = (authRequest) => {
     });
   }}
 
+  export const getProfileData = (url) => {
+
+      return axios.get(`${url}`, {
+        headers: {
+          Authorization: "Bearer " + getToken(),
+        },
+      });
+    }
+
+    export const getData = (url) =>{
+      return axios.get(url, {
+        headers: {
+          Authorization: "Bearer " + getToken(),
+        },
+    })
+};
+
 export const fetchUserData = (authRequest) => {
   if (authRequest.method === "post") {
     return axios.post(`${authRequest.url}`, authRequest.data, {
