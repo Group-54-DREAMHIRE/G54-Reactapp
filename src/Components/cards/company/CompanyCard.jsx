@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 const { Meta } = Card;
 
-const CompanyCard = ({ item }) => {
+const CompanyCard = ({ company }) => {
+  const id = company.id;
   const navigate = useNavigate();
   return (
     <Col style={{ marginBottom: "16px" }}>
@@ -16,21 +17,22 @@ const CompanyCard = ({ item }) => {
       >
         <Row justify='space-between'>
           <Col span={15}>
+            {company.id}
             <Meta
               title={
                 <Title level={2} style={{ marginBottom: '10px', marginTop: '0' }}>
-                  {item.name}
+                  {company.name}
                 </Title>
               }
-              description={<span>{item.description}</span>}
+              description={<span>{company.description}</span>}
             />
            
           </Col>
           <Col span={8}>
-            <Image alt="Card" src={item.cover} />
+            <Image alt="Card" src={company.cover} />
             <Row justify='end'>
             <Button
-            onClick={()=>navigate("/company")}
+            onClick={()=>navigate(`/company/${id}`)}
               type="primary"
               style={{ marginTop: "20px", borderRadius: "0" }}
             >

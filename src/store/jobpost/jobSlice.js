@@ -15,7 +15,7 @@ const jobSlice = createSlice({
         state.jobPosts.push(action.payload);
     },
     getJobPost: (state, action) => {
-        state.jobPosts.find((jobPost) => jobPost.id === action.payload);
+       state.jobPosts.find((jobPost) => jobPost.id === action.payload);
     }
   }  
 });

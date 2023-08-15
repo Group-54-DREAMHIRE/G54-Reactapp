@@ -19,6 +19,7 @@ import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
 import { candidateDetails } from "../../store/demo/candidateProfile";
+
 import {
   Row,
   Col,
@@ -37,7 +38,7 @@ import {
 } from "antd";
 import { currencies, salary } from "../../store/demo/profile";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
+import { getUser, updateUser } from "../../store/auth/userSlice";
 import {
   getProfileData,
   updateProfileData,
@@ -46,8 +47,10 @@ const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
-  const user = JSON.parse(useSelector(getUser));
+  const user = useSelector(getUser);
   const id = user.id;
+
+  const dispatch = useDispatch();
   const [profileData, setProfileData] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -57,7 +60,7 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [file, setFile] = useState(null);
   const [visible, setVisible] = useState(true);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
   const [title, setTitle] = useState("");
   const [birthday, setBirthday] = useState();
   const [currency, setCuurency] = useState("");
@@ -71,8 +74,6 @@ export default function Profile() {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
   const [formatbday, setFormatbDay] = useState();
 
   const [editingbd, setEditing] = useState(false);
@@ -80,21 +81,24 @@ export default function Profile() {
   const [editingMin, setEdittingMin] = useState(false);
   const [editingMax, setEdittingMax] = useState(false);
 
-  // let events = {
-  //   bday:
-  // }
+  const [successmsg, setSuccessmsg] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
-    getProfileData(`/api/v1/candidate/get/${id}`)
+    if(user==null){
+      getProfileData(`/api/v1/candidate/get/${id}`)
       .then((response) => {
         console.log(response.data);
         setProfileData(response.data);
         console.log(profileData.name);
       })
       .catch((error) => {
-        setError("Invalid data");
         console.error("Error fetching user profile:", error);
       });
+    }else{
+      setProfileData(user);
+    }
+    
   }, [id]);
 
   useEffect(() => {
@@ -161,17 +165,7 @@ export default function Profile() {
     setLinkedIn(value);
   };
 
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  };
+
 
   const handleFileChange = (info) => {
     setImageUpload(info.file.originFileObj);
@@ -201,7 +195,6 @@ export default function Profile() {
       });
     }
     let candidateData = {
-      userId: id,
       name,
       profilePicture,
       currency,
@@ -219,12 +212,6 @@ export default function Profile() {
       twitter,
       linkedIn,
     };
-    const formData = new FormData();
-    formData.append("data", candidateData);
-
-    if (file) {
-      formData.append("profilePicture", file);
-    }
     let data = {
       url: `/api/v1/candidate/save/${id}`,
       data: candidateData,
@@ -233,15 +220,16 @@ export default function Profile() {
     const response = await updateProfileData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setMessage(response.data);
+      setSuccessmsg("Succesfully updated");
+      dispatch(updateUser(response.data));
       setTimeout(
         () => {
-          setMessage(null);
-          clearTimeout();
+         setSuccessmsg("");
         },
-        500,
         2000
       );
+    }else{
+      setError("Invalid Data!");
     }
   };
 
@@ -266,6 +254,7 @@ export default function Profile() {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
+
         <Row style={{ padding: "3%" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -277,7 +266,7 @@ export default function Profile() {
                   listType="picture-card"
                   onChange={handleFileChange}
                 >
-                  {imageUrl !== null ? (
+                  {profilePicture !== null ? (
                     <Image preview={false} width={250} src={profilePicture} />
                   ) : (
                     uploadButton
@@ -603,10 +592,8 @@ export default function Profile() {
                     >
                       Save
                     </Button>
-                    {message && (
-                      <Alert message={message} type="success" showIcon />
-                    )}
-                    {error && <Alert message={error} type="error" showIcon />}
+                      { successmsg  && <Alert message={successmsg} type="success" showIcon />}
+                      { error  && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>

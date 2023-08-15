@@ -40,7 +40,7 @@ const userSlice = createSlice({
         loading: false,
         message:"",
         messageChange:"",
-        user:localStorage.getItem("USER"),
+        user:JSON.parse(localStorage.getItem("USER")),
         error: null,
     },
     reducers:{
@@ -51,7 +51,11 @@ const userSlice = createSlice({
         success: (state)=>{
             state.error = null
             state.message = null
+        },
+        updateUser: (state, action)=>{
+            state.user = action.payload;
         }
+
     },
     extraReducers: (builder) => {
         builder
@@ -122,6 +126,6 @@ const userSlice = createSlice({
         }
 });
 
-export const { logout, success } = userSlice.actions;
+export const { logout, success, updateUser } = userSlice.actions;
 export const getUser = (state) => state.user.user;
 export default userSlice.reducer;

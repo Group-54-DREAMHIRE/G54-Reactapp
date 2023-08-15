@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from '../../store/auth/userSlice';
+import { getUser } from "../../store/auth/userSlice";
 import { fetchUserData } from "../../api/authenticationService";
 import {
   Form,
@@ -11,16 +11,16 @@ import {
   Col,
   Typography,
   Select,
-  message,
+  Alert,
 } from "antd";
-import { currencies, salary, tagItems } from "../../store/demo/jobApply";
+import { currencies, salary,} from "../../store/demo/jobApply";
+import { tagItems} from '../../store/demo/addJobPost';
 import { closeApplyJob } from "../../store/models/modelsSlice";
 import { useNavigate } from "react-router-dom";
 const { Text, Link, Title } = Typography;
 
-export default function ApplyJob({jobID}) {
-
-  const user = JSON.parse(useSelector(getUser));
+export default function ApplyJob({ jobID }) {
+  const user = useSelector(getUser);
   const id = user.id;
 
   const dispatch = useDispatch();
@@ -35,21 +35,20 @@ export default function ApplyJob({jobID}) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const [messageApi, contextHolder] = message.useMessage();
-  const [successMessage, setSuccessMessage] = useState("");
-  const [error, setError] = useState("");
+  const [successmsg, setSuccessmsg] = useState();
+  const [error, setError] = useState();
 
-  const handleApply = async() => {
+  const handleApply = async () => {
     let applyJobData = {
-        jobID,
-        candidateName: name,
-        candidatePhone: phone,
-        candidateEmail: email,
-        candidateCity: city,
-        currency,
-        expectSalary: exsalary,
-        tags: tagList,
-    }
+      jobID,
+      candidateName: name,
+      candidatePhone: phone,
+      candidateEmail: email,
+      candidateCity: city,
+      currency,
+      expectSalary: exsalary,
+      tags: tagList,
+    };
 
     let data = {
       url: `/api/v1/applyjobcandidate/save/${id}`,
@@ -59,40 +58,24 @@ export default function ApplyJob({jobID}) {
     const response = await fetchUserData(data);
     console.log(response.data);
     if (response.status === 200) {
-      console.log(response.data);
-      setTimeout(
-        () => {
-          setTimeout(
-            ()=>{
-              messageApi.open({
-                type: 'success',
-                content: 'Apply Successfully',
-              });
-            },1000
-          )
-      setName("");
-      setCity("");
-      setCurrency("");
-      setExSalary("");
-      setTaglist([""]);
-      setTags([]);
-      setEmail("");
-      setPhone("");
-      navigate("/jobposts");
-        },
-        2000
-      );
-      
-      
+      setSuccessmsg("Succesfully updated");
+      setTimeout(() => {
+        setSuccessmsg("");
+        setName("");
+        setCity("");
+        setCurrency("");
+        setExSalary("");
+        setTaglist([""]);
+        setTags([]);
+        setEmail("");
+        setPhone("");
+        navigate("/jobposts");
+      }, 2000);
+    } else {
+      setError("Invalid Data!");
     }
-    else{
-      messageApi.open({
-        type: 'error',
-        content: 'Invalid data',
-      });
-    }
-  }; 
-    
+  };
+
   return (
     <>
       <Modal
@@ -101,11 +84,9 @@ export default function ApplyJob({jobID}) {
         onCancel={() => dispatch(closeApplyJob())}
         footer={[]}
       >
-        {id}
         <Row block style={{ padding: "0px 20px" }}>
           <Col>
             <Row block justify="center">
-              {contextHolder}
               <Title level={3} style={{ margin: "0" }}>
                 Apply Job
               </Title>
@@ -179,17 +160,8 @@ export default function ApplyJob({jobID}) {
                         value={tags}
                         onChange={(values) => {
                           setTags(values);
-                          setTaglist(tags.join(', '));
-                          console.log(tags.join(', '));
-                          setTimeout(
-                            () => {
-                              messageApi.open({
-                                type: 'success',
-                                content: `${values}`,
-                              });
-                            },
-                            1500,
-                          );
+                          setTaglist(tags.join(", "));
+                          console.log(tags.join(", "));
                         }}
                         options={tagItems}
                         mode="multiple"
@@ -228,9 +200,17 @@ export default function ApplyJob({jobID}) {
                     </Col>
                   </Row>
                   <Row justify="end">
-                    <Button size="medium" type="primary" htmlType="submit ">
+                    <Button 
+                      style={{borderRadius: '0'}}
+                      size="medium" 
+                      type="primary" 
+                      htmlType="submit ">
                       Apply
                     </Button>
+                    {successmsg && (
+                      <Alert message={successmsg} type="success" showIcon />
+                    )}
+                    {error && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Col>
               </Form>

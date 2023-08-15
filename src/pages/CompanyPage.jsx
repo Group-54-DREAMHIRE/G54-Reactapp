@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { companyDetails } from "../store/demo/companyProfile";
 import { getProfileData } from "../api/authenticationService";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCompanies, getCompany } from "../store/company/companySlice";
 const { Title, Text, Link } = Typography;
 
 const textStyle = {
@@ -16,67 +18,73 @@ const textStyle = {
   lineHeight: "27px",
 };
 export default function CompanyPage() {
-  const [name, setName] = useState("name");
-  const [profileData, setProfileData] = useState([]);
-  const [description, setDescription] = useState(companyDetails.description);
-  const [about, setAbout] = useState(companyDetails.about);
-  const [services, setServices] = useState(companyDetails.services);
-  const [serviceKeys, setServiceKeys] = useState(companyDetails.serviceKeys);
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+
+  const [description, setDescription] = useState("");
+  const [about, setAbout] = useState("");
+  const [services, setServices] = useState("");
+  const [serviceKeys, setServiceKeys] = useState("");
   const [imageList, setImageList] = useState([]);
-  const [email, setEmail] = useState(companyDetails.email);
-  const [phone, setPhone] = useState(companyDetails.phone);
-  const [address, setAddress] = useState(companyDetails.address);
-  const [facebook, setFacebook] = useState(companyDetails.facebook);
-  const [twitter, setTwitter] = useState(companyDetails.twitter);
-  const [linkedIn, setLinkedIn] = useState(companyDetails.linkedIn);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
 
   const [listServiceKeys, setListServiceKeys] = useState("");
 
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
 
+  const companies = useSelector(getAllCompanies);
   const { id } = useParams();
+  const company = dispatch(getCompany(companies,id));
+  const [profileData, setProfileData] = useState([]);
+  useEffect(() => {
 
-  // useEffect(() => {
-  //   getProfileData(`/api/v1/company/get/${id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setProfileData(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError("Invalid data");
-  //       console.error("Error fetching user profile:", error);
-  //     });
-  // }, [id]);
+    getProfileData(`/api/v1/company/get/${id}`)
+    .then((response) => {
+      console.log(response.data);
+      setProfileData(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      setError("Invalid data");
+      console.error("Error fetching user profile:", error);
+    });
 
-  // useEffect(() => {
-  //   if (profileData) {
-  //     setName(profileData.name);
-  //     setDescription(profileData.description);
-  //     setAbout(profileData.about);
-  //     setServices(profileData.services);
-  //     setListServiceKeys(profileData.serviceKeys);
+  }, [id]);
+
+  useEffect(() => {
+    if (profileData) {
+      setName(profileData.name);
+      setDescription(profileData.description);
+      setAbout(profileData.about);
+      setServices(profileData.services);
+      setListServiceKeys(profileData.serviceKeys);
       
-  //   if (typeof profileData.serviceKeys === 'string') {
-  //     const val = profileData.serviceKeys.split(', ');
-  //     setServiceKeys(val);
-  //   } else {
-  //     setServiceKeys([]); // Set default value if serviceKeys is not a string
-  //   }
-  //   console.log(serviceKeys);
-  //     setEmail(profileData.email);
-  //     setPhone(profileData.phone);
-  //     setAddress(profileData.address);
-  //     setFacebook(profileData.facebook);
-  //     setTwitter(profileData.twitter);
-  //     setLinkedIn(profileData.linkedIn);
-  //   }
-  // }, [profileData]);
+    if (typeof profileData.serviceKeys === 'string') {
+      const val = profileData.serviceKeys.split(', ');
+      setServiceKeys(val);
+    } else {
+      setServiceKeys([]); // Set default value if serviceKeys is not a string
+    }
+    console.log(serviceKeys);
+      setEmail(profileData.email);
+      setPhone(profileData.phone);
+      setAddress(profileData.address);
+      setFacebook(profileData.facebook);
+      setTwitter(profileData.twitter);
+      setLinkedIn(profileData.linkedIn);
+    }
+  }, [profileData]);
  
   return (
     <>
       <Row>
+        {companies[0].name}
         <Col span={24}>
           <Row gutter={[30, 40]} justify="center" style={{ padding: "1% 2%" }}>
             <Col span={10}>

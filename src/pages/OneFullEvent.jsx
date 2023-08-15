@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const OneFullCard = () => {
+  const navigate = useNavigate();
   return (
     <Card>
       <a href="your_link_url">Creative Software</a>
@@ -48,7 +50,11 @@ const OneFullCard = () => {
       {/* Add space after the tags */}
       <div style={{ marginBottom: "12px" }} />
 
-      <Button type="primary" style={{ marginTop: "8px" }}>
+      <Button 
+        type="primary"
+        onClick={()=> navigate("/registerevent")}
+        style={{ marginTop: "8px",borderRadius: '0' }}>
+        
         Register
       </Button>
     </Card>

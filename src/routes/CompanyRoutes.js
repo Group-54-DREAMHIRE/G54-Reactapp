@@ -32,6 +32,7 @@ import CompanyProfile from "../pages/company/CompanyProfile";
 import AddJobPost from "../pages/company/AddJobPost";
 import OneFullCard from "../pages/OneFullEvent";
 import EventForm from "../Components/cards/company/EventForm";
+import CompanyPage from '../pages/CompanyPage';
 export default function CandidateRoutes() {
   return (
     <>
@@ -65,6 +66,7 @@ export default function CandidateRoutes() {
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
           <Route path="/companies" element={<Companies/>}/>
+          <Route path="/company" element={<CompanyPage/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
           <Route path="/users" element={<Users/>}/>

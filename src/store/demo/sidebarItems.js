@@ -15,6 +15,8 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { BsBuildingUp } from "react-icons/bs";
 import { FiSlack, FiUsers } from "react-icons/fi";
 import { FaEnvelopeOpenText } from "react-icons/fa";
+import { AiOutlineDollar } from "react-icons/ai";
+
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
@@ -79,6 +81,12 @@ if (userType === "candidate") {
       icon: <SketchSquareFilled />,
     },
     {
+      id: 9,
+      label: "Annoucements",
+      key: "/announcements",
+      icon: <SketchSquareFilled />,
+    },
+    {
       id: 10,
       label: "Settings",
       key: "/settings",
@@ -120,7 +128,7 @@ if (userType === "candidate") {
     },
     {
       id: 6,
-      label: "Interviews",
+      label: "Schedule Interviews",
       key: "/interviews",
       icon: <FiSlack />,
     },
@@ -168,7 +176,7 @@ if (userType === "candidate") {
       id: 3,
       label: "Payments",
       key: "/payments",
-      icon: <FiUsers />,
+      icon: <AiOutlineDollar/>,
     },
     {
       id: 4,

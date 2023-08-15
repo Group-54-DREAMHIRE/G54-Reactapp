@@ -25,23 +25,17 @@ export default function JobPostCard({ items, status }) {
 
     const tag = items.tags.split(" ,");
     setTagList(tag);
-    console.log("this",taglist);
+    console.log("this", taglist);
   }, []);
 
   const navigate = useNavigate();
   return (
     <>
-      <Card style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }} hoverable>
-        <Row justify="space-between">
-          <Col span={24}>
-            <Image
-              preview={false}
-              src={items.cover}
-              height={160}
-              width={325}
-            />
-          </Col>
-        </Row>
+      <Card
+        style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }}
+        hoverable
+        cover={<Image preview={false} src={items.cover} style={{height: '200px', width: '100%'}}/>}
+      >
         <Row style={{ marginTop: "10px" }} gutter={20}>
           <Col>
             <Text strong>{items.companyName}</Text>
@@ -99,31 +93,130 @@ const tagStyles = {
 };
 
 export const handleTags = (value) => {
-  if (value === "react") {
+  if (value === "python") {
     return (
-      <Tag style={tagStyles} color="orange" bordered={false}>
-        React
+      <Tag style={tagStyles} color="blue" bordered={false}>
+        Python
       </Tag>
     );
   }
   if (value === "java") {
     return (
-      <Tag style={tagStyles} color="green" bordered={false}>
+      <Tag style={tagStyles} color="orange" bordered={false}>
         Java
       </Tag>
     );
   }
-  if (value === "node") {
+  if (value === "c++") {
     return (
-      <Tag style={tagStyles} color="lime" bordered={false}>
-        Python
+      <Tag style={tagStyles} color="purple" bordered={false}>
+        C++
+      </Tag>
+    );
+  }
+  if (value === "javascript") {
+    return (
+      <Tag style={tagStyles} color="yellow" bordered={false}>
+        JavaScript
+      </Tag>
+    );
+  }
+  if (value === "ruby") {
+    return (
+      <Tag style={tagStyles} color="orange" bordered={false}>
+        Ruby
+      </Tag>
+    );
+  }
+  if (value === "c#") {
+    return (
+      <Tag style={tagStyles} color="orange" bordered={false}>
+        C#
+      </Tag>
+    );
+  }
+  if (value === "github") {
+    return (
+      <Tag style={{ ...tagStyles, color: "black" }} bordered={false}>
+        GitHub
+      </Tag>
+    );
+  }
+  if (value === "bitbucket") {
+    return (
+      <Tag style={tagStyles} color="blue" bordered={false}>
+        Bitbucket
+      </Tag>
+    );
+  }
+
+  if (value === "html") {
+    return (
+      <Tag style={tagStyles} color="orange" bordered={false}>
+        HTML
+      </Tag>
+    );
+  }
+  if (value === "react") {
+    return (
+      <Tag style={tagStyles} color="blue" bordered={false}>
+        React
       </Tag>
     );
   }
   if (value === "angular") {
     return (
-      <Tag style={tagStyles} color="magenta" bordered={false}>
+      <Tag style={tagStyles} color="red" bordered={false}>
         Angular
+      </Tag>
+    );
+  }
+  if (value === "android") {
+    return (
+      <Tag style={tagStyles} color="green" bordered={false}>
+        Android
+      </Tag>
+    );
+  }
+  if (value === "ios") {
+    return (
+      <Tag style={tagStyles} color="blue" bordered={false}>
+        iOS
+      </Tag>
+    );
+  }
+  if (value === "flutter") {
+    return (
+      <Tag style={tagStyles} color="purple" bordered={false}>
+        Flutter
+      </Tag>
+    );
+  }
+  if (value === "reactnative") {
+    return (
+      <Tag style={{ ...tagStyles, color: "#008080" }} bordered={false}>
+        ReactNative
+      </Tag>
+    );
+  }
+  if (value === "aws") {
+    return (
+      <Tag style={tagStyles} color="orange" bordered={false}>
+        AWS
+      </Tag>
+    );
+  }
+  if (value === "azure") {
+    return (
+      <Tag style={tagStyles} color="blue" bordered={false}>
+        Azure
+      </Tag>
+    );
+  }
+  if (value === "googlecloud") {
+    return (
+      <Tag style={tagStyles} color="green" bordered={false}>
+        GoogleCloud
       </Tag>
     );
   }

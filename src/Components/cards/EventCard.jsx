@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import job from '../../assets/images/jobpost1.jpg';
+
 
 export default function EventCard ({event,status}) {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function EventCard ({event,status}) {
     <Card
       cover={
         <img
-          src={job}
+          src={event.image}
           alt="Card Cover"
           style={{ objectFit: "cover", height: "220px" }}
         />

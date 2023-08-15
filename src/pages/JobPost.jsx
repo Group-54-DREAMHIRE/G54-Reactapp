@@ -23,11 +23,8 @@ export default function JobPost() {
   const [postDate, setPostDate] = useState();
   const [listRequirements, setListRequirements] = useState([""]);
 
-  const job = dispatch(getJobPost);
 
   useEffect(() => {
-    
-    if(job === null){
       getData(`/api/v1/jobpost/getjobpost/${id}`)
     .then((response) => {
       console.log(response.data);
@@ -37,9 +34,6 @@ export default function JobPost() {
       console.error("Error fetching user profile:", error);
     });
     console.log(jobPost)
-    }else{
-      setJobPost(job)
-    }
    
      }, []);
 
@@ -59,7 +53,6 @@ export default function JobPost() {
       }
  }, [jobPost]);
   
-    
 
   let items = {
     title: 'Software Engineer',
@@ -107,7 +100,7 @@ export default function JobPost() {
                     <Col span={22}>
                       <Title level={4}>Address</Title>
                       <Text className="job-text-w">
-                       {items.address}
+                       {jobPost.address}
                       </Text>
                     </Col>
                   </Row>
@@ -121,7 +114,7 @@ export default function JobPost() {
                     </Col>
                     <Col span={22}>
                       <Title level={4}>Salary</Title>
-                      <Text className="job-text-w"> ${items.salry} Monthly</Text>
+                      <Text className="job-text-w"> {jobPost.currency}&nbsp;&nbsp;{jobPost.minSalary}-{jobPost.maxSalary} Monthly</Text>
                     </Col>
                   </Row>
                 </Col>
@@ -157,25 +150,6 @@ export default function JobPost() {
             </Text>
            </Col>
           </Row>
-          {/* <Row>
-            <Col span={24}>
-              <Title level={3} style={{fontFamily: 'Rubik,sans-serif', fontWeight:'500'}}>Job Description</Title>
-              <hr style={{ borderBottom: "2px solid rgba(0,0,0,0.3)" }} />
-              <br />
-              <Text className="job-text-w">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Ducimus, iure. Nostrum maiores labore error repellat? Mollitia,
-                unde. Eum, saepe provident. Magni quos dignissimos consequatur
-                et veritatis reiciendis, quaerat maiores, eius saepe dicta
-                voluptatum quidem alias amet labore distinctio cum cumque animi
-                dolor fuga earum! Nobis id rem expedita autem, placeat incidunt
-                cumque saepe harum! Esse mollitia quis atque, recusandae
-                voluptate nostrum minima quaerat iste cumque ipsum, magni neque
-                alias officiis. Iusto eos sint, accusantium velit ea optio
-                inventore nisi nesciunt!
-              </Text>
-            </Col>
-          </Row> */}
           <Row>
             <Col span={24}>
               <Title level={3} style={{fontFamily: 'Rubik,sans-serif', fontWeight:'500'}}>How to Apply</Title>

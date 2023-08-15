@@ -20,6 +20,8 @@ import JobPost from "../pages/JobPost";
 import AppliedJob from '../pages/candidate/AppliedJob';
 import InterviewDetails from "../pages/candidate/InterviewDetails";
 import CompanyPage from '../pages/CompanyPage';
+import OneFullCard from "../pages/OneFullEvent";
+import EventForm from "../Components/cards/company/EventForm";
 export default function CandidateRoutes() {
   return (
     <>
@@ -37,10 +39,13 @@ export default function CandidateRoutes() {
           <Route path="/appliedevents" element={<AppliedEvents/>}/>
           <Route path="/savedevents" element={<SavedEvents/>}/>
           <Route path="/events" element={<Events/>}/>
+          <Route path="/event" element={<OneFullCard/>}/>
+          <Route path="/announcements" element={<Notifications/>}/>
+          <Route path="/registerevent" element={<></>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
           <Route path="/jobpost/:id" element={<JobPost/>}/>
           <Route path="/companies" element={<Companies/>}/>
-          <Route path="/company" element={<CompanyPage/>}/>
+          <Route path="/company/:id" element={<CompanyPage/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
           <Route path="/changepassword" element={<ChangePassword/>}/>

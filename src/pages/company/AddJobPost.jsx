@@ -10,6 +10,7 @@ import {
   DatePicker,
   Button,
   Space,
+  Alert,
 } from "antd";
 import { storage } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -21,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/auth/userSlice";
 import { currencies, salary } from "../../store/demo/profile";
 import { addJobPost } from "../../store/jobpost/jobSlice";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -29,6 +31,8 @@ function AddJobPost() {
   const id = user.id;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [companyName, setCompanyName] = useState("");
   const [profileData, setProfileData] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
@@ -49,8 +53,8 @@ function AddJobPost() {
   const [listRequirements, setListRequirements] = useState("");
   const [listTags, setListTags] = useState("");
 
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const [successmsg, setSuccessmsg] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     getProfileData(`/api/v1/company/get/${id}`)
@@ -87,7 +91,7 @@ function AddJobPost() {
   };
 
   const handleImage = (info) =>{
-        setImageUpload(info.file.originFileObj);
+        setImageUpload(info.file);
         console.log(imageUpload,"Dulaaaaaa");
   }
 
@@ -148,14 +152,17 @@ function AddJobPost() {
     const response = await fetchUserData(data);
     console.log(response.data);
     if (response.status === 200) {
+      setSuccessmsg("Succesfully updated");
       dispatch(addJobPost(response.data));
       setTimeout(
         () => {
-
+         setSuccessmsg("");
+         navigate("/jobposts");
         },
-        500,
         2000
       );
+    }else{
+      setError("Invalid Data!");
     }
   };
   return (
@@ -169,7 +176,6 @@ function AddJobPost() {
                   <Title level={2}>Post A Job</Title>
                   <Divider style={{ margin: "0" }} />
                 </Row>
-                {user.systemUser.id}
                 <Row justify="space-between">
                   <Col span={11}>
                     <Title level={4}>Job Title:</Title>
@@ -418,6 +424,8 @@ function AddJobPost() {
                   >
                     Post Job
                   </Button>
+                  { successmsg  && <Alert message={successmsg} type="success" showIcon />}
+                  { error  && <Alert message={error} type="error" showIcon />}
                 </Row>
               </Form>
             </Col>

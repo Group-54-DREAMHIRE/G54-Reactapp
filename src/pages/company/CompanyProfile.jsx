@@ -4,7 +4,7 @@ import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
+import { getUser, updateUser } from "../../store/auth/userSlice";
 import {
   Button,
   Col,
@@ -15,6 +15,7 @@ import {
   Checkbox,
   Form,
   Alert,
+
 } from "antd";
 import { useState, useEffect } from "react";
 import { companyDetails } from "../../store/demo/companyProfile";
@@ -30,42 +31,49 @@ const textStyle = {
   lineHeight: "27px",
 };
 export default function CompanyProfile() {
-  const user = JSON.parse(useSelector(getUser));
+
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
   const id = user.id;
 
   const [profileData, setProfileData] = useState([]);
 
-  const [name, setName] = useState("name");
+  const [name, setName] = useState("");
   const [logo, setLogo] = useState(null);
   const [visible, setVisible] = useState(true);
-  const [description, setDescription] = useState(companyDetails.description);
-  const [about, setAbout] = useState(companyDetails.about);
-  const [services, setServices] = useState(companyDetails.services);
+  const [description, setDescription] = useState("");
+  const [about, setAbout] = useState("");
+  const [services, setServices] = useState("");
   const [serviceKeys, setServiceKeys] = useState([]);
   const [images, setImages] = useState(null);
-  const [email, setEmail] = useState(companyDetails.email);
-  const [phone, setPhone] = useState(companyDetails.phone);
-  const [address, setAddress] = useState(companyDetails.address);
-  const [facebook, setFacebook] = useState(companyDetails.facebook);
-  const [twitter, setTwitter] = useState(companyDetails.twitter);
-  const [linkedIn, setLinkedIn] = useState(companyDetails.linkedIn);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
 
   const [listServiceKeys, setListServiceKeys] = useState("");
 
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const [successmsg, setSuccessmsg] = useState();
+  const [error, setError] = useState();
+  
 
   useEffect(() => {
-    getProfileData(`/api/v1/company/get/${id}`)
+    if(user==null){
+      getProfileData(`/api/v1/company/get/${id}`)
       .then((response) => {
         console.log(response.data);
         setProfileData(response.data);
         console.log(response.data);
       })
       .catch((error) => {
-        setError("Invalid data");
         console.error("Error fetching user profile:", error);
       });
+    }else{
+      setProfileData(user);
+    }
+   
   }, [id]);
 
   useEffect(() => {
@@ -75,12 +83,11 @@ export default function CompanyProfile() {
       setAbout(profileData.about);
       setServices(profileData.services);
       setListServiceKeys(profileData.serviceKeys);
-      
     if (typeof profileData.serviceKeys === 'string') {
       const val = profileData.serviceKeys.split(', ');
       setServiceKeys(val);
     } else {
-      setServiceKeys([]); // Set default value if serviceKeys is not a string
+      setServiceKeys([]);
     }
     console.log(serviceKeys);
       setVisible(profileData.visible);
@@ -93,7 +100,6 @@ export default function CompanyProfile() {
     }
   }, [profileData]);
 
- 
   const handleName= (value) => {
     setName(value);
   };
@@ -135,7 +141,6 @@ export default function CompanyProfile() {
 
   const handleSubmit = async () => {
     let companyData = {
-      userId: id,
       name,
       description,
       about,
@@ -157,15 +162,16 @@ export default function CompanyProfile() {
     const response = await updateProfileData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setMessage(response.data);
+      setSuccessmsg("Succesfully updated");
+      dispatch(updateUser(response.data));
       setTimeout(
         () => {
-          setMessage(null);
-          clearTimeout();
+         setSuccessmsg("");
         },
-        500,
         2000
       );
+    }else{
+      setError("Invalid Data!");
     }
   };
 
@@ -380,8 +386,8 @@ export default function CompanyProfile() {
               >
                 Save
               </Button>
-              {message && <Alert message={message} type="success" showIcon />}
-              {error && <Alert message={error} type="error" showIcon />}
+              { successmsg  && <Alert message={successmsg} type="success" showIcon />}
+             { error  && <Alert message={error} type="error" showIcon />}
             </Row>
           </Form>
         </Col>

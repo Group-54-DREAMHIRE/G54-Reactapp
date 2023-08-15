@@ -1,56 +1,12 @@
 import React from "react";
-import { Card, Space, Button } from "antd";
+import { Card, Space, Button, Row, Col, Image, Typography } from "antd";
 import { DollarOutlined, HomeOutlined } from "@ant-design/icons";
+import { handleTags } from "../JobPostCard";
+const { Title } = Typography;
 
-function CandidateCard({items}) {
-  
-
+function CandidateCard({ items }) {
   const cardStyle = {
-    width: "300px", // Adjusted width
-    height: "400px", // Adjusted height
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Adding a subtle shadow
-    textAlign: "center",
-    padding: "20px", // Add padding to create space
-  };
-
-  const titleStyle = {
-    marginTop: "10px", // Adjust as needed
-    fontSize: "18px", // Adjust as needed
-    fontWeight: "bold",
-  };
-
-  const descriptionStyle = {
-    marginTop: "15px", // Adjust as needed
-    fontSize: "14px", // Adjust as needed
-    color: "#555", // Adjust color if needed
-  };
-
-  const tagContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "20px", // Adjust as needed
-  };
-
-  const tagStyle = {
-    backgroundColor: "#f5f5f5", // Light ash color
-    color: "#555", // Adjust color if needed
-    fontSize: "12px",
-    padding: "3px 10px",
-    borderRadius: "20px",
-    margin: "0 5px", // Adjust spacing as needed
-  };
-
-  const additionalTextStyle = {
-    marginTop: "15px", // Adjust as needed
-    fontSize: "14px", // Adjust as needed
-    color: "#888", // Adjust color if needed
-    textAlign: "center",
-  };
-
-  const buttonStyle = {
-    marginTop: "15px", // Adjust as needed
-    width: "250px", // Increase button width
-    height: "50px", // Increase button height
+    boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)", // Adding a subtle shadow
   };
 
   const imageStyle = {
@@ -61,38 +17,48 @@ function CandidateCard({items}) {
   };
 
   return (
-    <div>
+    <>
       <Card style={cardStyle}>
-        <div>
-          <img
-            src={items.profileImageUrl}
-            alt="Profile"
-            style={{ ...imageStyle, marginBottom: "15px" }}
-          />
-        </div>
-        <div style={titleStyle}>{items.name}</div>
-        <div style={descriptionStyle}>{items.jobTitle}</div>
-        <div style={tagContainerStyle}>
-          {items.skills.map((skill, index) => (
-            <div key={index} style={tagStyle}>
-              {skill}
-            </div>
-          ))}
-        </div>
-
-        <div style={additionalTextStyle}>
+        <Row gutter={[20,20]}>
+          <Col span={8}>
+            <Row justify='center'>
+            <Image
+              src={items.profileImageUrl}
+              alt="Profile"
+              style={imageStyle}
+            />
+            </Row>
+          </Col>
+        <Col span={16}>
+        <Row gutter={[0,20]}>
+        <Col>
+            <Title level={4} style={{margin: '0',textAlign:'center'}}>{items.name}</Title>
+          </Col>
+          <Col span={24}>
+            <span>{items.jobTitle}</span>
+          </Col>
+          <Col span={24}>
+            {items.skills.slice(0,3).map((skill, index) => handleTags(skill))}
+          </Col>
+          <Col span={24}>
           <Space>
             <HomeOutlined />
             <span>{items.location}</span>
             <DollarOutlined />
-            <span>{items.salary}</span>
+            <span>{items.currency}{items.minSalary}-{items.currency}{items.maxSalary}</span>
           </Space>
-        </div>
-        <Button type="primary" style={buttonStyle}>
+          </Col>
+          <Button 
+            block
+            style={{borderRadius: '0'}}
+            type="primary">
           View Profile
         </Button>
+        </Row>
+        </Col>
+        </Row>
       </Card>
-    </div>
+    </>
   );
 }
 

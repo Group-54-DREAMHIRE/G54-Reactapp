@@ -3,6 +3,7 @@ import LandingNavbar from "../Components/navbar/LandingNavbar";
 import LandingHome from "../pages/landing/LandingHome";
 import LandingAboutUs from "../pages/landing/LandingAboutUs";
 import LandingContactUs from "../pages/landing/LandingContactUs";
+import PriceCard from '../pages/landing/cards/PriceCard';
 
 import Footer from "../Components/footer/Footer";
 
@@ -42,6 +43,9 @@ function DefaultMainLayout() {
       </Row>
       <Row id="3blog" style={{paddingTop:'5%'}}>
        <LandingBlogs/>
+      </Row>
+      <Row id="4pricing" style={{paddingTop:'5%'}} justify='center'>
+       <PriceCard/>
       </Row>
       <Row id="5contact" style={{paddingTop:'10%'}}>
        {/* <LandingContactUs/> */}
