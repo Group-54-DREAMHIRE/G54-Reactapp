@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch } from 'antd';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import '../../assets/styles/Tables.scss';
 
 const { Title } = Typography;
@@ -66,64 +65,61 @@ const Candidates = () => {
       address: '456 Elm St, Anytown, USA',
       qualification: 'Master\'s Degree',
     },
-  
+
   ]);
 
   return (
     <>
-    <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ duration: 0.6 }}>
-        <div className='container-n'>
-          <Row style={{
-            marginTop: "10px",
-          }}>
-            <Col span={12} style={{
-              display: 'flex',
-              justifyContent: 'left',
-              alignItems: 'center',
-            }}>
-              <Title style={{
-                fontSize: '25px',
-                fontWeight: 600,
+      <div className='container-n'>
+        <Row>
+          <Col span={24}>
+            <Row>
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
               }}>
-                Registered Candidates
-              </Title>
-            </Col>
-            <Col span={6}>
-            </Col>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  Registered Candidates
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
 
-            <Col span={6} style={{
-              display: 'flex',
-              justifyContent: 'right',
-              alignItems: 'center'
-            }}>
+              <Col span={6} style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center'
+              }}>
 
-            </Col>
-          </Row>
-          <Divider />
+              </Col>
+            </Row>
+            <Divider />
+            <Row>
+              <Col span={24}>
+                <Table className='tables-n'
+                  dataSource={dataSource}
+                  columns={columns}
+                  pagination={{
+                    current: page,
+                    pageSize: pageSize,
+                    onChange: (page, pageSize) => {
+                      setPage(page);
+                      setPageSize(pageSize);
+                      // Make the api call here with page and page size
+                    }
+                  }}
+                >
 
-          <Table className='tables-n'
-            dataSource={dataSource}
-            columns={columns}
-            pagination={{
-              current: page,
-              pageSize: pageSize,
-              onChange: (page, pageSize) => {
-                setPage(page);
-                setPageSize(pageSize);
-                // Make the api call here with page and page size
-              }
-            }}
-          >
-
-          </Table>
-        </div>
-
-
-      </motion.div>
+                </Table>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };

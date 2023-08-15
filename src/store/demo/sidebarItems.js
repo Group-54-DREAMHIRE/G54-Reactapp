@@ -18,7 +18,7 @@ import { FaEnvelopeOpenText } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
-const userType = localStorage.getItem("USERTYPE");
+const userType = "company";
 const sidebarItems = [
   {
     id: 1,
@@ -123,11 +123,23 @@ if (userType === "candidate") {
       label: "Interviews",
       key: "/interviews",
       icon: <FiSlack />,
+      children: [
+        {
+          label: "Schedule Interviews",
+          key: "/interviews",
+          icon: <FiSlack />,
+        },
+        {
+          label: "Scheduled Interviews",
+          key: "/scheduledinterviews",
+          icon: <FiSlack />,
+        },
+      ],
     },
     {
       id: 7,
       label: "Schedule Test",
-      key: "/sheduletests",
+      key: "/scheduletests",
       icon: <FaEnvelopeOpenText />,
     },
     {

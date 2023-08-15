@@ -15,6 +15,7 @@ function AdvertisementList() {
       title: 'Job Title',
       dataIndex: 'jobTitle',
       key: 'jobTitle',
+      width: '25%',
       render: (text, record) => (
         <>
           {text}
@@ -28,23 +29,14 @@ function AdvertisementList() {
       ),
     },
     {
-      title: 'No of vacancies',
+      title: 'No. of vacancies',
       dataIndex: 'vacancies',
       key: 'vacancies',
     },
     {
-      title: 'No of Applications',
+      title: 'No. of Applications',
       dataIndex: 'applications',
       key: 'applications',
-    },
-    {
-      title: "View",
-      key: "view",
-      render: (text, record) => (
-        <Button type="primary" onClick={() => handleViewAdvertisement(record.id)}>
-          View
-        </Button>
-      ),
     },
     {
       title: "Schedule Interview",
@@ -55,7 +47,7 @@ function AdvertisementList() {
         </Button>
       ),
     },
-    ];
+  ];
 
   const [dataSource, setDataSource] = useState([
     {
@@ -95,67 +87,58 @@ function AdvertisementList() {
     },
   ]);
 
-  const handleViewAdvertisement = (id) => {
-    console.log("View advertisement with ID:", id);
-  };
-
   return (
     <>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ duration: 0.6 }}>
-        <div className='container-n'>
-          <Row style={{
-            marginTop: "10px",
-          }}>
-            <Col span={12} style={{
-              display: 'flex',
-              justifyContent: 'left',
-              alignItems: 'center',
-            }}>
-              <Title style={{
-                fontSize: '25px',
-                fontWeight: 600,
+      <div className='container-n'>
+        <Row>
+          <Col span={24}>
+            <Row>
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
               }}>
-                Schedule Interviews
-              </Title>
-            </Col>
-            <Col span={6}>
-            </Col>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  SCHEDULE INTERVIEWS
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
 
-            <Col span={6} style={{
-              display: 'flex',
-              justifyContent: 'right',
-              alignItems: 'center'
-            }}>
+              <Col span={6} style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center'
+              }}>
 
-            </Col>
-          </Row>
-          <Divider />
+              </Col>
+            </Row>
+            <Divider />
+            <Row>
+              <Col span={24}>
+                <Table className='tables-n'
+                  dataSource={dataSource}
+                  columns={columns}
+                  pagination={{
+                    current: page,
+                    pageSize: pageSize,
+                    onChange: (page, pageSize) => {
+                      setPage(page);
+                      setPageSize(pageSize);
+                      // Make the api call here with page and page size
+                    }
+                  }}
+                >
 
-          <Table className='tables-n'
-            dataSource={dataSource}
-            columns={columns}
-            pagination={{
-              current: page,
-              pageSize: pageSize,
-              onChange: (page, pageSize) => {
-                setPage(page);
-                setPageSize(pageSize);
-                // Make the api call here with page and page size
-              }
-            }}
-          >
-
-          </Table>
-        </div>
-
-
-      </motion.div>
-
-
+                </Table>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     </>
   )
 }
