@@ -13,9 +13,9 @@ function ScheduledInterviews() {
   const [pageSize, setPageSize] = useState(5);
   const columns = [
     {
-        title: 'Interview ID',
-        dataIndex: 'interviewId',
-        key: 'interviewId',
+      title: 'Interview ID',
+      dataIndex: 'interviewId',
+      key: 'interviewId',
     },
     {
       title: 'Job Title',
@@ -35,92 +35,93 @@ function ScheduledInterviews() {
       ),
     },
     {
-        title: "Designated Interviewees",
-        key: "assifnedCandidates",
-        render: (record) => (
-          <Button type="primary">
-            <Link to={`/scheduledinterviews/assignedcandidates`}>{record.assignedCandidates}</Link>
-          </Button>
-        ),
-      },
+      title: "Designated Candidates",
+      key: "designatedCandidates",
+      render: (record) => (
+        <Button type="primary">
+          <Link to={`/scheduledinterviews/designatedCandidates`}>{record.designatedCandidates}</Link>
+        </Button>
+      ),
+    },
+    {
+      title: "Reserved Slot Candidates",
+      key: "reservedSlotCandidates",
+      render: (record) => (
+        <Button type="primary">
+          <Link to={`/scheduledinterviews/reservedSlotCandidates`}>{record.reservedSlotCandidates}</Link>
+        </Button>
+      ),
+    },
+    {
+      title: "Pending Candidates",
+      key: "pendingCandidates",
+      render: (record) => (
+        <Button type="primary">
+          <Link to={`/scheduledinterviews/pendingTimeslots`}>{record.pendingTimeslots}</Link>
+        </Button>
+      ),
+    },
     {
       title: "Pending Timeslots",
-      key: "pendingTimeslots",
+      key: "pendingCandidates",
       render: (record) => (
         <Button type="primary">
-          <Link to={`/scheduledinterviews/pendingtimeslots`}>{record.pendingTimeSlots}</Link>
+          <Link to={`/scheduledinterviews/pendingCandidates`}>{record.pendingCandidates}</Link>
         </Button>
       ),
     },
-    {
-      title: "Selected Timeslots",
-      key: "selectedTimeSlots",
-      render: (record) => (
-        <Button type="primary">
-          <Link to={`/scheduledinterviews/selectedtimeslots`}>{record.selectedTimeSlots}</Link>
-        </Button>
-      ),
-    },
-    {
-      title: "Open schedule Candidates",
-      key: "rejectedCandidates",
-      render: (record) => (
-        <Button type="primary">
-          <Link to={`/scheduledinterviews/rejectedcandidates`}>{record.rejectedCandidates}</Link>
-        </Button>
-      ),
-    },
-    ];
+
+  ];
 
   const [dataSource, setDataSource] = useState([
     {
       key: '1',
       interviewId: '001',
       jobTitle: 'Software Engineer',
-      assignedCandidates: 10,
-      selectedTimeSlots: 2,
-      pendingTimeSlots: 3,
-      rejectedCandidates: 4,
+      designatedCandidates: 10,
+      reservedSlotCandidates: 5,
+      pendingCandidates: 3,
+      pendingTimeslots: 2,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '2',
       interviewId: '002',
       jobTitle: 'Software Engineer',
-      assignedCandidates: 10,
-      selectedTimeSlots: 2,
-      pendingTimeSlots: 3,
-      rejectedCandidates: 4,
+      designatedCandidates: 8,
+      reservedSlotCandidates: 3,
+      pendingCandidates: 5,
+      pendingTimeslots: 4,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '3',
       interviewId: '003',
       jobTitle: 'Web Developer',
-      assignedCandidates: 10,
-      selectedTimeSlots: 2,
-      pendingTimeSlots: 3,
-      rejectedCandidates: 4,
+      designatedCandidates: 10,
+      reservedSlotCandidates: 2,
+      pendingCandidates: 3,
+      pendingTimeslots: 4,
       skills: ["HTML", "CSS", "JavaScript"],
     },
     {
       key: '4',
       interviewId: '004',
       jobTitle: 'Software Engineer',
-      assignedCandidates: 10,
-      selectedTimeSlots: 2,
-      pendingTimeSlots: 3,
-      rejectedCandidates: 4,
+      designatedCandidates: 10,
+      reservedSlotCandidates: 2,
+      pendingCandidates: 3,
+      pendingTimeslots: 4,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '5',
       interviewId: '005',
       jobTitle: 'Web Developer',
-      assignedCandidates: 10,
-      selectedTimeSlots: 2,
-      pendingTimeSlots: 3,
-      rejectedCandidates: 4,
+      designatedCandidates: 10,
+      reservedSlotCandidates: 2,
+      pendingCandidates: 3,
+      pendingTimeslots: 4,
       skills: ["HTML", "CSS", "JavaScript"],
     },
   ]);
