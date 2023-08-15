@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, Row, Col, Typography, Space} from 'antd';
+import { Card, Button, Row, Col, Typography, Space, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/PostedEvents.scss';
 const { Title } = Typography;
@@ -60,29 +60,53 @@ const FutureEvents = () => {
 
   return (
     <>
-    <div className="company-postedEvents-n">
-    <Title level={2} style={{ margin: '10px 0' }}>Posted Events</Title>
-    <Row gutter={16}>
-      {events.map((event) => (
-        <Col span={8} key={event.id}>
-          <Card
-            hoverable
-            cover={<img alt={event.name} src={event.imageUrl} style={{height: '200px'}}/>}
-          >
-            <Meta title={event.name} description={event.venue} />
-            <p>{event.startTime} - {event.endTime}</p>
-            <Button type="primary" style={{ marginRight: '10px' }}>
-              <Link to={`/postedevents/${event.id}/details`}>View Details</Link>
-            </Button>
-            <Button type="primary">
-              <Link to={`/postedevents/registeredcandidates`}>View Candidates</Link>
-            </Button>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-    </div>
-  </>
+      <div className="company-postedEvents-n">
+
+        <Row>
+          <Col span={24}>
+            <Row>
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
+              }}>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  POSTED EVENTS
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
+
+              <Col span={6}>
+              </Col>
+            </Row>
+            <Divider />
+            <Row gutter={16}>
+              {events.map((event) => (
+                <Col span={8} key={event.id}>
+                  <Card
+                    hoverable
+                    cover={<img alt={event.name} src={event.imageUrl} style={{ height: '200px' }} />}
+                  >
+                    <Meta title={event.name} description={event.venue} />
+                    <p>{event.startTime} - {event.endTime}</p>
+                    <Button type="primary" style={{ marginRight: '10px' }}>
+                      <Link to={`/postedevents/${event.id}/details`}>View Details</Link>
+                    </Button>
+                    <Button type="primary">
+                      <Link to={`/postedevents/registeredcandidates`}>View Candidates</Link>
+                    </Button>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Col>
+        </Row>
+      </div>
+    </>
   );
 };
 

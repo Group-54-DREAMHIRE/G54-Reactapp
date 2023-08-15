@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Input, Select, Radio, Checkbox, DatePicker } from 'antd';
+import { Link } from 'react-router-dom';
 import '../../assets/styles/AddQuestions.scss';
 
 const { Option } = Select;
@@ -10,6 +11,7 @@ function AddQuestions() {
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm();
     const [questionNumber, setQuestionNumber] = useState(1);
+    const [quizSubmitted, setQuizSubmitted] = useState(false);
 
     const onFinish = (values) => {
         const newQuestion = {
@@ -39,6 +41,12 @@ function AddQuestions() {
             ...quizDetails,
             [e.target.name]: e.target.value
         })
+    }
+
+    const handleSubmit = () => {
+        localStorage.setItem('quizDetails', JSON.stringify(quizDetails));
+        localStorage.setItem('questions', JSON.stringify(questions));
+        setQuizSubmitted(true);
     }
 
     return (
@@ -142,8 +150,8 @@ function AddQuestions() {
                             <Input />
                         </Form.Item> */}
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Submit
+                            <Button type="primary" onClick={handleSubmit}>
+                            Submit
                             </Button>
                         </Form.Item>
                     </Form>
@@ -165,8 +173,6 @@ function TakeQuiz({ questions, quizDetails }) {
 
     return (
         <div>
-            <h1>{quizDetails.title}</h1>
-            <p>{quizDetails.instructions}</p>
             <Form>
                 {questions.map((question, i) => (
                     <Form.Item key={i}>
@@ -183,7 +189,7 @@ function TakeQuiz({ questions, quizDetails }) {
                 ))}
                 <Form.Item>
                     <Button type="primary" onClick={() => evaluateQuiz(answers)}>
-                        Submit
+                    <Link to={`/scheduletests/displaytest`}>Submit</Link>
                     </Button>
                 </Form.Item>
             </Form>

@@ -1,0 +1,41 @@
+// PendingTimeSlots.scss
+
+.pending-time-slots-n {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 4px 4px rgba(30, 136, 2229, .2) ;
+    margin: 20px;
+
+    .title {
+        font-size: 25px;
+        font-weight: 600;
+        
+      }
+      
+      .list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .list-item-meta {
+        flex: 1;
+      }
+      .ant-list-item-meta-description {
+        font-size: 20px;
+      }
+      
+      .link-button {
+        margin-left: 10px;
+      }
+  }
+  
+  
+  

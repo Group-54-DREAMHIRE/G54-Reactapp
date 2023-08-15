@@ -52,11 +52,11 @@ function AdvertisementList() {
       ),
     },
     {
-      title: "View",
+      title: "View Candidate Requests",
       key: "view",
       render: (text, record) => (
         <Button type="primary">
-          <Link to={`/postedjobs/jobpost`}>View</Link>
+          <Link to={`/pendingresumes`}>{record.applications}</Link>
         </Button>
       ),
     },
@@ -96,6 +96,7 @@ function AdvertisementList() {
       datePosted: 'December 15, 2022',
       status: true,
       skills: ["Java", "Python", "PHP"],
+      applications: 15,
     },
     {
       key: '2',
@@ -104,6 +105,7 @@ function AdvertisementList() {
       datePosted: 'December 15, 2022',
       status: true,
       skills: ["Java", "Python", "PHP"],
+      applications: 10,
     },
     {
       key: '3',
@@ -112,14 +114,16 @@ function AdvertisementList() {
       datePosted: 'December 15, 2022',
       status: false,
       skills: ["HTML", "CSS", "JavaScript"],
+      applications: 3,
     },
     {
       key: '4',
       jobTitle: 'Software Engineer',
       vacancies: 3,
       datePosted: 'December 15, 2022',
-      status: 'pending',
+      status: true,
       skills: ["Java", "Python", "PHP"],
+      applications: 3,
     },
     {
       key: '5',
@@ -128,6 +132,7 @@ function AdvertisementList() {
       datePosted: 'December 15, 2022',
       status: false,
       skills: ["HTML", "CSS", "JavaScript"],
+      applications: 3,
     },
   ]);
 
@@ -142,62 +147,56 @@ function AdvertisementList() {
 
   return (
     <>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ duration: 0.6 }}>
-        <div className='container-n'>
-          <Row style={{
-            marginTop: "10px",
-          }}>
-            <Col span={12} style={{
-              display: 'flex',
-              justifyContent: 'left',
-              alignItems: 'center',
-            }}>
-              <Title style={{
-                fontSize: '25px',
-                fontWeight: 600,
+      <div className='container-n'>
+        <Row>
+          <Col span={24}>
+            <Row>
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
               }}>
-                Advertisement List
-              </Title>
-            </Col>
-            <Col span={6}>
-            </Col>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  POSTED JOBS
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
 
-            <Col span={6} style={{
-              display: 'flex',
-              justifyContent: 'right',
-              alignItems: 'center'
-            }}>
-              <Button type="primary"
-              >+ Add Job</Button>
-            </Col>
-          </Row>
-          <Divider />
+              <Col span={6} style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center'
+              }}>
+                <Button type="primary"
+                >+ Add Job</Button>
+              </Col>
+            </Row>
 
-          <Table className='tables-n'
-            dataSource={dataSource}
-            columns={columns}
-            pagination={{
-              current: page,
-              pageSize: pageSize,
-              onChange: (page, pageSize) => {
-                setPage(page);
-                setPageSize(pageSize);
-                // Make the api call here with page and page size
-              }
-            }}
-          >
-
-          </Table>
-        </div>
-
-
-      </motion.div>
-
-
+            <Divider />
+            <Row>
+              <Col span={24}>
+              <Table className='tables-n'
+                dataSource={dataSource}
+                columns={columns}
+                pagination={{
+                  current: page,
+                  pageSize: pageSize,
+                  onChange: (page, pageSize) => {
+                    setPage(page);
+                    setPageSize(pageSize);
+                  }
+                }}
+              >
+              </Table>
+              </Col>
+            </Row>
+          </Col>
+        </Row >
+      </div >
     </>
   )
 }

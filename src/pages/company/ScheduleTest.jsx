@@ -51,7 +51,7 @@ function AdvertisementList() {
       key: "selectionTest",
       render: (text, record) => (
         <Button type="primary">
-          <Link to={`/sheduletests/createtest`}>Create</Link>
+          <Link to={`/scheduletests/createtest`}>Create</Link>
         </Button>
       ),
     },

@@ -1,10 +1,11 @@
 .event-profile-card-n {
+  display: block;
   width: 90%;
   margin: 20px auto;
   padding: 30px;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+  background-color: #ffffff;
 
   .header {
     text-align: center;
@@ -68,44 +69,44 @@
     text-align: center;
   }
   
-  .website a {
-    color: #003366;
-    text-decoration: underline;
-  }
+  // .website a {
+  //   color: #003366;
+  //   text-decoration: underline;
+  // }
   
-  .website a:hover {
-    color: #f57c00;
-  }
+  // .website a:hover {
+  //   color: #f57c00;
+  // }
   
-  .edit-button {
-    margin-top: 10px;
-    text-align: center;
-  }
+  // .edit-button {
+  //   margin-top: 10px;
+  //   text-align: center;
+  // }
   
-  .ant-modal-content {
-    border-radius: 8px;
-  }
+  // .ant-modal-content {
+  //   border-radius: 8px;
+  // }
   
-  .ant-modal-header {
-    background-color: #003366;
-    color: #ffffff;
-  }
+  // .ant-modal-header {
+  //   background-color: #003366;
+  //   color: #ffffff;
+  // }
   
-  .ant-modal-title {
-    color: #ffffff;
-  }
+  // .ant-modal-title {
+  //   color: #ffffff;
+  // }
   
-  .ant-modal-footer {
-    border-top: none;
-  }
+  // .ant-modal-footer {
+  //   border-top: none;
+  // }
   
-  .ant-btn-primary {
-    background-color: #003366;
-    border-color: #003366;
-  }
+  // .ant-btn-primary {
+  //   background-color: #003366;
+  //   border-color: #003366;
+  // }
   
-  .ant-btn-primary:hover {
-    background-color: #f57c00;
-    border-color: #f57c00;
-  }
+  // .ant-btn-primary:hover {
+  //   background-color: #f57c00;
+  //   border-color: #f57c00;
+  // }
 }

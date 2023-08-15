@@ -16,10 +16,17 @@ import PostedJobs from '../pages/company/PostedJobs';
 import JobPost from '../pages/JobPost';
 
 import Interviews from '../pages/company/Interviews';
-import ScheduleInterviews from '../pages/company/ScheduleInterviews'
+import ScheduleInterviews from '../pages/company/ScheduleInterviews';
 
-import SheduleTests from '../pages/company/SheduleTest';
+import ScheduledInterviews from '../pages/company/ScheduledInterviews';
+import SelectedTimeSlots from "../pages/company/SelectedTimeSlots";
+import PendingTimeSlots from "../pages/company/PendingTimeSlots";
+import RejectedCandidates from "../pages/company/RejectedCandidates";
+import AssignedCandidates from "../pages/company/AssignedCandidates";
+
+import ScheduleTests from '../pages/company/ScheduleTest';
 import CreateTest from '../pages/company/CreateTest';
+import DispalyTest from '../pages/company/DisplayTest';
 
 import SendNotifications from '../pages/company/SendNotification';
 import CandidateResumes from '../pages/company/CandidatResumes';
@@ -56,13 +63,21 @@ export default function CandidateRoutes() {
           <Route path="/postedevents/:id/details" element={<EventDetails/>}/>
           <Route path="/postedevents/registeredcandidates" element={<RegisteredCandidates/>} />
 
-          <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
           <Route path="/events" element={<Events/>}/>
-          <Route path="/event" element={< OneFullCard/>}/>
-          <Route path="/addevent" element={<EventForm/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
-          <Route path="/sheduletests" element={<SheduleTests/>}/>
-          <Route path="/sheduletests/createtest" element={<CreateTest/>}/>
+          <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
+
+          <Route path="/scheduledinterviews" element={<ScheduledInterviews/>} />
+          <Route path="/scheduledinterviews/selectedtimeslots" element={<SelectedTimeSlots/>} />
+          <Route path="/scheduledinterviews/pendingtimeslots" element={<PendingTimeSlots/>} />
+          <Route path="/scheduledinterviews/rejectedcandidates" element={<RejectedCandidates/>} />
+          <Route path="/scheduledinterviews/assignedcandidates" element={<AssignedCandidates/>} />
+
+
+          <Route path="/scheduletests" element={<ScheduleTests/>}/>
+          <Route path="/scheduletests/createtest" element={<CreateTest/>}/>
+          <Route path="/scheduletests/displaytest" element={<DispalyTest/>} />
+
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
           <Route path="/companies" element={<Companies/>}/>
