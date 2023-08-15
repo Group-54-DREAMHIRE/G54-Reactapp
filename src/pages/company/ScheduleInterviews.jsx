@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Form, DatePicker, Button, Select, List, Col, Row, TimePicker, InputNumber, Input } from 'antd';
+import { Form, DatePicker, Button, Select, List, Col, Row, TimePicker, InputNumber, Input, Typography, Divider } from 'antd';
 import '../../assets/styles/InterviewScheduling.scss';
+
+const { Title } = Typography;
 
 const InterviewScheduling = () => {
   const [interviewSlots, setInterviewSlots] = useState([]);
@@ -100,41 +102,62 @@ const InterviewScheduling = () => {
 
   return (
     <div className="interview-scheduling-n">
-      <h2>Interview Scheduling</h2>
-
-      <Form className="interview-form" layout="vertical">
-        <Row>
-          <Col span={24}>
+      <Row>
+        <Col span={24}>
+          <Form className="interview-form" layout="vertical">
             <Row>
-              <Col span={12} style={{ width: '100%' }}>
-                <Form.Item label="Interview ID">
-                  <InputNumber name="interviewId" value={formData.interviewId} onChange={handleInterviewIdChange} min={0} />
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
+              }}>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  SCHEDULE INTERVIEW
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
+              <Col span={6}>
+              </Col>
+
+            </Row>
+
+            <Divider />
+
+            <Row gutter={20}>
+              <Col span={12}>
+                <Form.Item label="Interview ID" style={{ width: '100%' }}>
+                  <InputNumber name="interviewId" value={formData.interviewId} style={{ width: '100%' }} onChange={handleInterviewIdChange} min={0} />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item label="No. of Candidates">
-                  <InputNumber name="candidateCount" value={formData.candidateCount} onChange={handleCandidateCountChange} min={0} />
+                  <InputNumber name="candidateCount" value={formData.candidateCount} style={{ width: '100%' }} onChange={handleCandidateCountChange} min={0} />
                 </Form.Item>
               </Col>
             </Row>
 
             <Row>
-              <Col span={12}>
+              <Col span={24}>
                 <Form.Item label="Instructions">
-                  <textarea name="instructions" value={formData.instructions} onChange={handleInputChange} />
+                  <Input.TextArea name="instructions" value={formData.instructions} style={{ width: '100%' }} onChange={handleInputChange} />
                 </Form.Item>
               </Col>
             </Row>
 
-            <Row>
+            <Row gutter={20}>
               <Col span={12}>
                 <Form.Item label="Date">
-                  <DatePicker onChange={handleDateChange} />
+                  <DatePicker style={{ width: '100%' }} onChange={handleDateChange} />
                 </Form.Item>
               </Col>
-              <Col span={6}>
+
+              <Col span={12}>
                 <Form.Item label="Interview Duration">
-                  <Select value={formData.interviewDuration} onChange={handleDurationChange}>
+                  <Select value={formData.interviewDuration} style={{ width: '100%' }} onChange={handleDurationChange}>
                     <Select.Option value={20}>20 minutes</Select.Option>
                     <Select.Option value={30}>30 minutes</Select.Option>
                     <Select.Option value={40}>40 minutes</Select.Option>
@@ -145,10 +168,11 @@ const InterviewScheduling = () => {
               </Col>
             </Row>
 
-            <Row>
+            <Row gutter={20}>
               <Col span={12}>
                 <Form.Item label="Interview Start Time">
                   <TimePicker
+                    style={{ width: '100%' }}
                     value={formData.interviewStartTime}
                     onChange={handleStartTimeChange}
                     format="HH:mm"
@@ -158,6 +182,7 @@ const InterviewScheduling = () => {
               <Col span={12}>
                 <Form.Item label="Interview End Time">
                   <TimePicker
+                    style={{ width: '100%' }}
                     value={formData.interviewEndTime}
                     onChange={handleEndTimeChange}
                     format="HH:mm"
@@ -165,10 +190,12 @@ const InterviewScheduling = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
+
+            <Row gutter={20}>
               <Col span={12}>
                 <Form.Item label="Interval Start Time">
                   <TimePicker
+                    style={{ width: '100%' }}
                     value={formData.intervalStartTime}
                     onChange={handleIntervalStartChange}
                     format="HH:mm"
@@ -178,6 +205,7 @@ const InterviewScheduling = () => {
               <Col span={12}>
                 <Form.Item label="Interval End Time">
                   <TimePicker
+                    style={{ width: '100%' }}
                     value={formData.intervalEndTime}
                     onChange={handleIntervalEndChange}
                     format="HH:mm"
@@ -185,9 +213,12 @@ const InterviewScheduling = () => {
                 </Form.Item>
               </Col>
             </Row>
-          </Col>
-        </Row>
-      </Form >
+
+          </Form >
+        </Col>
+      </Row>
+
+
 
       <Button type="primary" onClick={handleScheduling}>Generate Interview Slots</Button>
 
@@ -202,6 +233,8 @@ const InterviewScheduling = () => {
         )}
       />
     </div >
+
+
   );
 };
 

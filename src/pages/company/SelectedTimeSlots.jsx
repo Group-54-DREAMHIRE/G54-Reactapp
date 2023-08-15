@@ -175,7 +175,7 @@ const SelectedTimeSlots = () => {
             fontSize: '25px',
             fontWeight: 600,
         }}>
-            Selected Time Slots
+            SELECTED TIME SLOTS
         </Title>
             <Row style={{ padding: '2%' }} gutter={[20, 20]}>
                 {items.map((items) => {

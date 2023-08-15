@@ -35,7 +35,7 @@ function ScheduledInterviews() {
       ),
     },
     {
-        title: "Assigned Candidates",
+        title: "Designated Interviewees",
         key: "assifnedCandidates",
         render: (record) => (
           <Button type="primary">
@@ -62,7 +62,7 @@ function ScheduledInterviews() {
       ),
     },
     {
-      title: "Rejected Candidates",
+      title: "Open schedule Candidates",
       key: "rejectedCandidates",
       render: (record) => (
         <Button type="primary">
@@ -145,7 +145,7 @@ function ScheduledInterviews() {
                 fontSize: '25px',
                 fontWeight: 600,
               }}>
-                Scheduled Interviews
+                SCHEDULED INTERIVEWS
               </Title>
             </Col>
             <Col span={6}>

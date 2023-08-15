@@ -175,7 +175,7 @@ const RejectedCandidates = () => {
             fontSize: '25px',
             fontWeight: 600,
         }}>
-            Rejected Candidates
+            OPEN SCHEDULE CANDIDATES
         </Title>
             <Row style={{ padding: '2%' }} gutter={[20, 20]}>
                 {items.map((items) => {

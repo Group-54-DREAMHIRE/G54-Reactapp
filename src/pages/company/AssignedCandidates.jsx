@@ -176,7 +176,7 @@ const AssignedCandidates = () => {
                 fontSize: '25px',
                 fontWeight: 600,
             }}>
-                Assigned Candidates
+                DESIGNATED INTERVIEWEES
             </Title>
             <Row style={{ padding: '2%' }} gutter={[20, 20]}>
                 {items.map((items) => {
