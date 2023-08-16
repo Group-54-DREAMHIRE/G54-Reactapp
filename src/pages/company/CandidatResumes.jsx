@@ -21,7 +21,8 @@ export default function CandidatResumes() {
     items={[
     {label: "Pending List", key: "/pendingresumes"},
     {label: "Short List", key: "/shortlistresumes"},
-    {label: "Rejected List", key: "/rejectresumes"}
+    {label: "Rejected List", key: "/rejectresumes"},
+    {label: "Canceled List", key: "/canceledresumes"}
     ]}/>
     <Outlet/>
     </>

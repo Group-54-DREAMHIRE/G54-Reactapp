@@ -29,14 +29,14 @@ function AdvertisementList() {
       ),
     },
     {
-      title: 'No of Vacancies',
+      title: 'No. of Vacancies',
       dataIndex: 'vacancies',
       key: 'vacancies',
     },
     {
-      title: 'Date Posted',
-      dataIndex: 'datePosted',
-      key: 'datePosted'
+      title: 'Closing Date',
+      dataIndex: 'closingDate',
+      key: 'closingDate'
     },
     {
       title: 'Status',
@@ -52,7 +52,7 @@ function AdvertisementList() {
       ),
     },
     {
-      title: "View Candidate Requests",
+      title: "No. of Applications",
       key: "view",
       render: (text, record) => (
         <Button type="primary">
@@ -93,47 +93,47 @@ function AdvertisementList() {
       key: '1',
       jobTitle: 'Software Engineer',
       vacancies: 15,
-      datePosted: 'December 15, 2022',
+      closingDate: 'September 15, 2023',
       status: true,
       skills: ["Java", "Python", "PHP"],
       applications: 15,
     },
     {
       key: '2',
-      jobTitle: 'Software Engineer',
-      vacancies: 10,
-      datePosted: 'December 15, 2022',
-      status: true,
-      skills: ["Java", "Python", "PHP"],
-      applications: 10,
+      jobTitle: 'Web Developer',
+      vacancies: 4,
+      closingDate: 'September 20, 2023',
+      status: false,
+      skills: ["HTML", "CSS", "JavaScript","Node.js"],
+      applications: 3,
     },
     {
       key: '3',
-      jobTitle: 'Web Developer',
-      vacancies: 4,
-      datePosted: 'December 15, 2022',
-      status: false,
-      skills: ["HTML", "CSS", "JavaScript"],
+      jobTitle: 'Database Administrator',
+      vacancies: 3,
+      closingDate: 'October 15, 2023',
+      status: true,
+      skills: ["PostgreSQL", "Oracle"],
       applications: 3,
     },
     {
       key: '4',
-      jobTitle: 'Software Engineer',
-      vacancies: 3,
-      datePosted: 'December 15, 2022',
-      status: true,
-      skills: ["Java", "Python", "PHP"],
-      applications: 3,
+      jobTitle: 'Cybersecurity Analyst',
+      vacancies: 2,
+      closingDate: 'December 15, 2023',
+      status: false,
+      skills: ["Wireshark", "Nessus"],
+      applications: 1,
     },
     {
       key: '5',
-      jobTitle: 'Web Developer',
-      vacancies: 4,
-      datePosted: 'December 15, 2022',
+      jobTitle: 'Network Engineer',
+      vacancies: 3,
+      closingDate: 'December 15, 2023',
       status: false,
-      skills: ["HTML", "CSS", "JavaScript"],
-      applications: 3,
-    },
+      skills: [""],
+      applications: 2,
+    }
   ]);
 
   const handleViewAdvertisement = (id) => {
@@ -171,8 +171,7 @@ function AdvertisementList() {
                 justifyContent: 'right',
                 alignItems: 'center'
               }}>
-                <Button type="primary"
-                >+ Add Job</Button>
+                <Search placeholder="Search by job title" enterButton />
               </Col>
             </Row>
 

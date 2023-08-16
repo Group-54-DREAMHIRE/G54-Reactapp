@@ -14,15 +14,12 @@ export default function JobPosts() {
 
   const dispatch = useDispatch();
   const [allJobList, setAllJobList] = useState([]);
-  const jobPosts = useSelector(getAllJobPosts);
 
   useEffect(() => {
-    console.log(jobPosts,"Dula");
       getData('/api/v1/jobpost/getalljobs')
     .then((response) => {
       console.log(response.data);
       setAllJobList(response.data);
-      console.log(jobPosts);
       dispatch(setJobPosts(response.data))
     })
     .catch((error) => {
