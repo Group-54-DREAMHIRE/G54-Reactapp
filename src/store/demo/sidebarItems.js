@@ -18,7 +18,7 @@ import { FaEnvelopeOpenText } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
-const userType = "company";
+const userType = localStorage.getItem("USERTYPE");
 const sidebarItems = [
   {
     id: 1,

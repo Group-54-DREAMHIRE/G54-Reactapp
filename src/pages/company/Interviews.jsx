@@ -34,7 +34,7 @@ function AdvertisementList() {
       key: 'vacancies',
     },
     {
-      title: 'No. of Applications',
+      title: 'No. of Candidates',
       dataIndex: 'applications',
       key: 'applications',
     },
@@ -59,31 +59,31 @@ function AdvertisementList() {
     },
     {
       key: '2',
-      jobTitle: 'Software Engineer',
+      jobTitle: 'Web Developer',
       vacancies: 13,
       applications: 10,
-      skills: ["Java", "Python", "PHP"],
+      skills: ["HTML", "CSS", "JavaScript","Node.js"],
     },
     {
       key: '3',
-      jobTitle: 'Web Developer',
+      jobTitle: 'Database Administrator',
       vacancies: 8,
       applications: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
+      skills: ["PostgreSQL", "Oracle"],
     },
     {
       key: '4',
-      jobTitle: 'Software Engineer',
+      jobTitle: 'Cybersecurity Analyst',
       vacancies: 5,
       applications: 3,
-      skills: ["Java", "Python", "PHP"],
+      skills: ["Wireshark", "Nessus"],
     },
     {
       key: '5',
-      jobTitle: 'Web Developer',
+      jobTitle: 'Network Engineer',
       vacancies: 20,
       applications: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
+      skills: [""],
     },
   ]);
 
@@ -113,7 +113,7 @@ function AdvertisementList() {
                 justifyContent: 'right',
                 alignItems: 'center'
               }}>
-
+                <Search placeholder="Search by job title" enterButton />
               </Col>
             </Row>
             <Divider />

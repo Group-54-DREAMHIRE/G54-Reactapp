@@ -16,7 +16,7 @@ function PendingTimeSlots() {
   return (
     <>
       <div className='pending-time-slots-n'>
-        <Title className='title'>Pending Time Slots</Title>
+        <Title className='title'>PENDING TIME SLOTS</Title>
         <List
           itemLayout='horizontal'
           dataSource={pendingTimeSlots}

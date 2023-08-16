@@ -39,7 +39,7 @@ function ScheduledInterviews() {
       key: "designatedCandidates",
       render: (record) => (
         <Button type="primary">
-          <Link to={`/scheduledinterviews/designatedCandidates`}>{record.designatedCandidates}</Link>
+          <Link to={`/scheduledinterviews/assignedCandidates`}>{record.designatedCandidates}</Link>
         </Button>
       ),
     },
@@ -48,7 +48,7 @@ function ScheduledInterviews() {
       key: "reservedSlotCandidates",
       render: (record) => (
         <Button type="primary">
-          <Link to={`/scheduledinterviews/reservedSlotCandidates`}>{record.reservedSlotCandidates}</Link>
+          <Link to={`/scheduledinterviews/selectedtimeslots`}>{record.reservedSlotCandidates}</Link>
         </Button>
       ),
     },
@@ -57,7 +57,7 @@ function ScheduledInterviews() {
       key: "pendingCandidates",
       render: (record) => (
         <Button type="primary">
-          <Link to={`/scheduledinterviews/pendingTimeslots`}>{record.pendingTimeslots}</Link>
+          <Link to={`/scheduledinterviews/rejectedCandidates`}>{record.pendingCandidates}</Link>
         </Button>
       ),
     },
@@ -66,7 +66,7 @@ function ScheduledInterviews() {
       key: "pendingCandidates",
       render: (record) => (
         <Button type="primary">
-          <Link to={`/scheduledinterviews/pendingCandidates`}>{record.pendingCandidates}</Link>
+          <Link to={`/scheduledinterviews/pendingTimeslots`}>{record.pendingTimeslots}</Link>
         </Button>
       ),
     },
@@ -81,48 +81,48 @@ function ScheduledInterviews() {
       designatedCandidates: 10,
       reservedSlotCandidates: 5,
       pendingCandidates: 3,
-      pendingTimeslots: 2,
+      pendingTimeslots: 3,
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '2',
       interviewId: '002',
-      jobTitle: 'Software Engineer',
+      jobTitle: 'Web Developer',
       designatedCandidates: 8,
       reservedSlotCandidates: 3,
       pendingCandidates: 5,
-      pendingTimeslots: 4,
-      skills: ["Java", "Python", "PHP"],
+      pendingTimeslots: 5,
+      skills: ["HTML", "CSS", "JavaScript","Node.js"],
     },
     {
       key: '3',
       interviewId: '003',
-      jobTitle: 'Web Developer',
+      jobTitle: 'Database Administrator',
       designatedCandidates: 10,
       reservedSlotCandidates: 2,
       pendingCandidates: 3,
-      pendingTimeslots: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
+      pendingTimeslots: 2,
+      skills: ["PostgreSQL", "Oracle"],
     },
     {
       key: '4',
       interviewId: '004',
-      jobTitle: 'Software Engineer',
+      jobTitle: 'Cybersecurity Analyst',
       designatedCandidates: 10,
       reservedSlotCandidates: 2,
       pendingCandidates: 3,
       pendingTimeslots: 4,
-      skills: ["Java", "Python", "PHP"],
+      skills: ["Wireshark", "Nessus"],
     },
     {
       key: '5',
       interviewId: '005',
-      jobTitle: 'Web Developer',
+      jobTitle: 'Network Engineer',
       designatedCandidates: 10,
       reservedSlotCandidates: 2,
       pendingCandidates: 3,
       pendingTimeslots: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
+      skills: [""],
     },
   ]);
 
@@ -157,7 +157,7 @@ function ScheduledInterviews() {
               justifyContent: 'right',
               alignItems: 'center'
             }}>
-
+              <Search placeholder="Search by job title" enterButton />
             </Col>
           </Row>
           <Divider />

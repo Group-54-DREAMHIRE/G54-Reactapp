@@ -32,6 +32,7 @@ import SendNotifications from '../pages/company/SendNotification';
 import CandidateResumes from '../pages/company/CandidatResumes';
 import PendingResume from '../pages/company/resume/PendingResume';
 import RejectResume from '../pages/company/resume/RejectResume';
+import CanceledResume from "../pages/company/resume/CanceledResume";
 import ShortListResume from '../pages/company/resume/ShortListResume';
 import Registration from '../pages/company/Registration';
 import Users from "../pages/company/Users";
@@ -56,6 +57,7 @@ export default function CandidateRoutes() {
             <Route path="/pendingresumes" index element={<PendingResume/>} />
             <Route path="/rejectresumes" element={<RejectResume/>} />
             <Route path="/shortlistresumes" element={<ShortListResume/>} />
+            <Route path="/canceledresumes" element={<CanceledResume/>} />
           </Route>
 
           <Route path="/postedevents" element={<PostedEvents/>}/>
