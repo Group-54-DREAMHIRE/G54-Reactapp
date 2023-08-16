@@ -11,17 +11,18 @@ import {
   AuditOutlined,
   FileSyncOutlined,
 } from "@ant-design/icons";
-import { BiLogOutCircle } from "react-icons/bi";
+import { BiLogOutCircle,BiCommentX } from "react-icons/bi";
 import { BsBuildingUp } from "react-icons/bs";
-import { FiSlack, FiUsers } from "react-icons/fi";
+import { FiSlack, FiUsers,FiEdit } from "react-icons/fi";
 import { FaEnvelopeOpenText } from "react-icons/fa";
-import { AiOutlineDollar } from "react-icons/ai";
+import { AiOutlineDollar,AiOutlineSubnode } from "react-icons/ai";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
-//const userType = localStorage.getItem("USERTYPE");
-const userType = "admin";
+const userType = localStorage.getItem("USERTYPE");
+
 const sidebarItems = [
   {
     id: 1,
@@ -195,13 +196,13 @@ if (userType === "candidate") {
       id: 4,
       label: "Regaistration Requests",
       key: "/registration",
-      icon: <FiUsers />,
+      icon: <AiOutlineSubnode/>,
     },
     {
       id: 5,
       label: "Companies",
       key: "/handlecompanies",
-      icon: <FiUsers />,
+      icon: <HiOutlineBuildingOffice2 />,
     },
     {
       id: 6,
@@ -213,13 +214,13 @@ if (userType === "candidate") {
       id: 7,
       label: "Edit Landing Page",
       key: "/editlanding",
-      icon: <FiUsers />,
+      icon: <FiEdit />,
     },
     {
       id: 8,
       label: "Complaints",
       key: "/complaints",
-      icon: <FiUsers />,
+      icon: <BiCommentX/>,
     },
     {
       id: 10,

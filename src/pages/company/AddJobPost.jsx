@@ -153,7 +153,6 @@ function AddJobPost() {
     console.log(response.data);
     if (response.status === 200) {
       setSuccessmsg("Succesfully updated");
-      dispatch(addJobPost(response.data));
       setTimeout(
         () => {
          setSuccessmsg("");

@@ -18,7 +18,6 @@ export default function JobPosts() {
 
   useEffect(() => {
     console.log(jobPosts,"Dula");
-    if(jobPosts===null){
       getData('/api/v1/jobpost/getalljobs')
     .then((response) => {
       console.log(response.data);
@@ -30,9 +29,6 @@ export default function JobPosts() {
       console.error("Error fetching user profile:", error);
     });
     console.log(allJobList);
-    }else{
-      setAllJobList(jobPosts);
-    }
   }, []);
 
   
