@@ -3,7 +3,7 @@ import CandidateCard from "../Components/cards/candidate/CandidateCard";
 import lahiru from '../assets/images/lahiru.png';
 import danuka from '../assets/images/danuka.jpg';
 import anjana from '../assets/images/anjana.jpg';
-import nishan from '../assets/images/nishan.png';
+import nishan from '../assets/images/Nishan.jpg';
 import vishmi from '../assets/images/vishmi.jpg';
 import dula from '../assets/images/dula.jpeg';
 const items = [
