@@ -20,8 +20,7 @@ import { AiOutlineDollar } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
-//const userType = localStorage.getItem("USERTYPE");
-const userType = "admin";
+const userType = localStorage.getItem("USERTYPE");
 const sidebarItems = [
   {
     id: 1,
