@@ -1,5 +1,7 @@
 .D_complaints_content{
-    padding: 2%;}
+    padding: 2%;
+background:white;
+}
 
 .D_complaints_title {
     font-size: 24px;
@@ -7,14 +9,14 @@
     margin-bottom: 20px;
     }
 .D_complaints_table-container {
-    background-color: lightblue;
+    // background-color: lightblue;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 
     .ant-btn {
-        border-radius: 4px;
+        // border-radius: 4px;
         
         
     
@@ -23,6 +25,7 @@
           border-color: #1890ff;
           text-align: center;
           width: 120px;
+          border-radius: 0%;
         }
     
         &.ant-btn-danger {
@@ -30,11 +33,12 @@
           border-color: #ff4d4f;
           text-align: center;
           width: 120px;
+          border-radius: 0%;
         }
     }
     
 .D_complaints_table-cell {
-    background-color: lightblue;
+    // background-color: lightblue;
     padding: 8px 16px;
     border-right: 1px solid rgb(22, 21, 21);
     }
