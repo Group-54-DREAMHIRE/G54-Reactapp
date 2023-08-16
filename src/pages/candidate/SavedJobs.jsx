@@ -59,28 +59,28 @@ function SavedJobs() {
     const [dataSource, setDataSource] = useState([
         {
             key: '1',
-            company: 'Virtusa',
+            company: 'Creative Software',
             jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            date: 'August 01, 2023'
         },
         {
             key: '2',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
+            company: 'Cloud Solution International',
+            jobPosition: 'Full stack developer',
+            date: 'July 15, 2023'
         },
-        {
-            key: '3',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
-        },
-        {
-            key: '4',
-            company: 'Virtusa',
-            jobPosition: 'Software Engineer',
-            date: 'December 15, 2022'
-        },
+        // {
+        //     key: '3',
+        //     company: 'Virtusa',
+        //     jobPosition: 'Software Engineer',
+        //     date: 'December 15, 2022'
+        // },
+        // {
+        //     key: '4',
+        //     company: 'Virtusa',
+        //     jobPosition: 'Software Engineer',
+        //     date: 'December 15, 2022'
+        // },
 
     ]);
 
@@ -118,21 +118,21 @@ function SavedJobs() {
                                 SAVED JOBS
                             </Title>
                         </Col>
-                        <Col span={6} offset={6} style={{
+                        {/* <Col span={6} offset={6} style={{
                             display: 'flex',
                             justifyContent: 'right',
                             alignItems: 'center'
                         }}>
                             <Search placeholder="Search company name" enterButton />
-                        </Col>
+                        </Col> */}
 
-                        <Col span={6} style={{
+                        {/* <Col span={6} style={{
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
                             <Button type="primary" onClick={onAddJobs} >+ Add Job</Button>
-                        </Col>
+                        </Col> */}
                     </Row>
                     <Divider />
 

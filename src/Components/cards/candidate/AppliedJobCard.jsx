@@ -105,13 +105,13 @@ const handleStatus = (value) =>{
     if(value === "shortList"){
       return (
           <Text type="success" style={statusStyles}>
-            Application is in the shortlist July 25
+            Application is in the shortlist August 10
           </Text>
       )}
       if(value === "reject"){
         return (
             <Text type="danger" style={statusStyles}>
-              Application is rejected July 25
+              Application is rejected August 02
             </Text>
         )}
       if(value === "close"){

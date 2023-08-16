@@ -52,7 +52,7 @@ export default function InterviewDetails() {
                   >
                     Date:
                   </Text>
-                  <Text style={textStyle}>2023.08.20</Text>
+                  <Text style={textStyle}>2023.08.28</Text>
                 </Col>
                 <Col span={24}>
                   <Text
@@ -76,7 +76,7 @@ export default function InterviewDetails() {
                   >
                     With:
                   </Text>
-                  <Text style={textStyle}>Mr. Dps Weerasinghe</Text>
+                  <Text style={textStyle}>Mrs. Vishmi</Text>
                 </Col>
                 <Col span={24}>
                   <Button

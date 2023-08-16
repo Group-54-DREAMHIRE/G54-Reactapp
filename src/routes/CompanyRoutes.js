@@ -64,6 +64,8 @@ export default function CandidateRoutes() {
           <Route path="/postedevents/registeredcandidates" element={<RegisteredCandidates/>} />
 
           <Route path="/events" element={<Events/>}/>
+          <Route path="/addevent" element={<EventForm/>}/>
+          <Route path="/event" element={<OneFullCard/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
           <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
 

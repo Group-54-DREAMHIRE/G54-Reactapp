@@ -363,7 +363,7 @@ export default function Profile() {
                                   options={currencies}
                                 />
                               ) : (
-                                <label onClick={() => setEditing(true)}>
+                                <label onClick={() => {setEdittingC(true);setEdittingC(false)}}>
                                   {currency}
                                   <EditOutlined />
                                 </label>
@@ -377,7 +377,7 @@ export default function Profile() {
                                  <Select
                                  value={minSalary}
                                  defaultValue={minSalary}
-                                 onChange={(value) => setMinSalary(value)}
+                                 onChange={(value) =>{ setMinSalary(value);setEdittingMin(false)}}
                                  style={{
                                    width: "100%",
                                    boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -389,7 +389,7 @@ export default function Profile() {
                                  options={salary}
                                />
                               ) : (
-                                <label onClick={() => setEditing(true)}>
+                                <label onClick={() => setEdittingMin(true)}>
                                   {minSalary}
                                   <EditOutlined />
                                 </label>
@@ -402,7 +402,7 @@ export default function Profile() {
                               </Title>
                               {editingMax || maxSalary === null ? (
                                  <Select
-                                 onChange={(value) => setMaxSalary(value)}
+                                 onChange={(value) => {setMaxSalary(value);setEdittingMax(false)}}
                                  style={{
                                    width: "100%",
                                    boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -414,7 +414,7 @@ export default function Profile() {
                                  options={salary}
                                />
                               ) : (
-                                <label onClick={() => setEditing(true)}>
+                                <label onClick={() => setEdittingMax(true)}>
                                   {maxSalary}
                                   <EditOutlined />
                                 </label>

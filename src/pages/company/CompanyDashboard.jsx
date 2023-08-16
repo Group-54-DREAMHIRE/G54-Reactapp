@@ -11,7 +11,6 @@ import {
   List,
   Select
 } from "antd";
-import '../../assets/styles/CompanyDashboard.scss';
 const { Title, Text } = Typography;
 
 
