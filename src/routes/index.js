@@ -8,8 +8,6 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 
 export default function MainRoutes() {
-  
-
   const userType = localStorage.getItem("USERTYPE");
 
   if (userType === "candidate") {

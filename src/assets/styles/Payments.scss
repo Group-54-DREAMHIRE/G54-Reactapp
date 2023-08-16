@@ -1,5 +1,6 @@
 .L_Payments_Details_content {
     padding: 2%;
+    background-color: white;
   }
   
   .L_Payments_Details_title {
@@ -9,15 +10,15 @@
   }
   
   .L_Payments_Details_table-container {
-    background-color: lightblue;
+    // background-color: lightblue;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
   
   .L_Payments_Details_table-cell {
-    background-color: lightblue;
+    // background-color: lightblue;
     padding: 8px 16px;
     border-right: 1px solid white;
   }
