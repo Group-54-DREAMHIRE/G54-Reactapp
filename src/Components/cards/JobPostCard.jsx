@@ -55,14 +55,15 @@ export default function JobPostCard({ items, status }) {
         <Row>
           <Title level={3}> {items.jobTitle}</Title>
         </Row>
-        <Row>
-          <Text style={{ fontSize: "16px" }}>{items.description}</Text>
-        </Row>
         <Row style={{ marginTop: "13px" }} justify="start">
-          {taglist.map((tag) => {
+          {taglist.slice(0,5).map((tag) => {
             return handleTags(tag);
           })}
         </Row>
+        <Row justify='end'>
+          <Text style={{ fontSize: "16px" }}>{items.description.substring(0,120)} ...</Text>
+        </Row>
+        
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
           {status.save && (
             <Col>
@@ -78,7 +79,7 @@ export default function JobPostCard({ items, status }) {
                 onClick={() => navigate(`/jobpost/${items.id}`)}
                 type="primary"
               >
-                View Job
+                See more...
               </Button>
             </Col>
           )}

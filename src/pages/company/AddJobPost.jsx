@@ -15,12 +15,16 @@ import {
 import { storage } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { UploadOutlined } from "@ant-design/icons";
-import { jobtypes, tagItems, years } from "../../store/demo/addJobPost";
+import { jobExperienceCom } from "../../store/demo/jobExperience";
+import { jobTitles } from "../../store/demo/jobTitles";
+import { jobTypes } from "../../store/demo/jobTypes";
+import { qualifications } from "../../store/demo/quqlifications";
+import { tagItems } from "../../store/demo/tagItems";
 import { useState, useEffect } from "react";
 import { fetchUserData, getProfileData } from "../../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/auth/userSlice";
-import { currencies, salary } from "../../store/demo/profile";
+import { salary,currencies } from "../../store/demo/salary";
 import { addJobPost } from "../../store/jobpost/jobSlice";
 import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
@@ -84,7 +88,7 @@ function AddJobPost() {
   const handleInputChange = (e, index) => {
     const updatedValue = [...requirements];
     updatedValue[index] = e.target.value;
-    const newVal = updatedValue.join(", ");
+    const newVal = updatedValue.join("/ ");
     setRequirements(updatedValue);
     setListRequirements(newVal);
     console.log(listRequirements);
@@ -176,7 +180,7 @@ function AddJobPost() {
                   <Divider style={{ margin: "0" }} />
                 </Row>
                 <Row justify="space-between">
-                  <Col span={11}>
+                  {/* <Col span={11}>
                     <Title level={4}>Job Title:</Title>
                     <Input
                       allowClear
@@ -187,6 +191,25 @@ function AddJobPost() {
                       }}
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </Col> */}
+                  <Col span={11}>
+                    <Title level={4} style={{}}>
+                      Job Title:
+                    </Title>
+                    <Select
+                      value={title}
+                      onChange={(value) => setTitle(value)}
+                      allowClear
+                      style={{
+                        width: "100%",
+                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
+                        borderRadius: "0",
+                        fontSize: "medium",
+                        borderRadius: "0 !important",
+                        fontFamily: "arial",
+                      }}
+                      options={jobTitles}
                     />
                   </Col>
                   <Col span={11}>
@@ -206,7 +229,7 @@ function AddJobPost() {
                         borderRadius: "0 !important",
                         fontFamily: "arial",
                       }}
-                      options={jobtypes}
+                      options={jobTypes}
                     />
                   </Col>
                   <Col span={11}>
@@ -225,7 +248,7 @@ function AddJobPost() {
                         fontSize: "medium",
                         fontFamily: "arial",
                       }}
-                      options={years}
+                      options={jobExperienceCom}
                     />
                   </Col>
                   <Col span={11}>
@@ -244,12 +267,7 @@ function AddJobPost() {
                         fontSize: "medium",
                         fontFamily: "arial",
                       }}
-                      options={[
-                        {
-                          label: "BSc in Computer Science",
-                          value: "BSc in Computer Science",
-                        },
-                      ]}
+                      options={qualifications}
                     />
                   </Col>
                   <Col span={24}>

@@ -175,7 +175,7 @@ export default function Profile() {
 
   const handleSubmit = async () => {
     if (imageUpload) {
-      const imageRef = ref(storage, `dreamhire/profilepictures/${id}`);
+      const imageRef = ref(storage, `dreamhire/candidates/${id}`);
 
       uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);

@@ -4,16 +4,18 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import ApplyJob from "../pages/candidate/ApplyJob";
 import moment from "moment/moment";
 import { useParams } from "react-router-dom";
-import { Button, Col, Image, Row, Typography } from "antd";
+import { Button, Col, Image, Row, Space, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { openApplyJob } from "../store/models/modelsSlice";
 import { format, set } from "date-fns";
 import { useState, useEffect } from "react";
 import { getData } from "../api/authenticationService";
 import { getJobPost } from "../store/jobpost/jobSlice";
+import { getUser } from "../store/auth/userSlice";
 
 const { Title, Text } = Typography;
 export default function JobPost() {
+  const userType = localStorage.getItem("USERTYPE");
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -37,7 +39,7 @@ export default function JobPost() {
   useEffect(() => {
     if (jobPost) {
       if (typeof jobPost.jobRequirements === "string") {
-        const val = jobPost.jobRequirements.split(", ");
+        const val = jobPost.jobRequirements.split("/ ");
         setListRequirements(val);
         console.log(listRequirements);
       } else {
@@ -50,26 +52,6 @@ export default function JobPost() {
     }
   }, [jobPost]);
 
-  let items = {
-    title: "Software Engineer",
-    education: "BSc in Computer Science",
-    deadline: "25th January 2023",
-    country: "New York",
-    address: "Demo Address #8901 Marmora Road Chi Minh City, Vietnam",
-    salry: 600,
-    experience: 6,
-    details: "",
-    description: "",
-    howToApply: "",
-    jobRequirements: [
-      "Bachelor’s degree in Computer Science or related field",
-      "2+ years of experience in web development",
-      "Proficiency in JavaScript, HTML, and CSS",
-      "Experience with React framework",
-      "Strong problem-solving skills",
-      "Excellent communication skills",
-    ],
-  };
   return (
     <>
       <Row
@@ -129,8 +111,7 @@ export default function JobPost() {
                     <Col>
                       <Title level={4}>Experience</Title>
                       <Text className="job-text-w">
-                        {" "}
-                        {jobPost.experience} Year Experience
+                        {jobPost.experience} Experience
                       </Text>
                     </Col>
                   </Row>
@@ -146,11 +127,9 @@ export default function JobPost() {
                 {jobPost.jobTitle}
               </Title>
               <Text className="job-text-w" strong>
-                {" "}
                 Education &nbsp;{" "}
               </Text>
               <Text className="job-text-w">
-                {" "}
                 {jobPost.education} &nbsp;&nbsp;&nbsp;{" "}
               </Text>
               <Text className="job-text-w" strong>
@@ -169,8 +148,7 @@ export default function JobPost() {
             <Col span={24}>
               <Title
                 level={3}
-                style={{ fontFamily: "Rubik,sans-serif", fontWeight: "500" }}
-              >
+                style={{ fontFamily: "Rubik,sans-serif", fontWeight: "500" }}>
                 How to Apply
               </Title>
               <hr style={{ borderBottom: "2px solid rgba(0,0,0,0.3)" }} />
@@ -182,44 +160,38 @@ export default function JobPost() {
             <Col span={24}>
               <Title
                 level={3}
-                style={{ fontFamily: "Rubik,sans-serif", fontWeight: "500" }}
-              >
+                style={{ fontFamily: "Rubik,sans-serif", fontWeight: "500" }}>
                 Job Requirements
               </Title>
               <hr style={{ borderBottom: "2px solid rgba(0,0,0,0.3)" }} />
               <br />
               {listRequirements.map((item, index) => {
                 return (
-                  <>
-                    <Text
-                      style={{
-                        lineHeight: "35px",
-                        fontFamily: "Montserrat,sans-serif",
-                        fontSize: "15px",
-                        color: "rgba(0,0,0,.8)",
-                        fontWeight: "400",
-                      }}
-                      key={index}
-                    >
-                      {" "}
-                      {index + 1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item}.
-                    </Text>
-                    <br />
-                  </>
+                      <>
+                      <Row>
+                        <Col>
+                        <Text className="job-text-w" style={{marginRight: '20px'}}>{index+1}</Text>
+                        </Col>
+                        <Col span={22}>
+                        <Text className="job-text-w" key={index}>{item}</Text> <br/>
+                        </Col>
+                      </Row>
+                     
+                     
+                      </>
                 );
               })}
             </Col>
           </Row>
-          <Row style={{ marginTop: "30px" }}>
+          {userType==="company"?(null):(<Row style={{ marginTop: "30px" }}>
             <Button
               size="large"
               style={{ borderRadius: "0" }}
               type="primary"
-              onClick={() => dispatch(openApplyJob())}
-            >
+              onClick={() => dispatch(openApplyJob())}>
               Apply This Job
             </Button>
-          </Row>
+          </Row>)}
           <ApplyJob jobID={id} />
         </Col>
       </Row>

@@ -2,12 +2,15 @@ import JobPostCard from "../Components/cards/JobPostCard";
 import { Row, Col, Divider, Typography, Select, Space, Button } from "antd";
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
-import { items } from "../store/demo/jobPosts";
+import { jobExperience } from "../store/demo/jobExperience";
+import { jobTitles } from "../store/demo/jobTitles";
+import { jobTypes } from "../store/demo/jobTypes";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchUserData, getData } from "../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
+import { qualifications } from "../store/demo/quqlifications";
 const { Title } = Typography;
 
 export default function JobPosts() {
@@ -80,50 +83,24 @@ const auth = userType === "company"? true:false;
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
+                allowClear
                 showSearch
                 size="large"
-                defaultValue="Software Engineer"
+                placeholder='Job Title'
                 onChange={handleChange}
-                options={[
-                  {
-                    value: "softwareEngineer",
-                    label: "Software Engineer",
-                  },
-                  {
-                    value: "lucy",
-                    label: "Bussines Analyst",
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                  },
-                ]}
+                options={jobTitles}
+                maxTagCount={10}
               />
               <Select
                 size="large"
-                defaultValue="Full time"
+                placeholder='Job Type'
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
-                options={[
-                  {
-                    value: "fullTime",
-                    label: "Full Time",
-                  },
-                  {
-                    value: "partTime",
-                    label: "Part Time",
-                  },
-                  {
-                    value: "intern",
-                    label: "Intern",
-                  },
-                ]}
+                options={jobTypes}
+                maxTagCount={3}
               />
               <Select
                 suffixIcon={
@@ -132,32 +109,38 @@ const auth = userType === "company"? true:false;
                   </Title>
                 }
                 size="large"
-                defaultValue="600"
+                placeholder='Salary'
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
+                maxTagCount={5}
                 options={salary}
               />
               <Select
                 size="large"
-                defaultValue="On site"
+                placeholder='Qualifications'
+                options={qualifications}
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
+                  
                 }}
-                options={[
-                  {
-                    value: "onSite",
-                    label: "On SIte",
-                  },
-                  {
-                    value: "onLine",
-                    label: "Online",
-                  },
-                ]}
+                maxTagCount={5}
+              />
+              <Select
+                size="large"
+                placeholder='Experience'
+                options={jobExperience}
+                style={{
+                  width: 150,
+                  boxShadow: "0 0 8px rgba(0,0,0,.1)",
+                  borderRadius: "0 !important",
+                  
+                }}
+                maxTagCount={5}
               />
               <Button style={{ borderRadius: "0" }} size="large" type="primary">
                 Search

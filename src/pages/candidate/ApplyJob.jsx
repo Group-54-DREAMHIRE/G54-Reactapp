@@ -13,8 +13,8 @@ import {
   Select,
   Alert,
 } from "antd";
-import { currencies, salary,} from "../../store/demo/jobApply";
-import { tagItems} from '../../store/demo/addJobPost';
+import { currencies, salary,} from "../../store/demo/salary";
+import { tagItems } from "../../store/demo/tagItems";
 import { closeApplyJob } from "../../store/models/modelsSlice";
 import { useNavigate } from "react-router-dom";
 const { Text, Link, Title } = Typography;
