@@ -18,7 +18,7 @@ const { Title } = Typography;
 export default function () {
   const dispatch = useDispatch();
   const { error, messageChange } = useSelector((state) => state.user);
-  const user = JSON.parse(useSelector(getUser));
+  const user = useSelector(getUser);
 
   const navigate = useNavigate();
   const [oldp, setOldp] = useState("");
@@ -27,7 +27,7 @@ export default function () {
 
   const handleChangePassword = async () => {
     let change = {
-      email: user.email,
+      email: user.systemUser.email,
       oldPassword: oldp,
       newPassword: newp,
     };
@@ -40,9 +40,7 @@ export default function () {
         setTimeout(
           () => {
             dispatch(success());
-            clearTimeout();
           },
-          500,
           1000
         );
       }

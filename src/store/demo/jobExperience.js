@@ -8,10 +8,6 @@ export const jobExperience = [
         label: '1 Year'
     },
     {
-        value: '1 Year',
-        label: '1 Year'
-    },
-    {
         value: '2 Year',
         label: '2 Year'
     },

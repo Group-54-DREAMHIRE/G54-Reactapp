@@ -62,7 +62,7 @@ export default function CompanyProfile() {
   const [linkedIn, setLinkedIn] = useState("");
 
   const [listServiceKeys, setListServiceKeys] = useState("");
-  const [tempLogo, setTempLogo] = useState("");
+  const [tempLogo, setTempLogo] = useState(null);
   const [hasImage, setHasImage] = useState(true);
 
   const [successmsg, setSuccessmsg] = useState();
@@ -88,11 +88,12 @@ export default function CompanyProfile() {
     if (profileData) {
       setName(profileData.name);
       setLogo(profileData.logo);
+      setTempLogo(profileData.logo);
       console.log(profileData.logo);
       if (profileData.logo === null) {
         setHasImage(false);
         console.log(hasImage);
-        console.log(profileData.logo, "paka");
+        console.log(profileData.logo);
       }
 
       setDescription(profileData.description);
@@ -100,7 +101,7 @@ export default function CompanyProfile() {
       setServices(profileData.services);
       setListServiceKeys(profileData.serviceKeys);
       if (typeof profileData.serviceKeys === "string") {
-        const val = profileData.serviceKeys.split(", ");
+        const val = profileData.serviceKeys.split("/ ");
         setServiceKeys(val);
       } else {
         setServiceKeys([]);
@@ -133,8 +134,8 @@ export default function CompanyProfile() {
     const updatedValue = [...serviceKeys];
     updatedValue[index] = value;
     setServiceKeys(updatedValue);
-    setListServiceKeys(updatedValue.join(", "));
-    console.log(updatedValue.join(", "));
+    setListServiceKeys(updatedValue.join("/ "));
+    console.log(updatedValue.join("/ "));
   };
   const handleEmail = (value) => {
     setEmail(value);
@@ -161,8 +162,6 @@ export default function CompanyProfile() {
     console.log(logo);
     
   };
-
-
   const handleSubmit = async () => {
     if (imageUpload) {
       const imageRef = ref(storage, `dreamhire/companies/${name}/${id}`);
@@ -173,7 +172,7 @@ export default function CompanyProfile() {
           .then((url) => {
             setLogo(url);
             setTempLogo(url);
-            console.log(url);
+            console.log(tempLogo);
             setHasImage(true);
           })
           .catch((error) => {
@@ -184,38 +183,41 @@ export default function CompanyProfile() {
           });
       });
     }
-    let companyData = {
-      name,
-      logo: tempLogo,
-      images,
-      description,
-      about,
-      services,
-      serviceKeys: listServiceKeys,
-      visible,
-      phone,
-      email,
-      address,
-      facebook,
-      twitter,
-      linkedIn,
-    };
-    let data = {
-      url: `/api/v1/company/save/${id}`,
-      data: companyData,
-      method: "post",
-    };
-    const response = await updateProfileData(data);
-    console.log(response.data);
-    if (response.status === 200) {
-      setSuccessmsg("Succesfully updated");
-      dispatch(updateUser(response.data));
-      setProfileData(null);
-      setTimeout(() => {
-        setSuccessmsg("");
-      }, 2000);
-    } else {
-      setError("Invalid Data!");
+    if(tempLogo){
+      let companyData = {
+        name,
+        logo: tempLogo,
+        images,
+        description,
+        about,
+        services,
+        serviceKeys: listServiceKeys,
+        visible,
+        phone,
+        email,
+        address,
+        facebook,
+        twitter,
+        linkedIn,
+      };
+      let data = {
+        url: `/api/v1/company/save/${id}`,
+        data: companyData,
+        method: "post",
+      };
+      const response = await updateProfileData(data);
+      console.log(response.data);
+      if (response.status === 200) {
+        setSuccessmsg("Succesfully updated");
+        localStorage.setItem("USER",JSON.stringify(response.data));
+        dispatch(updateUser(response.data));
+        setProfileData(null);
+        setTimeout(() => {
+          setSuccessmsg("");
+        }, 2000);
+      } else {
+        setError("Invalid Data!");
+      }
     }
   };
 
@@ -255,6 +257,7 @@ export default function CompanyProfile() {
               </Col>
               <Col span={10}>
                 <Title
+                  
                   editable={{ onChange: handleName }}
                   style={{ margin: "0" }}
                 >

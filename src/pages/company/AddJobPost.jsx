@@ -25,7 +25,7 @@ import { fetchUserData, getProfileData } from "../../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/auth/userSlice";
 import { salary,currencies } from "../../store/demo/salary";
-import { addJobPost } from "../../store/jobpost/jobSlice";
+import { addJobPost, setJobPosts } from "../../store/jobpost/jobSlice";
 import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -157,6 +157,7 @@ function AddJobPost() {
     console.log(response.data);
     if (response.status === 200) {
       setSuccessmsg("Succesfully updated");
+      dispatch(addJobPost(response.data));
       setTimeout(
         () => {
          setSuccessmsg("");

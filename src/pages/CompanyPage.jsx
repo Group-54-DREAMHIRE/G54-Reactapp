@@ -1,4 +1,3 @@
-import company from "../assets/images/company.png";
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { FiMapPin } from "react-icons/fi";
 import { FaFacebook,FaTwitterSquare } from "react-icons/fa";
@@ -32,6 +31,7 @@ export default function CompanyPage() {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
+  const [logo, setLogo] = useState();
 
   const [listServiceKeys, setListServiceKeys] = useState("");
 
@@ -64,9 +64,10 @@ export default function CompanyPage() {
       setAbout(profileData.about);
       setServices(profileData.services);
       setListServiceKeys(profileData.serviceKeys);
+      setLogo(profileData.logo)
       
     if (typeof profileData.serviceKeys === 'string') {
-      const val = profileData.serviceKeys.split(', ');
+      const val = profileData.serviceKeys.split('/ ');
       setServiceKeys(val);
     } else {
       setServiceKeys([]); // Set default value if serviceKeys is not a string
@@ -84,7 +85,6 @@ export default function CompanyPage() {
   return (
     <>
       <Row>
-        {companies[0].name}
         <Col span={24}>
           <Row gutter={[30, 40]} justify="center" style={{ padding: "1% 2%" }}>
             <Col span={10}>
@@ -92,7 +92,7 @@ export default function CompanyPage() {
               <Divider style={{ margin: "8px" }} />
             </Col>
             <Col span={8}>
-              <Image src={company} preview={false} />
+              <Image src={logo} preview={false} />
             </Col>
             <Col span={24}>
               <Text

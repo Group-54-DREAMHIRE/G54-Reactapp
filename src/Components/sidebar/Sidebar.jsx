@@ -45,7 +45,7 @@ const Sidebar = () => {
                 backgroundColor: 'white',
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                height: '100vh'
+                 height: '88vh'
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{

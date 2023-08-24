@@ -52,7 +52,6 @@ export default function Profile() {
 
   const dispatch = useDispatch();
   const [profileData, setProfileData] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
 
   const [imageUpload, setImageUpload] = useState();
   const [loading, setLoading] = useState();
@@ -60,7 +59,7 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [file, setFile] = useState(null);
   const [visible, setVisible] = useState(true);
-  const [profilePicture, setProfilePicture] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
   const [title, setTitle] = useState("");
   const [birthday, setBirthday] = useState();
   const [currency, setCuurency] = useState("");
@@ -75,6 +74,8 @@ export default function Profile() {
   const [twitter, setTwitter] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [formatbday, setFormatbDay] = useState();
+
+  const [tempDP, setTempDP]= useState(null);
 
   const [editingbd, setEditing] = useState(false);
   const [editingc, setEdittingC] = useState(false);
@@ -120,17 +121,10 @@ export default function Profile() {
       setTwitter(profileData.twitter);
       setLinkedIn(profileData.linkedIn);
       setProfilePicture(profileData.profilePicture);
+      setTempDP(profileData.profilePicture);
       console.log(profilePicture);
     }
   }, [profileData]);
-
-  //   useEffect(() => {
-
-  //        const formattedDate = format(new Date(birthday), 'dd MMM yyyy');
-  //        setFormatbDay(formattedDate);
-
-  //     },
-  //  [birthday]);
 
   const handleName = (value) => {
     setName(value);
@@ -169,6 +163,7 @@ export default function Profile() {
 
   const handleFileChange = (info) => {
     setImageUpload(info.file.originFileObj);
+    setProfilePicture(URL.createObjectURL(info.file.originFileObj))
     console.log(info.file.originFileObj);
   };
 
@@ -181,9 +176,8 @@ export default function Profile() {
         console.log(imageUpload);
         getDownloadURL(imageRef)
           .then((url) => {
-            setImageUrl(url);
+            setTempDP(url);
             setProfilePicture(url);
-            console.log(imageUrl);
             console.log(profilePicture);
           })
           .catch((error) => {
@@ -194,9 +188,10 @@ export default function Profile() {
           });
       });
     }
+   if(tempDP){
     let candidateData = {
       name,
-      profilePicture,
+      profilePicture:tempDP,
       currency,
       minSalary,
       maxSalary,
@@ -221,6 +216,7 @@ export default function Profile() {
     console.log(response.data);
     if (response.status === 200) {
       setSuccessmsg("Succesfully updated");
+      localStorage.setItem("USER",JSON.stringify(response.data));
       dispatch(updateUser(response.data));
       setTimeout(
         () => {
@@ -231,6 +227,7 @@ export default function Profile() {
     }else{
       setError("Invalid Data!");
     }
+   }
   };
 
   const uploadButton = (
@@ -254,7 +251,6 @@ export default function Profile() {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
-
         <Row style={{ padding: "3%" }} className="profile-main-w">
           <Col span={24}>
             <Row>
@@ -298,7 +294,7 @@ export default function Profile() {
                             editable={{ onChange: handleName }}
                             style={{ marginTop: "6px" }}
                           >
-                            {name}
+                            {name===null?"Name":name}
                           </Title>
                         </Col>
                         <Col span={11}>
@@ -310,7 +306,7 @@ export default function Profile() {
                             editable={{ onChange: handleTitle }}
                             style={{ marginTop: "6px" }}
                           >
-                            {title}
+                            {title===null?"Title":title}
                           </Title>
                         </Col>
 
@@ -474,7 +470,7 @@ export default function Profile() {
                             editable={{ onChange: handleEmail }}
                             style={{ fontSize: "16px" }}
                           >
-                            {email}
+                            {email===null?"Email":email}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -491,7 +487,7 @@ export default function Profile() {
                             editable={{ onChange: handlePhone }}
                             style={{ fontSize: "16px" }}
                           >
-                            {phone}
+                            {phone===null?"Phone":phone}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -508,7 +504,7 @@ export default function Profile() {
                             editable={{ onChange: handleAddress }}
                             style={{ fontSize: "16px" }}
                           >
-                            {address}
+                            {address===null?"Address":address}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -525,7 +521,7 @@ export default function Profile() {
                             editable={{ onChange: handleCity }}
                             style={{ fontSize: "16px" }}
                           >
-                            {city}
+                            {city===null?"City":city}
                           </Text>
                         </Col>
                       </Row>

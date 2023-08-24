@@ -1,5 +1,14 @@
 import JobPostCard from "../Components/cards/JobPostCard";
-import { Row, Col, Divider, Typography, Select, Space, Button } from "antd";
+import {
+  Row,
+  Col,
+  Divider,
+  Typography,
+  Select,
+  Space,
+  Button,
+  Image,
+} from "antd";
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
 import { jobExperience } from "../store/demo/jobExperience";
@@ -11,27 +20,31 @@ import { fetchUserData, getData } from "../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
 import { qualifications } from "../store/demo/quqlifications";
+import flter from "../assets/images/flter.png";
 const { Title } = Typography;
 
 export default function JobPosts() {
-
   const dispatch = useDispatch();
   const [allJobList, setAllJobList] = useState([]);
+  const [filter, setFilter] = useState(false);
+  const jobs = useSelector(getAllJobPosts);
 
   useEffect(() => {
-      getData('/api/v1/jobpost/getalljobs')
-    .then((response) => {
-      console.log(response.data);
-      setAllJobList(response.data);
-      dispatch(setJobPosts(response.data))
-    })
-    .catch((error) => {
-      console.error("Error fetching user profile:", error);
-    });
-    console.log(allJobList);
+    if (jobs === null) {
+      getData("/api/v1/jobpost/getalljobs")
+        .then((response) => {
+          console.log(response.data);
+          setAllJobList(response.data);
+          dispatch(setJobPosts(response.data));
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+      console.log(allJobList);
+    } else {
+      setAllJobList(jobs);
+    }
   }, []);
-
-  
 
   const navigate = useNavigate();
   const handleChange = (value) => {
@@ -41,41 +54,57 @@ export default function JobPosts() {
   const userType = localStorage.getItem("USERTYPE");
 
   let status = {
-    save: userType === "candidate"? true:false,
+    save: userType === "candidate" ? true : false,
     more: true,
   };
-const auth = userType === "company"? true:false;
+  const auth = userType === "company" ? true : false;
   return (
     <>
       <Row style={{ padding: "1%" }}>
         <Col span={24}>
           <Row>
             <Col span={24}>
-              <Row justify="space-between">
+              <Row justify="space-between" align="top">
                 <Col>
-                  <Title style={{ marginTop: "0", marginBottom: '0' }}>Jobs</Title>
-                  
+                  <Title style={{ marginTop: "0", marginBottom: "0" }}>
+                    Jobs
+                  </Title>
                 </Col>
-              
-                {auth && (
-                  <Col>
-                    <Button 
-                      icon={<PlusOutlined />}
-                      size="large" 
-                      type="primary"
-                      onClick={()=> navigate("/addjobpost")}
-                      style={{borderRadius: '0'}}>
-                      Add Post
-                    </Button>
-                  </Col>
-                )}
+                <Col>
+                  <Row align="top" gutter={20}>
+                    <Col>
+                      <Image 
+                        onClick={()=>{setFilter(!filter)}}
+                        preview={false} 
+                        width={50} 
+                        style={{cursor: 'pointer'}}
+                        src={flter} />
+                    </Col>
+
+                    {auth && (
+                      <Col>
+                        <Button
+                          icon={<PlusOutlined />}
+                          size="large"
+                          type="primary"
+                          onClick={() => navigate("/addjobpost")}
+                          style={{ borderRadius: "0" }}
+                        >
+                          Add Post
+                        </Button>
+                      </Col>
+                    )}
+                  </Row>
+                </Col>
               </Row>
-             <Col span={24}>
-             <hr />
-             </Col>
+              <Col span={24}>
+                <hr />
+              </Col>
             </Col>
           </Row>
-          <Row justify="end" style={{ margin: "20px 0 30px" }}>
+         { filter &&
+
+         <Row justify="end" style={{ margin: "20px 0 30px" }}>
             <Space size="large" wrap>
               <Select
                 style={{
@@ -86,14 +115,14 @@ const auth = userType === "company"? true:false;
                 allowClear
                 showSearch
                 size="large"
-                placeholder='Job Title'
+                placeholder="Job Title"
                 onChange={handleChange}
                 options={jobTitles}
                 maxTagCount={10}
               />
               <Select
                 size="large"
-                placeholder='Job Type'
+                placeholder="Job Type"
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
@@ -109,7 +138,7 @@ const auth = userType === "company"? true:false;
                   </Title>
                 }
                 size="large"
-                placeholder='Salary'
+                placeholder="Salary"
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
@@ -120,25 +149,23 @@ const auth = userType === "company"? true:false;
               />
               <Select
                 size="large"
-                placeholder='Qualifications'
+                placeholder="Qualifications"
                 options={qualifications}
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
-                  
                 }}
                 maxTagCount={5}
               />
               <Select
                 size="large"
-                placeholder='Experience'
+                placeholder="Experience"
                 options={jobExperience}
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
-                  
                 }}
                 maxTagCount={5}
               />
@@ -146,7 +173,7 @@ const auth = userType === "company"? true:false;
                 Search
               </Button>
             </Space>
-          </Row>
+          </Row>}
           <Row style={{ marginTop: "20px" }} gutter={[25, 25]}>
             {allJobList.map((item, index) => {
               return (
