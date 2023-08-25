@@ -78,7 +78,9 @@ const EventForm = () => {
                 { required: true, message: "Please select the start time" },
               ]}
             >
-              <TimePicker format="HH:mm" />
+              <TimePicker
+                onChange={(time)=>console.log(time.format('HH:mm') )}
+                format="HH:mm" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -89,7 +91,9 @@ const EventForm = () => {
                 { required: true, message: "Please select the end time" },
               ]}
             >
-              <TimePicker format="HH:mm" />
+              <TimePicker
+              onChange={(time, timeString)=>console.log(time)}
+              format="HH:mm" />
             </Form.Item>
           </Col>
           <Col span={12}>

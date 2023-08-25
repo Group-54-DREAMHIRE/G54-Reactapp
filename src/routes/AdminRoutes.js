@@ -15,6 +15,8 @@ import Payments from '../pages/admin/Payments';
 import HandleCompany from '../pages/admin/HandleCompany';
 import HandleCandidate from '../pages/admin/HandleCanidate';
 import EditLandingPage from '../pages/admin/EditLandingPage';
+import Complaints from '../pages/admin/Complaints';
+import JobPost from "../pages/JobPost";
 
 export default function AdminRoutes() {
   return (
@@ -27,10 +29,12 @@ export default function AdminRoutes() {
           <Route path="/registration" element={<RegistrationRequest/>}/>
           <Route path="/handlecompanies" element={<HandleCompany/>}/>
           <Route path="/handlecandidates" element={<HandleCandidate/>}/>
+          <Route path="/complaints" element={<Complaints/>}/>
           <Route path="/editlanding" element={<EditLandingPage/>}/>
           <Route path="/events" element={<Events/>}/>
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
+          <Route path="/jobpost/:id" element={<JobPost/>}/>
           <Route path="/companies" element={<Companies/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
           <Route path="/notifications" element={<Notifications/>}/>

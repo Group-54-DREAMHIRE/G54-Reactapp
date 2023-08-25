@@ -1,0 +1,102 @@
+.D_Admin_Dashboard_dashboard {
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  
+  .D_Admin_Dashboard_greeting {
+    margin-bottom: 20px;
+  }
+  
+  .D_Admin_Dashboard_card-row {
+    margin-bottom: 20px;
+  }
+  
+  .D_Admin_Dashboard_dashboard-card {
+    display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  
+    &:hover {
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+  
+    .D_Admin_Dashboard_card-icon {
+      font-size: 36px;
+      margin-left: 16px;
+    //   background-color: #1890ff;
+      margin-top: -10px;
+      
+    }
+  
+    .D_Admin_Dashboard_card-content {
+    //   display: flex;
+      flex-direction: column;
+    //   align-items: flex-start;
+    //   background-color: burlywood;
+       justify-content: space-between;
+    //   text-align: center;
+       width: 200%;
+       font-size: 36px;
+    }
+    .value-button {
+        // margin-top: 10px;
+        font-size: 20px; /* Adjust the font size */
+        padding: 8px 16px; /* Adjust the padding */
+        border: none;
+        // background-color: #1890ff; /* Use the primary color */
+        // color: #fff; /* Text color */
+        border-radius: 8px; /* Adjust the border radius */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    
+        &:hover {
+          background-color: #096dd9; /* Darker shade for hover effect */
+        }
+      }
+
+
+
+
+  }
+  .D_Admin_Dashboard_custom-divider {
+    height: 3px; /* Increase the height as desired */
+    background-color: #1890ff; /* Customize the color */
+    margin: 20px 0; /* Add some spacing around the divider */
+  }
+  
+  .D_Admin_Dashboard_title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  
+    .D_Admin_Dashboard_ant-tag {
+      margin-right: 8px;
+    }
+  }
+  
+  .D_Admin_Dashboard_chart-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; }
+  
+.D_Admin_Dashboard_chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+        .D_Admin_Dashboard_ant-typography {
+        margin: 0;
+            }
+
+        .D_Admin_Dashboard_ant-select {
+        width: 120px;
+            }
+    }
+  
+  

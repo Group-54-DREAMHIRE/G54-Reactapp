@@ -13,7 +13,7 @@ function RootLayout() {
             justify="center"
             style={{
               paddingTop: " 3vh",
-              height: "12vh",
+               height: "12vh",
               position: "sticky",
               top: "0",
               left: "0",
@@ -26,14 +26,15 @@ function RootLayout() {
               <Navbar />
             </Col>
           </Row>
-          <Layout style={{ display: "flex", flexDirection: "row" }}>
+         
+          <Layout style={{ display: "flex", flexDirection: "row", }}>
             <Sidebar />
-            <Layout style={{ backgroundColor: "white" }}>
+            <Layout style={{ backgroundColor: "white" , }}>
               <Content
                 style={{
                   padding: 30,
                   margin:10,
-                  minHeight: 280,
+                  minHeight: '85vh',
                   backgroundColor: "white",
                   boxShadow: '0px 0px 5px  rgba(0,0,0,.2)',
                 }}

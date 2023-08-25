@@ -1,89 +1,164 @@
-import React from 'react';
-import { Card, Button, Row, Col, Typography, Space} from 'antd';
+import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch } from 'antd';
+import { useState, useEffect } from 'react';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/PostedEvents.scss';
+// import { pageanimation } from '../assets/animations/pageanimation';
+
 const { Title } = Typography;
+const { Search } = Input;
 
-const FutureEvents = () => {
-  const { Meta } = Card;
-
-  const events = [
+function AdvertisementList() {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const columns = [
     {
-      id: 1,
-      name: 'COMEXPO ',
-      venue: '1B De Fonseka Place Colombo, WP Colombo 04, Sri Lanka',
-      startTime: '2023-09-01 09:00',
-      endTime: '2023-09-01 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: 'Event Name',
+      dataIndex: 'eventName',
+      key: 'eventName',
     },
     {
-      id: 2,
-      name: 'SCREEN PRINT SRI LANKA',
-      venue: '50/1, Park St, Colombo 00700, Sri lanka',
-      startTime: '2023-08-20 09:00',
-      endTime: '2022-08-20 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: 'Venue',
+      dataIndex: 'venue',
+      key: 'venue'
     },
     {
-      id: 3,
-      name: 'CAREER FAIR',
-      venue: 'UCSC Building Complex, 35 Reid Ave, Colombo 00700',
-      startTime: '2023-10-04 09:00',
-      endTime: '2022-10-04 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
-      id: 4,
-      name: 'COMEXPO',
-      venue: '1B De Fonseka Place Colombo, WP Colombo 04, Sri Lanka',
-      startTime: '2023-09-01 09:00',
-      endTime: '2023-09-01 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time'
     },
     {
-      id: 5,
-      name: 'SCREEN PRINT SRI LANKA',
-      venue: '50/1, Park St, Colombo 00700, Sri lanka',
-      startTime: '2023-08-20 09:00',
-      endTime: '2022-08-20 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: "Registered Candidates",
+      key: "egisteredCandidates",
+      render: (text, record) => (
+        <Button type="primary" >
+          <Link to={`/postedevents/registeredcandidates`}>{record.registeredCandidates}</Link>
+        </Button>
+      ),
     },
     {
-      id: 6,
-      name: 'CAREER FAIR',
-      venue: 'UCSC Building Complex, 35 Reid Ave, Colombo 00700',
-      startTime: '2023-10-04 09:00',
-      endTime: '2022-10-04 17:00',
-      imageUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      title: "View",
+      key: "view",
+      render: (text, record) => (
+        <Button type="primary">
+          <Link to={`/postedevents/registeredcandidates`}>View</Link>
+        </Button>
+      ),
     },
   ];
 
+  const [dataSource, setDataSource] = useState([
+    {
+      key: '1',
+      eventName: 'TechConnect Summit',
+      date: 'September 10, 2023',
+      time: '9:00 AM - 6:00 PM',
+      venue: 'Colombo Convention Centre',
+      registeredCandidates: 20
+    },
+    {
+      key: '2',
+      eventName: 'CodeFest Lanka"',
+      date: 'September 20, 2023',
+      time: '10:00 AM - 7:00 PM',
+      venue: 'University of Moratuwa, Colombo',
+      registeredCandidates: 25
+    },
+    {
+      key: '3',
+      eventName: 'AI Expo Lanka',
+      date: 'October 13, 2023',
+      time: '09:30 AM - 04:30 PM',
+      venue: 'Hilton Colombo',
+      registeredCandidates: 12
+    },
+    {
+      key: '4',
+      eventName: 'E-Commerce Accelerate',
+      date: 'October 20, 2023',
+      time: '10:00 AM - 07:00 PM',
+      venue: 'Galadari Hotel, Colombo',
+      registeredCandidates: 33
+    },
+    {
+      key: '5',
+      eventName: 'Cybersecurity Symposium',
+      date: 'November 25, 2023',
+      time: '10:00 AM - 02:00 PM',
+      venue: 'Cinnamon Grand Colombo',
+      registeredCandidates: 14
+    },
+  ]);
+
+  const handleViewAdvertisement = (id) => {
+    console.log("View advertisement with ID:", id);
+  };
+
+  const handleStatusChange = (id) => {
+    // Handle logic for changing advertisement status
+    console.log("Change status of advertisement with ID:", id);
+  };
+
   return (
     <>
-    <div className="company-postedEvents-n">
-    <Title level={2} style={{ margin: '10px 0' }}>Posted Events</Title>
-    <Row gutter={16}>
-      {events.map((event) => (
-        <Col span={8} key={event.id}>
-          <Card
-            hoverable
-            cover={<img alt={event.name} src={event.imageUrl} style={{height: '200px'}}/>}
-          >
-            <Meta title={event.name} description={event.venue} />
-            <p>{event.startTime} - {event.endTime}</p>
-            <Button type="primary" style={{ marginRight: '10px' }}>
-              <Link to={`/postedevents/${event.id}/details`}>View Details</Link>
-            </Button>
-            <Button type="primary">
-              <Link to={`/postedevents/registeredcandidates`}>View Candidates</Link>
-            </Button>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-    </div>
-  </>
-  );
-};
+      <div className='container-n'>
+        <Row>
+          <Col span={24}>
+            <Row>
+              <Col span={12} style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
+              }}>
+                <Title style={{
+                  fontSize: '25px',
+                  fontWeight: 600,
+                }}>
+                  POSTED EVENTS
+                </Title>
+              </Col>
+              <Col span={6}>
+              </Col>
 
-export default FutureEvents;
+              <Col span={6} style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center'
+              }}>
+                <Search placeholder="Search event name" enterButton />
+              </Col>
+            </Row>
+
+            <Divider />
+            <Row>
+              <Col span={24}>
+                <Table className='tables-n'
+                  dataSource={dataSource}
+                  columns={columns}
+                  pagination={{
+                    current: page,
+                    pageSize: pageSize,
+                    onChange: (page, pageSize) => {
+                      setPage(page);
+                      setPageSize(pageSize);
+                    }
+                  }}
+                >
+                </Table>
+              </Col>
+            </Row>
+          </Col>
+        </Row >
+      </div >
+    </>
+  )
+}
+
+
+
+export default AdvertisementList;

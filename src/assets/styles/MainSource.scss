@@ -21,3 +21,23 @@ body{
     margin: 0;
    
 }
+
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar {
+    width: 7px;
+    
+  }
+  
+  /* Customize the scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(25,103,210,255);
+    border-radius: 25px;
+  }
+  
+  /* Customize the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(25,103,210,.8);
+    width: 10px;
+  }
+  

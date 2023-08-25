@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { pageanimation } from "../../assets/animations/pageanimation";
+import { format, startOfDay } from "date-fns";
+import moment from "moment/moment";
+import { storage, put } from "../../api/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
+  UserOutlined,
   MailOutlined,
   PhoneOutlined,
   PlusOutlined,
   EditOutlined,
   UploadOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
 import { candidateDetails } from "../../store/demo/candidateProfile";
+
 import {
   Row,
   Col,
@@ -26,41 +33,98 @@ import {
   Button,
   Alert,
   Image,
+  Checkbox,
+  Avatar,
 } from "antd";
 import { currencies, salary } from "../../store/demo/profile";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
+import { getUser, updateUser } from "../../store/auth/userSlice";
 import {
-  fetchUserData,
+  getProfileData,
   updateProfileData,
 } from "../../api/authenticationService";
 const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState(candidateDetails.name);
-  const [file, setFile] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [title, setTitle] = useState(candidateDetails.title);
-  const [birthday, setBirthday] = useState();
-  const [currency, setCuurency] = useState("USD$");
-  const [minSalary, setMinSalary] = useState(candidateDetails.minSalary);
-  const [maxSalary, setMaxSalary] = useState(candidateDetails.maxSalary);
-  const [description, setDiscription] = useState(candidateDetails.description);
-  const [phone, setPhone] = useState(candidateDetails.phone);
-  const [email, setEmail] = useState(candidateDetails.email);
-  const [city, setCity] = useState(candidateDetails.city);
-  const [address, setAddress] = useState(candidateDetails.address);
-  const [facebook, setFacebook] = useState(candidateDetails.facebook);
-  const [twitter, setTwitter] = useState(candidateDetails.twitter);
-  const [linkedIn, setLinkedIn] = useState(candidateDetails.linkedIn);
-  const [message, setMessage] = useState(null);
-
-  const hasPicture = profilePicture===null? false: true;
-
-  const user = JSON.parse(useSelector(getUser));
+  const user = useSelector(getUser);
   const id = user.id;
+
+  const dispatch = useDispatch();
+  const [profileData, setProfileData] = useState([]);
+
+  const [imageUpload, setImageUpload] = useState();
+  const [loading, setLoading] = useState();
+
+  const [name, setName] = useState("");
+  const [file, setFile] = useState(null);
+  const [visible, setVisible] = useState(true);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [title, setTitle] = useState("");
+  const [birthday, setBirthday] = useState();
+  const [currency, setCuurency] = useState("");
+  const [minSalary, setMinSalary] = useState("");
+  const [maxSalary, setMaxSalary] = useState("");
+  const [description, setDescription] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [formatbday, setFormatbDay] = useState();
+
+  const [tempDP, setTempDP]= useState(null);
+
+  const [editingbd, setEditing] = useState(false);
+  const [editingc, setEdittingC] = useState(false);
+  const [editingMin, setEdittingMin] = useState(false);
+  const [editingMax, setEdittingMax] = useState(false);
+
+  const [successmsg, setSuccessmsg] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    if(user==null){
+      getProfileData(`/api/v1/candidate/get/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setProfileData(response.data);
+        console.log(profileData.name);
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+      });
+    }else{
+      setProfileData(user);
+    }
+    
+  }, [id]);
+
+  useEffect(() => {
+    if (profileData) {
+      setName(profileData.name);
+      setTitle(profileData.title);
+      const dateObj = moment(profileData.birthday);
+      setFormatbDay(dateObj.format("YYYY MM DD"));
+      setCuurency(profileData.currency);
+      setMinSalary(profileData.minSalary);
+      setMaxSalary(profileData.maxSalary);
+      setDescription(profileData.description);
+      setVisible(profileData.visible);
+      setEmail(profileData.email);
+      setPhone(profileData.phone);
+      setAddress(profileData.address);
+      setCity(profileData.city);
+      setFacebook(profileData.facebook);
+      setTwitter(profileData.twitter);
+      setLinkedIn(profileData.linkedIn);
+      setProfilePicture(profileData.profilePicture);
+      setTempDP(profileData.profilePicture);
+      console.log(profilePicture);
+    }
+  }, [profileData]);
 
   const handleName = (value) => {
     setName(value);
@@ -69,7 +133,7 @@ export default function Profile() {
     setTitle(value);
   };
   const handleDescription = (value) => {
-    setDiscription(value);
+    setDescription(value);
     console.log(value);
   };
   const handlePhone = (value) => {
@@ -80,6 +144,7 @@ export default function Profile() {
   };
   const handleAddress = (value) => {
     setAddress(value);
+    console.log(value);
   };
   const handleCity = (value) => {
     setCity(value);
@@ -94,38 +159,43 @@ export default function Profile() {
     setLinkedIn(value);
   };
 
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  };
 
-  
 
   const handleFileChange = (info) => {
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-      setFile(info.file.originFileObj);
-
-
-      // Display image preview
-      setProfilePicture(URL.createObjectURL(info.file.originFileObj));
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
+    setImageUpload(info.file.originFileObj);
+    setProfilePicture(URL.createObjectURL(info.file.originFileObj))
+    console.log(info.file.originFileObj);
   };
 
+
   const handleSubmit = async () => {
+    if (imageUpload) {
+      const imageRef = ref(storage, `dreamhire/candidates/${id}`);
+
+      uploadBytes(imageRef, imageUpload).then(() => {
+        console.log(imageUpload);
+        getDownloadURL(imageRef)
+          .then((url) => {
+            setTempDP(url);
+            setProfilePicture(url);
+            console.log(profilePicture);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      });
+    }
+   if(tempDP){
     let candidateData = {
-      userId: id,
       name,
-      profilePicture,
+      profilePicture:tempDP,
+      currency,
+      minSalary,
+      maxSalary,
+      visible,
       title,
       birthday,
       description,
@@ -137,12 +207,6 @@ export default function Profile() {
       twitter,
       linkedIn,
     };
-    const formData = new FormData();
-    formData.append("data", candidateData);
-    
-    if (file) {
-      formData.append("profilePicture", file);
-    }
     let data = {
       url: `/api/v1/candidate/save/${id}`,
       data: candidateData,
@@ -151,17 +215,33 @@ export default function Profile() {
     const response = await updateProfileData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setMessage(response.data);
+      setSuccessmsg("Succesfully updated");
+      localStorage.setItem("USER",JSON.stringify(response.data));
+      dispatch(updateUser(response.data));
       setTimeout(
         () => {
-          setMessage(null);
-          clearTimeout();
+         setSuccessmsg("");
         },
-        500,
         2000
       );
+    }else{
+      setError("Invalid Data!");
     }
+   }
   };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
   return (
     <>
       <motion.div
@@ -174,29 +254,20 @@ export default function Profile() {
         <Row style={{ padding: "3%" }} className="profile-main-w">
           <Col span={24}>
             <Row>
-              <ImgCrop rotationSlider>
+              <ImgCrop action="" rotationSlider>
                 <Upload
+                  accept=".jpg,.jpeg,.png"
+                  action=""
+                  name="avatar"
+                  listType="picture-card"
                   onChange={handleFileChange}
-                  beforeUpload={() => false}
-                  accept="image/*"
-                  listType="picture"
-                  // showUploadList={false}
                 >
-                  {!hasPicture &&
-                    (<Button icon={<UploadOutlined />}>
-                    Upload Profile Picture
-                  </Button>)}
-                  {hasPicture&& (
-                  <Image
-                    src={profilePicture}
-                    alt="Profile Preview"
-                    style={{ maxWidth: "200px", marginTop: "10px" }}
-                  />
-                )}
-
+                  {profilePicture !== null ? (
+                    <Image preview={false} width={250} src={profilePicture} />
+                  ) : (
+                    uploadButton
+                  )}
                 </Upload>
-
-                
               </ImgCrop>
             </Row>
 
@@ -204,10 +275,12 @@ export default function Profile() {
               <Col span={23}>
                 <Form layout="vertical" onFinish={handleSubmit}>
                   <Row justify="start">
-                    <Title level={2} style={{ margin: "30px 0" }}>
-                      Basic Information
-                    </Title>
-                    <Divider style={{ margin: "0" }} />
+                    <Col span={22}>
+                      <Title level={2} style={{ margin: "30px 0 5px 0" }}>
+                        BASIC INFORMATION
+                      </Title>
+                      <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
+                    </Col>
                   </Row>
                   <Row>
                     <Col span={24}>
@@ -221,7 +294,7 @@ export default function Profile() {
                             editable={{ onChange: handleName }}
                             style={{ marginTop: "6px" }}
                           >
-                            {name}
+                            {name===null?"Name":name}
                           </Title>
                         </Col>
                         <Col span={11}>
@@ -233,7 +306,7 @@ export default function Profile() {
                             editable={{ onChange: handleTitle }}
                             style={{ marginTop: "6px" }}
                           >
-                            {title}
+                            {title===null?"Title":title}
                           </Title>
                         </Col>
 
@@ -241,74 +314,108 @@ export default function Profile() {
                           <Title level={4} style={{}}>
                             Birthday:
                           </Title>
-                          <DatePicker
-                            value={birthday}
-                            style={{
-                              boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                              height: "40px",
-                            }}
-                            onChange={(date) => {
-                              setBirthday(date);
-                              console.log(date);
-                            }}
-                          />
-                        </Col>
 
+                          {editingbd || formatbday === null ? (
+                            <DatePicker
+                              style={{
+                                boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                height: "40px",
+                              }}
+                              onChange={(date) => {
+                                setBirthday(date);
+                                console.log(date);
+                              }}
+                            />
+                          ) : (
+                            <label
+                              onClick={(e) => {
+                                setEditing(true);
+                                console.log(e);
+                              }}
+                            >
+                              {formatbday}
+                              <EditOutlined />
+                            </label>
+                          )}
+                        </Col>
                         <Col span={24}>
                           <Row justify="space-between">
                             <Col span={3}>
                               <Title level={4} style={{}}>
                                 Currency:
                               </Title>
-                              <Select
-                                defaultValue={"USD$"}
-                                value={currency}
-                                onChange={(value) => setCuurency(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  fontFamily: "arial",
-                                }}
-                                options={currencies}
-                              />
+                              {editingc || currency === null ? (
+                                <Select
+                                  defaultValue={currency}
+                                  value={currency}
+                                  onChange={(value) => setCuurency(value)}
+                                  style={{
+                                    width: "100%",
+                                    boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                    borderRadius: "0",
+                                    fontSize: "medium",
+                                    fontFamily: "arial",
+                                  }}
+                                  options={currencies}
+                                />
+                              ) : (
+                                <label onClick={() => {setEdittingC(true);setEdittingC(false)}}>
+                                  {currency}
+                                  <EditOutlined />
+                                </label>
+                              )}
                             </Col>
                             <Col span={9}>
                               <Title level={4} style={{}}>
                                 Minimum Salary:
                               </Title>
-                              <Select
-                                value={minSalary}
-                                onChange={(value) => setMinSalary(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  borderRadius: "0 !important",
-                                  fontFamily: "arial",
-                                }}
-                                options={salary}
-                              />
+                              {editingMin || minSalary === null ? (
+                                 <Select
+                                 value={minSalary}
+                                 defaultValue={minSalary}
+                                 onChange={(value) =>{ setMinSalary(value);setEdittingMin(false)}}
+                                 style={{
+                                   width: "100%",
+                                   boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                   borderRadius: "0",
+                                   fontSize: "medium",
+                                   borderRadius: "0 !important",
+                                   fontFamily: "arial",
+                                 }}
+                                 options={salary}
+                               />
+                              ) : (
+                                <label onClick={() => setEdittingMin(true)}>
+                                  {minSalary}
+                                  <EditOutlined />
+                                </label>
+                              )}
+                             
                             </Col>
                             <Col span={9}>
                               <Title level={4} style={{}}>
                                 Maximum Salary:
                               </Title>
-                              <Select
-                                value={maxSalary}
-                                onChange={(value) => setMaxSalary(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  borderRadius: "0 !important",
-                                  fontFamily: "arial",
-                                }}
-                                options={salary}
-                              />
+                              {editingMax || maxSalary === null ? (
+                                 <Select
+                                 onChange={(value) => {setMaxSalary(value);setEdittingMax(false)}}
+                                 style={{
+                                   width: "100%",
+                                   boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                   borderRadius: "0",
+                                   fontSize: "medium",
+                                   borderRadius: "0 !important",
+                                   fontFamily: "arial",
+                                 }}
+                                 options={salary}
+                               />
+                              ) : (
+                                <label onClick={() => setEdittingMax(true)}>
+                                  {maxSalary}
+                                  <EditOutlined />
+                                </label>
+                              )}
+                             
                             </Col>
                           </Row>
                         </Col>
@@ -316,24 +423,38 @@ export default function Profile() {
                     </Col>
                   </Row>
                   <Row style={{ marginTop: "30px", marginBottom: "30px" }}>
-                    <Title level={4}>Descreption:</Title>
-                    <Title
-                      level={5}
-                      editable={{ onChange: handleDescription }}
-                      style={{ marginTop: "6px" }}
-                    >
-                      {description}
-                    </Title>
+                    <Col span={24}>
+                      <Title level={4}>Descreption:</Title>
+                      <Title
+                        level={5}
+                        editable={{ onChange: handleDescription }}
+                        style={{ marginTop: "6px" }}
+                      >
+                        {" "}
+                        {description}
+                      </Title>
+                    </Col>
                   </Row>
-                  <Row
-                    style={{ marginTop: "20px", padding: "2%" }}
-                    justify="space-between"
-                  >
-                    <Col span={10}>
+                  <Row>
+                    <Col span={12}>
+                      <Title level={3} style={{ marginTop: "0" }}>
+                        SECURITY
+                      </Title>
+                      <Checkbox
+                        checked={!visible}
+                        onChange={() => setVisible(false)}
+                      >
+                        <Text style={{ fontSize: "16px" }}>
+                          Account Invisible
+                        </Text>
+                      </Checkbox>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "20px" }} justify="space-between">
+                    <Col span={12}>
                       <Title level={3} style={{ margin: "0" }}>
                         CONTACT
                       </Title>
-                      <Divider style={{ margin: "8px" }} />
                       <Row>
                         <Col span={24}>
                           <Title
@@ -347,9 +468,9 @@ export default function Profile() {
                           </Title>
                           <Text
                             editable={{ onChange: handleEmail }}
-                            style={{ fontSize: "18px" }}
+                            style={{ fontSize: "16px" }}
                           >
-                            {email}
+                            {email===null?"Email":email}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -364,9 +485,9 @@ export default function Profile() {
                           </Title>
                           <Text
                             editable={{ onChange: handlePhone }}
-                            style={{ fontSize: "18px" }}
+                            style={{ fontSize: "16px" }}
                           >
-                            {phone}
+                            {phone===null?"Phone":phone}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -381,9 +502,9 @@ export default function Profile() {
                           </Title>
                           <Text
                             editable={{ onChange: handleAddress }}
-                            style={{ fontSize: "18px" }}
+                            style={{ fontSize: "16px" }}
                           >
-                            {address}
+                            {address===null?"Address":address}
                           </Text>
                         </Col>
                         <Col span={24}>
@@ -398,9 +519,9 @@ export default function Profile() {
                           </Title>
                           <Text
                             editable={{ onChange: handleCity }}
-                            style={{ fontSize: "18px" }}
+                            style={{ fontSize: "16px" }}
                           >
-                            {city}
+                            {city===null?"City":city}
                           </Text>
                         </Col>
                       </Row>
@@ -411,7 +532,6 @@ export default function Profile() {
                           <Title level={3} style={{ margin: "0" }}>
                             FOLLOW
                           </Title>
-                          <Divider style={{ margin: "8px" }} />
                         </Col>
                         <Col>
                           <Link target="_blabk" href={facebook}>
@@ -468,9 +588,8 @@ export default function Profile() {
                     >
                       Save
                     </Button>
-                    {message && (
-                      <Alert message="Success Tips" type="success" showIcon />
-                    )}
+                      { successmsg  && <Alert message={successmsg} type="success" showIcon />}
+                      { error  && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>

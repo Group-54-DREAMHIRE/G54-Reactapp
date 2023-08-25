@@ -1,0 +1,29 @@
+.L_Payments_Details_content {
+    padding: 2%;
+    background-color: white;
+  }
+  
+  .L_Payments_Details_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .L_Payments_Details_table-container {
+    // background-color: lightblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .L_Payments_Details_table-cell {
+    // background-color: lightblue;
+    padding: 8px 16px;
+    border-right: 1px solid white;
+  }
+  
+  .L_Payments_Details_data-table {
+    margin-top: 20px;
+  }
+  

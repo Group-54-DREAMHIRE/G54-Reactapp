@@ -1,48 +1,110 @@
 import JobPostCard from "../Components/cards/JobPostCard";
-import { Row, Col, Divider, Typography, Select, Space, Button } from "antd";
+import {
+  Row,
+  Col,
+  Divider,
+  Typography,
+  Select,
+  Space,
+  Button,
+  Image,
+} from "antd";
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
-import { items } from "../store/demo/jobPosts";
+import { jobExperience } from "../store/demo/jobExperience";
+import { jobTitles } from "../store/demo/jobTitles";
+import { jobTypes } from "../store/demo/jobTypes";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { fetchUserData, getData } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
+import { qualifications } from "../store/demo/quqlifications";
+import flter from "../assets/images/flter.png";
 const { Title } = Typography;
 
 export default function JobPosts() {
+  const dispatch = useDispatch();
+  const [allJobList, setAllJobList] = useState([]);
+  const [filter, setFilter] = useState(false);
+  const jobs = useSelector(getAllJobPosts);
+
+  useEffect(() => {
+    if (jobs === null) {
+      getData("/api/v1/jobpost/getalljobs")
+        .then((response) => {
+          console.log(response.data);
+          setAllJobList(response.data);
+          dispatch(setJobPosts(response.data));
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+      console.log(allJobList);
+    } else {
+      setAllJobList(jobs);
+    }
+  }, []);
+
   const navigate = useNavigate();
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const userType = localStorage.getItem("USERTYPE");
+
   let status = {
-    save: true,
+    save: userType === "candidate" ? true : false,
     more: true,
   };
-  const company = localStorage.getItem("USERTYPE") === "company" ? true : false;
+  const auth = userType === "company" ? true : false;
   return (
     <>
       <Row style={{ padding: "1%" }}>
         <Col span={24}>
           <Row>
             <Col span={24}>
-              <Row justify="space-between">
+              <Row justify="space-between" align="top">
                 <Col>
-                  <Title style={{ marginTop: "0" }}>Jobs</Title>
+                  <Title style={{ marginTop: "0", marginBottom: "0" }}>
+                    Jobs
+                  </Title>
                 </Col>
-                {company && (
-                  <Col>
-                    <Button 
-                      icon={<PlusOutlined />}
-                      size="large" 
-                      type="primary"
-                      onClick={()=> navigate("/addjobpost")}
-                      style={{borderRadius: '0'}}>
-                      Add Post
-                    </Button>
-                  </Col>
-                )}
+                <Col>
+                  <Row align="top" gutter={20}>
+                    <Col>
+                      <Image 
+                        onClick={()=>{setFilter(!filter)}}
+                        preview={false} 
+                        width={50} 
+                        style={{cursor: 'pointer'}}
+                        src={flter} />
+                    </Col>
+
+                    {auth && (
+                      <Col>
+                        <Button
+                          icon={<PlusOutlined />}
+                          size="large"
+                          type="primary"
+                          onClick={() => navigate("/addjobpost")}
+                          style={{ borderRadius: "0" }}
+                        >
+                          Add Post
+                        </Button>
+                      </Col>
+                    )}
+                  </Row>
+                </Col>
               </Row>
-              <Divider />
+              <Col span={24}>
+                <hr />
+              </Col>
             </Col>
           </Row>
-          <Row justify="end" style={{ margin: "20px 0 30px" }}>
+         { filter &&
+
+         <Row justify="end" style={{ margin: "20px 0 30px" }}>
             <Space size="large" wrap>
               <Select
                 style={{
@@ -50,50 +112,24 @@ export default function JobPosts() {
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
+                allowClear
                 showSearch
                 size="large"
-                defaultValue="Software Engineer"
+                placeholder="Job Title"
                 onChange={handleChange}
-                options={[
-                  {
-                    value: "softwareEngineer",
-                    label: "Software Engineer",
-                  },
-                  {
-                    value: "lucy",
-                    label: "Bussines Analyst",
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                  },
-                ]}
+                options={jobTitles}
+                maxTagCount={10}
               />
               <Select
                 size="large"
-                defaultValue="Full time"
+                placeholder="Job Type"
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
-                options={[
-                  {
-                    value: "fullTime",
-                    label: "Full Time",
-                  },
-                  {
-                    value: "partTime",
-                    label: "Part Time",
-                  },
-                  {
-                    value: "intern",
-                    label: "Intern",
-                  },
-                ]}
+                options={jobTypes}
+                maxTagCount={3}
               />
               <Select
                 suffixIcon={
@@ -102,43 +138,47 @@ export default function JobPosts() {
                   </Title>
                 }
                 size="large"
-                defaultValue="600"
+                placeholder="Salary"
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
+                maxTagCount={5}
                 options={salary}
               />
               <Select
                 size="large"
-                defaultValue="On site"
+                placeholder="Qualifications"
+                options={qualifications}
                 style={{
                   width: 150,
                   boxShadow: "0 0 8px rgba(0,0,0,.1)",
                   borderRadius: "0 !important",
                 }}
-                options={[
-                  {
-                    value: "onSite",
-                    label: "On SIte",
-                  },
-                  {
-                    value: "onLine",
-                    label: "Online",
-                  },
-                ]}
+                maxTagCount={5}
+              />
+              <Select
+                size="large"
+                placeholder="Experience"
+                options={jobExperience}
+                style={{
+                  width: 150,
+                  boxShadow: "0 0 8px rgba(0,0,0,.1)",
+                  borderRadius: "0 !important",
+                }}
+                maxTagCount={5}
               />
               <Button style={{ borderRadius: "0" }} size="large" type="primary">
                 Search
               </Button>
             </Space>
-          </Row>
+          </Row>}
           <Row style={{ marginTop: "20px" }} gutter={[25, 25]}>
-            {items.map((item) => {
+            {allJobList.map((item, index) => {
               return (
                 <Col span={8}>
-                  <JobPostCard items={item} status={status} />
+                  <JobPostCard key={index} items={item} status={status} />
                 </Col>
               );
             })}

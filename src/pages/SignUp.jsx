@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginPic from '../assets/images/landing-1.png';
-import { registerUser } from "../store/auth/userSlice";
+import { registerUser, success } from "../store/auth/userSlice";
 import { loginUser } from "../store/auth/userSlice";
 
 import {
@@ -45,8 +45,15 @@ export default function SignUp() {
           userType: userType,
       }
       dispatch(registerUser(register)).then((result)=>{
-        console.log(result);
+        if(result.payload === 200){
+          console.log(result);
           navigate("/login")
+        }else{
+          setTimeout(() => {
+            dispatch(success());
+          }, 2000);
+        }
+       
       })
     }  
   

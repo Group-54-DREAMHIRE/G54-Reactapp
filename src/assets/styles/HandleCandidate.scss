@@ -1,0 +1,57 @@
+.L_Haddle_Candidates_content {
+    padding: 2%;
+    background-color: white;
+  }
+  
+  .L_Haddle_Candidates_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .L_Haddle_Candidates_table-container {
+    // background-color: lightblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .L_Haddle_Candidates_table-cell {
+    // background-color: lightblue;
+    padding: 8px 16px;
+    border-right: 1px solid white;
+   
+  }
+  
+  .L_Haddle_Candidates_data-table {
+    margin-top: 20px;
+
+  }
+  
+  .L_Haddle_Candidates_view-button {
+    background-color: #1890ff; /* Dark blue color */
+    border-color: #1890ff;
+    color: black;
+    border-radius: 0;
+  }
+  
+  .L_Haddle_Candidates_view-button:hover,
+  .L_Haddle_Candidates_view-button:focus {
+    background-color: #096dd9; /* Slightly darker shade on hover/focus */
+    border-color: #096dd9;
+  }
+  
+  .L_Haddle_Candidates_remove-button {
+    background-color: #ff4d4f; /* Red color */
+    border-color: #ff4d4f;
+    border-radius: 0%;
+    
+  }
+  
+  .L_Haddle_Candidates_remove-button:hover,
+  .L_Haddle_Candidates_remove-button:focus {
+    background-color: #d9363e; /* Slightly darker shade on hover/focus */
+    border-color: #d9363e;
+  }
+  

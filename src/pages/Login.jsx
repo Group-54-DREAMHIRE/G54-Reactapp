@@ -34,7 +34,7 @@ export default function Login() {
         password: password
       };
       dispatch(loginUser(userCredentials)).then((result)=> {
-        if(result.payload){
+        if(result.payload==200){
           setEmail('');
           setPassword('');
           setTimeout(
@@ -42,11 +42,20 @@ export default function Login() {
               dispatch(success());
               clearTimeout();
             },
-            500,
             1000
           );
           navigate("/dashboard");
           window.location.reload();
+        }else{
+          setEmail('');
+          setPassword('');
+          setTimeout(
+            () => {
+              dispatch(success());
+              clearTimeout();
+            },
+            1000
+          );
         }
       })
     };
@@ -80,6 +89,7 @@ export default function Login() {
                           marginBottom: "15px",
                           fontSize: "medium",
                         }}
+                        required
                         allowClear
                         onChange={(e) => setEmail(e.target.value)}
                       />
@@ -87,6 +97,7 @@ export default function Login() {
 
                     <Form.Item label="Password" name="password">
                       <Input.Password
+                      required
                         style={{
                           padding: "10px 15px 10px",
                           marginBottom: "15px",

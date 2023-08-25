@@ -1,67 +1,26 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { motion } from "framer-motion";
-import { pageanimation } from "../../assets/animations/pageanimation";
-import { EditOutlined } from "@ant-design/icons";
-import { PlusOutlined } from "@ant-design/icons";
-import ImgCrop from "antd-img-crop";
+import React from "react";
 import {
   Row,
   Col,
-  Upload,
   Form,
-  Typography,
   Input,
-  Divider,
   Button,
+  Avatar,
+  Divider,
+  Upload,
+  Typography,
+  Image,
 } from "antd";
-const { TextArea } = Input;
+import { UserOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
+import danuka from "../../../src/assets/images/danuka.jpg";
+import { motion } from "framer-motion";
+import { pageanimation } from "../../../src/assets/animations/pageanimation";
 const { Title } = Typography;
 
-const AdminProfile = () => {
-  const dispatch = useDispatch();
-
-  const [name, setName] = useState("Dulanjana Weeasinghe");
-  const [title, setTitle] = useState("Software Engineer");
-  const [description, setDiscription] = useState("");
-  const [phone, setPhone] = useState("071 290 50 22");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("Matara");
-  const [address, setAddress] = useState("Galhena, Bathigama, Dickwella.");
-
-  const [fileList, setFileList] = useState([
-    {
-      //   uid: '-1',
-      //   name: 'image.png',
-      //   status: 'done',
-      //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+export default function AdminProfile() {
+  const onFinish = (values) => {
+    console.log("Received values:", values);
   };
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-  };
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   return (
     <>
@@ -72,172 +31,105 @@ const AdminProfile = () => {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
-        <Row style={{ padding: "3%", zIndex: "-1" }} className="profile-main-w">
-          <Col span={24}>
-            <Row>
-              <ImgCrop rotationSlider>
-                <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture-circle"
-                  fileList={fileList}
-                  onChange={onChange}
-                  onPreview={onPreview}
-                >
-                  {fileList.length > 5 ? null : uploadButton}
-                </Upload>
-              </ImgCrop>
-            </Row>
-
-            <Row justify="center">
-              <Col span={23}>
-                <Form layout="vertical">
-                  <Row justify="start">
-                    <Title level={2} style={{margin: '30px 0'}}>Basic Information</Title>
-                    <Divider style={{ margin: "0" }} />
-                  </Row>
-                  <Row >
-                    <Col span={24}>
-                      <Row justify="space-between" gutter={[0,35]}>
-                        <Col span={11}>
-                          <Title level={4} style={{ marginBottom: "0" }}>
-                            Your Name:
-                          </Title>
-                          <Input
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            style={{
-                              paddingTop: "5px",
-                              paddingBottom: "5px",
-                              marginTop: "15px",
-                              boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                              borderRadius: "0",
-                              fontSize: "large",
-                            }}
-                            suffix={<EditOutlined />}
-                          />
-                        </Col>
-                          <Col span={11}>
-                            <Title level={4} style={{ marginBottom: "0" }}>
-                              Professional title:
-                            </Title>
-                            <Input
-                              onChange={(e) => setTitle(e.target.value)}
-                              value={title}
-                              style={{
-                                paddingTop: "5px",
-                                paddingBottom: "5px",
-                                marginTop: "10px",
-                                boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                                borderRadius: "0",
-                                fontSize: "large",
-                              }}
-                              suffix={<EditOutlined />}
-                            />
-                          </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row style={{marginTop: '30px', marginBottom: '30px'}}>
-                    <Title level={4}>Descreption:</Title>
-                    <TextArea
-                      onChange={(e) => setDiscription(e.target.value)}
-                      value={description}
-                      rows={4}
-                      style={{ boxShadow: "0 0 10px 0 rgba(30,136,229,.3)" }}
-                    />
-                  </Row>
-                  <Row justify="start">
-                    <Title level={2}>Contact Information</Title>
-                    <Divider style={{ margin: "0" }} />
-                  </Row>
-                  <Row justify="space-between" gutter={[0,35]}>
-                    <Col span={11}>
-                      <Title level={4} style={{ marginBottom: "0" }}>
-                        Phone:
-                      </Title>
-                      <Input
-                        onChange={(e) => setPhone(e.target.value)}
-                        value={phone}
-                        style={{
-                          paddingTop: "5px",
-                          paddingBottom: "5px",
-                          marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                          borderRadius: "0",
-                          fontSize: "large",
-                        }}
-                        suffix={<EditOutlined />}
-                      />
-                    </Col>
-                    <Col span={11}>
-                      <Title level={4} style={{ marginBottom: "0" }}>
-                        Email Address:
-                      </Title>
-                      <Input
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        style={{
-                          paddingTop: "5px",
-                          paddingBottom: "5px",
-                          marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                          borderRadius: "0",
-                          fontSize: "large",
-                        }}
-                        suffix={<EditOutlined />}
-                      />
-                    </Col>
-
-                    <Col span={11}>
-                      <Title level={4} style={{ marginBottom: "0" }}>
-                        City:
-                      </Title>
-                      <Input
-                        onChange={(e) => setCity(e.target.value)}
-                        value={city}
-                        style={{
-                          paddingTop: "5px",
-                          paddingBottom: "5px",
-                          marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                          borderRadius: "0",
-                          fontSize: "large",
-                        }}
-                        suffix={<EditOutlined />}
-                      />
-                    </Col>
-                    <Col span={11}>
-                      <Title level={4} style={{ marginBottom: "0" }}>
-                        Full Address:
-                      </Title>
-                      <Input
-                        onChange={(e) => setAddress(e.target.value)}
-                        value={address}
-                        style={{
-                          paddingTop: "5px",
-                          paddingBottom: "5px",
-                          marginTop: "10px",
-                          boxShadow: "0 0 10px 0 rgba(30,136,229,.3)",
-                          borderRadius: "0",
-                          fontSize: "large",
-                        }}
-                        suffix={<EditOutlined />}
-                      />
-                    </Col>
-                  </Row>
-                  <Row style={{marginTop: '25px'}}>
-                    <Col>
-                        <Button htmlType="submit" type="primary" size="large">Save</Button>
-                    </Col>
-                  </Row>
-                </Form>
-              </Col>
-            </Row>
+        <Row>
+          <Image preview={false} width={175} height={150} src={danuka} />
+        </Row>
+        <Row justify="start">
+          <Col span={22}>
+            <Title level={2} style={{ margin: "30px 0 5px 0" }}>
+              BASIC INFORMATION
+            </Title>
+            <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
+          </Col>
+        </Row>
+        <Row justify="space-between" gutter={[0, 35]}>
+          <Col span={11}>
+            <Title level={4} style={{ marginBottom: "0" }}>
+              Your Name:
+            </Title>
+            <Title level={5} style={{ marginTop: "6px" }}>
+              Dhanuka Iroshan
+            </Title>
+          </Col>
+          <Col span={11}>
+            <Title level={4} style={{ marginBottom: "0" }}>
+              Email:
+            </Title>
+            <Title level={5} style={{ marginTop: "6px" }}>
+              danukairoshan@gmail.com
+            </Title>
           </Col>
         </Row>
       </motion.div>
     </>
   );
-};
+}
 
-export default AdminProfile;
+// <div className="D_Admin_Profile_edit-profile-form">
+//       <div className="D_Admin_Profile_form-header">
+//         <div className="D_Admin_Profile_title">Edit Profile</div>
+//         <img src={ProfileImage} alt="Profile Picture" className="D_Admin_Profile_profile-picture" />
+//         {/* <Avatar size={64} icon={<UserOutlined />} className="D_Admin_Profile_profile-picture" /> */}
+
+//         {/* <Upload
+//           name="avatar"
+//           showUploadList={false}
+//           beforeUpload={() => false}
+//         >
+//           <img src={ProfileImage} alt="Profile Picture" className="profile-picture" />
+//           <div className="upload-overlay">
+//             <UploadOutlined />
+//             <div className="upload-text">Upload Photo</div>
+//           </div>
+//         </Upload> */}
+
+//       </div>
+//       <Form onFinish={onFinish} layout="vertical">
+//         <Row gutter={[16, 16]}>
+//           <Col span={12}>
+//             <Form.Item label="First Name" name="firstName">
+//               <Input className='D_Admin_Profile_input-field' suffix={<EditOutlined />}/>
+//             </Form.Item>
+//           </Col>
+//           <Col span={12}>
+//             <Form.Item label="Last Name" name="lastName">
+//               <Input className='D_Admin_Profile_input-field'suffix={<EditOutlined />}/>
+//             </Form.Item>
+//           </Col>
+//         </Row>
+//         <Form.Item label="Email" name="email">
+//           <Input disabled className='D_Admin_Profile_input-field'/>
+//         </Form.Item>
+//         <Form.Item label="Address" name="address">
+//           <Input className='D_Admin_Profile_input-field' suffix={<EditOutlined />}/>
+//         </Form.Item>
+//         <Form.Item label="Contact Number" name="contactNumber">
+//           <Input className='D_Admin_Profile_input-field' suffix={<EditOutlined />}/>
+//         </Form.Item>
+//         <Form.Item label="Password" name="password">
+//           <Input.Password disabled className='D_Admin_Profile_input-field'/>
+//         </Form.Item>
+//         <Row justify="end">
+//           <Button type="default">Cancel</Button>
+//           <Button type="primary" htmlType="submit" className="D_Admin_Profile_save-button">
+//             Save
+//           </Button>
+//         </Row>
+//         <Divider />
+//         <div className="D_Admin_Profile_change-password-title">Change Password</div>
+//         <Form.Item label="Password" name="currentPassword">
+//           <Input.Password className='D_Admin_Profile_input-field'/>
+//         </Form.Item>
+//         <Form.Item label="New Password" name="newPassword">
+//           <Input.Password className='D_Admin_Profile_input-field'/>
+//         </Form.Item>
+//         <Form.Item label="Confirm New Password" name="confirmNewPassword">
+//           <Input.Password className='D_Admin_Profile_input-field'/>
+//         </Form.Item>
+//         <Row justify="end">
+//           <Button type="primary" className="D_Admin_Profile_save-button">
+//             Save
+//           </Button>
+//         </Row>
+//       </Form>
+//     </div>

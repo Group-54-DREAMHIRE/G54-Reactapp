@@ -1,18 +1,21 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
-export default function EventCard ({event}) {
 
+export default function EventCard ({event,status}) {
+  const navigate = useNavigate();
   return (
   
     <Card
       cover={
         <img
-          src="https://images.unsplash.com/photo-1516882058351-3601a7f420cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lkZSUyMGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+          src={event.image}
           alt="Card Cover"
+          style={{ objectFit: "cover", height: "220px" }}
         />
       }
-      style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)" }}
     >
       
       <a href="your_link_url">{event.company}</a>
@@ -21,7 +24,6 @@ export default function EventCard ({event}) {
         {event.description}
       </p>
 
-      
       <div style={{ marginBottom: "12px" }}>
         {event.participates.map((item, index)=>{
           return(
@@ -31,7 +33,7 @@ export default function EventCard ({event}) {
           )
         })}
       </div>
-      <Button 
+      {status.save && <Button 
         size="large" 
         type="primary" 
         style={{ 
@@ -39,10 +41,18 @@ export default function EventCard ({event}) {
           marginRight: '20px',
           borderRadius: '0' }}>
         Save
-      </Button>
-      <Button size="large" type="primary" style={{ marginTop: "8px", borderRadius: '0' }}>
+      </Button>}
+      { status.more && 
+      <Button 
+      size="large" 
+      type="primary" 
+      style={{ 
+        marginTop: "8px", 
+        borderRadius: '0' 
+        }}
+      onClick={()=> navigate("/event")}>
         View More..
-      </Button>
+      </Button>}
     </Card>
   );
 };

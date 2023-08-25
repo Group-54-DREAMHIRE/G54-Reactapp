@@ -11,10 +11,13 @@ import {
   AuditOutlined,
   FileSyncOutlined,
 } from "@ant-design/icons";
-import { BiLogOutCircle } from "react-icons/bi";
+import { BiLogOutCircle,BiCommentX } from "react-icons/bi";
 import { BsBuildingUp } from "react-icons/bs";
-import { FiSlack, FiUsers } from "react-icons/fi";
+import { FiSlack, FiUsers,FiEdit } from "react-icons/fi";
 import { FaEnvelopeOpenText } from "react-icons/fa";
+import { AiOutlineDollar,AiOutlineSubnode } from "react-icons/ai";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+
 import { useSelector } from "react-redux";
 import { getUser } from "../auth/userSlice";
 
@@ -32,7 +35,6 @@ const sidebarItems = [
     key: "/profile",
     icon: <UserOutlined />,
   },
- 
 ];
 
 if (userType === "candidate") {
@@ -80,6 +82,12 @@ if (userType === "candidate") {
       icon: <SketchSquareFilled />,
     },
     {
+      id: 9,
+      label: "Annoucements",
+      key: "/announcements",
+      icon: <SketchSquareFilled />,
+    },
+    {
       id: 10,
       label: "Settings",
       key: "/settings",
@@ -97,7 +105,7 @@ if (userType === "candidate") {
       label: "Logout",
       key: "logout",
       icon: <BiLogOutCircle />,
-    },
+    }
   );
 } else if (userType === "company") {
   sidebarItems.push(
@@ -121,19 +129,31 @@ if (userType === "candidate") {
     },
     {
       id: 6,
-      label: "Interviews",
+      label: "Schedule Interviews",
       key: "/interviews",
       icon: <FiSlack />,
+      children: [
+        {
+          label: "Schedule Interviews",
+          key: "/interviews",
+          icon: <FiSlack />,
+        },
+        {
+          label: "Scheduled Interviews",
+          key: "/scheduledinterviews",
+          icon: <FiSlack />,
+        },
+      ],
     },
     {
       id: 7,
       label: "Schedule Test",
-      key: "/sheduletests",
+      key: "/scheduletests",
       icon: <FaEnvelopeOpenText />,
     },
     {
       id: 8,
-      label: "Send Notifications",
+      label: "Send Annoucements",
       key: "/sendnotifications",
       icon: <BellOutlined />,
     },
@@ -161,63 +181,67 @@ if (userType === "candidate") {
       label: "Logout",
       key: "logout",
       icon: <BiLogOutCircle />,
-    },
+    }
   );
 } else if (userType === "admin") {
   sidebarItems.push(
     {
-    id: 3,
-    label: "Payments",
-    key: "/payments",
-    icon: <FiUsers />,
-  },
-  {
-    id: 4,
-    label: "Regaistration Requests",
-    key: "/registration",
-    icon: <FiUsers />,
-  },
-  {
-    id: 5,
-    label: "Companies",
-    key: "/handlecompanies",
-    icon: <FiUsers />,
-  },
-  {
-    id: 6,
-    label: "Candidates",
-    key: "/handlecandidates",
-    icon: <FiUsers />,
-  },
-  {
-    id: 7,
-    label: "Edit Landing Page",
-    key: "/editlanding",
-    icon: <FiUsers />,
-  },
-  {
-    id: 10,
-    label: "Settings",
-    key: "/settings",
-    icon: <SettingFilled />,
-    children: [
-      {
-        label: "ChangePassword",
-        key: "/changepassword",
-        icon: <LockFilled />,
-      },
-    ],
-  },
-  {
-    id: 11,
-    label: "Logout",
-    key: "logout",
-    icon: <BiLogOutCircle />,
-  },
+      id: 3,
+      label: "Payments",
+      key: "/payments",
+      icon: <AiOutlineDollar/>,
+    },
+    {
+      id: 4,
+      label: "Regaistration Requests",
+      key: "/registration",
+      icon: <AiOutlineSubnode/>,
+    },
+    {
+      id: 5,
+      label: "Companies",
+      key: "/handlecompanies",
+      icon: <HiOutlineBuildingOffice2 />,
+    },
+    {
+      id: 6,
+      label: "Candidates",
+      key: "/handlecandidates",
+      icon: <FiUsers />,
+    },
+    {
+      id: 7,
+      label: "Edit Landing Page",
+      key: "/editlanding",
+      icon: <FiEdit />,
+    },
+    {
+      id: 8,
+      label: "Complaints",
+      key: "/complaints",
+      icon: <BiCommentX/>,
+    },
+    {
+      id: 10,
+      label: "Settings",
+      key: "/settings",
+      icon: <SettingFilled />,
+      children: [
+        {
+          label: "ChangePassword",
+          key: "/changepassword",
+          icon: <LockFilled />,
+        },
+      ],
+    },
+    {
+      id: 11,
+      label: "Logout",
+      key: "logout",
+      icon: <BiLogOutCircle />,
+    }
   );
-}
-
-else if(userType === null){
+} else if (userType === null) {
   sidebarItems.push(null);
 }
 

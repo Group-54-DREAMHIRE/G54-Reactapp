@@ -66,7 +66,6 @@ export default function CandidateResumeCard({ items, status }) {
       <Card
         className="resume-card-w"
         style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }}
-        hoverable
       >
         <Row justify="space-between">
           <Col span={16}>
@@ -84,9 +83,9 @@ export default function CandidateResumeCard({ items, status }) {
               >
                 <FaMapMarkerAlt /> {items.address}.{" "}
               </Text>
-              <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
+              {/* <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
                 <FaMoneyBillAlt /> {items.salary}
-              </Text>
+              </Text> */}
             </Title>
             <Col style={{marginTop: '25px'}}>
             {items.tags.slice(0, 4).map((tag) => {
