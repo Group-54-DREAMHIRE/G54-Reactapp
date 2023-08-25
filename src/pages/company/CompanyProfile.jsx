@@ -166,7 +166,7 @@ export default function CompanyProfile() {
     if (imageUpload) {
       const imageRef = ref(storage, `dreamhire/companies/${name}/${id}`);
 
-      uploadBytes(imageRef, imageUpload).then(() => {
+    await uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);
         getDownloadURL(imageRef)
           .then((url) => {
