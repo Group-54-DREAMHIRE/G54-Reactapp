@@ -1,5 +1,5 @@
 import { Button, Menu, Row, Col,ConfigProvider } from 'antd';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     MenuFoldOutlined,
@@ -8,27 +8,41 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
-import  SidebarItems from '../../store/demo/sidebarItems';
-const Sidebar = () => {
+import  {adminSidebar} from '../../store/demo/adminSidebar';
+import {candidateSidebar} from '../../store/demo/candidateSidebar';
+import { companySidebar } from '../../store/demo/companySidebar';
+export default function Sidebar (){
+
+    const [sidebar, setSidebar] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userType = localStorage.getItem("USERTYPE");
    
     const onClick = ({ key }) => {
         if(key === "logout"){
             dispatch(logout());
             localStorage.clear();
             navigate("/");
-            window.location.reload();
-            console.log("Log out Succesfully!");
+            
+        }else{
+            navigate(key);
         }
-        navigate(key);
+        
     };
 
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapsed = (e) => {
         setCollapsed(!collapsed);
     };
-
+    useEffect(() => {
+        if(userType==="candidate"){
+            setSidebar(candidateSidebar);
+        }else if(userType==="company"){
+            setSidebar(companySidebar);
+        }else if(userType==="admin"){
+            setSidebar(adminSidebar);
+        }
+    }, []);
     return (
         <>
          <ConfigProvider
@@ -76,7 +90,7 @@ const Sidebar = () => {
                                        }}      
                                 mode="inline"
                                 inlineCollapsed={collapsed}
-                                items={SidebarItems}
+                                items={sidebar}
                                 onClick={onClick} />
                                 
                         </Col>
@@ -88,4 +102,3 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar

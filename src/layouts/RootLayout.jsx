@@ -28,7 +28,7 @@ function RootLayout() {
           </Row>
          
           <Layout style={{ display: "flex", flexDirection: "row", }}>
-            <Sidebar />
+<Sidebar />
             <Layout style={{ backgroundColor: "white" , }}>
               <Content
                 style={{
