@@ -44,8 +44,12 @@ export default function Login() {
             },
             1000
           );
-          navigate("/dashboard");
-          window.location.reload();
+          if(localStorage.getItem("USERTYPE")){
+            navigate("/dashboard");
+            console.log(localStorage.getItem("USERTYPE"));
+          }
+          
+          
         }else{
           setEmail('');
           setPassword('');
