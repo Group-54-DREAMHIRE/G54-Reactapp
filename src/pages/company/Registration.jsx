@@ -12,42 +12,87 @@ import {
   Space,
   Image,
   Divider,
+  message,
   List,
+  Spin,
 } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { InboxOutlined } from "@ant-design/icons";
 import "../../assets/styles/CompanyRegistration.scss";
 import { useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
+import { storage } from "../../api/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { fetchUserData, updateProfileData } from "../../api/authenticationService";
 
 const { Title } = Typography;
 
 const CompanyRegistration = () => {
-  const user = useSelector(getUser);
 
-  const [form] = Form.useForm();
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const [registration, setRegistration] = useState("");
+  const [file, setFile] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const pricingPlans = [
-    {
-      name: "Basic",
-      price: "$10/month",
-      features: "10 job posting,Job displayed for 15 days,Premium Support 24/7",
-    },
-    {
-      name: "Standard",
-      price: "$20/month",
-      features: "20 job posting,Job displayed for 30 days,Premium Support 24/7",
-    },
-    {
-      name: "Premium",
-      price: "$30/month",
-      features: "30 job posting,Job displayed for 60 days,Premium Support 24/7",
-    },
-  ];
+  const handlefileChange =(info)=>{
+    console.log(info.file.originFileObj);
+    setFile(info.file.originFileObj);
+    console.log(file,"Dilaiji");
+  }
 
-  const handleSubmit = (values) => {
-    console.log("Received values of form: ", values);
+  const handleSubmit = async() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+    setLoading(true);
+    if (file) {
+      console.log("AAAAAAAA");
+      
+      const imageRef = ref(storage, `dreamhire/companies/${user.name}/registration/${user.id}`);
+    await uploadBytes(imageRef, file).then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+              console.log(url);
+              setRegistration(url); 
+              console.log(registration);  
+          })
+          .catch((error) => {
+            console.log(error.message);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+         
+      });
+        let data1 = {
+          url: `/api/v1/company/saveBR/${user.id}`,
+          data: registration,
+          method: "post",
+        };
+  
+          const response = await fetchUserData(data1);
+          console.log(response);
+          if (response.status === 200) {
+            setLoading(false);
+            message.success("Successfully Updated");
+            console.log("AWAAAA");
+          } else {
+            setLoading(false);
+            message.error("Data is invalid!");
+          } 
+       
+    }else{
+      setLoading(false);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      message.error("Add the BR!");
+      return;
+    }
+   
+    
   };
 
   const features1 = [
@@ -68,6 +113,9 @@ const CompanyRegistration = () => {
 
   const [isHovered1, setHovered1] = useState(false);
   const [isHovered2, setHovered2] = useState(false);
+  
+
+
 
   const handleHover1 = () => {
     setHovered1(true);
@@ -87,10 +135,11 @@ const CompanyRegistration = () => {
 
   return (
     <>
+    <Spin spinning={loading}>
       <div className="company-registration-n">
         <Row>
           <Col span={24}>
-            <Form form={form} layout="vertical" onFinish={handleSubmit}>
+            <Form layout="vertical" onFinish={handleSubmit}>
               <Row>
                 <Col
                   span={12}
@@ -154,10 +203,10 @@ const CompanyRegistration = () => {
               <Row style={{ marginTop: "5%" }} justify='center'>
                 <Col span={24}>
                   <Form.Item
-                    name="businessReport"
-                    label="Business Report"
-                    valuePropName="fileList"
-                    getValueFromEvent={(e) => e.fileList}
+                    // name="businessReport"
+                    // label="Business Report"
+                    // valuePropName="fileList"
+                    // getValueFromEvent={(e) => e.fileList}
                     rules={[
                       {
                         required: true,
@@ -165,7 +214,10 @@ const CompanyRegistration = () => {
                       },
                     ]}
                   >
-                    <Upload.Dragger name="files" multiple={false}>
+                    <Upload.Dragger 
+                      name="files" 
+                      multiple={false} 
+                      onChange={handlefileChange}>
                       <p className="ant-upload-drag-icon">
                         <InboxOutlined />
                       </p>
@@ -180,6 +232,14 @@ const CompanyRegistration = () => {
                       </p>
                     </Upload.Dragger>
                   </Form.Item>
+                </Col>
+                <Col>
+                <Button 
+                  htmlType="submit"
+                  type="primary" 
+                  style={{borderRadius: '0'}}>
+                  Upload
+                </Button>
                 </Col>
               </Row>
               {/* <Row>
@@ -292,6 +352,7 @@ const CompanyRegistration = () => {
           </Col>
         </Row>
       </div>
+      </Spin>
     </>
   );
 };

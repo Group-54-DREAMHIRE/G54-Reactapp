@@ -11,8 +11,9 @@ import {
   Button,
   Space,
   Alert,
+  Spin,
+  message,
 } from "antd";
-import { List } from "react-content-loader";
 import { storage } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { UploadOutlined } from "@ant-design/icons";
@@ -24,7 +25,6 @@ import { tagItems } from "../../store/demo/tagItems";
 import { useState, useEffect } from "react";
 import { fetchUserData, getProfileData } from "../../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
 import { salary, currencies } from "../../store/demo/salary";
 import { addJobPost, setJobPosts } from "../../store/jobpost/jobSlice";
 import { useNavigate } from "react-router-dom";
@@ -59,28 +59,10 @@ function AddJobPost() {
   const [listTags, setListTags] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
 
   useEffect(() => {
-    getProfileData(`/api/v1/company/get/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setProfileData(response.data);
-        console.log(profileData.name);
-      })
-      .catch((error) => {
-        setError("Invalid data");
-        console.error("Error fetching user profile:", error);
-      });
+   setCompanyName(user.name);
   }, [id]);
-
-  useEffect(() => {
-    if (profileData) {
-      setCompanyName(profileData.name);
-      console.log(companyName);
-    }
-  }, [profileData]);
 
   const handleAddInput = () => {
     const newInput = "";
@@ -157,52 +139,32 @@ function AddJobPost() {
       data: jobPostData,
       method: "post",
     };
-
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     setLoading(true);
     try {
       const response = await fetchUserData(data);
       if (response.status === 200) {
-        setSuccessmsg("Succesfully updated");
+        message.success("Succesfully updated");
         console.log("brfore")
         navigate("/jobposts");
         console.log("after")
         dispatch(addJobPost(response.data));
       } else {
-        setError("Invalid Data!");
+        message.error("Invalid Data!");
+        navigate("/jobposts");
+        setLoading(false);
       }
     } catch (e) {
       setLoading(false);
       console.dir(e);
-    } finally {
-      setLoading(false);
     }
   };
-
-  //   const MyLoader = () => (
-  //     <ContentLoader viewBox="0 0 380 110">
-  //       <rect x="25" y="15" rx="4" ry="4" width="1" height="100" />
-  //       <rect x="25" y="109" rx="4" ry="4" width="325" height="2" />
-  //       <rect x="350" y="15" rx="4" ry="4" width="1" height="100" />
-
-  //       <rect x="20" y="5" rx="4" ry="4" width="340" height="20" />
-  //       <rect x="50" y="30" rx="3" ry="3" width="50" height="15" />
-  //       <rect x="105" y="30" rx="3" ry="3" width="65" height="15" />
-  //       <rect x="175" y="30" rx="3" ry="3" width="125" height="15" />
-
-  //       <rect x="50" y="55" rx="3" ry="3" width="120" height="15" />
-  //       <rect x="175" y="55" rx="3" ry="3" width="120" height="15" />
-
-  //       <rect x="50" y="80" rx="3" ry="3" width="120" height="15" />
-  //       <rect x="175" y="80" rx="3" ry="3" width="120" height="15" />
-  //     </ContentLoader>
-  //   )
   return (
     <>
-      {loading ? (
-        <>
-          <List />
-        </>
-      ) : (
+        <Spin spinning={loading}>
         <Row justify="center" className="addjob-w">
           <Col span={24}>
             <Row justify="center">
@@ -481,19 +443,13 @@ function AddJobPost() {
                     >
                       Post Job
                     </Button>
-                    {JSON.stringify(loading)}
-                    <h1>fygwruyg</h1>
-                    {successmsg && (
-                      <Alert message={successmsg} type="success" showIcon />
-                    )}
-                    {error && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>
             </Row>
           </Col>
         </Row>
-      )}
+        </Spin>
     </>
   );
 }

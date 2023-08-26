@@ -1,4 +1,5 @@
 import { Row, Col } from "antd";
+import { List } from 'react-content-loader';
 import CandidateCard from "../Components/cards/candidate/CandidateCard";
 import { getAllCandidates, setCandidates } from "../store/candidate/candidateSlice";
 import { useState, useEffect } from "react";
@@ -8,8 +9,10 @@ import { getData } from "../api/authenticationService";
 export default function Candidates() {
   const dispatch = useDispatch();
   const [candidateData, setCandidateData] = useState([]);
+  const [loading, setLoading]= useState(false);
   const candidates = useSelector(getAllCandidates);
   useEffect(() => {
+    setLoading(true);
     if (candidates === null) {
       getData("/api/v1/candidate/getAllCandidates")
         .then((response) => {
@@ -18,6 +21,7 @@ export default function Candidates() {
           setCandidateData(response.data);
           console.log(candidateData);
           dispatch(setCandidates(response.data));
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);
@@ -25,11 +29,13 @@ export default function Candidates() {
       console.log(candidates);
     } else {
       setCandidateData(candidates);
+      setLoading(false);
     }
   }, []);
   return (
     <>
-      <Row style={{ padding: "5%" }} gutter={[30,30]}>
+      {loading?<List/>:
+      (<Row style={{ padding: "5%" }} gutter={[30,30]}>
         {candidateData.map((item, index) => {
           return (
             <Col span={11}>
@@ -37,7 +43,7 @@ export default function Candidates() {
             </Col>
           );
         })}
-      </Row>
+      </Row>)}
     </>
   );
 }

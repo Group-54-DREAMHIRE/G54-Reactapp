@@ -1,4 +1,3 @@
-import company from "../../assets/images/company.png";
 import {
   MailOutlined,
   PhoneOutlined,
@@ -9,9 +8,9 @@ import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaPlusSquare, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../../store/auth/userSlice";
 import { storage } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Facebook } from 'react-content-loader';
 import {
   Button,
   Col,
@@ -24,6 +23,8 @@ import {
   Alert,
   Space,
   Upload,
+  Spin,
+  message,
 } from "antd";
 import { useState, useEffect } from "react";
 import { companyDetails } from "../../store/demo/companyProfile";
@@ -40,49 +41,40 @@ const textStyle = {
 };
 export default function CompanyProfile() {
   const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
   const [profileData, setProfileData] = useState([]);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState();
   const [imageUpload, setImageUpload] = useState();
   const [logo, setLogo] = useState(null);
   const [visible, setVisible] = useState(true);
-  const [description, setDescription] = useState("");
-  const [about, setAbout] = useState("");
-  const [services, setServices] = useState("");
+  const [description, setDescription] = useState();
+  const [about, setAbout] = useState();
+  const [services, setServices] = useState();
   const [serviceKeys, setServiceKeys] = useState([]);
-  const [images, setImages] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [linkedIn, setLinkedIn] = useState("");
+  const [images, setImages] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [address, setAddress] = useState();
+  const [facebook, setFacebook] = useState();
+  const [twitter, setTwitter] = useState();
+  const [linkedIn, setLinkedIn] = useState();
 
-  const [listServiceKeys, setListServiceKeys] = useState("");
+  const [listServiceKeys, setListServiceKeys] = useState();
   const [tempLogo, setTempLogo] = useState(null);
   const [hasImage, setHasImage] = useState(true);
 
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user == null) {
-      getProfileData(`/api/v1/company/get/${id}`)
-        .then((response) => {
-          console.log(response.data);
-          setProfileData(response.data);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user profile:", error);
-        });
-    } else {
-      setProfileData(user);
-    }
-  }, [id]);
+    setProfileData(user);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
 
   useEffect(() => {
     if (profileData) {
@@ -164,6 +156,7 @@ export default function CompanyProfile() {
   };
   const handleSubmit = async () => {
     if (imageUpload) {
+      
       const imageRef = ref(storage, `dreamhire/companies/${name}/${id}`);
 
     await uploadBytes(imageRef, imageUpload).then(() => {
@@ -183,7 +176,13 @@ export default function CompanyProfile() {
           });
       });
     }
+    setLoading(true);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     if(tempLogo){
+      
       let companyData = {
         name,
         logo: tempLogo,
@@ -208,27 +207,28 @@ export default function CompanyProfile() {
       const response = await updateProfileData(data);
       console.log(response.data);
       if (response.status === 200) {
-        setSuccessmsg("Succesfully updated");
         localStorage.setItem("USER",JSON.stringify(response.data));
-        dispatch(updateUser(response.data));
         setProfileData(null);
-        setTimeout(() => {
-          setSuccessmsg("");
-        }, 2000);
+        setLoading(false);
+       
+        message.success("Successfully Updated");
       } else {
-        setError("Invalid Data!");
+        setLoading(false);
+        message.error("Data is invalid!");
       }
     }
   };
 
   return (
     <>
-      <Row>
+  <Spin spinning={loading}>
+   <Row>
         <Col span={24}>
           <Form onFinish={handleSubmit}>
             <Row
               gutter={[30, 40]}
               justify="space-around"
+              align='bottom'
               style={{ padding: "1% 2%" }}
             >
               <Col span={10}>
@@ -489,14 +489,11 @@ export default function CompanyProfile() {
               >
                 Save
               </Button>
-              {successmsg && (
-                <Alert message={successmsg} type="success" showIcon />
-              )}
-              {error && <Alert message={error} type="error" showIcon />}
             </Row>
           </Form>
         </Col>
       </Row>
+      </Spin>
     </>
   );
 }

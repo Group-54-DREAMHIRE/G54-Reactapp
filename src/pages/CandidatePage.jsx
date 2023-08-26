@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { pageanimation } from "../assets/animations/pageanimation";
 import { format, startOfDay } from "date-fns";
+import { Instagram  } from 'react-content-loader'
 import moment from "moment/moment";
 import {
   UserOutlined,
@@ -30,51 +31,58 @@ import {
   Image,
   Checkbox,
   Avatar,
+  Spin,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../store/auth/userSlice";
 import {
   getProfileData,
   updateProfileData,
 } from "../api/authenticationService";
+import { useParams } from "react-router";
 const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function CandidatePage() {
-  const user = useSelector(getUser);
-  const id = user.id;
-
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [profileData, setProfileData] = useState([]);
   const [formatbDay, setFormatbDay]=useState();
+  const [loading, setLoading]= useState(false);
 
   useEffect(() => {
-    if(user==null){
+      setLoading(true);
       getProfileData(`/api/v1/candidate/get/${id}`)
       .then((response) => {
         console.log(response.data);
         setProfileData(response.data);
         console.log(profileData.name);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.error("Error fetching user profile:", error);
       });
-    }else{
-      setProfileData(user);
-    }
-    
+      console.log(profileData.name);
   }, [id]);
 
   useEffect(() => {
     if (profileData) {
       const dateObj = moment(profileData.birthday);
       setFormatbDay(dateObj.format("YYYY MM DD"));
+      console.log(formatbDay);
+      console.log(profileData);
+      
+      
     }
   }, [profileData]);
 
   return (
     <>
-      <motion.div
+      { loading?
+      (
+        <Instagram/>
+      ):
+        (<motion.div
         variants={pageanimation}
         initial="hidden"
         animate="visible"
@@ -297,7 +305,7 @@ export default function CandidatePage() {
             </Row>
           </Col>
         </Row>
-      </motion.div>
+      </motion.div>)}
     </>
   );
 }

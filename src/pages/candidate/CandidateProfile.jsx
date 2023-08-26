@@ -18,7 +18,6 @@ import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
-import { candidateDetails } from "../../store/demo/candidateProfile";
 
 import {
   Row,
@@ -35,10 +34,11 @@ import {
   Image,
   Checkbox,
   Avatar,
+  message,
+  Spin,
 } from "antd";
 import { currencies, salary } from "../../store/demo/profile";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../../store/auth/userSlice";
 import {
   getProfileData,
   updateProfileData,
@@ -47,7 +47,7 @@ const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
-  const user = useSelector(getUser);
+  const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
   const dispatch = useDispatch();
@@ -82,24 +82,8 @@ export default function Profile() {
   const [editingMin, setEdittingMin] = useState(false);
   const [editingMax, setEdittingMax] = useState(false);
 
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
-
   useEffect(() => {
-    if(user==null){
-      getProfileData(`/api/v1/candidate/get/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setProfileData(response.data);
-        console.log(profileData.name);
-      })
-      .catch((error) => {
-        console.error("Error fetching user profile:", error);
-      });
-    }else{
       setProfileData(user);
-    }
-    
   }, [id]);
 
   useEffect(() => {
@@ -188,6 +172,11 @@ export default function Profile() {
           });
       });
     }
+    setLoading(true);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
    if(tempDP){
     let candidateData = {
       name,
@@ -215,17 +204,12 @@ export default function Profile() {
     const response = await updateProfileData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setSuccessmsg("Succesfully updated");
       localStorage.setItem("USER",JSON.stringify(response.data));
-      dispatch(updateUser(response.data));
-      setTimeout(
-        () => {
-         setSuccessmsg("");
-        },
-        2000
-      );
+      setLoading(false);
+      message.success("Successfully Updated");
     }else{
-      setError("Invalid Data!");
+      setLoading(false);
+      message.error("Data is invalid!");
     }
    }
   };
@@ -244,6 +228,7 @@ export default function Profile() {
   );
   return (
     <>
+    <Spin spinning={loading}>
       <motion.div
         variants={pageanimation}
         initial="hidden"
@@ -588,8 +573,6 @@ export default function Profile() {
                     >
                       Save
                     </Button>
-                      { successmsg  && <Alert message={successmsg} type="success" showIcon />}
-                      { error  && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>
@@ -597,6 +580,7 @@ export default function Profile() {
           </Col>
         </Row>
       </motion.div>
+      </Spin>
     </>
   );
 }

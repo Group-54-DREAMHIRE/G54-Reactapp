@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginPic from '../assets/images/landing-1.png';
 
-import { success } from "../store/auth/userSlice";
+import { getUser, success } from "../store/auth/userSlice";
 import { loginUser } from "../store/auth/userSlice";
 
 import {
@@ -24,10 +24,14 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    
+
     const {loading, error, message} = useSelector((state)=> state.user)
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+;
+    
     const submitHandler = async () => {
       let userCredentials = {
         email: email,
@@ -35,31 +39,16 @@ export default function Login() {
       };
       dispatch(loginUser(userCredentials)).then((result)=> {
         if(result.payload==200){
+          console.log(localStorage.getItem("USERTYPE"), "Dualaaaaaa");
           setEmail('');
           setPassword('');
-          setTimeout(
-            () => {
-              dispatch(success());
-              clearTimeout();
-            },
-            1000
-          );
           if(localStorage.getItem("USERTYPE")){
             navigate("/dashboard");
-            console.log(localStorage.getItem("USERTYPE"));
+           // window.location.reload();
+            
           }
-          
-          
         }else{
-          setEmail('');
-          setPassword('');
-          setTimeout(
-            () => {
-              dispatch(success());
-              clearTimeout();
-            },
-            1000
-          );
+
         }
       })
     };

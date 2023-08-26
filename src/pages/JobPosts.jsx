@@ -1,4 +1,5 @@
 import JobPostCard from "../Components/cards/JobPostCard";
+import { List } from 'react-content-loader';
 import {
   Row,
   Col,
@@ -27,15 +28,18 @@ export default function JobPosts() {
   const dispatch = useDispatch();
   const [allJobList, setAllJobList] = useState([]);
   const [filter, setFilter] = useState(false);
+  const [loading, setLoading]= useState(false);
   const jobs = useSelector(getAllJobPosts);
 
   useEffect(() => {
+    setLoading(true);
     if (jobs === null) {
       getData("/api/v1/jobpost/getalljobs")
         .then((response) => {
           console.log(response.data);
           setAllJobList(response.data);
           dispatch(setJobPosts(response.data));
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);
@@ -43,6 +47,7 @@ export default function JobPosts() {
       console.log(allJobList);
     } else {
       setAllJobList(jobs);
+      setLoading(false);
     }
   }, []);
 
@@ -60,7 +65,7 @@ export default function JobPosts() {
   const auth = userType === "company" ? true : false;
   return (
     <>
-      <Row style={{ padding: "1%" }}>
+      {loading?<List />:(<Row style={{ padding: "1%" }}>
         <Col span={24}>
           <Row>
             <Col span={24}>
@@ -184,7 +189,7 @@ export default function JobPosts() {
             })}
           </Row>
         </Col>
-      </Row>
+      </Row>)}
     </>
   );
 }

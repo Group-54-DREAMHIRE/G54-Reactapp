@@ -20,9 +20,12 @@ export default function Sidebar (){
    
     const onClick = ({ key }) => {
         if(key === "logout"){
+            navigate("/");
+            console.log("LOgout")
             dispatch(logout());
             localStorage.clear();
-            navigate("/");
+            console.log("paka")
+            window.location.reload();
             
         }else{
             navigate(key);
