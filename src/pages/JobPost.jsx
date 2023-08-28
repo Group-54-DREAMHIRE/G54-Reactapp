@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { getData } from "../api/authenticationService";
 import { getJobPost } from "../store/jobpost/jobSlice";
 import { getUser } from "../store/auth/userSlice";
+import { List } from 'react-content-loader';
 
 const { Title, Text } = Typography;
 export default function JobPost() {
@@ -23,15 +24,27 @@ export default function JobPost() {
   const [deadline, setDeadline] = useState();
   const [postDate, setPostDate] = useState();
   const [listRequirements, setListRequirements] = useState([""]);
+  const [loading, setLoading]= useState(false);
 
   useEffect(() => {
+    setLoading(true);
       getData(`/api/v1/jobpost/getjobpost/${id}`)
         .then((response) => {
           console.log(response.data);
           setJobPost(response.data);
+          setLoading(false);
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);
+          setLoading(false);
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
         });
       console.log(jobPost);
   }, []);
@@ -54,7 +67,8 @@ export default function JobPost() {
 
   return (
     <>
-      <Row
+      {loading?<List/>:
+      (<Row
         style={{ padding: "5%" }}
         justify="space-between"
         className="jobpost-w"
@@ -183,18 +197,22 @@ export default function JobPost() {
               })}
             </Col>
           </Row>
-          {userType==="company"?(null):(<Row style={{ marginTop: "30px" }}>
+          {/* {userType==="company"?(null):(
+          
+          )} */}
+          <Row style={{ marginTop: "30px" }}>
             <Button
+              disabled={userType==="candidate"?false:true}
               size="large"
               style={{ borderRadius: "0" }}
               type="primary"
               onClick={() => dispatch(openApplyJob())}>
               Apply This Job
             </Button>
-          </Row>)}
+          </Row>
           <ApplyJob jobID={id} />
         </Col>
-      </Row>
+      </Row>)}
     </>
   );
 }

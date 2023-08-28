@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePasswordUser, getUser, success } from "../store/auth/userSlice";
+import { changePasswordUser, success } from "../store/auth/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
@@ -18,7 +18,7 @@ const { Title } = Typography;
 export default function () {
   const dispatch = useDispatch();
   const { error, messageChange } = useSelector((state) => state.user);
-  const user = useSelector(getUser);
+  const user = JSON.parse(localStorage.getItem("USER"));
 
   const navigate = useNavigate();
   const [oldp, setOldp] = useState("");

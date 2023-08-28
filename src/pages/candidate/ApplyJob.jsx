@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
 import { fetchUserData } from "../../api/authenticationService";
 import {
   Form,
@@ -20,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const { Text, Link, Title } = Typography;
 
 export default function ApplyJob({ jobID }) {
-  const user = useSelector(getUser);
+  const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
   const dispatch = useDispatch();

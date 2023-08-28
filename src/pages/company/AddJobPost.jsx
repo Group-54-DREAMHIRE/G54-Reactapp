@@ -11,8 +11,9 @@ import {
   Button,
   Space,
   Alert,
+  Spin,
+  message,
 } from "antd";
-import { List } from "react-content-loader";
 import { storage } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { UploadOutlined } from "@ant-design/icons";
@@ -24,7 +25,6 @@ import { tagItems } from "../../store/demo/tagItems";
 import { useState, useEffect } from "react";
 import { fetchUserData, getProfileData } from "../../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
 import { salary, currencies } from "../../store/demo/salary";
 import { addJobPost, setJobPosts } from "../../store/jobpost/jobSlice";
 import { useNavigate } from "react-router-dom";
@@ -41,8 +41,8 @@ function AddJobPost() {
   const [companyName, setCompanyName] = useState("");
   const [profileData, setProfileData] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-  const [imageUpload, setImageUpload] = useState();
-  const [cover, setCover] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
+  const [cover, setCover] = useState(null);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [experience, setExperience] = useState("");
@@ -59,28 +59,10 @@ function AddJobPost() {
   const [listTags, setListTags] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
 
   useEffect(() => {
-    getProfileData(`/api/v1/company/get/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setProfileData(response.data);
-        console.log(profileData.name);
-      })
-      .catch((error) => {
-        setError("Invalid data");
-        console.error("Error fetching user profile:", error);
-      });
+    setCompanyName(user.name);
   }, [id]);
-
-  useEffect(() => {
-    if (profileData) {
-      setCompanyName(profileData.name);
-      console.log(companyName);
-    }
-  }, [profileData]);
 
   const handleAddInput = () => {
     const newInput = "";
@@ -97,112 +79,87 @@ function AddJobPost() {
   };
 
   const handleImage = (info) => {
-    setImageUpload(info.file);
-    console.log(imageUpload, "Dulaaaaaa");
+    setImageUpload(info.file.originFileObj);
+    console.log(imageUpload);
   };
 
-  const saveImage = () => {
-    console.log("Out If");
+  const handleSubmit = async () => {
     if (imageUpload) {
-      console.log(imageUpload, "test");
-      console.log(imageUpload);
-      console.log("In If");
+      setLoading(true);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       const imageRef = ref(
         storage,
-        `dreamhire/companies/${companyName}/${imageUpload.name}`
+        `dreamhire/companies/${companyName}/jobposts/${imageUpload.name}`
       );
-      uploadBytes(imageRef, imageUpload).then(() => {
+      let coverURL=null;
+      await uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);
-        getDownloadURL(imageRef)
-          .then((url) => {
-            console.log(imageUpload);
-            setImageUrl(url);
-            setCover(url);
-            console.log(imageUrl);
-            console.log(cover);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        
+      }).catch((error) => {
+        console.log(error.message);
       });
-      console.log("end");
-    }
-  };
 
-  const handleSubmit = async (e) => {
-    console.log("eghetjg");
-    console.dir(e);
-    const postedDate = new Date();
-    let jobPostData = {
-      systemUserID: user.systemUser.id,
-      companyName,
-      postedDate,
-      cover,
-      currency,
-      minSalary,
-      maxSalary,
-      jobTitle: title,
-      jobType: type,
-      experience,
-      education,
-      deadline,
-      description,
-      howToApply: apply,
-      jobRequirements: listRequirements,
-      tags: listTags,
-    };
+      await getDownloadURL(imageRef)
+      .then((url) => {
+       coverURL = url;
+       console.log(coverURL);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    let data = {
-      url: `/api/v1/jobpost/save/${id}`,
-      data: jobPostData,
-      method: "post",
-    };
-
-    setLoading(true);
-    try {
-      const response = await fetchUserData(data);
-      if (response.status === 200) {
-        setSuccessmsg("Succesfully updated");
-        console.log("brfore")
-        navigate("/jobposts");
-        console.log("after")
-        dispatch(addJobPost(response.data));
-      } else {
-        setError("Invalid Data!");
+     let jobPostData = {
+        systemUserID: user.systemUser.id,
+        companyName,
+        postedDate: new Date(),
+        cover: coverURL,
+        currency,
+        minSalary,
+        maxSalary,
+        jobTitle: title,
+        jobType: type,
+        experience,
+        education,
+        deadline,
+        description,
+        howToApply: apply,
+        jobRequirements: listRequirements,
+        tags: listTags,
+      };
+      let data = {
+        url: `/api/v1/jobpost/save/${id}`,
+        data: jobPostData,
+        method: "post",
+      };
+      try {
+        const response = await fetchUserData(data);
+        if (response.status === 200) {
+          message.success("Succesfully updated");
+          setLoading(false);
+          console.log("brfore");
+          navigate("/jobposts");
+          console.log("after");
+          dispatch(addJobPost(response.data));
+        } else {
+          message.error("Invalid Data!");
+          navigate("/jobposts");
+          setLoading(false);
+        }
+      } catch (e) {
+        console.log(e);
+        setLoading(false);
       }
-    } catch (e) {
-      setLoading(false);
-      console.dir(e);
-    } finally {
-      setLoading(false);
+
     }
-  };
+  }
 
-  //   const MyLoader = () => (
-  //     <ContentLoader viewBox="0 0 380 110">
-  //       <rect x="25" y="15" rx="4" ry="4" width="1" height="100" />
-  //       <rect x="25" y="109" rx="4" ry="4" width="325" height="2" />
-  //       <rect x="350" y="15" rx="4" ry="4" width="1" height="100" />
 
-  //       <rect x="20" y="5" rx="4" ry="4" width="340" height="20" />
-  //       <rect x="50" y="30" rx="3" ry="3" width="50" height="15" />
-  //       <rect x="105" y="30" rx="3" ry="3" width="65" height="15" />
-  //       <rect x="175" y="30" rx="3" ry="3" width="125" height="15" />
-
-  //       <rect x="50" y="55" rx="3" ry="3" width="120" height="15" />
-  //       <rect x="175" y="55" rx="3" ry="3" width="120" height="15" />
-
-  //       <rect x="50" y="80" rx="3" ry="3" width="120" height="15" />
-  //       <rect x="175" y="80" rx="3" ry="3" width="120" height="15" />
-  //     </ContentLoader>
-  //   )
   return (
     <>
-      {loading ? (
-        <>
-          <List />
-        </>
-      ) : (
+      <Spin spinning={loading}>
         <Row justify="center" className="addjob-w">
           <Col span={24}>
             <Row justify="center">
@@ -213,24 +170,12 @@ function AddJobPost() {
                     <Divider style={{ margin: "0" }} />
                   </Row>
                   <Row justify="space-between">
-                    {/* <Col span={11}>
-                    <Title level={4}>Job Title:</Title>
-                    <Input
-                      allowClear
-                      style={{
-                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
-                        borderRadius: "0",
-                        fontSize: "large",
-                      }}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </Col> */}
                     <Col span={11}>
                       <Title level={4} style={{}}>
                         Job Title:
                       </Title>
                       <Select
+                        showSearch
                         value={title}
                         onChange={(value) => setTitle(value)}
                         allowClear
@@ -380,21 +325,14 @@ function AddJobPost() {
                         <Upload
                           onChange={handleImage}
                           name="image"
-                          action="/upload"
+                          action=""
                           listType="picture"
-                          beforeUpload={() => false}
                         >
-                          <Button icon={<UploadOutlined />}>
+                          <Button 
+                            icon={<UploadOutlined />}>
                             Select Image
                           </Button>
                         </Upload>
-                        <Button
-                          type="primary"
-                          style={{ borderRadius: "0" }}
-                          onClick={saveImage}
-                        >
-                          Save
-                        </Button>
                       </Space>
                     </Col>
                   </Row>
@@ -472,6 +410,7 @@ function AddJobPost() {
                   <Row>
                     <Button
                       htmlType="submit"
+                      disabled={imageUpload===null?true:false}
                       type="primary"
                       size="large"
                       style={{
@@ -481,19 +420,13 @@ function AddJobPost() {
                     >
                       Post Job
                     </Button>
-                    {JSON.stringify(loading)}
-                    <h1>fygwruyg</h1>
-                    {successmsg && (
-                      <Alert message={successmsg} type="success" showIcon />
-                    )}
-                    {error && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>
             </Row>
           </Col>
         </Row>
-      )}
+      </Spin>
     </>
   );
 }

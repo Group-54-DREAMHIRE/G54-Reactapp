@@ -25,19 +25,17 @@ body{
 
 /* Customize the scrollbar track */
 ::-webkit-scrollbar {
-    width: 7px;
-    
+    width: 8px;
   }
   
   /* Customize the scrollbar thumb */
   ::-webkit-scrollbar-thumb {
-    background: rgba(25,103,210,255);
+    background: white;
     border-radius: 25px;
   }
   
   /* Customize the scrollbar thumb on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(25,103,210,.8);
-    width: 10px;
   }
   

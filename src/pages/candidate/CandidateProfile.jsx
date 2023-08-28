@@ -6,6 +6,7 @@ import moment from "moment/moment";
 import { storage, put } from "../../api/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
+  CameraOutlined,
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
@@ -18,7 +19,6 @@ import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
-import { candidateDetails } from "../../store/demo/candidateProfile";
 
 import {
   Row,
@@ -35,10 +35,11 @@ import {
   Image,
   Checkbox,
   Avatar,
+  message,
+  Spin,
 } from "antd";
 import { currencies, salary } from "../../store/demo/profile";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../../store/auth/userSlice";
 import {
   getProfileData,
   updateProfileData,
@@ -47,14 +48,14 @@ const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
-  const user = useSelector(getUser);
+  const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
   const dispatch = useDispatch();
   const [profileData, setProfileData] = useState([]);
 
   const [imageUpload, setImageUpload] = useState();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState("");
   const [file, setFile] = useState(null);
@@ -73,33 +74,22 @@ export default function Profile() {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
-  const [formatbday, setFormatbDay] = useState();
+  const [formatbday, setFormatbDay] = useState(null);
 
-  const [tempDP, setTempDP]= useState(null);
-
+  const [tempV, setTempV] = useState(true);
+  const [change, setChange] = useState(false);
   const [editingbd, setEditing] = useState(false);
   const [editingc, setEdittingC] = useState(false);
   const [editingMin, setEdittingMin] = useState(false);
   const [editingMax, setEdittingMax] = useState(false);
-
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
+  
 
   useEffect(() => {
-    if(user==null){
-      getProfileData(`/api/v1/candidate/get/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setProfileData(response.data);
-        console.log(profileData.name);
-      })
-      .catch((error) => {
-        console.error("Error fetching user profile:", error);
-      });
-    }else{
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
       setProfileData(user);
-    }
-    
   }, [id]);
 
   useEffect(() => {
@@ -107,7 +97,8 @@ export default function Profile() {
       setName(profileData.name);
       setTitle(profileData.title);
       const dateObj = moment(profileData.birthday);
-      setFormatbDay(dateObj.format("YYYY MM DD"));
+      setBirthday(dateObj.format("YYYY MM DD"));
+      setFormatbDay(profileData.birthday);
       setCuurency(profileData.currency);
       setMinSalary(profileData.minSalary);
       setMaxSalary(profileData.maxSalary);
@@ -121,42 +112,52 @@ export default function Profile() {
       setTwitter(profileData.twitter);
       setLinkedIn(profileData.linkedIn);
       setProfilePicture(profileData.profilePicture);
-      setTempDP(profileData.profilePicture);
+      setTempV(profileData.visible);
       console.log(profilePicture);
     }
   }, [profileData]);
 
   const handleName = (value) => {
     setName(value);
+    setChange(true);
   };
   const handleTitle = (value) => {
     setTitle(value);
+    setChange(true);
   };
   const handleDescription = (value) => {
     setDescription(value);
+    setChange(true);
     console.log(value);
   };
   const handlePhone = (value) => {
     setPhone(value);
+    setChange(true);
   };
   const handleEmail = (value) => {
     setEmail(value);
+    setChange(true);
   };
   const handleAddress = (value) => {
     setAddress(value);
+    setChange(true);
     console.log(value);
   };
   const handleCity = (value) => {
     setCity(value);
+    setChange(true);
   };
   const handleFacebook = (value) => {
     setFacebook(value);
+    setChange(true);
   };
   const handleTwitter = (value) => {
     setTwitter(value);
+    setChange(true);
   };
   const handleLinkedIn = (value) => {
     setLinkedIn(value);
+    setChange(true);
   };
 
 
@@ -165,39 +166,43 @@ export default function Profile() {
     setImageUpload(info.file.originFileObj);
     setProfilePicture(URL.createObjectURL(info.file.originFileObj))
     console.log(info.file.originFileObj);
+    setChange(true);
   };
 
 
   const handleSubmit = async () => {
+    setLoading(true);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      let temp=null;
     if (imageUpload) {
       const imageRef = ref(storage, `dreamhire/candidates/${id}`);
-
-      uploadBytes(imageRef, imageUpload).then(() => {
+      await uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);
-        getDownloadURL(imageRef)
-          .then((url) => {
-            setTempDP(url);
-            setProfilePicture(url);
-            console.log(profilePicture);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+      }).catch((error) => {
+        console.log(error.message);
       });
-    }
-   if(tempDP){
+
+      await getDownloadURL(imageRef)
+      .then((url) => {
+        temp = url;
+        console.log(temp);
+      })
+      .catch((error) => {
+        console.log(error.message)
+      });
+} 
     let candidateData = {
       name,
-      profilePicture:tempDP,
+      profilePicture:temp,
       currency,
       minSalary,
       maxSalary,
       visible,
       title,
-      birthday,
+      birthday:formatbday,
       description,
       phone,
       email,
@@ -212,21 +217,20 @@ export default function Profile() {
       data: candidateData,
       method: "post",
     };
+   try{
     const response = await updateProfileData(data);
     console.log(response.data);
     if (response.status === 200) {
-      setSuccessmsg("Succesfully updated");
       localStorage.setItem("USER",JSON.stringify(response.data));
-      dispatch(updateUser(response.data));
-      setTimeout(
-        () => {
-         setSuccessmsg("");
-        },
-        2000
-      );
+      setLoading(false);
+      message.success("Successfully Updated");
     }else{
-      setError("Invalid Data!");
+      setLoading(false);
+      message.error("Data is invalid!");
     }
+   }catch(e){
+      setLoading(false);
+      console.log(e.error);
    }
   };
 
@@ -244,6 +248,7 @@ export default function Profile() {
   );
   return (
     <>
+    <Spin spinning={loading}>
       <motion.div
         variants={pageanimation}
         initial="hidden"
@@ -251,24 +256,50 @@ export default function Profile() {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
-        <Row style={{ padding: "3%" }} className="profile-main-w">
+        <Row>
           <Col span={24}>
-            <Row>
-              <ImgCrop action="" rotationSlider>
-                <Upload
-                  accept=".jpg,.jpeg,.png"
-                  action=""
-                  name="avatar"
-                  listType="picture-card"
-                  onChange={handleFileChange}
-                >
-                  {profilePicture !== null ? (
-                    <Image preview={false} width={250} src={profilePicture} />
-                  ) : (
-                    uploadButton
-                  )}
-                </Upload>
-              </ImgCrop>
+            <Row style={{padding: '0 2%'}}>
+            <Col>
+                    {profilePicture === null ? (
+                      <ImgCrop action="" rotationSlider>
+                        <Upload
+                          showUploadList={
+                            profilePicture === null ? true : false
+                          }
+                          accept=".jpg,.jpeg,.png"
+                          action=""
+                          name="avatar"
+                          listType="picture-card"
+                          onChange={handleFileChange}
+                        >
+                          {uploadButton}
+                        </Upload>
+                      </ImgCrop>
+                    ) : (
+                      <Row align="bottom" gutter={10}>
+                        <Col >
+                          <Image
+                            preview={false}
+                            width={125}
+                            src={profilePicture}
+                          />
+                        </Col>
+                        <Col>
+                        <ImgCrop action="" rotationSlider>
+                          <Upload 
+                            showUploadList={
+                              profilePicture === null ? true : false
+                            }
+                            onChange={handleFileChange}>
+                            <span style={{ cursor: "pointer" }}>
+                              <CameraOutlined />
+                            </span>
+                          </Upload>
+                          </ImgCrop>
+                        </Col>
+                      </Row>
+                    )}
+                  </Col>
             </Row>
 
             <Row justify="center">
@@ -322,7 +353,10 @@ export default function Profile() {
                                 height: "40px",
                               }}
                               onChange={(date) => {
-                                setBirthday(date);
+                                const dateObj = moment(date);
+                                setFormatbDay(date);
+                                setBirthday(dateObj.format("YYYY MM DD"));
+                                setChange(true);
                                 console.log(date);
                               }}
                             />
@@ -333,7 +367,7 @@ export default function Profile() {
                                 console.log(e);
                               }}
                             >
-                              {formatbday}
+                              {birthday}
                               <EditOutlined />
                             </label>
                           )}
@@ -348,7 +382,10 @@ export default function Profile() {
                                 <Select
                                   defaultValue={currency}
                                   value={currency}
-                                  onChange={(value) => setCuurency(value)}
+                                  onChange={(value) => {
+                                    setCuurency(value);
+                                    setChange(true);
+                                    setEdittingC(false);}}
                                   style={{
                                     width: "100%",
                                     boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -359,7 +396,7 @@ export default function Profile() {
                                   options={currencies}
                                 />
                               ) : (
-                                <label onClick={() => {setEdittingC(true);setEdittingC(false)}}>
+                                <label onClick={() => {setEdittingC(true)}}>
                                   {currency}
                                   <EditOutlined />
                                 </label>
@@ -373,7 +410,10 @@ export default function Profile() {
                                  <Select
                                  value={minSalary}
                                  defaultValue={minSalary}
-                                 onChange={(value) =>{ setMinSalary(value);setEdittingMin(false)}}
+                                 onChange={(value) =>{ 
+                                  setMinSalary(value);
+                                  setEdittingMin(false);
+                                  setChange(true);}}
                                  style={{
                                    width: "100%",
                                    boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -398,7 +438,10 @@ export default function Profile() {
                               </Title>
                               {editingMax || maxSalary === null ? (
                                  <Select
-                                 onChange={(value) => {setMaxSalary(value);setEdittingMax(false)}}
+                                 onChange={(value) => {
+                                  setMaxSalary(value);
+                                  setEdittingMax(false);
+                                  setChange(true);}}
                                  style={{
                                    width: "100%",
                                    boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
@@ -441,8 +484,12 @@ export default function Profile() {
                         SECURITY
                       </Title>
                       <Checkbox
-                        checked={!visible}
-                        onChange={() => setVisible(false)}
+                        checked={!tempV}
+                        onChange={() => {
+                          setTempV(!tempV)
+                          setVisible(visible?false:true);
+                          console.log(visible,"DUla");
+                          setChange(true);}}
                       >
                         <Text style={{ fontSize: "16px" }}>
                           Account Invisible
@@ -579,8 +626,9 @@ export default function Profile() {
                       </Row>
                     </Col>
                   </Row>
-                  <Row style={{ padding: "0 2%" }}>
+                  <Row style={{ padding: "0 2%", marginTop: '20px' }}>
                     <Button
+                      disabled={!change && imageUpload===null?true:false}
                       htmlType="submit"
                       size="large"
                       type="primary"
@@ -588,8 +636,6 @@ export default function Profile() {
                     >
                       Save
                     </Button>
-                      { successmsg  && <Alert message={successmsg} type="success" showIcon />}
-                      { error  && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Form>
               </Col>
@@ -597,6 +643,7 @@ export default function Profile() {
           </Col>
         </Row>
       </motion.div>
+      </Spin>
     </>
   );
 }

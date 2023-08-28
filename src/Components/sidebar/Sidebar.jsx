@@ -22,7 +22,9 @@ export default function Sidebar (){
         if(key === "logout"){
             dispatch(logout());
             localStorage.clear();
-            navigate("/");
+            window.location.href = "/";
+            console.log("log out successfully");
+
             
         }else{
             navigate(key);
@@ -59,7 +61,9 @@ export default function Sidebar (){
                 backgroundColor: 'white',
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                 height: '88vh'
+                overflow: 'auto',
+                scrollbarWidth: '0',
+                maxHeight: '88vh'
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{
