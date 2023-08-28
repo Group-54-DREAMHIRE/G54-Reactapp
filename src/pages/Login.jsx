@@ -43,8 +43,11 @@ export default function Login() {
           setEmail('');
           setPassword('');
           if(localStorage.getItem("USERTYPE")){
-            navigate("/dashboard");
-           // window.location.reload();
+            //navigate("/dashboard");
+
+window.location.href = "dashboard";
+
+            //window.location.reload();
             
           }
         }else{

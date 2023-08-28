@@ -11,6 +11,7 @@ import {
   List,
   Select
 } from "antd";
+import React,{ useEffect } from "react";
 const { Title, Text } = Typography;
 
 
@@ -28,7 +29,7 @@ const pendingSelectionTests = [
 ];
 
 
-export default function CandidateDashboard() {
+function CompanyDashboard() {
   return (
     <>
     <div className="company-dashboard-n">
@@ -195,3 +196,5 @@ export default function CandidateDashboard() {
     </>
   );
 }
+ 
+export default CompanyDashboard;

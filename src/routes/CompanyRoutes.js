@@ -47,7 +47,7 @@ export default function CompanyRoutes() {
     <>
         <Routes>
         <Route path="/" element={<RootLayout/>}>
-          <Route path="/dashboard" index element={<CompanyDashboard/>}/>
+          <Route path="/dashboard" element={<CompanyDashboard/>}/>
           <Route path="/profile" element={<CompanyProfile/>}/>
           <Route path="/registration" element={<Registration/>}/>
 

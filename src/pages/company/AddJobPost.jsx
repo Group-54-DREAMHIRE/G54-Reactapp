@@ -41,8 +41,8 @@ function AddJobPost() {
   const [companyName, setCompanyName] = useState("");
   const [profileData, setProfileData] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-  const [imageUpload, setImageUpload] = useState();
-  const [cover, setCover] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
+  const [cover, setCover] = useState(null);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [experience, setExperience] = useState("");
@@ -61,7 +61,7 @@ function AddJobPost() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-   setCompanyName(user.name);
+    setCompanyName(user.name);
   }, [id]);
 
   const handleAddInput = () => {
@@ -79,92 +79,87 @@ function AddJobPost() {
   };
 
   const handleImage = (info) => {
-    setImageUpload(info.file);
-    console.log(imageUpload, "Dulaaaaaa");
+    setImageUpload(info.file.originFileObj);
+    console.log(imageUpload);
   };
 
-  const saveImage = () => {
-    console.log("Out If");
+  const handleSubmit = async () => {
     if (imageUpload) {
-      console.log(imageUpload, "test");
-      console.log(imageUpload);
-      console.log("In If");
+      setLoading(true);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       const imageRef = ref(
         storage,
-        `dreamhire/companies/${companyName}/${imageUpload.name}`
+        `dreamhire/companies/${companyName}/jobposts/${imageUpload.name}`
       );
-      uploadBytes(imageRef, imageUpload).then(() => {
+      let coverURL=null;
+      await uploadBytes(imageRef, imageUpload).then(() => {
         console.log(imageUpload);
-        getDownloadURL(imageRef)
-          .then((url) => {
-            console.log(imageUpload);
-            setImageUrl(url);
-            setCover(url);
-            console.log(imageUrl);
-            console.log(cover);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        
+      }).catch((error) => {
+        console.log(error.message);
       });
-      console.log("end");
-    }
-  };
 
-  const handleSubmit = async (e) => {
-    console.log("eghetjg");
-    console.dir(e);
-    const postedDate = new Date();
-    let jobPostData = {
-      systemUserID: user.systemUser.id,
-      companyName,
-      postedDate,
-      cover,
-      currency,
-      minSalary,
-      maxSalary,
-      jobTitle: title,
-      jobType: type,
-      experience,
-      education,
-      deadline,
-      description,
-      howToApply: apply,
-      jobRequirements: listRequirements,
-      tags: listTags,
-    };
+      await getDownloadURL(imageRef)
+      .then((url) => {
+       coverURL = url;
+       console.log(coverURL);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    let data = {
-      url: `/api/v1/jobpost/save/${id}`,
-      data: jobPostData,
-      method: "post",
-    };
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-    setLoading(true);
-    try {
-      const response = await fetchUserData(data);
-      if (response.status === 200) {
-        message.success("Succesfully updated");
-        console.log("brfore")
-        navigate("/jobposts");
-        console.log("after")
-        dispatch(addJobPost(response.data));
-      } else {
-        message.error("Invalid Data!");
-        navigate("/jobposts");
+     let jobPostData = {
+        systemUserID: user.systemUser.id,
+        companyName,
+        postedDate: new Date(),
+        cover: coverURL,
+        currency,
+        minSalary,
+        maxSalary,
+        jobTitle: title,
+        jobType: type,
+        experience,
+        education,
+        deadline,
+        description,
+        howToApply: apply,
+        jobRequirements: listRequirements,
+        tags: listTags,
+      };
+      let data = {
+        url: `/api/v1/jobpost/save/${id}`,
+        data: jobPostData,
+        method: "post",
+      };
+      try {
+        const response = await fetchUserData(data);
+        if (response.status === 200) {
+          message.success("Succesfully updated");
+          setLoading(false);
+          console.log("brfore");
+          navigate("/jobposts");
+          console.log("after");
+          dispatch(addJobPost(response.data));
+        } else {
+          message.error("Invalid Data!");
+          navigate("/jobposts");
+          setLoading(false);
+        }
+      } catch (e) {
+        console.log(e);
         setLoading(false);
       }
-    } catch (e) {
-      setLoading(false);
-      console.dir(e);
+
     }
-  };
+  }
+
+
   return (
     <>
-        <Spin spinning={loading}>
+      <Spin spinning={loading}>
         <Row justify="center" className="addjob-w">
           <Col span={24}>
             <Row justify="center">
@@ -175,24 +170,12 @@ function AddJobPost() {
                     <Divider style={{ margin: "0" }} />
                   </Row>
                   <Row justify="space-between">
-                    {/* <Col span={11}>
-                    <Title level={4}>Job Title:</Title>
-                    <Input
-                      allowClear
-                      style={{
-                        boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",
-                        borderRadius: "0",
-                        fontSize: "large",
-                      }}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </Col> */}
                     <Col span={11}>
                       <Title level={4} style={{}}>
                         Job Title:
                       </Title>
                       <Select
+                        showSearch
                         value={title}
                         onChange={(value) => setTitle(value)}
                         allowClear
@@ -342,21 +325,14 @@ function AddJobPost() {
                         <Upload
                           onChange={handleImage}
                           name="image"
-                          action="/upload"
+                          action=""
                           listType="picture"
-                          beforeUpload={() => false}
                         >
-                          <Button icon={<UploadOutlined />}>
+                          <Button 
+                            icon={<UploadOutlined />}>
                             Select Image
                           </Button>
                         </Upload>
-                        <Button
-                          type="primary"
-                          style={{ borderRadius: "0" }}
-                          onClick={saveImage}
-                        >
-                          Save
-                        </Button>
                       </Space>
                     </Col>
                   </Row>
@@ -434,6 +410,7 @@ function AddJobPost() {
                   <Row>
                     <Button
                       htmlType="submit"
+                      disabled={imageUpload===null?true:false}
                       type="primary"
                       size="large"
                       style={{
@@ -449,7 +426,7 @@ function AddJobPost() {
             </Row>
           </Col>
         </Row>
-        </Spin>
+      </Spin>
     </>
   );
 }
