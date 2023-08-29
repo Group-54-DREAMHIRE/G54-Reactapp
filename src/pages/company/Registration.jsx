@@ -47,9 +47,12 @@ const CompanyRegistration = () => {
 
 
   const handlefileChange = (info) => {
-    console.log(info.file.originFileObj);
+    console.log(info.file);
     setFile(info.file.originFileObj);
-    console.log(file, "BR File");
+    if(file){
+      info.file.status='done';
+    }
+    //console.log(file, "BR File");
   };
 
   const handleSubmit = async () => {
@@ -220,6 +223,7 @@ const CompanyRegistration = () => {
                         action=""
                         name="files"
                         multiple={false}
+                        listType="picture"
                         onChange={handlefileChange}
                       >
                         <p className="ant-upload-drag-icon">
@@ -239,6 +243,7 @@ const CompanyRegistration = () => {
                   </Col>
                   <Col>
                     <Button
+                      disabled
                       htmlType="submit"
                       type="primary"
                       style={{ borderRadius: "0" }}
