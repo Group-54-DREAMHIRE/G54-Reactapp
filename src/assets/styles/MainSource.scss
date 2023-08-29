@@ -39,3 +39,7 @@ body{
     background: rgba(25,103,210,.8);
   }
   
+  .no-star .ant-form-item-label > label::before {
+    content: none !important;
+  }
+  

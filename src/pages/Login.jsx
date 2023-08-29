@@ -16,44 +16,69 @@ import {
   Col,
   Typography,
   Alert,
+  message,
 } from "antd";
-const {Link, Title } = Typography;
+import { userLogin } from "../api/authenticationService";
+const {Link, Title, Text } = Typography;
 
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    
-
-    const {loading, error, message} = useSelector((state)=> state.user)
-
+    const validateEmail = (email) => {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(email);
+    };
+  
+    const handleEmailChange = (e) => {
+      const newEmail = e.target.value;
+      setEmail(newEmail);
+      setIsValidEmail(validateEmail(newEmail));
+    };
     const navigate = useNavigate();
     const dispatch = useDispatch();
 ;
     
     const submitHandler = async () => {
-      let userCredentials = {
-        email: email,
-        password: password
-      };
-      dispatch(loginUser(userCredentials)).then((result)=> {
-        if(result.payload==200){
-          console.log(localStorage.getItem("USERTYPE"), "Dualaaaaaa");
-          setEmail('');
-          setPassword('');
-          if(localStorage.getItem("USERTYPE")){
-            //navigate("/dashboard");
-
-window.location.href = "dashboard";
-
-            //window.location.reload();
-            
+      setLoading(true);
+      if(validateEmail){
+        let userCredentials = {
+          email: email,
+          password: password
+        };
+          try{
+            const response = await userLogin(userCredentials);
+            if(response.status == 200){
+            localStorage.setItem("USER",JSON.stringify(response.data.user));
+            localStorage.setItem("USERTYPE", response.data.user.systemUser.userType);
+            localStorage.setItem("TOKEN",response.data.accessToken);
+            window.location.href = "dashboard";
+            setLoading(false);
+            setEmail('');
+            setPassword('');
+            }else{
+            message.error("Invalid Usernae or password!");
+            setEmail('');
+            setPassword('');
+            setLoading(false);
           }
-        }else{
+          }catch(e){
+            console.log(e.message);
+            message.error("Invalid Usernae or password!");
+            setEmail('');
+            setPassword('');
+            setLoading(false);
+          }
+      }else{
+        message.error("Email is invalid!");
+        setLoading(false);
+        setEmail('');
+        setPassword('');
+      }
 
-        }
-      })
     };
   
   return (
@@ -80,6 +105,7 @@ window.location.href = "dashboard";
                   >
                     <Form.Item label="Email" name="email">
                       <Input
+                        value={email}
                         style={{
                           padding: "10px 15px 10px",
                           marginBottom: "15px",
@@ -87,13 +113,16 @@ window.location.href = "dashboard";
                         }}
                         required
                         allowClear
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                       />
+                      { email &&
+                    (isValidEmail ? <Text type="success">Email is valid</Text> : <Text type='danger'>Email is not valid!</Text>)}
                     </Form.Item>
 
                     <Form.Item label="Password" name="password">
                       <Input.Password
-                      required
+                        required
+                        value={password}
                         style={{
                           padding: "10px 15px 10px",
                           marginBottom: "15px",
@@ -139,10 +168,6 @@ window.location.href = "dashboard";
                     </Form.Item>
                   </Form>
                   <Button onClick={()=>navigate("/")}>Back to Home</Button>
-                  {message && (
-                    <Alert message={message} type="success" showIcon />
-                  )}
-                  {error && <Alert message={error} type="error" showIcon />}
                 </Col>
               </Row>
             </Col>
