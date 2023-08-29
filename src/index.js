@@ -8,7 +8,7 @@ import { ConfigProvider } from "antd";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 
-axios.defaults.baseURL = "http://localhost:8080/";
+axios.defaults.baseURL = "https://dreamhire.azurewebsites.net/";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
@@ -20,7 +20,6 @@ root.render(
             colorBgContainer: 'white',
             colorBgTextHover: 'rgba(30,136,229,.1)',
             colorBgTextActive: 'rgba(30,136,229,1)',
-            // colorBgTextActive:"rgb(30,136,229)",
           },}}
         >
       <App />
