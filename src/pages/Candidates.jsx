@@ -1,4 +1,4 @@
-import { Row, Col } from "antd";
+import { Row, Col, Empty } from "antd";
 import { List } from 'react-content-loader';
 import CandidateCard from "../Components/cards/candidate/CandidateCard";
 import { getAllCandidates, setCandidates } from "../store/candidate/candidateSlice";
@@ -36,13 +36,18 @@ export default function Candidates() {
     <>
       {loading?<List/>:
       (<Row style={{ padding: "5%" }} gutter={[30,30]}>
-        {candidateData.map((item, index) => {
+        {JSON.stringify(candidateData) === "[]" ? (
+                <Col span={24}>
+                  <Empty />
+                </Col>
+              ) : (
+        candidateData.map((item, index) => {
           return (
             <Col span={11}>
               <CandidateCard items={item} />
             </Col>
           );
-        })}
+        }))}
       </Row>)}
     </>
   );

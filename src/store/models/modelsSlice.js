@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     applyJob: false,
+    collapsed:false,
 }
 
 const modelsSlice = createSlice({
@@ -13,10 +14,13 @@ const modelsSlice = createSlice({
         },
         closeApplyJob:(state)=>{
             state.applyJob = false;
+        },
+        setCollapsed:(state, action)=>{
+            state.collapsed= !action.payload;
         }
     }
 })
 
-export const { openSignIn, closeSignIn, openSignUp, closeSignUp, openApplyJob, closeApplyJob} = modelsSlice.actions;
+export const { openApplyJob, closeApplyJob, setCollapsed} = modelsSlice.actions;
 
 export default modelsSlice.reducer;
