@@ -46,6 +46,15 @@ export const updateProfileData = (authRequest) => {
     })
 };
 
+export const getAction = (url) =>{
+  return axios.post(url, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+})
+};
+
+
 export const fetchUserData = (authRequest) => {
   if (authRequest.method === "post") {
     return axios.post(`${authRequest.url}`, authRequest.data, {

@@ -6,11 +6,12 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
 import  {adminSidebar} from '../../store/demo/adminSidebar';
 import {candidateSidebar} from '../../store/demo/candidateSidebar';
 import { companySidebar } from '../../store/demo/companySidebar';
+import { setCollapsed } from '../../store/models/modelsSlice';
 export default function Sidebar (){
 
     const [sidebar, setSidebar] = useState([]);
@@ -32,9 +33,10 @@ export default function Sidebar (){
         
     };
 
-    const [collapsed, setCollapsed] = useState(true);
+    const collapsed = useSelector((state)=>state.models.collapsed);
+
     const toggleCollapsed = (e) => {
-        setCollapsed(!collapsed);
+        dispatch(setCollapsed(collapsed));
     };
     useEffect(() => {
         if(userType==="candidate"){

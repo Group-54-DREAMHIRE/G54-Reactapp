@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Empty } from "antd";
 import CompanyCard from "../Components/cards/company/CompanyCard";
 import { List } from 'react-content-loader';
 import { useDispatch, useSelector } from "react-redux";
@@ -38,13 +38,18 @@ export default function Companies() {
     <>
     { loading? <List/>:
     (<Row>
-        {companyData.map((company) => {
+       {JSON.stringify(companyData) === "[]" ? (
+                <Col span={24}>
+                  <Empty />
+                </Col>
+              ) : (
+        companyData.map((company) => {
           return (
             <Col span={16}>
               <CompanyCard company={company} />
             </Col>
           );
-        })}
+        }))}
       </Row>)}
     </>
   );

@@ -50,27 +50,28 @@ export default function CompanyProfile() {
   const [profileData, setProfileData] = useState([]);
 
   const [name, setName] = useState(null);
-  const [imageUpload, setImageUpload] = useState("");
-  const [logo, setLogo] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
+  const [logo, setLogo] = useState(null);
   const [visible, setVisible] = useState(true);
-  const [description, setDescription] = useState("");
-  const [about, setAbout] = useState("");
-  const [services, setServices] = useState("");
-  const [serviceKeys, setServiceKeys] = useState([""]);
+  const [description, setDescription] = useState(null);
+  const [about, setAbout] = useState(null);
+  const [services, setServices] = useState(null);
+  const [serviceKeys, setServiceKeys] = useState([]);
   const [images, setImages] = useState(null);
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [linkedIn, setLinkedIn] = useState("");
+  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [facebook, setFacebook] = useState(null);
+  const [twitter, setTwitter] = useState(null);
+  const [linkedIn, setLinkedIn] = useState(null);
 
-  const [listServiceKeys, setListServiceKeys] = useState("");
+  const [listServiceKeys, setListServiceKeys] = useState(null);
   const [imageList, setImageList] = useState([]);
 
   const [tempV, setTempV] = useState(true);
   const [change, setChange] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     setProfileData(user);
@@ -157,13 +158,15 @@ export default function CompanyProfile() {
   const handleFileChange = (info) => {
     console.log(info.file.originFileObj);
     setImageUpload(info.file.originFileObj);
-    setLogo(URL.createObjectURL(info.file.originFileObj));
+    if (imageUpload) {
+      info.file.status = "done";
+    }
     setChange(true);
     console.log(logo);
   };
 
   const handleImageList = (info) => {
-   console.log(info);
+    console.log(info);
   };
   const handleSubmit = async () => {
     setLoading(true);
@@ -171,60 +174,66 @@ export default function CompanyProfile() {
       top: 0,
       behavior: "smooth",
     });
-    let temp = null;
-    if (imageUpload) {
+    if (name && (imageUpload || logo)) {
+      let temp = logo;
+      if (imageUpload) {
+        const imageRef = ref(storage, `dreamhire/companies/${name}/${id}`);
+        await uploadBytes(imageRef, imageUpload)
+          .then(() => {
+            console.log(imageUpload);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+
+        await getDownloadURL(imageRef)
+          .then((url) => {
+            setLogo(url);
+            temp = url;
+            console.log(logo);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+        let companyData = {
+          name,
+          logo: temp,
+          images,
+          description,
+          about,
+          services,
+          serviceKeys: listServiceKeys,
+          visible,
+          phone,
+          email,
+          address,
+          facebook,
+          twitter,
+          linkedIn,
+        };
+        let data = {
+          url: `/api/v1/company/save/${id}`,
+          data: companyData,
+          method: "post",
+        };
+        const response = await updateProfileData(data);
+        console.log(response.data);
+        if (response.status === 200) {
+          localStorage.setItem("USER", JSON.stringify(response.data));
+          setProfileData(null);
+          setLoading(false);
+
+          message.success("Successfully Updated");
+        } else {
+          setLoading(false);
+          message.error("Data is invalid!");
+        }
       
-      const imageRef = ref(storage, `dreamhire/companies/${name}/${id}`);
-      await uploadBytes(imageRef, imageUpload)
-        .then(() => {
-          console.log(imageUpload);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-
-      await getDownloadURL(imageRef)
-        .then((url) => {
-          setLogo(url);
-          temp = url;
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      }
-      let companyData = {
-        name,
-        logo: temp,
-        images,
-        description,
-        about,
-        services,
-        serviceKeys: listServiceKeys,
-        visible,
-        phone,
-        email,
-        address,
-        facebook,
-        twitter,
-        linkedIn,
-      };
-      let data = {
-        url: `/api/v1/company/save/${id}`,
-        data: companyData,
-        method: "post",
-      };
-      const response = await updateProfileData(data);
-      console.log(response.data);
-      if (response.status === 200) {
-        localStorage.setItem("USER", JSON.stringify(response.data));
-        setProfileData(null);
-        setLoading(false);
-
-        message.success("Successfully Updated");
-      } else {
-        setLoading(false);
-        message.error("Data is invalid!");
-      }
+    } else {
+      setErrorMsg("You must fill name and upload logo! Try again!");
+      setLoading(false);
+    }
   };
   const uploadButton = (
     <div>
@@ -243,6 +252,16 @@ export default function CompanyProfile() {
     <>
       <Spin spinning={loading}>
         <Row>
+          { errorMsg &&
+           ( <Col span={24}>
+            <Alert
+              message="Error"
+              description={errorMsg}
+              type="error"
+              showIcon
+              closable
+            />
+          </Col>)}
           <Col span={24}>
             <Form onFinish={handleSubmit}>
               <Row
@@ -373,7 +392,6 @@ export default function CompanyProfile() {
                     action=""
                     listType="picture"
                     showUploadList={false}
-
                     multiple
                   >
                     <Button icon={<UploadOutlined />}>Select Image</Button>
@@ -542,9 +560,7 @@ export default function CompanyProfile() {
               </Row>
               <Row style={{ padding: "0 2%" }}>
                 <Button
-                  disabled={
-                    !change
-                  }
+                  disabled={!change}
                   htmlType="submit"
                   size="large"
                   type="primary"
