@@ -26,7 +26,7 @@ import AssignedCandidates from "../pages/company/AssignedCandidates";
 
 import ScheduleTests from '../pages/company/ScheduleTest';
 import CreateTest from '../pages/company/CreateTest';
-import DispalyTest from '../pages/company/DisplayTest';
+import AddQuestions from "../pages/company/AddQuestions";
 
 import SendNotifications from '../pages/company/SendNotification';
 import CandidateResumes from '../pages/company/CandidatResumes';
@@ -80,7 +80,7 @@ export default function CandidateRoutes() {
 
           <Route path="/scheduletests" element={<ScheduleTests/>}/>
           <Route path="/scheduletests/createtest" element={<CreateTest/>}/>
-          <Route path="/scheduletests/displaytest" element={<DispalyTest/>} />
+          <Route path="/scheduletests/addquestions" element={<AddQuestions/>} />
 
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>

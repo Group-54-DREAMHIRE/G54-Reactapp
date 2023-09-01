@@ -1,31 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Input, Select, Radio, Checkbox, DatePicker } from 'antd';
-import { Link } from 'react-router-dom';
-import '../../assets/styles/AddQuestions.scss';
+import {Link} from 'react-router-dom'
+import ShowQuestions from '../../Components/DisplayTest.jsx'
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-function AddQuestions() {
-    const [questions, setQuestions] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
+function AddTestDetails() {
     const [form] = Form.useForm();
-    const [questionNumber, setQuestionNumber] = useState(1);
-    const [quizSubmitted, setQuizSubmitted] = useState(false);
 
-    const onFinish = (values) => {
-        const newQuestion = {
-            questionType: values.questionType,
-            question: values.question,
-            options: values.questionType === 'Multiple Choice' ? values.options : null,
-            answer: values.answer,
-            number: questionNumber
-        };
-        setQuestions([...questions, newQuestion]);
-        setQuestionNumber(questionNumber + 1);
-        form.resetFields();
-        setModalVisible(false);
-    };
 
     const [quizDetails, setQuizDetails] = useState({
         title: '',
@@ -43,17 +26,11 @@ function AddQuestions() {
         })
     }
 
-    const handleSubmit = () => {
-        localStorage.setItem('quizDetails', JSON.stringify(quizDetails));
-        localStorage.setItem('questions', JSON.stringify(questions));
-        setQuizSubmitted(true);
-    }
-
     return (
-        <>
-            <div class="add-questions">
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div style={{ width: '50%', backgroundColor: '#f8f8f8', padding: '20px', borderRadius: '10px' }}>
                 <h1>Add Quiz Details</h1>
-                <Form layout='vertical'>
+                <Form>
                     <Form.Item>
                         <label>
                             Quiz title:
@@ -90,115 +67,16 @@ function AddQuestions() {
                             <textarea name='instructions' value={quizDetails.instructions} onChange={handleInputChange} />
                         </label>
                     </Form.Item>
+
                     <Form.Item>
-                        <Button type="primary" onClick={() => setModalVisible(true)}>
-                            Add New Question
+                        <Button type="primary">
+                        <Link to={`/scheduleTests/addquestions`}>Next</Link>
                         </Button>
                     </Form.Item>
                 </Form>
-                <Modal
-                    title="Add New Question"
-                    visible={modalVisible}
-                    onCancel={() => setModalVisible(false)}
-                    footer={null}
-                >
-                    <Form form={form} onFinish={onFinish}>
-                        <Form.Item
-                            label="Question"
-                            name="question"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your question!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item name="questionType" label="Question Type" rules={[{ required: true }]}>
-                            <Radio.Group>
-                                <Radio value="Multiple Choice">Multiple Choice</Radio>
-                                <Radio value="Short Answer">Short Answer</Radio>
-                            </Radio.Group>
-                        </Form.Item>
-                        <Form.Item
-                            noStyle
-                            shouldUpdate={(prevValues, currentValues) => prevValues.questionType !== currentValues.questionType}
-                        >
-                            {({ getFieldValue }) =>
-                                getFieldValue('questionType') === 'Multiple Choice' ? (
-                                    <Form.Item
-                                        name="options"
-                                        label="Options"
-                                        rules={[{ required: true, message: 'Please add options!', type: 'array' }]}
-                                    >
-                                        <Select mode="tags" style={{ width: '100%' }} placeholder="Options" />
-                                    </Form.Item>
-                                ) : null
-                            }
-                        </Form.Item>
-                        {/* <Form.Item
-                            label="Answer"
-                            name="answer"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input the answer!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> */}
-                        <Form.Item>
-                            <Button type="primary" onClick={handleSubmit}>
-                            Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-                <TakeQuiz questions={questions} quizDetails={quizDetails} />
             </div>
-        </>
-    );
-}
-
-function TakeQuiz({ questions, quizDetails }) {
-    const [answers, setAnswers] = useState([]);
-
-    const onAnswerChange = (questionIndex, answer) => {
-        const newAnswers = [...answers];
-        newAnswers[questionIndex] = answer;
-        setAnswers(newAnswers);
-    };
-
-    return (
-        <div>
-            <Form>
-                {questions.map((question, i) => (
-                    <Form.Item key={i}>
-                        <h3>Q{question.number}: {question.question}</h3> {/* Display question number here */}
-                        {question.questionType === 'Multiple Choice' ? (
-                            <Checkbox.Group
-                                options={question.options}
-                                onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
-                            />
-                        ) : (
-                            <TextArea rows={4} onChange={(e) => onAnswerChange(i, e.target.value)} />
-                        )}
-                    </Form.Item>
-                ))}
-                <Form.Item>
-                    <Button type="primary" onClick={() => evaluateQuiz(answers)}>
-                    <Link to={`/scheduletests/displaytest`}>Submit</Link>
-                    </Button>
-                </Form.Item>
-            </Form>
         </div>
     );
 }
 
-function evaluateQuiz(answers) {
-    // Implement your quiz evaluation logic here
-}
-
-export default AddQuestions;
+export default AddTestDetails;
