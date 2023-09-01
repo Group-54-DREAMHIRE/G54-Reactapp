@@ -147,10 +147,9 @@ function AdvertisementList() {
 
   return (
     <>
-      <div className='container-n'>
-        <Row>
-          <Col span={24}>
-            <Row>
+        <Row  className='container-n'justify='center' >
+          <Col span={22}>
+            <Row justify='space-between'>
               <Col span={12} style={{
                 display: 'flex',
                 justifyContent: 'left',
@@ -163,9 +162,6 @@ function AdvertisementList() {
                   POSTED JOBS
                 </Title>
               </Col>
-              <Col span={6}>
-              </Col>
-
               <Col span={6} style={{
                 display: 'flex',
                 justifyContent: 'right',
@@ -175,10 +171,11 @@ function AdvertisementList() {
               </Col>
             </Row>
 
-            <Divider />
-            <Row>
+            <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
+            <Row style={{marginTop: '5%'}}> 
               <Col span={24}>
-              <Table className='tables-n'
+              <Table 
+                className='tables-n'
                 dataSource={dataSource}
                 columns={columns}
                 pagination={{
@@ -195,7 +192,6 @@ function AdvertisementList() {
             </Row>
           </Col>
         </Row >
-      </div >
     </>
   )
 }

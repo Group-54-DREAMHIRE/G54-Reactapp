@@ -42,6 +42,7 @@ import OneFullCard from "../pages/OneFullEvent";
 import EventForm from "../Components/cards/company/EventForm";
 import CompanyPage from '../pages/CompanyPage';
 import CandidatePage from "../pages/CandidatePage";
+import GenarateInterviews from "../pages/company/GenarateInterviews";
 export default function CompanyRoutes() {
   return (
     <>
@@ -70,7 +71,8 @@ export default function CompanyRoutes() {
           <Route path="/addevent" element={<EventForm/>}/>
           <Route path="/event" element={<OneFullCard/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
-          <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
+          <Route path="/interviews/scheduleinterviews" element={<GenarateInterviews/>} />
+          <Route path="/genarateinterviews" element={<GenarateInterviews/>}/>
 
           <Route path="/scheduledinterviews" element={<ScheduledInterviews/>} />
           <Route path="/scheduledinterviews/selectedtimeslots" element={<SelectedTimeSlots/>} />
