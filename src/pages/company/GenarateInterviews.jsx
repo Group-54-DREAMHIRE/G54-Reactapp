@@ -21,7 +21,7 @@ const { Title } = Typography;
 export default function GenarateInterviews() {
   const CheckboxGroup = Checkbox.Group;
   const [checkedList, setCheckedList] = useState([]);
-  const [defaultList, setDefaultList] =useState(false);
+  const [defaultList, setDefaultList] = useState(false);
   const onChange = (list) => {
     setCheckedList(list);
     console.log(list);
@@ -59,24 +59,54 @@ export default function GenarateInterviews() {
       });
 
       while (currentDateTime.isBefore(endDateTime)) {
-        slots.push(currentDateTime.format("HH:mm"));
-        currentDateTime.add(duration, "minutes");
         if (endDateTime > currentDateTime) {
           slots.push(currentDateTime.format("HH:mm"));
-          currentDateTime.add(interval, "minutes");
+          currentDateTime.add(duration, "minutes");
         }
+         slots.push(currentDateTime.format("HH:mm"));
+        currentDateTime.add(interval, "minutes");
       }
       const array = slots.length % 2 === 0 ? slots : slots.slice(0, -1);
       const timesArray = [];
-      for(let i=0; i<slots.length-2; i+=2){
-          timesArray.push(`${array[i]}-${array[i+1]}`);
+      for (let i = 0; i < slots.length ; i += 2) {
+        timesArray.push(`${array[i]}-${array[i + 1]}`);
       }
       setTimeSlots(timesArray);
       setCheckedList(timesArray);
       setDefaultList(timesArray);
-        
     }
   };
+
+  const generateMannualTimeSlots = () => {
+    if (date && start && duration > 0) {
+      const slots = [];
+      const currentDateTime = moment(date).set({
+        hour: start.hour(),
+        minute: start.minute(),
+        second: 0,
+      });
+
+      slots.push(currentDateTime.format("HH:mm"));
+      currentDateTime.add(duration, "minutes");
+      slots.push(currentDateTime.format("HH:mm"));
+      console.log(slots);
+      const timesArray = [];
+      timesArray.push(`${slots[0]}-${slots[1]}`);
+
+      setTimeSlots((prev) => [...prev, timesArray]);
+      
+    }
+  };
+  const clear =()=>{
+    setTimeSlots([]);
+    setCheckedList([]);
+    setDefaultList([]);
+    setDate(null);
+    setDuration(null);
+    setInterval(null);
+    setStart(null);
+    setEndTime(null);
+  }
   return (
     <>
       <Row className="Interview-genarate-w" gutter={[20, 40]}>
@@ -89,11 +119,11 @@ export default function GenarateInterviews() {
         <Col span={22}>
           <Form>
             <Radio.Group
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => {setValue(e.target.value); clear();}}
               value={value}
             >
               <Row>
-                <Col span={14}>
+                <Col span={10}>
                   <Radio value={true}>Genarate Automatically</Radio>
                   <Row
                     className={value ? "" : "Interview-genarate-auto-w"}
@@ -156,6 +186,7 @@ export default function GenarateInterviews() {
                           <Space size="large">
                             <span>Start Time: </span>
                             <TimePicker
+                              disabled={!value}
                               onChange={(time) => setStart(time)}
                               format="HH:mm"
                             />
@@ -165,98 +196,203 @@ export default function GenarateInterviews() {
                           <Space size="large">
                             <span>End Time: </span>
                             <TimePicker
+                              disabled={!value}
                               onChange={(time) => setEndTime(time)}
                               format="HH:mm"
                             />
                           </Space>
                         </Col>
+                        <Col span={24}>
+                          <Space size='large'>
+                            <Button
+                            disabled={!value}
+                            onClick={generateAutoTimeSlots}
+                            type="primary"
+                            style={{ borderRadius: "0" }}
+                          >
+                            Genarate
+                          </Button>
+                          { JSON.stringify(timeSlots) === "[]" ? null :
+                          ( <Button
+                            disabled={!value}
+                            onClick={clear}
+                            type="primary"
+                            style={{ borderRadius: "0" }}
+                          >
+                            Clear
+                          </Button>)}
+                          </Space>
+                        </Col>
                       </Row>
-                    </Col>
-                    {/* <Col span={10}>
-                      <Title level={5} style={{ marginTop: "0" }}>
-                        Breaks
-                      </Title>
-                      <Space direction="vertical">
-                        <Checkbox
-                          onChange={(e)=> setMornTea(e.target.checked)}
-                          >
-                          Tea Time<br/>
-                          (10.30-11.00 AM)
-                        </Checkbox>
-                        <Checkbox
-                          onChange={(e)=> setLunch(e.target.checked)}
-                          >
-                          Lunch<br/>
-                          (12.00-1.00 PM)
-                        </Checkbox>
-                        <Checkbox
-                        onChange={(e)=> setEveTea(e.target.checked)}
-                        >
-                          Tea Time <br/>
-                          (3.30-4.00 PM)
-                        </Checkbox>
-                      </Space>
-                    </Col> */}
-                    <Col span={24}>
-                      <Button
-                        onClick={generateAutoTimeSlots}
-                        type="primary"
-                        style={{ borderRadius: "0" }}
-                      >
-                        Genarate
-                      </Button>
                     </Col>
                   </Row>
                 </Col>
-                <Col span={10}>
-                  <h1>Hi</h1>
-                  {/* {timeSlots.map((time, index) => {
-                    return index % 2 === 0 ? (
-                      <span>{time}-</span>
-                    ) : (
-                      <span>
-                        {time} <br />
-                      </span>
-                    );
-                  })} */}
-                  {timeSlots.map((time)=>{
-                    return(
-                      <h1>{time}</h1>
-                    )
-                  })}
-                  <Checkbox
-                    indeterminate={checkedList.length> 0 && checkedList.length< defaultList.length}
-                    onChange={onCheckAllChange}
-                    checked={timeSlots.length === checkedList.length?true:false}
+                {JSON.stringify(timeSlots) === "[]" ? null : (
+                  <Col
+                    span={14}
+                    style={{
+                      border: "1px solid rgba(0,0,0,.2)",
+                      padding: " 2%",
+                    }}
                   >
-                    All
-                  </Checkbox>
-                 <Space direction="vertical">
-                 <CheckboxGroup
-                  options={defaultList}
-                  value={checkedList}
-                  onChange={onChange}
-                />
-                 </Space>
-                </Col>
+                    <Row justify="end" gutter={[20, 20]}>
+                      <Col span={24}>
+                        {value && (
+                          <Checkbox
+                            disabled={!value}
+                            indeterminate={
+                              checkedList.length > 0 &&
+                              checkedList.length < defaultList.length
+                            }
+                            onChange={onCheckAllChange}
+                            checked={
+                              timeSlots.length === checkedList.length
+                                ? true
+                                : false
+                            }
+                          >
+                            All
+                          </Checkbox>
+                        )}
+                        {value && (
+                          <Space direction="vertical">
+                            <CheckboxGroup
+                              disabled={!value}
+                              options={defaultList}
+                              value={checkedList}
+                              onChange={onChange}
+                            />
+                          </Space>
+                        )}
+                      </Col>
+                      <Col>
+                        {value && (
+                          <Button
+                            disabled={!value}
+                            style={{ borderRadius: "0" }}
+                            type="primary"
+                          >
+                            Publish
+                          </Button>
+                        )}
+                      </Col>
+                    </Row>
+                  </Col>
+                )}
               </Row>
               <Row style={{ marginTop: "5%" }}>
                 <Col span={24}>
                   <Radio value={false}>Genarate Mannually</Radio>
                 </Col>
-                <Col span={14}>
-                  <Row></Row>
-                </Col>
-                <Col span={6}>
-                  <InputNumber
-                    placeholder="Interval (minutes)"
-                    onChange={(value) => setInterval(value)}
-                  />
-                  <Button type="primary">Generate Slots</Button>
-                  {/* <List
-                    dataSource={timeSlots}
-                    renderItem={(slot) => <List.Item>{slot}</List.Item>}
-                  /> */}
+                <Col
+                  className={!value ? "" : "Interview-genarate-auto-w"}
+                  span={24}
+                >
+                  <Row>
+                    <Col span={10}>
+                      <Row style={{ marginTop: "5%" }} gutter={[20, 20]}>
+                        <Col span={24}>
+                          <Row gutter={[20, 20]}>
+                            <Col span={24}>
+                              <Space size="large">
+                                <span level={4}>Date:</span>
+                                <DatePicker
+                                  disabled={value}
+                                  onChange={(value) => setDate(value)}
+                                />
+                              </Space>
+                            </Col>
+                            <Col span={24}>
+                              <Space size="large">
+                                <span>Duration: </span>
+                                <Select
+                                  disabled={value}
+                                  placeholder="Duration"
+                                  onChange={(value) => setDuration(value)}
+                                  options={[
+                                    {
+                                      label: "15 Min",
+                                      value: 15,
+                                    },
+                                    { label: "20 Min", value: 20 },
+                                    { label: "25Min", value: 25 },
+                                    { label: "30Min", value: 30 },
+                                    { label: "45Min", value: 45 },
+                                    { label: "1 Hour", value: 60 },
+                                  ]}
+                                />
+                              </Space>
+                            </Col>
+
+                            <Col span={24}>
+                              <Space size="large">
+                                <span>Start Time: </span>
+                                <TimePicker
+                                  disabled={value}
+                                  onChange={(time) => setStart(time)}
+                                  format="HH:mm"
+                                />
+                              </Space>
+                            </Col>
+
+                            <Col span={24}>
+                              <Space size='large'>
+                                <Button
+                                disabled={value}
+                                onClick={generateMannualTimeSlots}
+                                type="primary"
+                                style={{ borderRadius: "0" }}
+                              >
+                                Genarate
+                              </Button>
+
+                            {JSON.stringify(timeSlots) === "[]" ? null :
+                            (
+                                <Button
+                                disabled={value}
+                                onClick={clear}
+                                type="primary"
+                                style={{ borderRadius: "0" }}
+                              >
+                                Clear
+                              </Button>)}
+                              </Space>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Col>
+                    
+                    {JSON.stringify(timeSlots) === "[]" ? null :
+                    (                 
+                    <Col
+                      span={14}
+                      style={{
+                        border: "1px solid rgba(0,0,0,.2)",
+                        padding: " 2%",
+                      }}
+                    >
+                      <Row gutter={[0, 10]}>
+                        {!value && timeSlots.map((item) => {
+                          return <Col span={8}>{item}</Col>;
+                        })}
+                        <Col span={24}>
+                          {!value && (
+                            <Row justify="end">
+                               {JSON.stringify(timeSlots) === "[]" ? null :
+                             ( <Button
+                                disabled={value}
+                                style={{ borderRadius: "0" }}
+                                type="primary"
+                              >
+                                Publish
+                              </Button>)}
+                            </Row>
+                          )}
+                        </Col>
+                      </Row>
+                    </Col>)}
+                  </Row>
                 </Col>
               </Row>
             </Radio.Group>

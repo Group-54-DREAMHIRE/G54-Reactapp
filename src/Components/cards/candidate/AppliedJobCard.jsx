@@ -20,13 +20,21 @@ import {
   Space,
 } from "antd";
 import Link from "antd/es/typography/Link";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 export default function AppliedJobCard({ items }) {
   const navigate = useNavigate();
+  const [tags, setTags] = useState([]);
+  const [post, setPost] = useState([]);
+  const [company, setCompany] = useState([]);
+  useEffect(() => {
+     setTags(items.tags.split(", "));
+     setPost(items.jobPost);
+     setCompany(items.jobPost.company);
+   }, []);
   return (
     <>
       <Card
@@ -37,13 +45,13 @@ export default function AppliedJobCard({ items }) {
         <Row justify="space-between">
           <Col>
             <Title level={4} style={{ marginBottom: "18px", marginTop: "0" }}>
-              {items.title}
+              {post.jobTitle}
             </Title>
             <Title
               level={5}
               style={{ color: "rgb(31,31,51)", marginTop: "8px" }}
             >
-              @ {items.name}
+              @ {company.name}
             </Title>
             <Title level={5} style={{ marginTop: "8px" }}>
               <Text
@@ -53,14 +61,14 @@ export default function AppliedJobCard({ items }) {
                   color: "rgb(31,31,51)",
                 }}
               >
-                <FaMapMarkerAlt /> {items.address}.
+                <FaMapMarkerAlt /> {company.address}.
               </Text>
               <Text style={{ marginTop: "0px", color: "rgb(31,31,51)" }}>
-                <FaMoneyBillAlt /> {items.salary}
+                <FaMoneyBillAlt /> {post.currency} {post.minSalary} - {post.maxSalary}
               </Text>
             </Title>
             <Space style={{ marginTop: "15px" }}>
-              {items.tags.slice(0, 4).map((tag) => {
+              {tags.slice(0, 4).map((tag) => {
                 return (
                  handleTags(tag)
                 );
@@ -68,12 +76,12 @@ export default function AppliedJobCard({ items }) {
             </Space>
           </Col>
           <Col span={8}>
-            <Image preview={false} width={150} height={100} src={items.image} />
+            <Image preview={false} width={150} height={100} src={post.cover} />
           </Col>
         </Row>
         <Row style={{ marginTop: "0px" }} align="bottom" gutter={40} justify="end">
           <Col>
-           { items.status && handleStatus(items.status)}
+           { items.candidateType && handleStatus(items.candidateType)}
           </Col>
           <Col>
             <Button
@@ -102,7 +110,7 @@ const handleStatus = (value) =>{
         Application is in the pending list July 25
       </Link>
     )}
-    if(value === "shortList"){
+    if(value === "shortlist"){
       return (
           <Text type="success" style={statusStyles}>
             Application is in the shortlist August 10

@@ -56,83 +56,57 @@ const InterviewScheduling = () => {
     setFormData({ ...formData, interviewId: value });
   };
 
-  const handleScheduling = () => {
-    const interviewStartTime = formData.interviewStartTime.toDate();
-    const interviewEndTime = formData.interviewEndTime.toDate();
-    const intervalStartTime = formData.intervalStartTime.toDate();
-    const intervalEndTime = formData.intervalEndTime.toDate();
-    const interviewDurationMs = formData.interviewDuration * 60000;
+  // const handleScheduling = () => {
+  //   const interviewStartTime = formData.interviewStartTime.toDate();
+  //  // const interviewEndTime = formData.interviewEndTime.toDate();
+  //  // const intervalStartTime = formData.intervalStartTime.toDate();
+  //   //const intervalEndTime = formData.intervalEndTime.toDate();
+  //   const interviewDurationMs = formData.interviewDuration * 60000;
 
-    const maxSlots = formData.candidateCount;
+  //   const maxSlots = formData.candidateCount;
 
-    const slots = [];
-    let slotId = 1;
+  //   const slots = [];
+  //   let slotId = 1;
 
-    while (interviewStartTime < interviewEndTime && slots.length < maxSlots) {
-      if (interviewStartTime >= intervalEndTime || interviewStartTime < intervalStartTime) {
-        slots.push({
-          id: slotId,
-          startTime: interviewStartTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          endTime: (new Date(interviewStartTime.getTime() + interviewDurationMs)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        });
-        slotId++;
-      }
+  //   while (interviewStartTime < interviewEndTime && slots.length < maxSlots) {
+  //     if (interviewStartTime >= intervalEndTime || interviewStartTime < intervalStartTime) {
+  //       slots.push({
+  //         id: slotId,
+  //         startTime: interviewStartTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  //         endTime: (new Date(interviewStartTime.getTime() + interviewDurationMs)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  //       });
+  //       slotId++;
+  //     }
 
-      interviewStartTime.setTime(interviewStartTime.getTime() + interviewDurationMs);
+  //     interviewStartTime.setTime(interviewStartTime.getTime() + interviewDurationMs);
 
-      if (interviewStartTime >= intervalStartTime && interviewStartTime < intervalEndTime) {
-        interviewStartTime.setTime(intervalEndTime.getTime());
-      }
-    }
+  //     if (interviewStartTime >= intervalStartTime && interviewStartTime < intervalEndTime) {
+  //       interviewStartTime.setTime(intervalEndTime.getTime());
+  //     }
+  //   }
 
-    setInterviewSlots(slots);
-    setFormData({
-      InterviewId: 0,
-      date: null,
-      location: '',
-      instructions: '',
-      candidateCount: 0,
-      interviewDuration: 30,
-      interviewStartTime: null,
-      interviewEndTime: null,
-      intervalStartTime: null,
-      intervalEndTime: null,
-    });
-  };
+  //   setInterviewSlots(slots);
+  //   setFormData({
+  //     InterviewId: 0,
+  //     date: null,
+  //     location: '',
+  //     instructions: '',
+  //     candidateCount: 0,
+  //     interviewDuration: 30,
+  //     interviewStartTime: null,
+  //     interviewEndTime: null,
+  //     intervalStartTime: null,
+  //     intervalEndTime: null,
+  //   });
+  // };
 
   return (
     <div className="interview-scheduling-n">
       <Row>
         <Col span={24}>
           <Form className="interview-form" layout="vertical">
-            <Row>
-              <Col span={12} style={{
-                display: 'flex',
-                justifyContent: 'left',
-                alignItems: 'center',
-              }}>
-                <Title style={{
-                  fontSize: '25px',
-                  fontWeight: 600,
-                }}>
-                  SCHEDULE INTERVIEW
-                </Title>
-              </Col>
-              <Col span={6}>
-              </Col>
-              <Col span={6}>
-              </Col>
-
-            </Row>
-
-            <Divider />
-
             <Row gutter={20}>
-              <Col span={12}>
-                <Form.Item label="Interview ID" style={{ width: '100%' }}>
-                  <InputNumber name="interviewId" value={formData.interviewId} style={{ width: '100%' }} onChange={handleInterviewIdChange} min={0} />
-                </Form.Item>
-              </Col>
+             
               <Col span={12}>
                 <Form.Item label="No. of Candidates">
                   <InputNumber name="candidateCount" value={formData.candidateCount} style={{ width: '100%' }} onChange={handleCandidateCountChange} min={0} />
@@ -140,13 +114,13 @@ const InterviewScheduling = () => {
               </Col>
             </Row>
 
-            <Row>
+            {/* <Row>
               <Col span={24}>
                 <Form.Item label="Instructions">
                   <Input.TextArea name="instructions" value={formData.instructions} style={{ width: '100%' }} onChange={handleInputChange} />
                 </Form.Item>
               </Col>
-            </Row>
+            </Row> */}
 
             <Row gutter={20}>
               <Col span={12}>
@@ -166,9 +140,6 @@ const InterviewScheduling = () => {
                   </Select>
                 </Form.Item>
               </Col>
-            </Row>
-
-            <Row gutter={20}>
               <Col span={12}>
                 <Form.Item label="Interview Start Time">
                   <TimePicker
@@ -179,7 +150,11 @@ const InterviewScheduling = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+            </Row>
+
+            <Row gutter={20}>
+             
+              {/* <Col span={12}>
                 <Form.Item label="Interview End Time">
                   <TimePicker
                     style={{ width: '100%' }}
@@ -188,10 +163,10 @@ const InterviewScheduling = () => {
                     format="HH:mm"
                   />
                 </Form.Item>
-              </Col>
+              </Col> */}
             </Row>
 
-            <Row gutter={20}>
+            {/* <Row gutter={20}>
               <Col span={12}>
                 <Form.Item label="Interval Start Time">
                   <TimePicker
@@ -212,7 +187,7 @@ const InterviewScheduling = () => {
                   />
                 </Form.Item>
               </Col>
-            </Row>
+            </Row> */}
 
           </Form >
         </Col>
@@ -220,7 +195,7 @@ const InterviewScheduling = () => {
 
 
 
-      <Button type="primary" onClick={handleScheduling}>Generate Interview Slots</Button>
+      <Button type="primary">Generate Interview Slots</Button>
 
 
       <h2>Interview Time Slots</h2>

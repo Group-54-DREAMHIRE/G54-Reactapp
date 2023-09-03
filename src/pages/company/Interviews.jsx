@@ -42,7 +42,10 @@ function AdvertisementList() {
       title: "Schedule Interview",
       key: "scheduleInterview",
       render: (text, record) => (
-        <Button type="primary">
+        <Button 
+          type="primary"
+          style={{borderRadius: '0'}}
+        >
           <Link to={`/interviews/scheduleinterviews`}>Shedule</Link>
         </Button>
       ),
@@ -56,6 +59,7 @@ function AdvertisementList() {
       vacancies: 20,
       applications: 15,
       skills: ["Java", "Python", "PHP"],
+      scheduleInterview:1,
     },
     {
       key: '2',
