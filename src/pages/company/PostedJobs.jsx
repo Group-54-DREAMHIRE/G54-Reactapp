@@ -3,14 +3,32 @@ import { useState, useEffect } from 'react';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { getData } from '../../api/authenticationService';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 function AdvertisementList() {
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+  
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+      getData(`/api/v1/jobpost/getAllJobsByCompanyId/${id}`)
+        .then((response) => {
+          console.log(response.data);
+          // setAllJobList(response.data);
+          // dispatch(setJobPosts(response.data));
+          // setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, []);
   const columns = [
     {
       title: 'Job Title',
@@ -147,6 +165,7 @@ function AdvertisementList() {
 
   return (
     <>
+    {id}
         <Row  className='container-n'justify='center' >
           <Col span={22}>
             <Row justify='space-between'>

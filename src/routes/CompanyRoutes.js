@@ -72,7 +72,7 @@ export default function CompanyRoutes() {
           <Route path="/event" element={<OneFullCard/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
           <Route path="/interviews/scheduleinterviews" element={<GenarateInterviews/>} />
-          <Route path="/genarateinterviews" element={<GenarateInterviews/>}/>
+          <Route path="/genarateinterviews" element={<ScheduleInterviews/>}/>
 
           <Route path="/scheduledinterviews" element={<ScheduledInterviews/>} />
           <Route path="/scheduledinterviews/selectedtimeslots" element={<SelectedTimeSlots/>} />

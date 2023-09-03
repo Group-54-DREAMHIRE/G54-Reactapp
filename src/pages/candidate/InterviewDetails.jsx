@@ -28,7 +28,7 @@ export default function InterviewDetails() {
               </Title>
               <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
             </Col>
-            <Col span={11}>
+            <Col span={14}>
               <Row align="bottom" gutter={[0, 15]}>
                 <Col span={14}>
                   <Text
@@ -93,14 +93,14 @@ export default function InterviewDetails() {
                 </Col>
               </Row>
             </Col>
-            <Col span={11}>
+            <Col span={10}>
               <Row>
                 <Col span={24}>
                   <Title style={{ margin: "0" }} level={4}>
                     Select a time slot and confirm
                   </Title>
                 </Col>
-                <Col>
+                <Col span={16}>
                   <Card
                     style={{
                       borderRadius: "0",
