@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, List, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/PendingTimeSlots.scss';
+// import '../../assets/styles/PendingTimeSlots.scss';
 
 const { Title } = Typography;
 

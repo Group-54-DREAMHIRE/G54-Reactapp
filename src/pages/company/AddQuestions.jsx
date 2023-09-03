@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Select, Radio, Checkbox } from 'antd';
+import { Button, Modal, Form, Input, Select, Radio, Checkbox, Pagination } from 'antd';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,18 +11,24 @@ function AddQuestions() {
   const [form] = Form.useForm();
   const [selectedQuestionType, setSelectedQuestionType] = useState(null);
   const [modalQuestionType, setModalQuestionType] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(2);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [questionsPerPage, setQuestionsPerPage] = useState(2);
 
   const onFinish = (values) => {
     const newQuestion = {
+      questionNumber,
       questionType: modalQuestionType || selectedQuestionType,
       question: values.question,
       options: (modalQuestionType || selectedQuestionType) === 'Multiple Choice' ? values.options : null,
       answer: values.answer,
     };
-    setQuestions([...questions, newQuestion]);
+    setQuestions([newQuestion, ...questions]); // Add new question to the beginning of the list
     form.resetFields();
     setModalVisible(false);
     setModalQuestionType(null);
+    setQuestionNumber(questionNumber + 1);
   };
 
   const handleSelectQuestionType = (value) => {
@@ -34,9 +40,17 @@ function AddQuestions() {
     setModalQuestionType(e.target.value);
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div style={{ width: '50%', backgroundColor: '#f8f8f8', padding: '20px', borderRadius: '10px' }}>
+    <>
+      <div className='add-questions-n'>
         <h1>Add Questions</h1>
         <Form>
           <Form.Item>
@@ -103,52 +117,88 @@ function AddQuestions() {
             </Form.Item>
           </Form>
         </Modal>
-        <TakeQuiz questions={questions} />
+        <TakeQuiz questions={currentQuestions} />
+        <Pagination
+          currentPage={currentPage}
+          pageSize={pageSize}
+          onChange={(currentPage, pageSize) => {
+            setCurrentPage(currentPage);
+            setPageSize(pageSize);
+          }}
+          defaultCurrent={1} 
+          total={10}
+        />
       </div>
+    </>
+  );
+}
+
+
+
+function TakeQuiz({ questions }) {
+  const [answers, setAnswers] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+
+
+  const onSubmit = () => {
+    setSubmitted(true);
+  };
+
+  const onAnswerChange = (questionIndex, answer) => {
+    const newAnswers = [...answers];
+    newAnswers[questionIndex] = answer;
+    setAnswers(newAnswers);
+  };
+
+  return (
+    <div>
+      <Form>
+        {questions.map((question, i) => (
+          <Form.Item key={i}>
+            <h4>Question {question.questionNumber}:</h4>
+            <h4>{question.question}</h4>
+            {question.questionType === 'Multiple Choice' ? (
+              <Checkbox.Group
+                options={question.options}
+                onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
+              />
+            ) : (
+              <TextArea rows={4} onChange={(e) => onAnswerChange(i, e.target.value)} />
+            )}
+          </Form.Item>
+        ))}
+
+        <Form.Item>
+          <Button type="primary" onClick={onSubmit}>
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }
 
-function TakeQuiz({ questions}) {
-    const [answers, setAnswers] = useState([]);
-    const [submitted, setSubmitted] = useState(false);
+// function Pagination({ currentPage, questionsPerPage, totalQuestions, paginate }) {
+//   const pageNumbers = [];
 
-    const onSubmit = () => {
-        setSubmitted(true);
-    };
+//   for (let i = 1; i <= Math.ceil(totalQuestions / questionsPerPage); i++) {
+//     pageNumbers.push(i);
+//   }
 
-    const onAnswerChange = (questionIndex, answer) => {
-        const newAnswers = [...answers];
-        newAnswers[questionIndex] = answer;
-        setAnswers(newAnswers);
-    };
-
-    return (
-        <div>
-            
-            <Form>
-                {questions.map((question, i) => (
-                    <Form.Item key={i}>
-                        <h3>{question.question}</h3>
-                        {question.questionType === 'Multiple Choice' ? (
-                            <Checkbox.Group
-                                options={question.options}
-                                onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
-                            />
-                        ) : (
-                            <TextArea rows={4} onChange={(e) => onAnswerChange(i, e.target.value)} />
-                        )}
-                    </Form.Item>
-                ))}
-                
-                <Form.Item>
-                    <Button type="primary" onClick={onSubmit}>
-                        Submit
-                    </Button>
-                </Form.Item> 
-            </Form>
-        </div>
-    );
-}
+//   return (
+//     <div>
+//       <ul className="pagination">
+//         {pageNumbers.map((number) => (
+//           <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
+//             <a onClick={() => paginate(number)} className="page-link">
+//               {number}
+//             </a>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
 
 export default AddQuestions;
+

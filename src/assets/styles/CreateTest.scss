@@ -1,0 +1,48 @@
+.create-test-n {
+    display: block;
+    width: 90%;
+    margin: 20px auto;
+
+    padding: 0px 30px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+    background-color: #ffffff;
+
+    .ant-divider-horizontal {
+        margin: 12px 0;
+    }
+
+    .ant-form-item-label {
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .ant-form-item-explain {
+        color: #ff4d4f;
+    }
+
+    .ant-input,
+    .ant-input-number,
+    .ant-select-selector,
+    .ant-picker,
+    .ant-radio-wrapper {
+        box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+    }
+
+    .ant-input:focus,
+    .ant-input-number:focus,
+    .ant-select-selector:focus,
+    .ant-picker-input:focus,
+    .ant-radio-wrapper:focus {
+        box-shadow: 4px 4px rgba(30, 136, 2229, .4);
+    }
+
+    .ant-form-item {
+        margin-bottom: 20px;
+    }
+
+    .ant-form-vertical .ant-form-item-control {
+        flex-direction: column;
+    }
+}

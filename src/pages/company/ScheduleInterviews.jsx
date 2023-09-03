@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, DatePicker, Button, Select, List, Col, Row, TimePicker, InputNumber, Input, Typography, Divider } from 'antd';
-import '../../assets/styles/InterviewScheduling.scss';
+
 
 const { Title } = Typography;
 

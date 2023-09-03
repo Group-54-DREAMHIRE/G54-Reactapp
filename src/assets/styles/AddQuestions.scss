@@ -1,4 +1,4 @@
-.add-questions {
+.add-questions-n {
     max-width: 90%;
     margin: 20px auto;
     padding: 30px;
@@ -7,70 +7,4 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .add-questions h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .add-questions label {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .add-questions input,
-  .add-questions textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .add-questions input[type='number'] {
-    width: 150px;
-  }
-  
-  .add-questions textarea {
-    resize: vertical;
-  }
-  
-  .add-questions .ant-btn-primary {
-    background-color: #1890ff;
-    border-color: #1890ff;
-    color: #fff;
-  }
-  
-  .add-questions .ant-btn-primary:hover {
-    background-color: #40a9ff;
-    border-color: #40a9ff;
-  }
-  
-  .add-questions .ant-modal-content {
-    border-radius: 8px;
-  }
-  
-  .add-questions .ant-modal-header {
-    background-color: #1890ff;
-    color: #fff;
-    border-radius: 8px 8px 0 0;
-  }
-  
-  .add-questions .ant-modal-footer {
-    border-radius: 0 0 8px 8px;
-  }
-  
-  .add-questions .ant-radio-group,
-  .add-questions .ant-checkbox-group {
-    margin-top: 10px;
-  }
-  
-  .add-questions .ant-checkbox-wrapper {
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  .add-questions .ant-btn-primary {
-    margin-top: 20px;
-  }
   

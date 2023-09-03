@@ -17,7 +17,6 @@ import {
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { InboxOutlined } from "@ant-design/icons";
-import "../../assets/styles/CompanyRegistration.scss";
 import { useSelector } from "react-redux";
 import { getUser } from "../../store/auth/userSlice";
 
