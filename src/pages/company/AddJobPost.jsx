@@ -52,6 +52,7 @@ function AddJobPost() {
   const [description, setDescription] = useState("");
   const [apply, setApply] = useState("");
   const [requirements, setRequirements] = useState([""]);
+  const [vacancies, setVacancies] = useState(0);
   const [tags, setTags] = useState([""]);
   const [deadline, setDeadline] = useState(null);
   const [education, setEducation] = useState("");
@@ -81,10 +82,14 @@ function AddJobPost() {
   const handleImage = (info) => {
     setImageUpload(info.file.originFileObj);
     console.log(imageUpload);
+    if(imageUpload){
+      info.file.status = "done";
+    }
+   
   };
 
   const handleSubmit = async () => {
-    if (imageUpload) {
+    if (imageUpload && vacancies>0) {
       setLoading(true);
       window.scrollTo({
         top: 0,
@@ -116,6 +121,7 @@ function AddJobPost() {
         companyName,
         postedDate: new Date(),
         cover: coverURL,
+        numberOfVacancies:vacancies,
         currency,
         minSalary,
         maxSalary,
@@ -305,7 +311,7 @@ function AddJobPost() {
                         </Col>
                       </Row>
                     </Col>
-                    <Col span={11}>
+                    <Col span={8}>
                       <Title level={4} style={{}}>
                         Deadline:
                       </Title>
@@ -313,11 +319,12 @@ function AddJobPost() {
                         style={{
                           boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
                           height: "40px",
+                          borderRadius:'0'
                         }}
                         onChange={(date) => setDeadline(date)}
                       />
                     </Col>
-                    <Col span={13}>
+                    <Col span={8}>
                       <Title level={4} style={{}}>
                         Add Cover:
                       </Title>
@@ -335,6 +342,20 @@ function AddJobPost() {
                         </Upload>
                       </Space>
                     </Col>
+                    <Col span={8}>
+                    <Title level={4} style={{}}>
+                        Vacancies:
+                      </Title>
+                      <Input 
+                          value={vacancies}
+                          onChange={(e)=>setVacancies(e.target.value)}
+                          style={{
+                          boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                          height: "40px",
+                          borderRadius:'0',
+                          width: '100px'
+                        }}/>
+                    </Col>
                   </Row>
 
                   <Row>
@@ -344,7 +365,7 @@ function AddJobPost() {
                       value={description}
                       allowClear
                       rows={4}
-                      style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)" }}
+                      style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",borderRadius:'0' }}
                     />
                   </Row>
                   <Row>
@@ -354,7 +375,7 @@ function AddJobPost() {
                       onChange={(e) => setApply(e.target.value)}
                       allowClear
                       rows={4}
-                      style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)" }}
+                      style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.05)",borderRadius:'0' }}
                     />
                   </Row>
                   <Row gutter={[20, 10]}>
@@ -410,7 +431,7 @@ function AddJobPost() {
                   <Row>
                     <Button
                       htmlType="submit"
-                      disabled={imageUpload===null?true:false}
+                      disabled={(imageUpload===null) || (vacancies===0)}
                       type="primary"
                       size="large"
                       style={{
