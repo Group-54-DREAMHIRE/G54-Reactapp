@@ -51,7 +51,8 @@ function AddQuestions() {
   return (
     <>
       <div className='add-questions-n'>
-        <h1>Add Questions</h1>
+        <div className='add-questions'>
+        <h1 style={{margin: '5px 0px'}}>Add Questions</h1>
         <Form>
           <Form.Item>
             <label>
@@ -117,6 +118,8 @@ function AddQuestions() {
             </Form.Item>
           </Form>
         </Modal>
+        </div>
+        <div className='take-quiz'>
         <TakeQuiz questions={currentQuestions} />
         <Pagination
           currentPage={currentPage}
@@ -128,6 +131,7 @@ function AddQuestions() {
           defaultCurrent={1} 
           total={10}
         />
+        </div>
       </div>
     </>
   );
@@ -153,17 +157,17 @@ function TakeQuiz({ questions }) {
   return (
     <div>
       <Form>
+        <h1 style={{margin: '5px 0px'}}>Selection Test</h1>
         {questions.map((question, i) => (
           <Form.Item key={i}>
-            <h4>Question {question.questionNumber}:</h4>
-            <h4>{question.question}</h4>
+            <h4>{question.questionNumber}.{question.question}</h4>
             {question.questionType === 'Multiple Choice' ? (
               <Checkbox.Group
                 options={question.options}
                 onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
               />
             ) : (
-              <TextArea rows={4} onChange={(e) => onAnswerChange(i, e.target.value)} />
+              <TextArea rows={2} onChange={(e) => onAnswerChange(i, e.target.value)} />
             )}
           </Form.Item>
         ))}
@@ -177,28 +181,6 @@ function TakeQuiz({ questions }) {
     </div>
   );
 }
-
-// function Pagination({ currentPage, questionsPerPage, totalQuestions, paginate }) {
-//   const pageNumbers = [];
-
-//   for (let i = 1; i <= Math.ceil(totalQuestions / questionsPerPage); i++) {
-//     pageNumbers.push(i);
-//   }
-
-//   return (
-//     <div>
-//       <ul className="pagination">
-//         {pageNumbers.map((number) => (
-//           <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
-//             <a onClick={() => paginate(number)} className="page-link">
-//               {number}
-//             </a>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
 
 export default AddQuestions;
 
