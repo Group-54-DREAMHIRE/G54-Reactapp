@@ -12,19 +12,25 @@ import {
   Select,
   Space,
   Checkbox,
+  Input,
+  Spin,
+  message,
 } from "antd";
 import { useState } from "react";
 import moment from "moment";
 import { spaceChildren } from "antd/es/button";
+import { fetchUserData } from "../../api/authenticationService";
 const { Title } = Typography;
 
 export default function GenarateInterviews() {
   const CheckboxGroup = Checkbox.Group;
   const [checkedList, setCheckedList] = useState([]);
   const [defaultList, setDefaultList] = useState(false);
+  const [interviewData, setInterviewData] = useState([]);
   const onChange = (list) => {
     setCheckedList(list);
-    console.log(list);
+   
+  
   };
   const onCheckAllChange = (e) => {
     setCheckedList(e.target.checked ? timeSlots : []);
@@ -36,44 +42,52 @@ export default function GenarateInterviews() {
   const [interval, setInterval] = useState(0);
   const [start, setStart] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [mornTea, setMornTea] = useState(false);
-  const [lunch, setLunch] = useState(false);
-  const [eveTea, setEveTea] = useState(false);
   const [timeSlots, setTimeSlots] = useState([]);
   const [value, setValue] = useState(true);
+  const [type, setType] = useState();
   const [timeList, setTimeList] = useState([]);
+  const [withInt, setWithInt] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   const generateAutoTimeSlots = () => {
     if (date && start && endTime && duration > 0 && interval > 0) {
       const slots = [];
+      const tempSlots =[];
+
       const currentDateTime = moment(date).set({
         hour: start.hour(),
         minute: start.minute(),
         second: 0,
+        date: date.date(),
       });
 
       const endDateTime = moment(date).set({
         hour: endTime.hour(),
         minute: endTime.minute(),
         second: 0,
+        date:date.date(),
       });
-
-      while (currentDateTime.isBefore(endDateTime)) {
-        if (endDateTime > currentDateTime) {
-          slots.push(currentDateTime.format("HH:mm"));
+     const sTime = endDateTime.subtract(duration, "minutes")
+      while (currentDateTime.isSameOrBefore(sTime)) {
+          tempSlots.push(currentDateTime.format("YYYY-MM-DD HH:mm"));
+          slots.push(currentDateTime.format(" HH:mm "));
           currentDateTime.add(duration, "minutes");
-        }
-         slots.push(currentDateTime.format("HH:mm"));
-        currentDateTime.add(interval, "minutes");
+          slots.push(currentDateTime.format(" HH:mm "));
+          currentDateTime.add(interval, "minutes");
+
+         
       }
       const array = slots.length % 2 === 0 ? slots : slots.slice(0, -1);
       const timesArray = [];
       for (let i = 0; i < slots.length ; i += 2) {
         timesArray.push(`${array[i]}-${array[i + 1]}`);
       }
+      setTimeList(tempSlots);
       setTimeSlots(timesArray);
-      setCheckedList(timesArray);
+      setCheckedList(timesArray); 
       setDefaultList(timesArray);
+      console.log(tempSlots);
     }
   };
 
@@ -84,16 +98,25 @@ export default function GenarateInterviews() {
         hour: start.hour(),
         minute: start.minute(),
         second: 0,
+        date: date.date()
       });
-
+      const dataObj = {
+        id:0,
+        type:type,
+        startTime:new Date(currentDateTime),
+        duration:duration,
+        with: withInt,
+        jobId:1,
+      }
+      interviewData.push(dataObj);
       slots.push(currentDateTime.format("HH:mm"));
       currentDateTime.add(duration, "minutes");
       slots.push(currentDateTime.format("HH:mm"));
       console.log(slots);
       const timesArray = [];
       timesArray.push(`${slots[0]}-${slots[1]}`);
-
       setTimeSlots((prev) => [...prev, timesArray]);
+      console.log(interviewData);
       
     }
   };
@@ -106,9 +129,57 @@ export default function GenarateInterviews() {
     setInterval(null);
     setStart(null);
     setEndTime(null);
+    setInterviewData([]);
+  }
+  const handleSubmit = async () => {
+    if(checkedList){
+      for(let i=0; i<checkedList.length; i++){
+        const hour1 = checkedList[i].slice(0,3);
+        const minute1 = checkedList[i].slice(4,6);
+        const currentDateTime = moment(date).set({
+          hour: hour1,
+          minute: minute1,
+          second: 0,
+          date: date.date(),
+        });
+        console.log(currentDateTime);
+        const times = {
+          type,
+          startTime: new Date(currentDateTime),
+          duration,
+          withInt,
+          jobId:1
+        }
+        interviewData.push(times);
+      }
+      console.log(interviewData);
+      if(interviewData){
+        setLoading(true);
+        let data = {
+          url: `/api/v1/interview/save`,
+          data: interviewData,
+          method: "post",
+        };
+        try {
+          const response = await fetchUserData(data);
+          if (response.status === 200) {
+            message.success("Succesfully updated");
+            setLoading(false);
+          } else {
+            message.error("Invalid Data!");
+            setLoading(false);
+          }
+        } catch (e) {
+          console.log(e);
+          setLoading(false);
+        }
+      }  
+    }
+   
   }
   return (
     <>
+    <Spin spinning={loading}>
       <Row className="Interview-genarate-w" gutter={[20, 40]}>
         <Col span={22}>
           <Title level={2} style={{ margin: "30px 0 5px 0" }}>
@@ -117,7 +188,7 @@ export default function GenarateInterviews() {
           <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
         </Col>
         <Col span={22}>
-          <Form>
+          <Form onFinish={handleSubmit}>
             <Radio.Group
               onChange={(e) => {setValue(e.target.value); clear();}}
               value={value}
@@ -137,7 +208,7 @@ export default function GenarateInterviews() {
                             <span level={4}>Date:</span>
                             <DatePicker
                               disabled={!value}
-                              onChange={(value) => setDate(value)}
+                              onChange={(date) => {setDate(date);console.log(date)}}
                             />
                           </Space>
                         </Col>
@@ -227,16 +298,49 @@ export default function GenarateInterviews() {
                     </Col>
                   </Row>
                 </Col>
-                {JSON.stringify(timeSlots) === "[]" ? null : (
+                
                   <Col
                     span={14}
-                    style={{
+                    
+                  >
+                    <Row className={value ? "" : "Interview-genarate-auto-w"} gutter={[20, 20]}>
+                      <Col span={24}  >
+                      <Space size="large">
+                            <span>Interview Type:</span>
+                            <Select
+                              disabled={!value}
+                              onChange={(value) => setType(value)}
+                              placeholder="Interview Type"
+                              options={[
+                                {label: "HR",value: "hr"},
+                                { label: "Technical ", value: "technical" }
+                               
+                              ]}
+                            />
+                          </Space>
+                      </Col>
+                      <Col span={24}>
+                      <Space size="large">
+                            <span>With:</span>
+                            <Select
+                              disabled={!value}
+                              onChange={(value) => setWithInt(value)}
+                              defaultValue={"MRS Thushani"}
+                             // placeholder="MR/MRS"
+                              options={[
+                                {label: "MR Sampath",value: "sampath"},
+                                {label: "MRS Thushani ", value: "thushani"}
+                               
+                              ]}
+                              style={{borderRadius: '0 !important', width: '100'}}
+                            />
+                          </Space>
+                      </Col>
+                      {JSON.stringify(timeSlots) === "[]" ? null : ( <>
+                       <Col span={18} style={{
                       border: "1px solid rgba(0,0,0,.2)",
                       padding: " 2%",
-                    }}
-                  >
-                    <Row justify="end" gutter={[20, 20]}>
-                      <Col span={24}>
+                    }}>
                         {value && (
                           <Checkbox
                             disabled={!value}
@@ -265,20 +369,27 @@ export default function GenarateInterviews() {
                           </Space>
                         )}
                       </Col>
-                      <Col>
-                        {value && (
-                          <Button
-                            disabled={!value}
-                            style={{ borderRadius: "0" }}
-                            type="primary"
-                          >
-                            Publish
-                          </Button>
-                        )}
-                      </Col>
+                       <Col span={18}>
+                       <Row justify='end'>
+                       {value && (
+                           <Button
+                              htmlType="submit"
+                             disabled={!value}
+                             style={{ borderRadius: "0" }}
+                             type="primary"
+                           >
+                             Publish
+                           </Button>
+                         )}
+                       </Row>
+                        
+                       </Col>
+                       </>)}
+                     
+                      
                     </Row>
                   </Col>
-                )}
+               
               </Row>
               <Row style={{ marginTop: "5%" }}>
                 <Col span={24}>
@@ -363,24 +474,66 @@ export default function GenarateInterviews() {
                       </Row>
                     </Col>
                     
-                    {JSON.stringify(timeSlots) === "[]" ? null :
-                    (                 
+                   
+                                     
                     <Col
                       span={14}
-                      style={{
-                        border: "1px solid rgba(0,0,0,.2)",
-                        padding: " 2%",
-                      }}
+                      
                     >
                       <Row gutter={[0, 10]}>
-                        {!value && timeSlots.map((item) => {
+                      <Col span={24}  >
+                      <Space size="large">
+                            <span>Interview Type:</span>
+                            <Select
+                              disabled={value}
+                              onChange={(value) => setType(value)}
+                              placeholder="Interview Type"
+                              options={[
+                                {label: "HR",value: "hr"},
+                                { label: "Technical ", value: "technical" }
+                               
+                              ]}
+                            />
+                          </Space>
+                      </Col>
+                      <Col span={24}>
+                      <Space size="large">
+                            <span>With:</span>
+                            <Select
+                              disabled={value}
+                              onChange={(value) => setWithInt(value)}
+                              defaultValue={"MRS Thushani"}
+                             // placeholder="MR/MRS"
+                              options={[
+                                {label: "MR Sampath",value: "hr"},
+                                { label: "MRS Thushani ", value: "technical" }
+                               
+                              ]}
+                              style={{borderRadius: '0 !important', width: '100'}}
+                            />
+                            </Space>
+                          </Col>
+                          {JSON.stringify(timeSlots) === "[]" ? null :
+                    (  <>
+                          <Col span={24} style={{
+                        border: "1px solid rgba(0,0,0,.2)",
+                        padding: " 2%",
+                      }}>
+                         
+                            <Row >
+                            { timeSlots.map((item) => {
                           return <Col span={8}>{item}</Col>;
                         })}
+                            </Row>
+                          </Col>
+                        
+                        
                         <Col span={24}>
                           {!value && (
                             <Row justify="end">
                                {JSON.stringify(timeSlots) === "[]" ? null :
                              ( <Button
+                                htmlType="submit"
                                 disabled={value}
                                 style={{ borderRadius: "0" }}
                                 type="primary"
@@ -389,9 +542,9 @@ export default function GenarateInterviews() {
                               </Button>)}
                             </Row>
                           )}
-                        </Col>
+                        </Col></>)}
                       </Row>
-                    </Col>)}
+                    </Col>
                   </Row>
                 </Col>
               </Row>
@@ -399,6 +552,7 @@ export default function GenarateInterviews() {
           </Form>
         </Col>
       </Row>
+      </Spin>
     </>
   );
 }

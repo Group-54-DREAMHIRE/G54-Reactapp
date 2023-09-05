@@ -12,8 +12,9 @@ const { Search } = Input;
 function AdvertisementList() {
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
-  
+
   const [page, setPage] = useState(1);
+  const [jobPosts, setJobPosts] = ([]);
   const [pageSize, setPageSize] = useState(5);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -21,9 +22,8 @@ function AdvertisementList() {
       getData(`/api/v1/jobpost/getAllJobsByCompanyId/${id}`)
         .then((response) => {
           console.log(response.data);
-          // setAllJobList(response.data);
-          // dispatch(setJobPosts(response.data));
-          // setLoading(false);
+          setJobPosts(response.data);
+        
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);

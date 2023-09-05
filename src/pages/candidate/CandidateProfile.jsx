@@ -268,6 +268,7 @@ export default function Profile() {
                {errorMsg &&
                ( <Col span={24}>
                   <Alert
+                    closable
                     message="Error"
                     description={errorMsg}
                     type="error"

@@ -11,8 +11,10 @@ import {
   Typography,
   Select,
   Alert,
+  Spin,
+  message,
 } from "antd";
-import { currencies, salary,} from "../../store/demo/salary";
+import { currencies, salary } from "../../store/demo/salary";
 import { tagItems } from "../../store/demo/tagItems";
 import { closeApplyJob } from "../../store/models/modelsSlice";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +23,6 @@ const { Text, Link, Title } = Typography;
 export default function ApplyJob({ jobID }) {
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isOpen = useSelector((state) => state.models.applyJob);
@@ -34,44 +35,80 @@ export default function ApplyJob({ jobID }) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const [successmsg, setSuccessmsg] = useState();
-  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleApply = async () => {
-    let applyJobData = {
-      jobID,
-      candidateName: name,
-      candidatePhone: phone,
-      candidateEmail: email,
-      candidateCity: city,
-      currency,
-      expectSalary: exsalary,
-      tags: tagList,
-    };
-
-    let data = {
-      url: `/api/v1/applyjobcandidate/save/${id}`,
-      data: applyJobData,
-      method: "post",
-    };
-    const response = await fetchUserData(data);
-    console.log(response.data);
-    if (response.status === 200) {
-      setSuccessmsg("Succesfully updated");
-      setTimeout(() => {
-        setSuccessmsg("");
-        setName("");
-        setCity("");
-        setCurrency("");
-        setExSalary("");
-        setTaglist([""]);
-        setTags([]);
-        setEmail("");
-        setPhone("");
-        navigate("/jobposts");
-      }, 2000);
-    } else {
-      setError("Invalid Data!");
+    setLoading(true);
+    if (name && currency && exsalary) {
+      setLoading(true);
+      let applyJobData = {
+        jobID,
+        candidateName: name,
+        candidatePhone: phone,
+        candidateEmail: email,
+        candidateCity: city,
+        currency,
+        expectSalary: exsalary,
+        tags: tagList,
+      };
+      let data = {
+        url: `/api/v1/applyjobcandidate/save/${id}`,
+        data: applyJobData,
+        method: "post",
+      };
+      try {
+        const response = await fetchUserData(data);
+        if (response.status === 200) {
+          setName("");
+          setCity("");
+          setCurrency("");
+          setExSalary("");
+          setTaglist([""]);
+          setTags([]);
+          setEmail("");
+          setPhone("");
+          navigate("/jobposts");
+          message.success("Succesfully Applied");
+          setLoading(false);
+        } else {
+          if (response.data === "already applied") {
+            message.error("You are already registerd with this job!");
+          }
+          setName("");
+          setCity("");
+          setCurrency("");
+          setExSalary("");
+          setTaglist([""]);
+          setTags([]);
+          setEmail("");
+          setPhone("");
+          navigate(`/jobpost/${jobID}`);
+          message.error("There is an error! please, try again!");
+          setLoading(false);
+        }
+      } catch (e) {
+        console.log(e.message);
+        if (e) {
+          dispatch(closeApplyJob());
+          message.error("You are already registerd with this job!");
+          navigate(`/jobpost/${jobID}`);
+          setLoading(false);
+          setName("");
+          setCity("");
+          setCurrency("");
+          setExSalary("");
+          setTaglist([""]);
+          setTags([]);
+          setEmail("");
+          setPhone("");
+          console.log(e);
+          setLoading(false);
+        }
+      }
+    }else{
+      setLoading(false);
+      setErrorMsg("You must fill name and expect salary fields! Try again!");
     }
   };
 
@@ -83,12 +120,23 @@ export default function ApplyJob({ jobID }) {
         onCancel={() => dispatch(closeApplyJob())}
         footer={[]}
       >
+        <Spin spinning={loading}>
         <Row block style={{ padding: "0px 20px" }}>
           <Col>
             <Row block justify="center">
               <Title level={3} style={{ margin: "0" }}>
                 Apply Job
               </Title>
+              {errorMsg &&
+               ( <Col span={24}>
+                  <Alert
+                    closable
+                    message="Error"
+                    description={errorMsg}
+                    type="error"
+                    showIcon
+                  />
+                </Col>)}
             </Row>
             <Row>
               <Form onFinish={handleApply}>
@@ -199,23 +247,21 @@ export default function ApplyJob({ jobID }) {
                     </Col>
                   </Row>
                   <Row justify="end">
-                    <Button 
-                      style={{borderRadius: '0'}}
-                      size="medium" 
-                      type="primary" 
-                      htmlType="submit ">
+                    <Button
+                      style={{ borderRadius: "0" }}
+                      size="medium"
+                      type="primary"
+                      htmlType="submit "
+                    >
                       Apply
                     </Button>
-                    {successmsg && (
-                      <Alert message={successmsg} type="success" showIcon />
-                    )}
-                    {error && <Alert message={error} type="error" showIcon />}
                   </Row>
                 </Col>
               </Form>
             </Row>
           </Col>
         </Row>
+        </Spin>
       </Modal>
     </>
   );
