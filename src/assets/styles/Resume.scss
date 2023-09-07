@@ -1,0 +1,15 @@
+.edit-personal-details-w{
+  color: red;
+    .input-w{
+        background-color: rgba(243,244,246,255);
+        border: none;
+        outline: none !important;
+        &:hover{
+            border: none !important;
+            outline: none !important;
+        }
+        &:focus{
+            border: none;
+        }
+    }
+}

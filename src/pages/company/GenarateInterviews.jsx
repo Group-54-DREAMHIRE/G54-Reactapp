@@ -116,6 +116,7 @@ export default function GenarateInterviews() {
       const timesArray = [];
       timesArray.push(`${slots[0]}-${slots[1]}`);
       setTimeSlots((prev) => [...prev, timesArray]);
+      setCheckedList((prev) => [...prev, timesArray]);
       console.log(interviewData);
       
     }

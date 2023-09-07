@@ -26,7 +26,7 @@ export default function InterviewCard({item}) {
     <>
       <Row justify="center">
         <Col span={24} style={{ padding: " 0 2%" }}>
-          <Card style={{ boxShadow: "0 0 8px rgba(0,0,0,.1)" }}>
+          <Card hoverable style={{ boxShadow: "0 0 8px rgba(0,0,0,.1)",cursor:'pointer' }}>
             <Row>
               {/* <Col span={3}>
                         <Space direction="vertical">
