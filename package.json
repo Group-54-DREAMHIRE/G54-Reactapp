@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-pdf/renderer": "^3.1.12",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -21,6 +22,7 @@
     "react-redux": "^8.1.1",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
+    "react-svg-pan-zoom": "^3.12.1",
     "recharts": "^2.7.3",
     "sass": "^1.63.6",
     "web-vitals": "^2.1.4"

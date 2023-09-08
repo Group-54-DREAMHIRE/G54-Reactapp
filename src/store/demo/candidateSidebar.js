@@ -52,7 +52,7 @@ import {
       {
         id: 6,
         label: "Interviews",
-        key: "/interview",
+        key: "scheduledinterviews",
         icon: <FiSlack />,
       },
       {

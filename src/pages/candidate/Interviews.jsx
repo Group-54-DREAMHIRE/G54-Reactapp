@@ -1,39 +1,28 @@
-import { Col, Row } from "antd";
-import InterviewCard from "../../Components/cards/candidate/InterviewCard";
-import { Link, useNavigate } from "react-router-dom";
+import {Row, Divider, Typography, Tabs} from 'antd';
+import { Outlet, useNavigate } from "react-router-dom";
+const { Title, } = Typography;
 
-const items = [
-  {
-    company: "Creative Software",
-    date: "2023.08.28",
-    time: "9.00 AM",
-    type: "HR Interview",
-    with: "MRS. Vishmi"
-  },
-  {
-    company: "Derect FN",
-    date: "2023.09.05",
-    time: "11.00 AM",
-    type: "TECH Interview",
-    with: "MR. Sampath"
-  },
-];
-export default function Interviews() {
+export default function CandidatResumes() {
   const navigate = useNavigate();
+  const onChange = (key) => {
+    console.log(key);
+    navigate(key);
+  };
+
   return (
     <>
-      <Row gutter={[30, 30]}>
-            {items.map((item) => {
-              return (
-                <Col span={9}
-                  onClick={()=>navigate("/interviewdetails")}>
-                 <InterviewCard
-                 item={item} />
-                </Col>
-              );
-            })}
-          </Row>
-      
+    <Row style={{padding: '2%'}}>
+      <Title level={2}>INTERVIEWS</Title>
+      <Divider style={{ margin: "0" }} />
+    </Row>
+    <Tabs
+    onChange={onChange}
+    type="card"
+    items={[
+    {label: "Scheduled", key: "/scheduledinterviews"},
+    {label: "Pending", key: "/pendinginterviews"}
+    ]}/>
+    <Outlet/>
     </>
   )
 }
