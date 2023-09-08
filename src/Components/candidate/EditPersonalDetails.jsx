@@ -23,13 +23,14 @@ import {
   LinkedinOutlined,
   GithubOutlined,
   DeleteOutlined,
+  CheckOutlined
 } from "@ant-design/icons";
 import { AiOutlineLink } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
 import { useDispatch, useSelector } from "react-redux";
-import { closeAddLink, openAddLink } from "../../store/models/modelsSlice";
+import { closeAddLink, closeViewEditDetails, openAddLink } from "../../store/models/modelsSlice";
 const { Title, Text, Link } = Typography;
-export default function EditPersonalDetails() {
+export default function EditPersonalDetails({editPersonalData}) {
   const dispatch = useDispatch();
   const addLink = useSelector((state) => state.models.addLink);
   const linksList = [
@@ -38,45 +39,47 @@ export default function EditPersonalDetails() {
       label: "LinkedIn",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
+      value: "editPersonalData.setLinkedInLabel"
     },
     {
       key: 2,
       label: "Twitter",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
+      value:`${editPersonalData.setTwitterInLabel}`
     },
     {
       key: 3,
       label: "GitHub",
       icon: <LinkedinOutlined />,
-      placeholder: "Enter LinkedIn",
+      placeholder: "Enter Github",
+      value:`${editPersonalData.setGithubLabel}`
     },
     {
       key: 4,
       label: "Website",
       icon: <LinkedinOutlined />,
+      placeholder: "Enter Website",
+      value:`${editPersonalData.setWebsiteLabel}`
     },
     {
       key: 5,
       label: "Discode",
       icon: <LinkedinOutlined />,
+      placeholder: "Enter Discode",
+      value:`${editPersonalData.setDiscodeLabel}`
     },
   ];
 
   const [imageUpload, setImageUpload] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
   const [activeDetails, setActiveDetails] = useState([]);
-  const [linkedIn, setLinkedIn] = useState();
-  const [twitter, setTwitter] = useState();
-  const [github, setGithub] =useState();
-  const [website, setWebsite] = useState();
-  const [discode, setDiscode] = useState();
+  const [label, setLabel]= useState(null);
   const [active, setActive] = useState(0);
   const handleFileChange = (info) => {
     setImageUpload(info.file.originFileObj);
     if (imageUpload) {
       info.file.status = "done";
-      setProfilePicture(URL.createObjectURL(imageUpload));
+      editPersonalData.setProfilePicture(URL.createObjectURL(imageUpload));
     }
     console.log(info.file.originFileObj);
   };
@@ -92,36 +95,45 @@ export default function EditPersonalDetails() {
       Upload
     </div>
   );
+  const handleChange =(id,value)=>{
+      if(id===1){
+        editPersonalData.setLinkedInLabel(value);
+      }else if(id===2){
+        editPersonalData.setTwitterLabel(value);
+      }else if(id===3){
+        editPersonalData.setGithubLabel(value);
+      }else if(id===4){
+        editPersonalData.setWebsiteLabel(value);
+      }else if(id===5){
+        editPersonalData.setDiscodeLabel(value);
+      }
+  }
+
   const InputLink = ({id}) => {
     const [value, setValue] = useState("");
     const handleAdd =(id)=>{
         if(id===1){
-            setLinkedIn(value);
+          editPersonalData.setLinkedIn(value);
             setValue("");
-            console.log(value, "LinkedIn");
             dispatch(closeAddLink());
         }else if(id===2){
-            setTwitter(value);
+          editPersonalData.setTwitter(value);
             setValue("");
-            console.log(twitter, "twitter");
             dispatch(closeAddLink());
         }else if(id===3){
-           setGithub(value);
+          editPersonalData.setGithub(value);
            setValue("");
-           console.log(github, "github");
            dispatch(closeAddLink());
         }else if(id===4){
-            setWebsite(value);
+          editPersonalData.setWebsite(value);
             setValue("");
-            console.log(website, "website");
             dispatch(closeAddLink());
         }else if(id===5){
-            setDiscode(value);
+          editPersonalData.setDiscode(value);
             setValue("");
-            console.log(discode, "discode");
             dispatch(closeAddLink());
         }else{
-            dispatch(closeAddLink());
+          editPersonalData.dispatch(closeAddLink());
         }
       }
     return (
@@ -188,13 +200,15 @@ export default function EditPersonalDetails() {
                   Full Name
                 </Title>
                 <Input
+                  value={editPersonalData.name}
+                  onChange={(e)=>editPersonalData.setName(e.target.value)}
                   className="input-w"
                   size="large"
                   placeholder="Enter your title, first-and lase name"
                 />
               </Col>
               <Col span={8}>
-                {profilePicture === null ? (
+                {editPersonalData.profilePicture === null ? (
                   <>
                     <ImgCrop rotationSlider>
                       <Upload
@@ -203,7 +217,7 @@ export default function EditPersonalDetails() {
                           borderRadius: "50%",
                         }}
                         listType="picture-circle"
-                        showUploadList={profilePicture === null ? true : false}
+                        showUploadList={editPersonalData.profilePicture === null ? true : false}
                         accept=".jpg,.jpeg,.png"
                         action=""
                         name="avatar"
@@ -218,7 +232,7 @@ export default function EditPersonalDetails() {
                       <ImgCrop rotationSlider>
                         <Upload
                           showUploadList={
-                            profilePicture === null ? true : false
+                            editPersonalData.profilePicture === null ? true : false
                           }
                           onChange={handleFileChange}
                         >
@@ -245,7 +259,7 @@ export default function EditPersonalDetails() {
                         preview={false}
                         width={100}
                         height={100}
-                        src={profilePicture}
+                        src={editPersonalData.profilePicture}
                       />
                     </Col>
                     <Col
@@ -254,7 +268,7 @@ export default function EditPersonalDetails() {
                       <ImgCrop rotationSlider>
                         <Upload
                           showUploadList={
-                            profilePicture === null ? true : false
+                            editPersonalData.profilePicture === null ? true : false
                           }
                           onChange={handleFileChange}
                         >
@@ -287,6 +301,8 @@ export default function EditPersonalDetails() {
                   </Text>
                 </Title>
                 <Input
+                  value={editPersonalData.title}
+                  onChange={(e)=>editPersonalData.setTitle(e.target.value)}
                   className="input-w"
                   size="large"
                   placeholder="Enter your job title"
@@ -306,6 +322,8 @@ export default function EditPersonalDetails() {
                   </Text>
                 </Title>
                 <Input
+                  value={editPersonalData.email}
+                  onChange={(e)=>editPersonalData.setEmail(e.target.value)}
                   className="input-w"
                   size="large"
                   placeholder="Enter your email"
@@ -325,6 +343,8 @@ export default function EditPersonalDetails() {
                   </Text>
                 </Title>
                 <Input
+                  value={editPersonalData.phone}
+                  onChange={(e)=>editPersonalData.setPhone(e.target.value)}
                   className="input-w"
                   size="large"
                   placeholder="Enter your phone"
@@ -344,6 +364,8 @@ export default function EditPersonalDetails() {
                   </Text>
                 </Title>
                 <Input
+                  value={editPersonalData.address}
+                  onChange={(e)=>editPersonalData.setAddress(e.target.value)}
                   className="input-w"
                   size="large"
                   placeholder="City, Country"
@@ -367,6 +389,7 @@ export default function EditPersonalDetails() {
                             <Row gutter={10}>
                               <Col span={18}>
                                 <Input
+                                  onChange={(e)=>{handleChange(items.key,e.target.value)}}
                                   className="input-w"
                                   placeholder={items.label}
                                   size="large"
@@ -428,6 +451,28 @@ export default function EditPersonalDetails() {
                       </Col>
                     );
                   })}
+                </Row>
+              </Col>
+              <Col span={24}>
+                <Row justify='end'> 
+                  <Space>
+                  <Button 
+                  onClick={()=>dispatch(closeViewEditDetails())}
+                  size="large" 
+                  style={{border: '0'}}>
+                  Cancel
+                </Button>
+                <Button 
+                  icon={<CheckOutlined />}
+                  size="large"
+                  style={{
+                    backgroundColor: 'rgba(25,103,210,255)',
+                    color: 'white',
+                    height: '50px', 
+                    width: '100px'}}> 
+                  Save
+                </Button>
+                  </Space>
                 </Row>
               </Col>
             </Row>

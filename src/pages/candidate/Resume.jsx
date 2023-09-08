@@ -8,6 +8,7 @@ import {
   LinkedinOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import { FiMapPin, FiEdit } from "react-icons/fi";
 import CustomContentModel from "../../Components/candidate/CustomContentModel";
 import { useDispatch } from "react-redux";
 import { openCustomContent } from "../../store/models/modelsSlice";
@@ -15,77 +16,102 @@ import { openCustomContent } from "../../store/models/modelsSlice";
 const { Content } = Layout;
 const { Title, Text, Link } = Typography;
 
-const Resume = ({list}) => {
+const Resume = ({ viewPersonalData }) => {
   const dispatch = useDispatch();
   return (
-    <Layout style={{transform:'scale(0.75)',transformOrigin: 'top left', width: '900px'}}>
-      <Content style={{ padding: "40px" }}>
-        <Row justify="space-between" align="middle">
-          <Col span={24}>
-            <Row justify="space-between">
-              <Col span={18}>
-                <Title 
-                  level={2} 
-                  style={{ marginBottom: "5px" }}>
-                 Dulanajna Weerasinghe
-                </Title>
-                <Title 
-                  level={5} 
-                  style={{ marginTop: "5px" }}>
-                Software Engineer
-                </Title>
-                <Row gutter={20}>
+    <>
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{
+          padding: "40px",
+          transform: "scale(0.75)",
+          transformOrigin: "top left",
+          width: "850px",
+        }}
+      >
+        <Col span={24}>
+          <Row justify="space-between">
+            <Col span={18}>
+              <Row gutter={[20, 10]}>
+                {viewPersonalData.name && (
+                  <Col span={24}>
+                    <Title level={2} style={{ margin: "0" }}>
+                      {viewPersonalData.name}
+                    </Title>
+                  </Col>
+                )}
+                {viewPersonalData.title && (
+                  <Col span={24}>
+                    <Title level={4} style={{ margin: "0" }}>
+                      {viewPersonalData.title}
+                    </Title>
+                  </Col>
+                )}
+                {viewPersonalData.email && (
                   <Col>
-                    <Text > 
+                    <Text>
                       <MailOutlined style={{ marginRight: "7px" }} />
-                   
+                      {viewPersonalData.email}
                     </Text>
                   </Col>
+                )}
+                {viewPersonalData.phone && (
                   <Col>
-                    <Text >
+                    <Text>
                       <PhoneOutlined style={{ marginRight: "7px" }} />
-                 
+                      {viewPersonalData.phone}
                     </Text>
                   </Col>
+                )}
+                {viewPersonalData.address && (
                   <Col>
-                    <Link href="" target="_blank">
-                    <Text >
-                      <LinkedinOutlined style={{ marginRight: "7px" }} />
-                      LinkedIn
+                    <Text>
+                      <FiMapPin style={{ marginRight: "7px" }} />
+                      {viewPersonalData.address}
+                    </Text>
+                  </Col>
+                )}
+                {viewPersonalData.linkedInLabel && (
+                  <Col>
+                    <Link href={viewPersonalData.linkedIn} target="_blank">
+                      <Text>
+                        <LinkedinOutlined style={{ marginRight: "7px" }} />
+                        {viewPersonalData.linkedInLabel}
                       </Text>
                     </Link>
                   </Col>
+                )}
+                {viewPersonalData.githubLabel && (
                   <Col>
-                  <Link href="" target="_blank">
-                    <Text >
-                      <GithubOutlined style={{ marginRight: "5px" }} />
-                      Github
-                    </Text>
+                    <Link href={viewPersonalData.github} target="_blank">
+                      <Text>
+                        <GithubOutlined style={{ marginRight: "5px" }} />
+                        {viewPersonalData.githubLabel}
+                      </Text>
                     </Link>
                   </Col>
-                </Row>
-              </Col>
+                )}
+              </Row>
+            </Col>
 
+            {viewPersonalData.profilePicture && (
               <Col>
                 <Image
-                  src={dula}
+                  src={viewPersonalData.profilePicture}
                   alt="Profile_Picture"
-                  style={{ borderRadius: "20px", width: "175px" }}
+                  style={{
+                    borderRadius: "20px",
+                    width: "175px",
+                    height: "150px",
+                  }}
                 />
               </Col>
-            </Row>
-            <Row justify='center'>
-            <Button 
-              onClick={()=>dispatch(openCustomContent())}>
-                ADD
-            </Button>
-            <CustomContentModel/>
-            </Row>
-           
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+            )}
+          </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 
@@ -167,7 +193,7 @@ export default Resume;
 //                   <Col span={20}>
 //                     <Text strong>LEARNX</Text>
 //                     <br />
-                 
+
 //                     <Text>
 //                       Effective and convenient online education platform with
 //                       video conferencing tools and track student activities

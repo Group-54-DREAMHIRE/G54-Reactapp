@@ -5,6 +5,8 @@ const initialState = {
     collapsed:false,
     customContent:false,
     addLink:false,
+    viewEditDetails:false,
+    addContent:false,
 }
 
 const modelsSlice = createSlice({
@@ -32,9 +34,33 @@ const modelsSlice = createSlice({
         closeAddLink:(state)=>{
             state.addLink = false;
         },
+        openViewEditDetails:(state)=>{
+            state.viewEditDetails = true;
+        },
+        closeViewEditDetails:(state)=>{
+            state.viewEditDetails = false;
+        },
+        openAddContent:(state)=>{
+            state.addContent = true;
+        },
+        closeAddContent:(state)=>{
+            state.addContent = false;
+        },
     }
 })
 
-export const { openApplyJob, closeApplyJob, setCollapsed,openCustomContent, closeCustomContent,openAddLink,closeAddLink} = modelsSlice.actions;
+export const { 
+    openApplyJob, 
+    closeApplyJob, 
+    setCollapsed,
+    openCustomContent, 
+    closeCustomContent,
+    openAddLink,
+    closeAddLink,
+    openViewEditDetails,
+    closeViewEditDetails,
+    openAddContent,
+    closeAddContent
+} = modelsSlice.actions;
 
 export default modelsSlice.reducer;

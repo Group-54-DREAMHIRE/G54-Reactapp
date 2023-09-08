@@ -1,9 +1,10 @@
 .edit-personal-details-w{
-  color: red;
+
     .input-w{
         background-color: rgba(243,244,246,255);
         border: none;
         outline: none !important;
+        border-radius: 0;
         &:hover{
             border: none !important;
             outline: none !important;
@@ -12,4 +13,20 @@
             border: none;
         }
     }
+}
+
+.add-content-w{
+    .input-w{
+        background-color: rgba(243,244,246,255);
+        border: none;
+        outline: none !important;
+        border-radius: 0;
+        &:hover{
+            border: none !important;
+            outline: none !important;
+        }
+        &:focus{
+            border: none;
+        }
+    } 
 }

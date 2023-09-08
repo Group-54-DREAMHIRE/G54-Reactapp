@@ -26,6 +26,7 @@ const { Title, Text, Link } = Typography;
 
 const customList = [
   {
+    id:1,
     icon: <UserOutlined />,
     title: "Profile",
     value: "profile",
@@ -33,6 +34,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
+    id:2,
     icon: "",
     title: "Education",
     value: "education",
@@ -40,6 +42,7 @@ const customList = [
       " Show off your primary education, college degrees & exchange semesters.",
   },
   {
+    id:3,
     icon: "",
     title: "Professional Experience",
     value: "professionalExperience",
@@ -47,6 +50,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
+    id:4,
     icon: "",
     title: "Projects",
     value: "projects",
@@ -54,6 +58,7 @@ const customList = [
       " A place to highlight your professional experience - including internships.",
   },
   {
+    id:5,
     icon: "",
     title: "Courses And Certifications",
     value: "coursesCertifications",
@@ -61,12 +66,14 @@ const customList = [
       "Drivers licenses and other industry-specific certificates you have belong here.",
   },
   {
+    id:6,
     icon: "",
     title: "Skills",
     value: "skills",
     content: " List your technical, managerial or soft skills in this section.",
   },
   {
+    id:7,
     icon: "",
     title: "Volunteer Experience",
     value: "volunteerExperience",
@@ -74,6 +81,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
+    id:8,
     icon: "",
     title: "Other Qualifications",
     value: "otherQualification",
@@ -81,6 +89,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
+    id:9,
     icon: "",
     title: "Reference",
     value: "reference",
@@ -88,16 +97,27 @@ const customList = [
       "If you have former colleagues or bosses that vouch for you, list them.",
   },
 ];
-export default function CustomContentModel() {
+export default function CustomContentModel({addContentData}) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.models.customContent);
+  const handleClick =(value)=>{
+    const data = {
+      id:value.id,
+      title:value.title,
+      subTitle: "",
+      city: "",
+      Country: "",
+    }
+    addContentData.setContentData([...addContentData.contentData,data]);
+    dispatch(closeCustomContent());
+    console.log(value);
+  }
   return (
     <>
       <Modal
         style={{ top: "20px" }}
         open={isOpen}
         width={window.innerWidth < 768 ? "100%" : "1300px"}
-        //centered
         onCancel={() => dispatch(closeCustomContent())}
         footer={[]}
       >
@@ -111,7 +131,7 @@ export default function CustomContentModel() {
                 return (
                   <Col span={6}>
                     <Card
-                    onClick={()=>{dispatch(closeCustomContent());console.log(item.value)}}
+                    onClick={()=>{handleClick(item)}}
                       style={{ backgroundColor: "rgba(243,244,246,255)" }}
                       hoverable>
                       <Title level={5}>
