@@ -104,9 +104,14 @@ export default function CustomContentModel({addContentData}) {
     const data = {
       id:value.id,
       title:value.title,
-      subTitle: "",
-      city: "",
-      Country: "",
+      children:[
+        {
+          title:"",
+          subTitle: "",
+          city: "",
+          Country: "",
+        }
+      ]
     }
     addContentData.setContentData([...addContentData.contentData,data]);
     dispatch(closeCustomContent());

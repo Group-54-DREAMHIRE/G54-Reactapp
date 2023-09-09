@@ -32,7 +32,7 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
                       margin: "0",
                       fontSize: "20px",
                       fontWeight: "800",
-                      color: "rgba(0,0,0,.4)",
+                      //color: "rgba(0,0,0,.4)",
                     }}
                   >
                     {viewEditPersonalData.name === null
