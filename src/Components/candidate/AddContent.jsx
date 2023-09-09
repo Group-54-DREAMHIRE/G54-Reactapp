@@ -1,5 +1,5 @@
 import { Card, Col, Row, Typography, Input, Space, Button } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CameraOutlined,
   UserOutlined,
@@ -22,7 +22,16 @@ const { Title, Text } = Typography;
 export default function AddContent({addContentData}) {
   const activeLink = useSelector((state)=>state.models.addLink);
   const dispatch = useDispatch();
-  const currentData = addContentData.contentData[addContentData.activeContent];
+  const [activeData, setActiveData] = useState({});
+  // const currentList = addContentData.contentData[addContentData.activeContent.index];
+  // const currentData = currentList.children[addContentData.activeContent.key];
+  useEffect(() => {
+    setActiveData(addContentData.activeContent)
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const handleAdd =()=>{
     dispatch(closeAddLink());
   }
@@ -75,7 +84,7 @@ export default function AddContent({addContentData}) {
           <Card
             title={
               <Text style={{ fontSize: "22px", fontWeight: "800" }}>
-                Create {currentData.title}
+                Create {activeData.title}
               </Text>
             }
             style={{ boxShadow: "0 0 30px rgba(0,0,0,.1)", padding: "3% 0" }}

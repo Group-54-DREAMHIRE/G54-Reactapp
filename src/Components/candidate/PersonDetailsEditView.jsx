@@ -15,7 +15,9 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
   const dispatch = useDispatch();
   return (
     <>
-      <Row onClick={() => dispatch(openViewEditDetails())}>
+      <Row 
+        className="personal-details-edit-view-w"
+        onClick={() => dispatch(openViewEditDetails())}>
         <Col span={24}>
           <Card
             hoverable
@@ -28,12 +30,7 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               <Col span={24}>
                 <Row justify="space-between">
                   <Text
-                    style={{
-                      margin: "0",
-                      fontSize: "20px",
-                      fontWeight: "800",
-                      //color: "rgba(0,0,0,.4)",
-                    }}
+                    className={viewEditPersonalData.name===null?"hasnot-name-w":"has-name-w"} 
                   >
                     {viewEditPersonalData.name === null
                       ? "Your Name"
@@ -50,11 +47,7 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  style={{
-                    margin: "0",
-                    fontSize: "16px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
+                  className={viewEditPersonalData.email===null?"hasnot-content-w":"has-content-w"} 
                 >
                   <Space>
                     <MailOutlined />
@@ -66,11 +59,7 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  style={{
-                    margin: "0",
-                    fontSize: "16px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
+                  className={viewEditPersonalData.phone===null?"hasnot-content-w":"has-content-w"}
                 >
                   <Space>
                     <PhoneOutlined />
@@ -82,11 +71,7 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  style={{
-                    margin: "0",
-                    fontSize: "16px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
+                  className={viewEditPersonalData.address===null?"hasnot-content-w":"has-content-w"}
                 >
                   <Space>
                     <FiMapPin />

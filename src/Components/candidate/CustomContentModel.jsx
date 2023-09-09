@@ -21,12 +21,12 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { closeCustomContent } from "../../store/models/modelsSlice";
+import { closeCustomContent, openAddContent } from "../../store/models/modelsSlice";
 const { Title, Text, Link } = Typography;
 
 const customList = [
   {
-    id:1,
+    key:0,
     icon: <UserOutlined />,
     title: "Profile",
     value: "profile",
@@ -34,7 +34,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
-    id:2,
+    key:1,
     icon: "",
     title: "Education",
     value: "education",
@@ -42,7 +42,7 @@ const customList = [
       " Show off your primary education, college degrees & exchange semesters.",
   },
   {
-    id:3,
+    key:2,
     icon: "",
     title: "Professional Experience",
     value: "professionalExperience",
@@ -50,7 +50,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
-    id:4,
+    key:3,
     icon: "",
     title: "Projects",
     value: "projects",
@@ -58,7 +58,7 @@ const customList = [
       " A place to highlight your professional experience - including internships.",
   },
   {
-    id:5,
+    key:4,
     icon: "",
     title: "Courses And Certifications",
     value: "coursesCertifications",
@@ -66,14 +66,14 @@ const customList = [
       "Drivers licenses and other industry-specific certificates you have belong here.",
   },
   {
-    id:6,
+    key:5,
     icon: "",
     title: "Skills",
     value: "skills",
     content: " List your technical, managerial or soft skills in this section.",
   },
   {
-    id:7,
+    key:6,
     icon: "",
     title: "Volunteer Experience",
     value: "volunteerExperience",
@@ -81,7 +81,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
-    id:8,
+    key:7,
     icon: "",
     title: "Other Qualifications",
     value: "otherQualification",
@@ -89,7 +89,7 @@ const customList = [
       " Make a great first impression by presenting yourself in a few sentences.",
   },
   {
-    id:9,
+    key:8,
     icon: "",
     title: "Reference",
     value: "reference",
@@ -102,11 +102,12 @@ export default function CustomContentModel({addContentData}) {
   const isOpen = useSelector((state) => state.models.customContent);
   const handleClick =(value)=>{
     const data = {
-      id:value.id,
+      key:value.key,
       title:value.title,
       children:[
         {
-          title:"",
+          key:0,
+          title:value.title,
           subTitle: "",
           city: "",
           Country: "",
@@ -115,6 +116,13 @@ export default function CustomContentModel({addContentData}) {
     }
     addContentData.setContentData([...addContentData.contentData,data]);
     dispatch(closeCustomContent());
+    dispatch(openAddContent());
+    let activeCon = {
+      index:value.key,
+      key:0,
+      title:value.title
+    }
+    addContentData.setActiveContent(activeCon);
     console.log(value);
   }
   return (

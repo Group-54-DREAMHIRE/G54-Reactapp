@@ -30,3 +30,28 @@
         }
     } 
 }
+
+.personal-details-edit-view-w{
+    .has-name-w{
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        color: rgba(0,0,0,1);
+    }
+    .hasnot-name-w{
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        color: rgba(0,0,0,.4);
+    }
+    .hasnot-content-w{
+        margin: 0;
+        font-size: 16px;
+        color: rgba(0,0,0,.4);
+    }
+    .has-content-w{
+        margin: 0;
+        font-size: 16px;
+        color: rgba(0,0,0,1);
+    }
+}

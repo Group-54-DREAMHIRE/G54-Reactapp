@@ -27,7 +27,7 @@ const Resume = ({ viewPersonalData }) => {
           padding: "40px",
           transform: "scale(0.75)",
           transformOrigin: "top left",
-          width: "850px",
+          width: "900px",
         }}
       >
         <Col span={24}>
