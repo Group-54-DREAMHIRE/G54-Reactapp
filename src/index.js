@@ -20,7 +20,6 @@ root.render(
             colorBgContainer: 'white',
             colorBgTextHover: 'rgba(30,136,229,.1)',
             colorBgTextActive: 'rgba(30,136,229,1)',
-            // colorBgTextActive:"rgb(30,136,229)",
           },}}
         >
       <App />
