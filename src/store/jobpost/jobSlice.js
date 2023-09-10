@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     jobPosts:null,
+    activeId:0,
 }
 
 const jobSlice = createSlice({
@@ -16,10 +17,14 @@ const jobSlice = createSlice({
     },
     getJobPost: (state, action) => {
        state.jobPosts.find((jobPost) => jobPost.id === action.payload);
-    }
+    },
+    setActiveId: (state, action)=>{
+      state.activeId=action.payload;
+    },
   }  
 });
 
-export const { setJobPosts, addJobPost, getJobPost } = jobSlice.actions;
+export const { setJobPosts, addJobPost, getJobPost,setActiveId } = jobSlice.actions;
 export const getAllJobPosts = (state) => state.jobPost.jobPosts;
+export const getActiveId = (state) => state.jobPost.activeId;
 export default jobSlice.reducer;
