@@ -1,8 +1,15 @@
 import {Row, Divider, Typography, Tabs} from 'antd';
+import { useState,useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from "react-router-dom";
+import { getActiveId } from '../../store/jobpost/jobSlice';
 const { Title, } = Typography;
 
 export default function CandidatResumes() {
+  const dispatch = useDispatch();
+
+  const  id = useSelector((state)=>state.jobPost.activeId);
+
   const navigate = useNavigate();
   const onChange = (key) => {
     console.log(key);
@@ -19,10 +26,10 @@ export default function CandidatResumes() {
     onChange={onChange}
     type="card"
     items={[
-    {label: "Pending List", key: "/pendingresumes"},
-    {label: "Short List", key: "/shortlistresumes"},
-    {label: "Rejected List", key: "/rejectresumes"},
-    {label: "Canceled List", key: "/canceledresumes"}
+    {label: "Pending List", key: `/pendingresumes/${id}`},
+    {label: "Short List", key: `/shortlistresumes/${id}`},
+    {label: "Rejected List", key: `/rejectresumes/${id}`},
+    {label: "Canceled List", key: `/canceledresumes/${id}`}
     ]}/>
     <Outlet/>
     </>

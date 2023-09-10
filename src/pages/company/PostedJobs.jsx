@@ -4,41 +4,71 @@ import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getData } from '../../api/authenticationService';
+import moment from "moment";
+import { useDispatch } from 'react-redux';
+import { setActiveId } from '../../store/jobpost/jobSlice';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 function AdvertisementList() {
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
 
   const [page, setPage] = useState(1);
-  const [jobPosts, setJobPosts] = ([]);
+  const [jobPosts, setJobPosts] =useState ([]);
   const [pageSize, setPageSize] = useState(5);
   const [loading, setLoading] = useState(false);
+  const [skillList, setSkillList] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   useEffect(() => {
     setLoading(true);
-      getData(`/api/v1/jobpost/getAllJobsByCompanyId/${id}`)
+      getData(`/api/v1/jobpost/getjobs/${id}`)
         .then((response) => {
-          console.log(response.data);
-          setJobPosts(response.data);
-        
+         setJobPosts(response.data);
+          
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);
         });
-  }, []);
+  }, [id]);
+  useEffect(() => {
+    setLoading(true);
+    for(let i=0; i<jobPosts.length; i++){
+      const data = jobPosts[i];
+      console.log(data);
+      if (typeof data.tags === "string") {
+        const val = data.tags.split(" ,");
+        setSkillList(val)
+      } else {
+        setSkillList([]);
+      }
+      const listData ={
+        id:data.jobPostId,
+        jobTitle: data.jobTitle,
+        vacancies: data.numberOfVacancies,
+        closingDate:moment(data.deadline).format("YYYY-MM-DD") ,
+        status: !data.validate,
+        skills: skillList,
+        applications: data.numberOfApplicants,
+      }
+     const dataItem = [...dataSource]
+     dataItem[i]=listData;
+     setDataSource(dataItem);
+     }
+  }, [jobPosts]);
   const columns = [
     {
       title: 'Job Title',
       dataIndex: 'jobTitle',
-      key: 'jobTitle',
+      key: 'skills',
       render: (text, record) => (
         <>
           {text}
           <br />
-          {record.skills.map((skill) => (
+          {record.skills.slice(0,3).map((skill) => (
             <Tag color="blue" key={skill}>
               {skill}
             </Tag>
@@ -49,17 +79,17 @@ function AdvertisementList() {
     {
       title: 'No. of Vacancies',
       dataIndex: 'vacancies',
-      key: 'vacancies',
+      key: 'numberOfVacancies',
     },
     {
       title: 'Closing Date',
       dataIndex: 'closingDate',
-      key: 'closingDate'
+      key: 'deadline'
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      key: 'status',
+      key: 'validate',
       render: (status, record) => (
         <Switch
           checked={status}
@@ -71,15 +101,15 @@ function AdvertisementList() {
     },
     {
       title: "No. of Applications",
-      key: "view",
+      key: "numberOfVacancies",
       render: (text, record) => (
-        <Button type="primary">
-          <Link to={`/pendingresumes`}>{record.applications}</Link>
+        <Button type="primary" onClick={()=>dispatch(setActiveId(record.id))}>
+          <Link to={`/pendingresumes/${record.id}`}>{record.applications}</Link>
         </Button>
       ),
     },
     {
-      key: 'action',
+      key: 'jobPostId',
       title: 'Action',
       render: () => {
         return (
@@ -106,53 +136,7 @@ function AdvertisementList() {
       }
     }];
 
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '1',
-      jobTitle: 'Software Engineer',
-      vacancies: 15,
-      closingDate: 'September 15, 2023',
-      status: true,
-      skills: ["Java", "Python", "PHP"],
-      applications: 15,
-    },
-    {
-      key: '2',
-      jobTitle: 'Web Developer',
-      vacancies: 4,
-      closingDate: 'September 20, 2023',
-      status: false,
-      skills: ["HTML", "CSS", "JavaScript","Node.js"],
-      applications: 3,
-    },
-    {
-      key: '3',
-      jobTitle: 'Database Administrator',
-      vacancies: 3,
-      closingDate: 'October 15, 2023',
-      status: true,
-      skills: ["PostgreSQL", "Oracle"],
-      applications: 3,
-    },
-    {
-      key: '4',
-      jobTitle: 'Cybersecurity Analyst',
-      vacancies: 2,
-      closingDate: 'December 15, 2023',
-      status: false,
-      skills: ["Wireshark", "Nessus"],
-      applications: 1,
-    },
-    {
-      key: '5',
-      jobTitle: 'Network Engineer',
-      vacancies: 3,
-      closingDate: 'December 15, 2023',
-      status: false,
-      skills: [""],
-      applications: 2,
-    }
-  ]);
+ 
 
   const handleViewAdvertisement = (id) => {
     console.log("View advertisement with ID:", id);
@@ -165,7 +149,6 @@ function AdvertisementList() {
 
   return (
     <>
-    {id}
         <Row  className='container-n'justify='center' >
           <Col span={22}>
             <Row justify='space-between'>
