@@ -22,6 +22,9 @@ import InterviewDetails from "../pages/candidate/InterviewDetails";
 import CompanyPage from '../pages/CompanyPage';
 import OneFullCard from "../pages/OneFullEvent";
 import EventForm from "../Components/cards/company/EventForm";
+import CandidatePage from "../pages/CandidatePage";
+import Sheduled from '../pages/candidate/interviews/Sheduled';
+import ViewResume from "../Components/candidate/ViewResume";
 export default function CandidateRoutes() {
   return (
     <>
@@ -29,10 +32,15 @@ export default function CandidateRoutes() {
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<CandidateDashboard/>}/>
           <Route path="/profile" element={<CandidateProfile/>}/>
-          <Route path="/resume" element={<Resume/>}/>
+          <Route path="/resume" element={<ViewResume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
           <Route path="/appliedjob" element={<AppliedJob/>}/>
-          <Route path="/interview" element={<Interviews/>}/>
+          
+          <Route element={<Interviews/>}>
+            <Route path="/pendinginterviews" element={<InterviewDetails/>}/>
+            <Route path="/scheduledinterviews" element={<Sheduled/>}/>
+          </Route>
+
           <Route path="/interviewdetails" element={<InterviewDetails/>}/>
           <Route path="/selectiontest" element={<SelectionTest/>}/>
           <Route path="/savedjobs" element={<SavedJobs/>}/>
@@ -47,6 +55,7 @@ export default function CandidateRoutes() {
           <Route path="/companies" element={<Companies/>}/>
           <Route path="/company/:id" element={<CompanyPage/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
+          <Route path="/candidate/:id" element={<CandidatePage/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
           <Route path="/changepassword" element={<ChangePassword/>}/>
         </Route>

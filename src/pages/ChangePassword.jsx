@@ -7,18 +7,21 @@ import {
   Input,
   Button,
   Alert,
+  message,
+  Spin
 } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePasswordUser, getUser, success } from "../store/auth/userSlice";
+import { changePasswordUser, success } from "../store/auth/userSlice";
 import { useNavigate } from "react-router-dom";
+import { userChangePassword } from "../api/authenticationService";
 
 const { Title } = Typography;
 
 export default function () {
   const dispatch = useDispatch();
-  const { error, messageChange } = useSelector((state) => state.user);
-  const user = JSON.parse(useSelector(getUser));
+  const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("USER"));
 
   const navigate = useNavigate();
   const [oldp, setOldp] = useState("");
@@ -26,31 +29,33 @@ export default function () {
   const [confirmp, setConfirmp] = useState("");
 
   const handleChangePassword = async () => {
+    setLoading(true);
     let change = {
-      email: user.email,
+      email: user.systemUser.email,
       oldPassword: oldp,
       newPassword: newp,
     };
-    console.log(user.email);
-    dispatch(changePasswordUser(change)).then((result) => {
-      if (result.payload) {
+     try{
+      const response = await userChangePassword(change);
+      if (response.status == 200) {
         setOldp("");
         setNewp("");
         setConfirmp("");
-        setTimeout(
-          () => {
-            dispatch(success());
-            clearTimeout();
-          },
-          500,
-          1000
-        );
+        setLoading(false);
       }
-    });
+     }catch(e){
+      console.log(e.message);
+      message.error("Invalid password! try again!");
+      setOldp("");
+      setNewp("");
+      setConfirmp("");
+      setLoading(false);
+     }
   };
 
   return (
     <>
+      <Spin spinning={loading}>
       <Row style={{ padding: "3%", height: "75vh" }}>
         <Col span={24}>
           <Row justify="center">
@@ -118,14 +123,11 @@ export default function () {
                   </Col>
                 </Row>
               </Form>
-              {messageChange && (
-                <Alert message={messageChange} type="success" showIcon />
-              )}
-              {error && <Alert message={error} type="error" showIcon />}
             </Col>
           </Row>
         </Col>
       </Row>
+      </Spin>
     </>
   );
 }

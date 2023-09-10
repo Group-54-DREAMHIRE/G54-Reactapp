@@ -21,14 +21,14 @@ export default function InterviewDetails() {
     <>
       <Row>
         <Col style={{ padding: "2% 3%", minHeight: "75vh" }} span={24}>
-          <Row gutter={[0, 20]} justify="space-between">
+          <Row gutter={[0, 20]} >
             <Col span={24}>
               <Title level={3} style={{ marginTop: "0", marginBottom: "10px" }}>
                 Interview Details
               </Title>
               <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
             </Col>
-            <Col span={11}>
+            <Col span={12}>
               <Row align="bottom" gutter={[0, 15]}>
                 <Col span={14}>
                   <Text
@@ -42,7 +42,7 @@ export default function InterviewDetails() {
                   </Text>
                   <Text style={textStyle}>Creative Software</Text>
                 </Col>
-                <Col span={10}>
+                <Col span={24}>
                   <Text
                     style={{
                       marginRight: "6px",
@@ -93,14 +93,14 @@ export default function InterviewDetails() {
                 </Col>
               </Row>
             </Col>
-            <Col span={11}>
+            <Col span={12}>
               <Row>
                 <Col span={24}>
                   <Title style={{ margin: "0" }} level={4}>
                     Select a time slot and confirm
                   </Title>
                 </Col>
-                <Col>
+                <Col span={16}>
                   <Card
                     style={{
                       borderRadius: "0",

@@ -1,86 +1,54 @@
-import { Row, Col } from "antd";
+import { Row, Col, Empty } from "antd";
+import { List } from 'react-content-loader';
 import CandidateCard from "../Components/cards/candidate/CandidateCard";
-import lahiru from '../assets/images/lahiru.png';
-import danuka from '../assets/images/danuka.jpg';
-import anjana from '../assets/images/anjana.jpg';
-import nishan from '../assets/images/Nishan.jpg';
-import vishmi from '../assets/images/vishmi.jpg';
-import dula from '../assets/images/dula.jpeg';
-const items = [
-  {
-    profileImageUrl:anjana,
-    name: "Anjana Nanayakkara",
-    jobTitle: "Software Engineer",
-    skills: ["java", "react", "javascript", "github"],
-    location: "Matara",
-    currency: "USD$",
-    minSalary: "700",
-    maxSalary: "1200",
-  },
-  {
-    profileImageUrl:lahiru,
-    name: "Lahiru Sampath",
-    jobTitle: "Software Engineer",
-    skills: ["python", "aws", "angular", "html"],
-    location: "Matara",
-    currency: "USD$",
-    minSalary: "600",
-    maxSalary: "1100",
-  },
-  {
-    profileImageUrl:vishmi,
-    name: "Vishmi Viraji",
-    jobTitle: "React Developper",
-    skills: ["html", "react", "javascript", "github"],
-    location: "Tangalle",
-    currency: "USD$",
-    minSalary: "700",
-    maxSalary: "1200",
-  },
-  {
-    profileImageUrl:danuka,
-    name: "Dhanuka Iroshan",
-    jobTitle: "Frontend Developer",
-    skills: ["javascript", "aws", "angular", "html"],
-    location: "Matara",
-    currency: "USD$",
-    minSalary: "500",
-    maxSalary: "1000",
-  },
-  {
-    profileImageUrl:nishan,
-    name: "Nishan Madhushanka",
-    jobTitle: "Backend Developer",
-    skills: ["java", "python", "javascript", "googlecloud"],
-    location: "Matara",
-    currency: "USD$",
-    minSalary: "600",
-    maxSalary: "1000",
-  },
-  {
-    profileImageUrl:dula,
-    name: "Dulanjana Weerasinghe",
-    jobTitle: "Full Stack Developer",
-    skills: ["java", "react", "javascript", "github"],
-    location: "Matara",
-    currency: "USD$",
-    minSalary: "500",
-    maxSalary: "1250",
-  },
-];
+import { getAllCandidates, setCandidates } from "../store/candidate/candidateSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../api/authenticationService";
 
 export default function Candidates() {
+  const dispatch = useDispatch();
+  const [candidateData, setCandidateData] = useState([]);
+  const [loading, setLoading]= useState(false);
+  const candidates = useSelector(getAllCandidates);
+  useEffect(() => {
+    setLoading(true);
+    if (candidates === null) {
+      getData("/api/v1/candidate/getAllCandidates")
+        .then((response) => {
+          console.log(response);
+          console.log(response.data);
+          setCandidateData(response.data);
+          console.log(candidateData);
+          dispatch(setCandidates(response.data));
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+      console.log(candidates);
+    } else {
+      setCandidateData(candidates);
+      setLoading(false);
+    }
+  }, []);
   return (
     <>
-      <Row style={{ padding: "5%" }} gutter={[30,30]}>
-        {items.map((item, index) => {
+      {loading?<List/>:
+      (<Row style={{ padding: "5%" }} gutter={[30,30]}>
+        {JSON.stringify(candidateData) === "[]" ? (
+                <Col span={24}>
+                  <Empty />
+                </Col>
+              ) : (
+        candidateData.map((item, index) => {
           return (
             <Col span={11}>
               <CandidateCard items={item} />
             </Col>
           );
-        })}
-      </Row>
+        }))}
+      </Row>)}
     </>
   );
 }

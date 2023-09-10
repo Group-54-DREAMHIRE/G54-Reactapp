@@ -11,7 +11,7 @@ const jobSlice = createSlice({
     setJobPosts: (state,action) => {
       state.jobPosts = action.payload;
     },
-    addJobPost: (state, action) => {
+    addJobPost: (state, action)=>{
         state.jobPosts.push(action.payload);
     },
     getJobPost: (state, action) => {

@@ -1,12 +1,4 @@
 .container-n {
-    display: block;
-    width: 90%;
-    margin: 20px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 4px 4px rgba(30, 136, 2229, .2);
-    background-color: #ffffff;
-
     .ant-divider-horizontal{
         margin: 12px 0;
     }
@@ -26,7 +18,7 @@
             background-color: rgba(242, 250, 250, 1);
         }
         .ant-table-tbody, .ant-table-thead {
-            box-shadow: 0 0 10px rgba(30,136, 2229,.4);
+            box-shadow: 0 0 20px rgba(0,0,0,.1);
         }
         
     }

@@ -1,34 +1,52 @@
 import { Button, Menu, Row, Col,ConfigProvider } from 'antd';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
-import  SidebarItems from '../../store/demo/sidebarItems';
-const Sidebar = () => {
+import  {adminSidebar} from '../../store/demo/adminSidebar';
+import {candidateSidebar} from '../../store/demo/candidateSidebar';
+import { companySidebar } from '../../store/demo/companySidebar';
+import { setCollapsed } from '../../store/models/modelsSlice';
+export default function Sidebar (){
+
+    const [sidebar, setSidebar] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userType = localStorage.getItem("USERTYPE");
    
     const onClick = ({ key }) => {
         if(key === "logout"){
             dispatch(logout());
             localStorage.clear();
-            navigate("/");
-            window.location.reload();
-            console.log("Log out Succesfully!");
+            window.location.href = "/";
+            console.log("log out successfully");
+
+            
+        }else{
+            navigate(key);
         }
-        navigate(key);
+        
     };
 
-    const [collapsed, setCollapsed] = useState(true);
+    const collapsed = useSelector((state)=>state.models.collapsed);
+
     const toggleCollapsed = (e) => {
-        setCollapsed(!collapsed);
+        dispatch(setCollapsed(collapsed));
     };
-
+    useEffect(() => {
+        if(userType==="candidate"){
+            setSidebar(candidateSidebar);
+        }else if(userType==="company"){
+            setSidebar(companySidebar);
+        }else if(userType==="admin"){
+            setSidebar(adminSidebar);
+        }
+    }, []);
     return (
         <>
          <ConfigProvider
@@ -45,7 +63,9 @@ const Sidebar = () => {
                 backgroundColor: 'white',
                 minWidth: collapsed ? '60px' : "245px",
                 left: '0',
-                height: '100vh'
+                overflow: 'auto',
+                scrollbarWidth: '0',
+                maxHeight: '88vh'
             }} className='sidebar-main-w'>
                 <Col span={24}>
                     <Row style={{
@@ -76,7 +96,7 @@ const Sidebar = () => {
                                        }}      
                                 mode="inline"
                                 inlineCollapsed={collapsed}
-                                items={SidebarItems}
+                                items={sidebar}
                                 onClick={onClick} />
                                 
                         </Col>
@@ -88,4 +108,3 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
