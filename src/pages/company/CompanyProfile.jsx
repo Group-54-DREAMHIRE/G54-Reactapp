@@ -42,6 +42,7 @@ const textStyle = {
   fontSize: "16px",
   lineHeight: "27px",
 };
+
 export default function CompanyProfile() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("USER"));
