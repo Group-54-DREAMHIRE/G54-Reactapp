@@ -22,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCustomContent, openAddContent } from "../../store/models/modelsSlice";
+import { useState } from "react";
 const { Title, Text, Link } = Typography;
 
 const customList = [
@@ -100,30 +101,50 @@ const customList = [
 export default function CustomContentModel({addContentData}) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.models.customContent);
+  const [currDay, setCurrDay] =useState(new Date());
   const handleClick =(value)=>{
-    const data = {
-      key:value.key,
-      title:value.title,
-      children:[
-        {
-          key:0,
+      for(let i=addContentData.contentData.length ; i<addContentData.contentData.length + 1; i++){
+        const data = {
+          key:i,
+          id:value.key,
           title:value.title,
-          subTitle: "",
-          city: "",
-          Country: "",
+          description:"",
+          children:[
+            {
+              key:0,
+              title:"",
+              link: "",
+              subTitle: "",
+              city: "",
+              country: "",
+              start:currDay,
+              hasStart:false,
+              showStartMonth:false,
+              end:currDay,
+              hasEnd:false,
+              showEndMonth:false,
+              present:false,
+              description:"",
+            }
+          ]
         }
-      ]
-    }
-    addContentData.setContentData([...addContentData.contentData,data]);
-    dispatch(closeCustomContent());
-    dispatch(openAddContent());
-    let activeCon = {
-      index:value.key,
-      key:0,
-      title:value.title
-    }
-    addContentData.setActiveContent(activeCon);
-    console.log(value);
+        const conData = [...addContentData.contentData];
+        conData[i]=data;
+        function compareById(a, b) {
+          return a.id - b.id;
+        }
+      let newData =  conData.slice().sort(compareById);
+        addContentData.setContentData(newData);
+        dispatch(closeCustomContent());
+        dispatch(openAddContent());
+        let activeCon = {
+          index:i,
+          key:0,
+          title:value.title
+        }
+        
+        addContentData.setActiveContent(activeCon);
+      }
   }
   return (
     <>

@@ -1,6 +1,6 @@
 import dula from "../../assets/images/dula.jpeg";
 import React, { useState } from "react";
-import { Layout, Row, Col, Typography, Divider, Image, Button } from "antd";
+import { Layout, Row, Col, Typography, Divider, Image, Button, Space } from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -12,6 +12,7 @@ import { FiMapPin, FiEdit } from "react-icons/fi";
 import CustomContentModel from "../../Components/candidate/CustomContentModel";
 import { useDispatch } from "react-redux";
 import { openCustomContent } from "../../store/models/modelsSlice";
+import ShowContent from "../../Components/candidate/ShowContent";
 
 const { Content } = Layout;
 const { Title, Text, Link } = Typography;
@@ -27,7 +28,7 @@ const Resume = ({ viewPersonalData }) => {
           padding: "40px",
           transform: "scale(0.75)",
           transformOrigin: "top left",
-          width: "900px",
+          width: "800px",
         }}
       >
         <Col span={24}>
@@ -108,6 +109,18 @@ const Resume = ({ viewPersonalData }) => {
                 />
               </Col>
             )}
+          </Row>
+          <Row>
+            <Col span={24}>
+            {viewPersonalData.contentData&& (
+              viewPersonalData.contentData.map((item)=>{
+                const data = viewPersonalData.contentData;
+                return(
+                  <ShowContent item={item} contentData={data}/>
+                )
+              })
+            )}
+            </Col>
           </Row>
         </Col>
       </Row>

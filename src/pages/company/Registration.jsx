@@ -221,7 +221,7 @@ const CompanyRegistration = () => {
               </Row>
 
               {!approval &&  !reject &&
-                (hasResistration ? (
+                (!hasResistration ? (
                   <Row style={{ marginTop: "5%" }} justify="center" gutter={20}>
                     <Col span={24}>
                       <Form.Item

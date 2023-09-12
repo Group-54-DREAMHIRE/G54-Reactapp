@@ -90,6 +90,7 @@ export default function ViewResume() {
     githubLabel,
     websiteLabel,
     discodeLabel,
+    contentData,
   };
   const viewEditPersonalData = {
     name,
@@ -124,8 +125,18 @@ export default function ViewResume() {
   };
   return (
     <>
-      <Row gutter={10}>
-        <Col span={12}>
+      <Row 
+        gutter={10} 
+        style={{
+          overflow:"hidden",
+          display: 'flex',
+          height: '80vh'
+        }}>
+        <Col span={12}  style={{
+         overflowY: "scroll",
+         flex:1,
+         height:'100%'
+        }}>
           <Row gutter={[20, 20]}>
             {!addContent && (
               <Col span={22}>
@@ -161,7 +172,7 @@ export default function ViewResume() {
                                 cursor: "pointer",
                               }}
                               ghost
-                              collapsible="icon"
+                              collapsible="header"
                               expandIconPosition="end"
                               //defaultActiveKey={["1"]}
                               items={[
@@ -213,7 +224,7 @@ export default function ViewResume() {
                                                     fontWeight: "700",
                                                   }}
                                                 >
-                                                  {item.title}
+                                                  {item.title===""?subTitle:item.title}
                                                 </Text>
                                               </Col>
                                             </>
@@ -265,7 +276,11 @@ export default function ViewResume() {
             </Col>
           </Row>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{
+           overflowY: "auto",
+           height:'100',
+           flex:1,
+        }}>
           <Resume viewPersonalData={viewPersonalData} />
         </Col>
       </Row>
