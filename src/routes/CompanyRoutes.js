@@ -57,10 +57,10 @@ export default function CompanyRoutes() {
           <Route path='/jobpost/:id' element={<JobPost/>}/>
 
           <Route element={<CandidateResumes/>}>
-            <Route path="/pendingresumes" index element={<PendingResume/>} />
-            <Route path="/rejectresumes" element={<RejectResume/>} />
-            <Route path="/shortlistresumes" element={<ShortListResume/>} />
-            <Route path="/canceledresumes" element={<CanceledResume/>} />
+            <Route path="/pendingresumes/:id" index element={<PendingResume/>} />
+            <Route path="/rejectresumes/:id" element={<RejectResume/>} />
+            <Route path="/shortlistresumes/:id" element={<ShortListResume/>} />
+            <Route path="/canceledresumes/:id" element={<CanceledResume/>} />
           </Route>
 
           <Route path="/postedevents" element={<PostedEvents/>}/>

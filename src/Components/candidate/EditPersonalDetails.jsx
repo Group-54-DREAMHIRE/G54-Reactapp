@@ -39,14 +39,14 @@ export default function EditPersonalDetails({editPersonalData}) {
       label: "LinkedIn",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
-      value: "editPersonalData.setLinkedInLabel"
+      value: editPersonalData.linkedInLabel
     },
     {
       key: 2,
       label: "Twitter",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
-      value:`${editPersonalData.setTwitterInLabel}`
+      value:`${editPersonalData.twitterInLabel}`
     },
     {
       key: 3,
@@ -67,7 +67,7 @@ export default function EditPersonalDetails({editPersonalData}) {
       label: "Discode",
       icon: <LinkedinOutlined />,
       placeholder: "Enter Discode",
-      value:`${editPersonalData.setDiscodeLabel}`
+      value:editPersonalData.discodeLabel
     },
   ];
 
@@ -107,6 +107,20 @@ export default function EditPersonalDetails({editPersonalData}) {
       }else if(id===5){
         editPersonalData.setDiscodeLabel(value);
       }
+  }
+
+  const getValue = (id) =>{
+    if(id===1){
+     return  editPersonalData.linkedInLabel;
+    }else if(id===2){
+      return  editPersonalData.twitterLabel;
+    }else if(id===3){
+      return  editPersonalData.githubLabel;
+    }else if(id===4){
+      return  editPersonalData.websiteLabel;
+    }else if(id===5){
+      return  editPersonalData.discodeLabel;
+    }
   }
 
   const InputLink = ({id}) => {
@@ -389,6 +403,7 @@ export default function EditPersonalDetails({editPersonalData}) {
                             <Row gutter={10}>
                               <Col span={18}>
                                 <Input
+                                  value={getValue(items.id)}
                                   onChange={(e)=>{handleChange(items.key,e.target.value)}}
                                   className="input-w"
                                   placeholder={items.label}
@@ -464,6 +479,7 @@ export default function EditPersonalDetails({editPersonalData}) {
                 </Button>
                 <Button 
                   icon={<CheckOutlined />}
+                  onClick={()=>dispatch(closeViewEditDetails())}
                   size="large"
                   style={{
                     backgroundColor: 'rgba(25,103,210,255)',

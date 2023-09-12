@@ -26,21 +26,25 @@ export default function ApplyJob({ jobID }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isOpen = useSelector((state) => state.models.applyJob);
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [currency, setCurrency] = useState("USD$");
-  const [exsalary, setExSalary] = useState("");
+  const [name, setName] = useState(null);
+  const [title, setTitle] = useState(null)
+  const [city, setCity] = useState(null);
   const [tags, setTags] = useState([]);
-  const [tagList, setTaglist] = useState([""]);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [tagList, setTaglist] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
+  let change = name && city && email && phone;
+
   const handleApply = async () => {
     setLoading(true);
-    if (name && currency && exsalary) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
       setLoading(true);
       let applyJobData = {
         jobID,
@@ -48,9 +52,8 @@ export default function ApplyJob({ jobID }) {
         candidatePhone: phone,
         candidateEmail: email,
         candidateCity: city,
-        currency,
-        expectSalary: exsalary,
         tags: tagList,
+        jobTitle: title,
       };
       let data = {
         url: `/api/v1/applyjobcandidate/save/${id}`,
@@ -62,29 +65,12 @@ export default function ApplyJob({ jobID }) {
         if (response.status === 200) {
           setName("");
           setCity("");
-          setCurrency("");
-          setExSalary("");
           setTaglist([""]);
           setTags([]);
           setEmail("");
           setPhone("");
           navigate("/jobposts");
           message.success("Succesfully Applied");
-          setLoading(false);
-        } else {
-          if (response.data === "already applied") {
-            message.error("You are already registerd with this job!");
-          }
-          setName("");
-          setCity("");
-          setCurrency("");
-          setExSalary("");
-          setTaglist([""]);
-          setTags([]);
-          setEmail("");
-          setPhone("");
-          navigate(`/jobpost/${jobID}`);
-          message.error("There is an error! please, try again!");
           setLoading(false);
         }
       } catch (e) {
@@ -96,9 +82,7 @@ export default function ApplyJob({ jobID }) {
           setLoading(false);
           setName("");
           setCity("");
-          setCurrency("");
-          setExSalary("");
-          setTaglist([""]);
+          setTaglist([]);
           setTags([]);
           setEmail("");
           setPhone("");
@@ -106,10 +90,6 @@ export default function ApplyJob({ jobID }) {
           setLoading(false);
         }
       }
-    }else{
-      setLoading(false);
-      setErrorMsg("You must fill name and expect salary fields! Try again!");
-    }
   };
 
   return (
@@ -155,6 +135,18 @@ export default function ApplyJob({ jobID }) {
                       />
                     </Col>
                     <Col span={24}>
+                      <Title level={5}> Title</Title>
+                      <Input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        style={{
+                          boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
+                          borderRadius: "0",
+                          height: "35px",
+                        }}
+                      />
+                    </Col>
+                    <Col span={24}>
                       <Title level={5}> City</Title>
                       <Input
                         value={city}
@@ -163,41 +155,6 @@ export default function ApplyJob({ jobID }) {
                           boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
                           borderRadius: "0",
                           height: "35px",
-                        }}
-                      />
-                    </Col>
-                    <Col span={5}>
-                      <Title level={5} style={{}}>
-                        Currency
-                      </Title>
-                      <Select
-                        value={currency}
-                        onChange={(value) => setCurrency(value)}
-                        style={{
-                          width: "100%",
-                          boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
-                          borderRadius: "0",
-                          fontSize: "medium",
-                          fontFamily: "arial",
-                        }}
-                        options={currencies}
-                      />
-                    </Col>
-                    <Col span={18}>
-                      <Title level={5} style={{ textAlign: "right" }}>
-                        Expect Salary
-                      </Title>
-                      <Select
-                        allowClear
-                        value={exsalary}
-                        onChange={(values) => setExSalary(values)}
-                        options={salary}
-                        style={{
-                          width: "100%",
-                          boxShadow: " 0 0 10px 0 rgba(0,0,0,.1)",
-                          borderRadius: "0",
-                          fontSize: "medium",
-                          fontFamily: "arial",
                         }}
                       />
                     </Col>
@@ -248,6 +205,7 @@ export default function ApplyJob({ jobID }) {
                   </Row>
                   <Row justify="end">
                     <Button
+                      disabled={!change}
                       style={{ borderRadius: "0" }}
                       size="medium"
                       type="primary"
