@@ -9,13 +9,15 @@ import {
   DatePicker,
   Select,
   Checkbox,
+  Form,
+  message,
 
 } from "antd";
 import moment from 'moment';
 import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
+import { fetchUserData } from "../../api/authenticationService";
 import {
   CameraOutlined,
   UserOutlined,
@@ -35,7 +37,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   closeAddContent,
   closeAddLink,
+  closeLoading,
   openAddLink,
+  openLoading,
 } from "../../store/models/modelsSlice";
 import { months } from "../../store/demo/months";
 const { TextArea } = Input;
@@ -45,11 +49,9 @@ export default function AddContent({ addContentData }) {
   const activeLink = useSelector((state) => state.models.addLink);
   const dispatch = useDispatch();
   const [isProfile, setIsProfile] = useState(false);
-  const [start, setStart] = useState(true);
-  const [end, setEnd] = useState(new Date());
-  // const currentList = addContentData.contentData[addContentData.activeContent.index];
-  // const currentData = currentList.children[addContentData.activeContent.key];
 
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -107,24 +109,27 @@ export default function AddContent({ addContentData }) {
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].start = currentDateTime;
-    if(value){
+    if(conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].start){
       conData[addContentData.activeContent.index].children[
         addContentData.activeContent.key
       ].hasStart = true;
+    }else{
+      conData[addContentData.activeContent.index].children[
+        addContentData.activeContent.key
+      ].hasStart = false;
     }
     addContentData.setContentData(conData);
   };
   const handleStartYear = (date) => {
     let conData = [...addContentData.contentData];
-    const currentDateTime = moment(conData[addContentData.activeContent.index].children[
-      addContentData.activeContent.key
-    ].start).set({
-      year:date.year()
-    });
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
-    ].start = currentDateTime;
-    if(date){
+    ].start = date;
+    if(conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].start){
       conData[addContentData.activeContent.index].children[
         addContentData.activeContent.key
       ].hasStart = true;
@@ -133,8 +138,6 @@ export default function AddContent({ addContentData }) {
   };
 
   const handleStartYearOnly = (e) => {
-    setStart(e.target.checked)
-    // console.log(start)
     let conData = [...addContentData.contentData];
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
@@ -153,24 +156,27 @@ export default function AddContent({ addContentData }) {
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].end = currentDateTime;
-    if(value){
+    if(conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].end){
       conData[addContentData.activeContent.index].children[
         addContentData.activeContent.key
       ].hasEnd = true;
+    }else{
+      conData[addContentData.activeContent.index].children[
+        addContentData.activeContent.key
+      ].hasEnd = false;
     }
     addContentData.setContentData(conData);
   };
   const handleEndYear = (date) => {
     let conData = [...addContentData.contentData];
-    const currentDateTime = moment(conData[addContentData.activeContent.index].children[
-      addContentData.activeContent.key
-    ].end).set({
-      year:date.year()
-    });
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
-    ].end = currentDateTime;
-    if(date){
+    ].end = date;
+    if(conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].end){
       conData[addContentData.activeContent.index].children[
         addContentData.activeContent.key
       ].hasEnd = true;
@@ -200,6 +206,33 @@ export default function AddContent({ addContentData }) {
     ].description = html;
     addContentData.setContentData(conData);
   };
+
+  const handleSubmit = async() =>{
+    dispatch(openLoading());
+    let data = {
+      url: `/api/v1/resume/save/${id}`,
+      data: addContentData.contentData,
+      method: "post",
+    };
+    try {
+      const response = await fetchUserData(data);
+      if (response.status === 200) {
+        message.success("Succesfully updated");
+        dispatch(closeLoading());
+        dispatch(closeAddContent())
+      } else {
+        message.error("Invalid Data!Try Again!");
+        dispatch(closeLoading());
+        dispatch(closeAddContent())
+      }
+    } catch (e) {
+      console.log(e);
+      message.error("Invalid Data!Try Again!");
+      dispatch(closeLoading());
+      dispatch(closeAddContent())
+    }
+
+  }
 
   const InputLink = () => {
     const [value, setValue] = useState(
@@ -270,6 +303,7 @@ export default function AddContent({ addContentData }) {
     <>
       <Row className="add-content-w">
         <Col span={24}>
+          <Form onFinish={handleSubmit}>
           <Card
             title={
               <Text style={{ fontSize: "22px", fontWeight: "800" }}>
@@ -443,6 +477,15 @@ export default function AddContent({ addContentData }) {
                     </Text>
                   </Title>
                   <Row gutter={[5,15]}>
+                  <Col span={10}>
+                      <DatePicker
+                        onChange={handleStartYear}
+                        size="large"
+                        className="input-w"
+                        placeholder="Year"
+                        picker="year"
+                      />
+                    </Col>
                     <Col span={14}>
                       <Select
                         size="large"
@@ -455,15 +498,7 @@ export default function AddContent({ addContentData }) {
                       />
                     </Col>
 
-                    <Col span={10}>
-                      <DatePicker
-                        onChange={handleStartYear}
-                        size="large"
-                        className="input-w"
-                        placeholder="Year"
-                        picker="year"
-                      />
-                    </Col>
+                   
                     <Col span={24}>
                     <Checkbox
                         checked={ 
@@ -492,6 +527,15 @@ export default function AddContent({ addContentData }) {
                     </Text>
                   </Title>
                   <Row gutter={[5,15]}>
+                  <Col span={10}>
+                      <DatePicker
+                        size="large"
+                        className="input-w"
+                        placeholder="Year"
+                        picker="year"
+                        onChange={handleEndYear}
+                      />
+                    </Col>
                     <Col span={14}>
                       <Select
                         size="large"
@@ -504,15 +548,7 @@ export default function AddContent({ addContentData }) {
                       />
                     </Col>
 
-                    <Col span={10}>
-                      <DatePicker
-                        size="large"
-                        className="input-w"
-                        placeholder="Year"
-                        picker="year"
-                        onChange={handleEndYear}
-                      />
-                    </Col>
+                    
                     <Col span={24}>
                     <Checkbox
                         checked={ 
@@ -583,11 +619,11 @@ export default function AddContent({ addContentData }) {
                   </Col>
                   <Col>
                     <Button
+                      htmlType="submit"
                       style={{ borderRadius: "0" }}
                       icon={<CheckOutlined />}
                       type="primary"
                       size="large"
-                      onClick={() => dispatch(closeAddContent())}
                     >
                       Save
                     </Button>
@@ -596,6 +632,7 @@ export default function AddContent({ addContentData }) {
               </Col>
             </Row>
           </Card>
+          </Form>
         </Col>
       </Row>
     </>

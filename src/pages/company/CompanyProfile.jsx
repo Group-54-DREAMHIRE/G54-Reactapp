@@ -160,6 +160,7 @@ export default function CompanyProfile() {
     setImageUpload(info.file.originFileObj);
     if (imageUpload) {
       info.file.status = "done";
+      setLogo(URL.createObjectURL(imageUpload));
     }
     setChange(true);
     console.log(logo);
@@ -188,7 +189,6 @@ export default function CompanyProfile() {
 
         await getDownloadURL(imageRef)
           .then((url) => {
-            setLogo(url);
             temp = url;
             console.log(logo);
           })

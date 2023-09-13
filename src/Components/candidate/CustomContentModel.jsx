@@ -101,50 +101,18 @@ const customList = [
 export default function CustomContentModel({addContentData}) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.models.customContent);
-  const [currDay, setCurrDay] =useState(new Date());
   const handleClick =(value)=>{
-      for(let i=addContentData.contentData.length ; i<addContentData.contentData.length + 1; i++){
-        const data = {
-          key:i,
-          id:value.key,
-          title:value.title,
-          description:"",
-          children:[
-            {
-              key:0,
-              title:"",
-              link: "",
-              subTitle: "",
-              city: "",
-              country: "",
-              start:currDay,
-              hasStart:false,
-              showStartMonth:false,
-              end:currDay,
-              hasEnd:false,
-              showEndMonth:false,
-              present:false,
-              description:"",
-            }
-          ]
-        }
         const conData = [...addContentData.contentData];
-        conData[i]=data;
-        function compareById(a, b) {
-          return a.id - b.id;
-        }
-      let newData =  conData.slice().sort(compareById);
-        addContentData.setContentData(newData);
+        conData[value.key].has=true;
+        addContentData.setContentData(conData);
         dispatch(closeCustomContent());
         dispatch(openAddContent());
         let activeCon = {
-          index:i,
+          index:value.key,
           key:0,
           title:value.title
         }
-        
         addContentData.setActiveContent(activeCon);
-      }
   }
   return (
     <>
