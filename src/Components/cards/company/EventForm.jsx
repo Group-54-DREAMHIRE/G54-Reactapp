@@ -1,14 +1,69 @@
 import React from 'react';
-import { Form, Input, Button, Card, Select, Upload, DatePicker, TimePicker, Row, Col } from 'antd';
+import { Form, Input, Button, Card, Select, Upload, DatePicker, TimePicker, Row, Col, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+
+import { storage } from "../../../api/firebase";
+import { useState, useEffect } from "react";
+import { fetchUserData, getProfileData } from "../../../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { saveEvent, setEvents } from "../../../store/event/eventSlice";
+import axios from 'axios';
 
 const { Option } = Select;
 
 const EventForm = () => {
-  const onFinish = (values) => {
-    console.log('Form values:', values);
-    // You can handle the form submission here
-  };
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [companyName, setCompanyName] = useState("");
+  const [title, setEventTitle] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setCompanyName(user.name);
+  }, [id]); 
+
+  const handleSubmit = async () => {
+    const eventData = {
+      systemUserID: user.systemUser.id,
+      companyName,
+      title
+    };
+
+    let data = {
+      url: `/api/v1/event/save/${id}`,
+      data: eventData,
+      method: "post",
+    };
+    try {
+      const response = await fetchUserData(data);
+      if(response.status === 200){
+        message.success("Successfully Updated");
+        setLoading(false);
+        console.log("before");
+        navigate("/jobposts");
+        console.log("after");
+        dispatch(saveEvent(response.data));
+      } else {
+        message.error("Invalid Data!");
+        navigate("/jobposts");
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+  }
+
+  // const onFinish = (values) => {
+  //   console.log('Form values:', values);
+  //   // You can handle the form submission here
+  // };
 
   return (
     <Card
@@ -18,24 +73,25 @@ const EventForm = () => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Form name="event_form" onFinish={onFinish} layout="vertical">
+      <Form name="event_form" onFinish={handleSubmit}layout="vertical">
         <Form.Item
           name="title"
           label="Title"
           rules={[{ required: true, message: "Please enter a title" }]}
         >
-          <Input />
+          <Input onChange={(e) => setEventTitle(e.target.value)}
+          value={title}/>
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           name="description"
           label="Description"
           rules={[{ required: true, message: "Please enter a description" }]}
         >
           <Input.TextArea />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           name="image"
           label="Image"
           valuePropName="fileList"
@@ -50,9 +106,9 @@ const EventForm = () => {
           >
             <Button icon={<UploadOutlined />}>Select Image</Button>
           </Upload>
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           name="tags"
           label="Tags"
           rules={[{ required: true, message: "Please enter tags" }]}
@@ -61,17 +117,17 @@ const EventForm = () => {
             mode="tags"
             style={{ width: "100%" }}
             placeholder="Enter tags separated by commas"
-          >
+          > */}
             {/* You can add predefined tags here, or leave it empty for user input */}
             {/* <Option value="tag1">Tag 1</Option>
             <Option value="tag2">Tag 2</Option>
             ... */}
-          </Select>
-        </Form.Item>
+          {/* </Select>
+        </Form.Item> */}
 
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
+          {/* <Col span={12}>
+           <Form.Item
               name="startTime"
               label="Start Time"
               rules={[
@@ -82,8 +138,8 @@ const EventForm = () => {
                 onChange={(time)=>console.log(time.format('HH:mm') )}
                 format="HH:mm" />
             </Form.Item>
-          </Col>
-          <Col span={12}>
+          </Col> */}
+          {/* <Col span={12}>
             <Form.Item
               name="endTime"
               label="End Time"
@@ -104,11 +160,11 @@ const EventForm = () => {
             >
               <DatePicker style={{ width: "100%" }} />
             </Form.Item>
-          </Col>
+          </Col> */}
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
+          {/* <Col span={12}>
             <Form.Item
               name="email"
               label="Email"
@@ -130,7 +186,7 @@ const EventForm = () => {
             >
               <Input />
             </Form.Item>
-          </Col>
+          </Col> */}
         </Row>
 
         <Form.Item>

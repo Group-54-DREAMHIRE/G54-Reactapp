@@ -143,15 +143,14 @@ function TakeQuiz({ questions }) {
   const [answers, setAnswers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
-
-  const onSubmit = () => {
-    setSubmitted(true);
-  };
-
   const onAnswerChange = (questionIndex, answer) => {
     const newAnswers = [...answers];
     newAnswers[questionIndex] = answer;
     setAnswers(newAnswers);
+  }
+
+  const onSubmit = () => {
+    setSubmitted(true);
   };
 
   return (
@@ -183,4 +182,3 @@ function TakeQuiz({ questions }) {
 }
 
 export default AddQuestions;
-

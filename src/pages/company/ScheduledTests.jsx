@@ -28,30 +28,21 @@ function AdvertisementList() {
       ),
     },
     {
-      title: 'No of vacancies',
-      dataIndex: 'vacancies',
-      key: 'vacancies',
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
-      title: 'No of Applications',
-      dataIndex: 'applications',
-      key: 'applications',
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
     },
-    // {
-    //   title: "View",
-    //   key: "view",
-    //   render: (text, record) => (
-    //     <Button type="primary" onClick={() => handleViewAdvertisement(record.id)}>
-    //       View
-    //     </Button>
-    //   ),
-    // },
     {
-      title: "Selection Test",
-      key: "selectionTest",
+      title: "Question Paper",
+      key: "view",
       render: (text, record) => (
-        <Button type="primary">
-          <Link to={`/scheduletests/createtest`}>Create</Link>
+        <Button type="primary" onClick={() => handleViewAdvertisement(record.id)}>
+          View
         </Button>
       ),
     },
@@ -61,36 +52,36 @@ function AdvertisementList() {
     {
       key: '1',
       jobTitle: 'Software Engineer',
-      vacancies: 20,
-      applications: 15,
+      date: '20 october 2023',
+      time: '8:00AM - 8:30AM',
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '2',
       jobTitle: 'Software Engineer',
-      vacancies: 13,
-      applications: 10,
+      date: '20 october 2023',
+      time: '8:00AM - 8:30AM',
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '3',
       jobTitle: 'Web Developer',
-      vacancies: 8,
-      applications: 4,
+      date: '20 october 2023',
+      time: '8:00AM - 8:30AM',
       skills: ["HTML", "CSS", "JavaScript"],
     },
     {
       key: '4',
       jobTitle: 'Software Engineer',
-      vacancies: 5,
-      applications: 3,
+      date: '20 october 2023',
+      time: '8:00AM - 8:30AM',
       skills: ["Java", "Python", "PHP"],
     },
     {
       key: '5',
       jobTitle: 'Web Developer',
-      vacancies: 10,
-      applications: 4,
+      date: '20 october 2023',
+      time: '8:00AM - 8:30AM',
       skills: ["HTML", "CSS", "JavaScript"],
     },
   ]);
@@ -119,7 +110,7 @@ function AdvertisementList() {
                 fontSize: '25px',
                 fontWeight: 600,
               }}>
-                Schedule Selection Tests
+                Scheduled Selection Tests
               </Title>
             </Col>
             <Col span={6}>
