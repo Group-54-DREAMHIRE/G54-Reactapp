@@ -161,9 +161,12 @@ export default function Profile() {
   };
 
   const handleFileChange = (info) => {
+
+    console.log(info.file.originFileObj);
     setImageUpload(info.file.originFileObj);
     if (imageUpload) {
       info.file.status = "done";
+      setProfilePicture(URL.createObjectURL(imageUpload));
     }
     console.log(info.file.originFileObj);
     setChange(true);
