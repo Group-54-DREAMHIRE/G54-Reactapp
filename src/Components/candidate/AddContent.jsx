@@ -231,7 +231,33 @@ export default function AddContent({ addContentData }) {
       dispatch(closeLoading());
       dispatch(closeAddContent())
     }
-
+  }
+  const handleDelete = ( ) =>{
+    let  conData = [...addContentData.contentData];
+    if(addContentData.activeContent.key===0){
+      conData[addContentData.activeContent.index].has=false;
+    }
+    const data = {
+      key: 0,
+      has:false,
+      title: null,
+      link: null,
+      subTitle: null,
+      city: null,
+      country: null,
+      start: null,
+      hasStart: false,
+      showStartMonth:true,
+      end: null,
+      hasEnd: false,
+      showEndMonth:true,
+      present: false,
+      description: null,
+    }
+    
+      conData[addContentData.activeContent.index].children[addContentData.activeContent.key] =  data;
+      addContentData.setContentData(conData);
+      dispatch(closeAddContent());
   }
 
   const InputLink = () => {
@@ -605,14 +631,23 @@ export default function AddContent({ addContentData }) {
                 </Col>
               </Row>
             )}
-            <Row style={{ marginTop: "5%" }}>
-              <Col span={24}>
+            <Row justify='space-between' style={{ marginTop: "5%" }}>
+              <Col>
+              <Button 
+                onClick={handleDelete}
+                icon={<DeleteOutlined />}
+                style={{ borderRadius: "0", color: 'red' }}
+                size="large">
+                Delete
+              </Button>
+              </Col>
+              <Col>
                 <Row justify="end" gutter={20}>
                   <Col>
                     <Button
                       style={{ borderRadius: "0" }}
                       size="large"
-                      onClick={() => dispatch(closeAddContent())}
+                      onClick={()=> dispatch(closeAddContent())}
                     >
                       Cancel
                     </Button>

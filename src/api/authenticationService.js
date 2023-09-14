@@ -75,5 +75,12 @@ export const fetchUserData = (authRequest) => {
       },
     });
   }
+  else if (authRequest.method === "delete") {
+    return axios.delete(authRequest.url, {
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    });
+  }
 };
 

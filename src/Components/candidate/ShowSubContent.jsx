@@ -20,19 +20,16 @@ export default function ShowSubContent({ content }) {
             <Col span={17}>
               <Row>
                 <Col span={24}>
-                  <Link
-                    href={
-                      
-                        content.item.link
-                    }
-                  >
+                 {content.item.title &&
+                  <Link href={content.item.link}>
                     <Text strong>
                       {content.item.title}
                     </Text>
-                  </Link>
-                  <Text>
+                  </Link>}
+                  {content.item.subTitle &&
+                    <Text>
                     {content.item.subTitle}
-                  </Text>
+                  </Text>}
                 </Col>
                
               </Row>
@@ -77,6 +74,7 @@ export default function ShowSubContent({ content }) {
             </Col>
           </Row>
           <Row>
+         {content.item.description &&
           <Col span={24} style={{ width: "500px !important" }}>
                   <div
                     className=" format-text-w"
@@ -84,7 +82,7 @@ export default function ShowSubContent({ content }) {
                       __html: content.item.description,
                     }}
                   />
-                </Col>
+                </Col>}
           </Row>
         </Col>
       </Row>
