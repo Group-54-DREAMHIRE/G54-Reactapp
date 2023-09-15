@@ -4,13 +4,48 @@ import EventForm from "../Components/cards/company/EventForm"
 import PriceCard from "../pages/landing/cards/PriceCard"
 import OneFullCard from "./OneFullEvent"
 import { events } from "../store/demo/events"
-import { Col, Divider, Row, Typography, Button } from "antd"
+import { Col, Divider, Row, Typography, Button, Empty } from "antd"
 import { useNavigate } from "react-router-dom";
+import { fetchUserData, getData } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEvents, setEvents} from "../store/event/eventSlice"
+import { useEffect, useState } from "react";
 const {Title} = Typography;
 
 export default function Events() {
+  const dispatch = useDispatch();
+  const [allEventList, setAllEventList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [eventState, setEventState] = useState(null);
+  // const eventState = useSelector(getAllEvents);
+  // const collapsed = useSelector((state) => state.model.collapsed);
+
+  useEffect(() => {
+    setLoading(true);
+    if(eventState == null){
+      getData("/api/v1/event/getallevents")
+      .then((response) => {
+        console.log(response.data);
+        setAllEventList(response.data);
+        dispatch(setEvents(response.data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching event details:", error);
+      });
+      console.log(allEventList);
+    } else {
+      setAllEventList(eventState);
+      setLoading(false);
+    }
+  }, []);
+
   const userType = localStorage.getItem("USERTYPE");
   const navigate = useNavigate();
+  const handleChange = (value) => {
+    console.log(`selected ${value}`)
+  };
+
   let status = {
     save: userType === "candidate"? true:false,
     more: true,
@@ -37,13 +72,20 @@ const auth = userType === "company"? true:false;
                 )}
           <Col span={24}>
             <Row gutter={[10,40]} justify='center'>
-              {events.map((event)=>{
-                return(
-                  <Col span={20}>
-                    <EventCard event={event} status={status} />
-                  </Col>
-                )
-              })}
+              {JSON.stringify(allEventList) === "[]" ? (
+                <Col span={24}>
+                  <Empty />
+                </Col>
+              ) : (
+                allEventList.map((item, index) => {
+                  return(
+                    <Col span={20}>
+                      <EventCard key={index} items={item} status={status} />
+                    </Col>
+                  );
+                })
+              )}
+              
             </Row>
           </Col>
         </Row>

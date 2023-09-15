@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Tag, Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import moment from "moment/moment";
 
-
-export default function EventCard ({event,status}) {
+export default function EventCard ({items,status}) {
+  
+  const [postDate, setPostDate] = useState();
+  useEffect(() => {
+    const date = moment(items.date);
+    setPostDate(date.format("YYYY MM DD"));
+  }, []);
   const navigate = useNavigate();
   return (
-  
+
     <Card
       cover={
         <img
-          src={event.image}
+          src={items.cover}
           alt="Card Cover"
           style={{ objectFit: "cover", height: "220px" }}
         />
@@ -18,14 +24,14 @@ export default function EventCard ({event,status}) {
       style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)" }}
     >
       
-      <a href="your_link_url">{event.company}</a>
-      <h3>{event.title}</h3>
+      <a href="your_link_url">{items.companyName}</a>
+      <h3>{items.title}</h3>
       <p>
-        {event.description}
+        {items.description}
       </p>
 
       <div style={{ marginBottom: "12px" }}>
-        {event.participates.map((item, index)=>{
+        {items.participates.map((item, index)=>{
           return(
             <Tag color="blue" key={index}>
               {item}

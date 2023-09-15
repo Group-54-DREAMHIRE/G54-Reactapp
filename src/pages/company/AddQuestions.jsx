@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { Button, Modal, Form, Input, Select, Radio, Checkbox, Pagination } from 'antd';
 
 const { Option } = Select;
@@ -158,10 +158,10 @@ function TakeQuiz({ questions }) {
       <Form>
         <h1 style={{margin: '5px 0px'}}>Selection Test</h1>
         {questions.map((question, i) => (
-          <Form.Item key={i}>
+          <Form.Item key={i} >
             <h4>{question.questionNumber}.{question.question}</h4>
             {question.questionType === 'Multiple Choice' ? (
-              <Checkbox.Group
+              <Checkbox.Group 
                 options={question.options}
                 onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
               />

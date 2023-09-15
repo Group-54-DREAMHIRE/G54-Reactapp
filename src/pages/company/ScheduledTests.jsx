@@ -41,9 +41,9 @@ function AdvertisementList() {
       title: "Question Paper",
       key: "view",
       render: (text, record) => (
-        <Button type="primary" onClick={() => handleViewAdvertisement(record.id)}>
-          View
-        </Button>
+        <Button type="primary">
+          <Link to={`questionpaper`}>View</Link>        
+          </Button>
       ),
     },
     ];
