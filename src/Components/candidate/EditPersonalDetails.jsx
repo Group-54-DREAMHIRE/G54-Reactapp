@@ -9,8 +9,12 @@ import {
   Modal,
   Space,
   Button,
+  message,
+  Form
 } from "antd";
 import { useState } from "react";
+import { storage } from "../../api/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   CameraOutlined,
   UserOutlined,
@@ -28,25 +32,28 @@ import {
 import { AiOutlineLink } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
 import { useDispatch, useSelector } from "react-redux";
-import { closeAddLink, closeViewEditDetails, openAddLink } from "../../store/models/modelsSlice";
+import { closeAddLink, closeLoading, closeViewEditDetails, openAddLink, openLoading } from "../../store/models/modelsSlice";
+import { fetchUserData } from "../../api/authenticationService";
 const { Title, Text, Link } = Typography;
 export default function EditPersonalDetails({editPersonalData}) {
   const dispatch = useDispatch();
   const addLink = useSelector((state) => state.models.addLink);
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
   const linksList = [
     {
       key: 1,
       label: "LinkedIn",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
-      value: "editPersonalData.setLinkedInLabel"
+      value: editPersonalData.linkedInLabel
     },
     {
       key: 2,
       label: "Twitter",
       icon: <LinkedinOutlined />,
       placeholder: "Enter LinkedIn",
-      value:`${editPersonalData.setTwitterInLabel}`
+      value:`${editPersonalData.twitterInLabel}`
     },
     {
       key: 3,
@@ -67,7 +74,7 @@ export default function EditPersonalDetails({editPersonalData}) {
       label: "Discode",
       icon: <LinkedinOutlined />,
       placeholder: "Enter Discode",
-      value:`${editPersonalData.setDiscodeLabel}`
+      value:editPersonalData.discodeLabel
     },
   ];
 
@@ -109,6 +116,85 @@ export default function EditPersonalDetails({editPersonalData}) {
       }
   }
 
+  const getValue = (id) =>{
+    if(id===1){
+     return  editPersonalData.linkedInLabel;
+    }else if(id===2){
+      return  editPersonalData.twitterLabel;
+    }else if(id===3){
+      return  editPersonalData.githubLabel;
+    }else if(id===4){
+      return  editPersonalData.websiteLabel;
+    }else if(id===5){
+      return  editPersonalData.discodeLabel;
+    }
+  }
+  const handleSubmit =async()=>{
+    dispatch(openLoading());
+    let temp = null;
+    if (imageUpload) {
+      const imageRef = ref(storage, `dreamhire/candidates/resumes/${id}`);
+      await uploadBytes(imageRef, imageUpload)
+        .then(() => {
+          console.log(imageUpload);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+
+      await getDownloadURL(imageRef)
+        .then((url) => {
+          temp = url;
+          editPersonalData.setProfilePicture(url);
+          console.log(temp);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+    let sendData ={
+     name: editPersonalData.name,
+     profilePicture:temp,
+     phone: editPersonalData.phone,
+     jobTitle: editPersonalData.title,
+     email: editPersonalData.email,
+     address: editPersonalData.address,
+     linkedInLabel:editPersonalData.linkedInLabel,
+     twitterLabel:editPersonalData.twitterLabel,
+     githubLabel:editPersonalData.githubLabel,
+     websiteLabel:editPersonalData.websiteLabel,
+     discordLabel:editPersonalData.discodeLabel,
+     linkedIn:editPersonalData.linkedIn,
+     twitter:editPersonalData.twitter,
+     github:editPersonalData.github,
+     website:editPersonalData. website,
+     discord:editPersonalData.discode,
+    }
+    let data = {
+      url: `/api/v1/resume/saveprofile/${id}`,
+      data: sendData,
+      method: "post",
+    };
+    try {
+      const response = await fetchUserData(data);
+      console.log(response.data);
+      if (response.status === 200) {
+        dispatch(closeLoading());
+        dispatch(closeViewEditDetails());
+        message.success("Successfully Updated");
+      } else {
+        dispatch(closeLoading());
+        dispatch(closeViewEditDetails());
+        message.error("Data is invalid! Try again!");
+      }
+    } catch (e) {
+      dispatch(closeLoading());
+      dispatch(closeViewEditDetails());
+      console.log(e.error);
+      message.error("Data is invalid! Try again!");
+    }
+  }
+
   const InputLink = ({id}) => {
     const [value, setValue] = useState("");
     const handleAdd =(id)=>{
@@ -133,9 +219,10 @@ export default function EditPersonalDetails({editPersonalData}) {
             setValue("");
             dispatch(closeAddLink());
         }else{
-          editPersonalData.dispatch(closeAddLink());
+          dispatch(closeAddLink());
         }
       }
+     
     return (
      <Row style={{padding: '5%', position: 'absolute', backgroundColor: 'white', boxShadow:'0 0 20px rgba(0,0,0,.2)', zIndex: '5'}}>
         <Col span={24}>
@@ -179,6 +266,7 @@ export default function EditPersonalDetails({editPersonalData}) {
     <>
       <Row className="edit-personal-details-w">
         <Col span={24}>
+          <Form onFinish={handleSubmit}>
           <Card
             style={{
               boxShadow: "0 0 40px rgba(0,0,0,.1)",
@@ -389,6 +477,7 @@ export default function EditPersonalDetails({editPersonalData}) {
                             <Row gutter={10}>
                               <Col span={18}>
                                 <Input
+                                  value={getValue(items.id)}
                                   onChange={(e)=>{handleChange(items.key,e.target.value)}}
                                   className="input-w"
                                   placeholder={items.label}
@@ -463,6 +552,7 @@ export default function EditPersonalDetails({editPersonalData}) {
                   Cancel
                 </Button>
                 <Button 
+                  htmlType="submit"
                   icon={<CheckOutlined />}
                   size="large"
                   style={{
@@ -477,6 +567,7 @@ export default function EditPersonalDetails({editPersonalData}) {
               </Col>
             </Row>
           </Card>
+          </Form>
         </Col>
       </Row>
     </>

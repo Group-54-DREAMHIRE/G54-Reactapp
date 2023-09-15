@@ -22,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCustomContent, openAddContent } from "../../store/models/modelsSlice";
+import { useState } from "react";
 const { Title, Text, Link } = Typography;
 
 const customList = [
@@ -29,7 +30,6 @@ const customList = [
     key:0,
     icon: <UserOutlined />,
     title: "Profile",
-    value: "profile",
     content:
       " Make a great first impression by presenting yourself in a few sentences.",
   },
@@ -37,7 +37,6 @@ const customList = [
     key:1,
     icon: "",
     title: "Education",
-    value: "education",
     content:
       " Show off your primary education, college degrees & exchange semesters.",
   },
@@ -45,7 +44,6 @@ const customList = [
     key:2,
     icon: "",
     title: "Professional Experience",
-    value: "professionalExperience",
     content:
       " Make a great first impression by presenting yourself in a few sentences.",
   },
@@ -53,7 +51,6 @@ const customList = [
     key:3,
     icon: "",
     title: "Projects",
-    value: "projects",
     content:
       " A place to highlight your professional experience - including internships.",
   },
@@ -61,7 +58,6 @@ const customList = [
     key:4,
     icon: "",
     title: "Courses And Certifications",
-    value: "coursesCertifications",
     content:
       "Drivers licenses and other industry-specific certificates you have belong here.",
   },
@@ -69,14 +65,12 @@ const customList = [
     key:5,
     icon: "",
     title: "Skills",
-    value: "skills",
     content: " List your technical, managerial or soft skills in this section.",
   },
   {
     key:6,
     icon: "",
     title: "Volunteer Experience",
-    value: "volunteerExperience",
     content:
       " Make a great first impression by presenting yourself in a few sentences.",
   },
@@ -84,7 +78,6 @@ const customList = [
     key:7,
     icon: "",
     title: "Other Qualifications",
-    value: "otherQualification",
     content:
       " Make a great first impression by presenting yourself in a few sentences.",
   },
@@ -92,7 +85,6 @@ const customList = [
     key:8,
     icon: "",
     title: "Reference",
-    value: "reference",
     content:
       "If you have former colleagues or bosses that vouch for you, list them.",
   },
@@ -101,29 +93,17 @@ export default function CustomContentModel({addContentData}) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.models.customContent);
   const handleClick =(value)=>{
-    const data = {
-      key:value.key,
-      title:value.title,
-      children:[
-        {
+        const conData = [...addContentData.contentData];
+        conData[value.key].has=true;
+        addContentData.setContentData(conData);
+        dispatch(closeCustomContent());
+        dispatch(openAddContent());
+        let activeCon = {
+          index:value.key,
           key:0,
-          title:value.title,
-          subTitle: "",
-          city: "",
-          Country: "",
+          title:value.title
         }
-      ]
-    }
-    addContentData.setContentData([...addContentData.contentData,data]);
-    dispatch(closeCustomContent());
-    dispatch(openAddContent());
-    let activeCon = {
-      index:value.key,
-      key:0,
-      title:value.title
-    }
-    addContentData.setActiveContent(activeCon);
-    console.log(value);
+        addContentData.setActiveContent(activeCon);
   }
   return (
     <>

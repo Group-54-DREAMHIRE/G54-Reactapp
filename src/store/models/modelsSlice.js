@@ -7,6 +7,7 @@ const initialState = {
     addLink:false,
     viewEditDetails:false,
     addContent:false,
+    loading:false,
 }
 
 const modelsSlice = createSlice({
@@ -46,6 +47,12 @@ const modelsSlice = createSlice({
         closeAddContent:(state)=>{
             state.addContent = false;
         },
+        openLoading:(state)=>{
+            state.loading= true;
+        },
+        closeLoading:(state)=>{
+            state.loading = false;
+        },
     }
 })
 
@@ -60,7 +67,11 @@ export const {
     openViewEditDetails,
     closeViewEditDetails,
     openAddContent,
-    closeAddContent
+    closeAddContent,
+    openLoading,
+    closeLoading
 } = modelsSlice.actions;
+
+export const getLoading = (state) => state.models.loading;
 
 export default modelsSlice.reducer;
