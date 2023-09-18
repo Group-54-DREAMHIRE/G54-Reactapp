@@ -25,6 +25,7 @@ import EventForm from "../Components/cards/company/EventForm";
 import CandidatePage from "../pages/CandidatePage";
 import Sheduled from '../pages/candidate/interviews/Sheduled';
 import ViewResume from "../Components/candidate/ViewResume";
+import Pending from "../pages/candidate/interviews/Pending";
 export default function CandidateRoutes() {
   return (
     <>
@@ -37,7 +38,7 @@ export default function CandidateRoutes() {
           <Route path="/appliedjob" element={<AppliedJob/>}/>
           
           <Route element={<Interviews/>}>
-            <Route path="/pendinginterviews" element={<InterviewDetails/>}/>
+            <Route path="/pendinginterviews" element={<Pending/>}/>
             <Route path="/scheduledinterviews" element={<Sheduled/>}/>
           </Route>
 

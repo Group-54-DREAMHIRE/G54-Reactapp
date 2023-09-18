@@ -37,7 +37,7 @@ export default function ShowContent({ item, contentData }) {
                     <Row justify="space-between" gutter={[15, 15]}>
                       <Col span={24}>
                         <Title level={3}>{item.title}</Title>
-                        <hr style={{ border: "2px solid rgba(0,0,0,.6)" }} />
+                        <hr style={{ border: "2px solid rgba(0,0,0,.6)", margin:'0' }}  />
                       </Col>
                       <Col span={24}>
                         {item.children &&
@@ -51,7 +51,6 @@ export default function ShowContent({ item, contentData }) {
                       </Col>
                     </Row>
                   </Col>
-                  <Divider />
                 </Row>
               </Col>
             </Row>
