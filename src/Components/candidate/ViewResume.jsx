@@ -1,5 +1,5 @@
 import { Button, Card, Col, Row, Typography, Collapse,Spin } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditPersonalDetails from "./EditPersonalDetails";
 import Resume from "../../pages/candidate/Resume";
 import PersonDetailsEditView from "./PersonDetailsEditView";
@@ -12,15 +12,20 @@ import {
 } from "../../store/models/modelsSlice";
 import CustomContentModel from "./CustomContentModel";
 import AddContent from "./AddContent";
+import { getData } from "../../api/authenticationService";
 
 const { Title, Text } = Typography;
 
 export default function ViewResume() {
   const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
   const loading = useSelector((state)=>state.models.loading);
   const viewEdit = useSelector((state) => state.models.viewEditDetails);
   const addContent = useSelector((state) => state.models.addContent);
 
+  const [cvData, setCvData] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
   const [linkedIn, setLinkedIn] = useState(null);
   const [twitter, setTwitter] = useState(null);
@@ -61,6 +66,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -86,6 +93,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -111,6 +120,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -136,6 +147,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -161,6 +174,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -186,6 +201,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -211,6 +228,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -236,6 +255,8 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
@@ -261,12 +282,60 @@ export default function ViewResume() {
           showEndMonth:true,
           present: false,
           description: null,
+          startMonth:null,
+          endMonth:null
         },
       ],
     },
   ]);
   const [activeContent, setActiveContent] = useState({});
 
+  useEffect(() => {
+
+      getData(`/api/v1/resume/getResume/${id}`)
+        .then((response) => {
+          setCvData(response.data);
+          console.log(response.data);
+          console.log(cvData === null);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, []);
+  useEffect(() => {
+    if(cvData !== null){
+      let tempCvData = [];
+      setName(cvData.name || name);
+      setProfilePicture(cvData.profilePicture || profilePicture);
+      setLinkedIn(cvData.linkedIn || linkedIn);
+      setTwitter(cvData.twitter || twitter);
+      setGithub(cvData.github || github);
+      setWebsite(cvData.website || website);
+      setDiscode(cvData.discode || discode);
+      setLinkedInLabel(cvData.linkedInLabel || linkedInLabel);
+      setTwitterLabel(cvData.twitterLabel || twitterLabel);
+      setGithubLabel(cvData.githubLabel || githubLabel);
+      setWebsiteLabel(cvData.websiteLabel || websiteLabel);
+      setDiscodeLabel(cvData.discodeLabel || discodeLabel);
+      setTitle(cvData.jobTitle || title);
+      setPhone(cvData.phone || phone);
+      setEmail(cvData.email || email);
+      setAddress(cvData.address || address);
+  
+      tempCvData.push(JSON.parse(cvData.profile || 'null' ) || contentData[0]);
+      tempCvData.push(JSON.parse(cvData.education || 'null' )|| contentData[1]);
+      tempCvData.push(JSON.parse(cvData.professionalExperience || 'null' )|| contentData[2]);
+      tempCvData.push(JSON.parse(cvData.projects || 'null')  || contentData[3]);
+      tempCvData.push(JSON.parse(cvData.coursesCertifications || 'null') || contentData[4]);
+      tempCvData.push(JSON.parse(cvData.skills || 'null') || contentData[5]);
+      tempCvData.push(JSON.parse(cvData.volunteerExperience || 'null') || contentData[6]);
+      tempCvData.push(JSON.parse(cvData.otherQualification || 'null') || contentData[7]);
+      tempCvData.push(JSON.parse(cvData.reference || 'null') || contentData[8]);
+      setContentData(tempCvData);
+
+    }
+      
+}, [cvData]);
   const editPersonalData = {
     name,
     setName,
@@ -334,15 +403,16 @@ export default function ViewResume() {
     activeContent,
   };
   const handleContent = (data) => {
-    dispatch(openAddContent());
     setActiveContent(data);
+    dispatch(openAddContent());
+    console.log(contentData[data.index].children);
   };
 
   const addSubContent = (data) => {
     let children = {
-      key: data.key + 1,
+      key: data.key,
       has:true,
-      title: data.subTitle,
+      title: null,
       subTitle: null,
       city: null,
       country: null,
@@ -356,7 +426,7 @@ export default function ViewResume() {
       description: null,
     };
     let newData = [...contentData];
-    newData[data.index].children[data.key + 1] = children;
+    newData[data.index].children[data.key] = children;
     setContentData(newData);
     handleContent(data);
   };
@@ -400,10 +470,10 @@ export default function ViewResume() {
             <Col span={22}>
               {!addContent && (
                 <Row justify="center" gutter={[0, 15]}>
-                  {contentData.map((item, index) => {
-                    let subTitle = item.title;
-                    let data = null;
-                    if(item.has){
+                  {contentData.map((mainItem, index) => {
+                    let subTitle = mainItem.title;
+                    let mainData = null;
+                    if(mainItem.has){
                       return (
                         <Col span={24}>
                           <Row justify="center">
@@ -438,7 +508,7 @@ export default function ViewResume() {
                                               cursor: "pointer",
                                             }}
                                           >
-                                            {item.title}
+                                            {mainItem.title}
                                           </Text>
                                         </Col>
                                       </Row>
@@ -446,20 +516,20 @@ export default function ViewResume() {
                                     children: (
                                       <>
                                         <Row gutter={[20, 20]}>
-                                          {item.children.map((item) => {
-                                            data = {
+                                          {mainItem.children.map((items) => {
+                                          const  data = {
                                               index,
-                                              key: item.key,
+                                              key:items.key,
                                               title: subTitle,
                                             };
                                             return (
                                               <>
-                                                {item.has &&
+                                                {items.has &&
                                                   <Col
                                                   span={24}
-                                                  onClick={() => {
-                                                    handleContent(data);
-                                                  }}
+                                                  onClick={()=>
+                                                    handleContent(data)
+                                                  }
                                                 >
                                                   <Text
                                                     style={{
@@ -468,9 +538,10 @@ export default function ViewResume() {
                                                       fontWeight: "700",
                                                     }}
                                                   >
-                                                    {item.title === null
+                                                    {data.key}
+                                                    {items.title === null
                                                       ? subTitle
-                                                      : item.title}
+                                                      : items.title}
                                                   </Text>
                                                 </Col>}
                                               </>
@@ -480,13 +551,19 @@ export default function ViewResume() {
                                             <Row justify="center">
                                               <Button
                                                 onClick={() =>
-                                                  addSubContent(data)
+                                                  { const data ={
+                                                    index,
+                                                    key:contentData[index].children.length,
+                                                    title:subTitle
+                                                  }
+                                                    addSubContent(data)
+                                                  }
                                                 }
                                                 style={{ borderRadius: "0" }}
                                                 type="primary"
                                                 size="large"
                                               >
-                                                + Add {item.title}
+                                                + Add {mainItem.title}
                                               </Button>
                                             </Row>
                                           </Col>

@@ -109,6 +109,9 @@ export default function AddContent({ addContentData }) {
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].start = currentDateTime;
+    conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].startMonth = value;
     if(conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].start){
@@ -156,6 +159,9 @@ export default function AddContent({ addContentData }) {
     conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].end = currentDateTime;
+    conData[addContentData.activeContent.index].children[
+      addContentData.activeContent.key
+    ].endMonth = value;
     if(conData[addContentData.activeContent.index].children[
       addContentData.activeContent.key
     ].end){
@@ -253,6 +259,8 @@ export default function AddContent({ addContentData }) {
       showEndMonth:true,
       present: false,
       description: null,
+      startMonth:null,
+      endMonth:null
     }
     
       conData[addContentData.activeContent.index].children[addContentData.activeContent.key] =  data;
@@ -505,6 +513,11 @@ export default function AddContent({ addContentData }) {
                   <Row gutter={[5,15]}>
                   <Col span={10}>
                       <DatePicker
+                         value={
+                          addContentData.contentData[
+                            addContentData.activeContent.index
+                          ].children[addContentData.activeContent.key].start
+                        }
                         onChange={handleStartYear}
                         size="large"
                         className="input-w"
@@ -514,6 +527,11 @@ export default function AddContent({ addContentData }) {
                     </Col>
                     <Col span={14}>
                       <Select
+                      value={
+                        addContentData.contentData[
+                          addContentData.activeContent.index
+                        ].children[addContentData.activeContent.key].startMonth
+                      }
                         size="large"
                         className="select-month-w"
                         placeholder="Month"
@@ -555,6 +573,11 @@ export default function AddContent({ addContentData }) {
                   <Row gutter={[5,15]}>
                   <Col span={10}>
                       <DatePicker
+                        value={
+                          addContentData.contentData[
+                            addContentData.activeContent.index
+                          ].children[addContentData.activeContent.key].end
+                        }
                         size="large"
                         className="input-w"
                         placeholder="Year"
@@ -564,6 +587,11 @@ export default function AddContent({ addContentData }) {
                     </Col>
                     <Col span={14}>
                       <Select
+                        value={
+                          addContentData.contentData[
+                            addContentData.activeContent.index
+                          ].children[addContentData.activeContent.key].endMonth
+                        }
                         size="large"
                         className="select-month-w"
                         placeholder="Month"
@@ -626,6 +654,9 @@ export default function AddContent({ addContentData }) {
                   <ReactQuill
                   style={{ wordWrap: 'break-word',width:'100%'}}
                     theme="snow"
+                    value={addContentData.contentData[
+                      addContentData.activeContent.index
+                    ].children[addContentData.activeContent.key].description}
                     onChange={handleHtml}
                   />
                 </Col>

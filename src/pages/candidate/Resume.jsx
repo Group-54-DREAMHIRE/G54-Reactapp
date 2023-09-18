@@ -110,8 +110,6 @@ const Resume = ({ viewPersonalData }) => {
               </Col>
             )}
           </Row>
-          <Row>
-            <Col span={24}>
             {viewPersonalData.contentData&& (
               viewPersonalData.contentData.map((item)=>{
                 const data = viewPersonalData.contentData;
@@ -120,8 +118,6 @@ const Resume = ({ viewPersonalData }) => {
                 )
               })
             )}
-            </Col>
-          </Row>
         </Col>
       </Row>
     </>
