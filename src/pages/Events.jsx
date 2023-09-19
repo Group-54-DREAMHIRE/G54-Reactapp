@@ -1,5 +1,6 @@
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import EventCard from '../Components/cards/EventCard';
+import { List } from "react-content-loader";
 import EventForm from "../Components/cards/company/EventForm"
 import PriceCard from "../pages/landing/cards/PriceCard"
 import OneFullCard from "./OneFullEvent"
@@ -16,16 +17,16 @@ export default function Events() {
   const dispatch = useDispatch();
   const [allEventList, setAllEventList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [eventState, setEventState] = useState(null);
-  // const eventState = useSelector(getAllEvents);
+  //const eventState = useSelector(getAllEvents);
   // const collapsed = useSelector((state) => state.model.collapsed);
-
+const eventState = null;
   useEffect(() => {
     setLoading(true);
-    if(eventState == null){
+    if(eventState === null){
+      console.log("Fetching events data...")
       getData("/api/v1/event/getallevents")
       .then((response) => {
-        console.log(response.data);
+        console.log("data recieved",response.data);
         setAllEventList(response.data);
         dispatch(setEvents(response.data));
         setLoading(false);
@@ -40,11 +41,12 @@ export default function Events() {
     }
   }, []);
 
-  const userType = localStorage.getItem("USERTYPE");
   const navigate = useNavigate();
   const handleChange = (value) => {
     console.log(`selected ${value}`)
   };
+
+  const userType = localStorage.getItem("USERTYPE");
 
   let status = {
     save: userType === "candidate"? true:false,

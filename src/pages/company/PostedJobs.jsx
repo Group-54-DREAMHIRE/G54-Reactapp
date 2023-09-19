@@ -25,7 +25,7 @@ function AdvertisementList() {
   const [dataSource, setDataSource] = useState([]);
   useEffect(() => {
     setLoading(true);
-      getData(`/api/v1/jobpost/getjobs/${id}`)
+      getData(`/api/v1/jobpost/editjobs/${id}`)
         .then((response) => {
          setJobPosts(response.data);
           
