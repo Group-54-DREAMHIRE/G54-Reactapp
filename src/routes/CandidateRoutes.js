@@ -14,7 +14,7 @@ import Companies from '../pages/Companies';
 import Candidates from '../pages/Candidates';
 import Notifications from '../pages/Notifications';
 import ChangePassword from "../pages/ChangePassword";
-import Interviews from '../pages/candidate/Interviews';
+import Interviews from '../pages/candidate/ScheduledInterviews';
 import SelectionTest from '../pages/candidate/SelectionTest';
 import JobPost from "../pages/JobPost";
 import AppliedJob from '../pages/candidate/AppliedJob';
@@ -26,6 +26,8 @@ import CandidatePage from "../pages/CandidatePage";
 import Sheduled from '../pages/candidate/interviews/Sheduled';
 import ViewResume from "../Components/candidate/ViewResume";
 import Pending from "../pages/candidate/interviews/Pending";
+import AppliedJobInterview from '../pages/candidate/AppliedJobInterview';
+import ScheduledInterviews from "../pages/candidate/ScheduledInterviews";
 export default function CandidateRoutes() {
   return (
     <>
@@ -36,10 +38,11 @@ export default function CandidateRoutes() {
           <Route path="/resume" element={<ViewResume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
           <Route path="/appliedjob" element={<AppliedJob/>}/>
-          
-          <Route element={<Interviews/>}>
-            <Route path="/pendinginterviews" element={<Pending/>}/>
-            <Route path="/scheduledinterviews" element={<Sheduled/>}/>
+          <Route  path="scheduledinterviews" element={<ScheduledInterviews/>}/> 
+
+          <Route element={<AppliedJobInterview/>}>
+            <Route path="/pendingappjobinterviews" element={<Pending/>}/>
+            <Route path="/scheduledappjobinterviews" element={<Sheduled/>}/>
           </Route>
 
           <Route path="/interviewdetails" element={<InterviewDetails/>}/>

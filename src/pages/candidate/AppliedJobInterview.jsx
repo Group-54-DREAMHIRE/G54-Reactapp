@@ -2,7 +2,7 @@ import {Row, Divider, Typography, Tabs} from 'antd';
 import { Outlet, useNavigate } from "react-router-dom";
 const { Title, } = Typography;
 
-export default function CandidatResumes() {
+export default function AppliedJobInterview() {
   const navigate = useNavigate();
   const onChange = (key) => {
     console.log(key);
@@ -19,8 +19,8 @@ export default function CandidatResumes() {
     onChange={onChange}
     type="card"
     items={[
-    {label: "Scheduled", key: "/scheduledinterviews"},
-    {label: "Pending", key: "/pendinginterviews"}
+    {label: "Scheduled", key: "/scheduledappjobinterviews"},
+    {label: "Pending", key: "/pendingappjobinterviews"}
     ]}/>
     <Outlet/>
     </>

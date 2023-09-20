@@ -5,6 +5,8 @@ import { useNavigate, useParams,Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getData } from "../../api/authenticationService";
 import moment from "moment";
+import ShowInterview from "../../Components/cards/candidate/ShowInterview";
+import ShowTest from "../../Components/cards/candidate/ShowTest";
 const { Title, Text } = Typography;
 const description = "This is a description";
 const items = [
@@ -152,7 +154,16 @@ export default function AppliedJob() {
             </Col>
             <Col span={24}>
              <Row gutter={20}>
-              
+              <Col span={6} 
+                onClick={()=>
+                  navigate("/scheduledappjobinterviews")}>
+              <ShowInterview/>
+              </Col>
+              <Col  onClick={()=>
+                  navigate("/scheduledtest")}
+                   span={6}>
+              <ShowTest/>
+              </Col>
              </Row>
             </Col>
           </Row>

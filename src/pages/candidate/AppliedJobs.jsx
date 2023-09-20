@@ -24,7 +24,6 @@ export default function AppliedJobs() {
   }, []);
   return (
     <>
-    {id}
       <Row>
         <Col span={24}>
           <Row style={{ padding: "2%" }}>
