@@ -3,11 +3,11 @@ import { Card, Tag, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
-export default function EventCard ({items,status}) {
+export default function EventCard ({item,status}) {
   
   const [postDate, setPostDate] = useState();
   useEffect(() => {
-    const date = moment(items.date);
+    const date = moment(item.date);
     setPostDate(date.format("YYYY MM DD"));
   }, []);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function EventCard ({items,status}) {
     <Card
       cover={
         <img
-          src={items.cover}
+          src={item.cover}
           alt="Card Cover"
           style={{ objectFit: "cover", height: "220px" }}
         />
@@ -24,13 +24,13 @@ export default function EventCard ({items,status}) {
       style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)" }}
     >
       
-      <a href="your_link_url">{items.companyName}</a>
-      <h3>{items.title}</h3>
+      <a href="your_link_url">{item.companyName}</a>
+      <h3>{item.title}</h3>
       <p>
-        {items.description}
+        {item.description}
       </p>
 
-      <div style={{ marginBottom: "12px" }}>
+      {/* <div style={{ marginBottom: "12px" }}>
         {items.participates.map((item, index)=>{
           return(
             <Tag color="blue" key={index}>
@@ -38,7 +38,7 @@ export default function EventCard ({items,status}) {
             </Tag>
           )
         })}
-      </div>
+      </div> */}
       {status.save && <Button 
         size="large" 
         type="primary" 

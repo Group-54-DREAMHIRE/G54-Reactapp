@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { fetchUserData, getProfileData } from "../../../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveEvent, setEvents } from "../../../store/event/eventSlice";
+// import { saveEvent, setEvents } from "../../../store/event/eventSlice";
 import axios from 'axios';
 
 const { Option } = Select;
@@ -84,6 +84,7 @@ function EventForm() {
         contactNumber
       };
 
+
       let data = {
         url: `/api/v1/event/save/${id}`,
         data: eventData,
@@ -97,7 +98,7 @@ function EventForm() {
           console.log("before");
           navigate("/events");
           console.log("after");
-          dispatch(saveEvent(response.data));
+          // dispatch(saveEvent(response.data));
         } else {
           message.error("Invalid Data!");
           navigate("/events");
@@ -118,6 +119,7 @@ function EventForm() {
 
   return (
     <>
+    {user.systemUser.id}
       <Card
         style={{
           width: 900,

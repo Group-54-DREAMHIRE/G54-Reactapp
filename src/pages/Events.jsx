@@ -9,7 +9,7 @@ import { Col, Divider, Row, Typography, Button, Empty } from "antd"
 import { useNavigate } from "react-router-dom";
 import { fetchUserData, getData } from "../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEvents, setEvents} from "../store/event/eventSlice"
+// import { getAllEvents, setEvents} from "../store/event/eventSlice"
 import { useEffect, useState } from "react";
 const {Title} = Typography;
 
@@ -22,23 +22,20 @@ export default function Events() {
 const eventState = null;
   useEffect(() => {
     setLoading(true);
-    if(eventState === null){
+    
       console.log("Fetching events data...")
       getData("/api/v1/event/getallevents")
       .then((response) => {
         console.log("data recieved",response.data);
         setAllEventList(response.data);
-        dispatch(setEvents(response.data));
+        // dispatch(setEvents(response.data));
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching event details:", error);
       });
       console.log(allEventList);
-    } else {
-      setAllEventList(eventState);
-      setLoading(false);
-    }
+   
   }, []);
 
   const navigate = useNavigate();
@@ -55,6 +52,9 @@ const eventState = null;
 const auth = userType === "company"? true:false;
   return (
     <>
+    {/* {
+      JSON.stringify(allEventList)
+    } */}
         <Row  style={{padding: "2%"}} justify='space-between'>
           <Col>
             <Title style={{marginTop: '0'}}>Events</Title>
@@ -82,7 +82,7 @@ const auth = userType === "company"? true:false;
                 allEventList.map((item, index) => {
                   return(
                     <Col span={20}>
-                      <EventCard key={index} items={item} status={status} />
+                      <EventCard item={item} status={status} />
                     </Col>
                   );
                 })

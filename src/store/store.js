@@ -4,7 +4,7 @@ import modelsReducer from './models/modelsSlice';
 import candidateReducer from "./candidate/candidateSlice";
 import companyReducer from "./company/companySlice";
 import jobReducer from "./jobpost/jobSlice";
-import eventReducer from "./event/eventSlice";
+// import eventReducer from "./event/eventSlice";
 export const store = configureStore({
     reducer: {
         user: userReducere,
@@ -12,6 +12,6 @@ export const store = configureStore({
         candidate: candidateReducer,
         company: companyReducer,
         jobPost: jobReducer,
-        eventState: eventReducer,
+        // eventState: eventReducer,
     }
 })
