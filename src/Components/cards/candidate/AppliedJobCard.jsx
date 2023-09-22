@@ -22,18 +22,24 @@ import {
 import Link from "antd/es/typography/Link";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setActiveJobId } from "../../../store/company/applyJobSlice";
 
 const { Title, Text } = Typography;
 
 export default function AppliedJobCard({ items }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [tags, setTags] = useState([]);
   const [post, setPost] = useState([]);
   const [company, setCompany] = useState([]);
+  const [jobId, setJobId] = useState();
   useEffect(() => {
      setTags(items.tags.split(", "));
      setPost(items.jobPost);
      setCompany(items.jobPost.company);
+     setJobId(items.jobPost.id);
+     dispatch(setActiveJobId(items.jobPost.id));
    }, []);
   return (
     <>
@@ -85,7 +91,7 @@ export default function AppliedJobCard({ items }) {
           </Col>
           <Col>
             <Button
-            onClick={()=>navigate("/appliedjob")}
+            onClick={()=>navigate(`/appliedjob/${jobId}`)}
               className="view-w"
               type="primary"
               style={{

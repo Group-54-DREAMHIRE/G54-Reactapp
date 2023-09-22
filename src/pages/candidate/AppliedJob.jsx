@@ -3,7 +3,7 @@ import AppliedJobCard from "../../Components/cards/candidate/AppliedJobCard";
 import InterviewCard from "../../Components/cards/candidate/InterviewCard";
 import { useNavigate, useParams,Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getData } from "../../api/authenticationService";
+import { fetchUserData, getData } from "../../api/authenticationService";
 import moment from "moment";
 import ShowInterview from "../../Components/cards/candidate/ShowInterview";
 import ShowTest from "../../Components/cards/candidate/ShowTest";
@@ -27,6 +27,8 @@ const items = [
 ];
 export default function AppliedJob() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const canId = user.id;
   const { id } = useParams();
   const [interviewList, setInterviewList] = useState([]);
   const [showHrList, setShowHrList] = useState([]);
@@ -37,7 +39,15 @@ export default function AppliedJob() {
 
   useEffect(() => {
     // setLoading(true);
-    getData(`/api/v1/interview/getScheduledInterviews/${id}`)
+    const sendData = {
+      jobId:id
+    }
+    let data ={
+      url:`/api/v1/interview/getScheduledInterviews/${canId}`,
+      data:sendData,
+      method:'post'
+    }
+    fetchUserData(data)
       .then((response) => {
         console.log(response.data);
         setInterviewList(response.data);
@@ -64,6 +74,7 @@ export default function AppliedJob() {
       ],
     };
     const initialShowList = [tempDateList];
+    interviewList.sort((a,b)=>a.startTime - b.startTime); 
     for (let i = 0; i < interviewList.length; i++) {
       if (i < interviewList.length - 1) {
         const nextInterview = interviewList[i + 1];
@@ -114,6 +125,7 @@ export default function AppliedJob() {
   };
   return (
     <>
+    {id}
       <Row>
         <Col span={24}>
           <Row align="bottom" justify="space-between" gutter={[30, 30]}>
@@ -156,7 +168,7 @@ export default function AppliedJob() {
              <Row gutter={20}>
               <Col span={6} 
                 onClick={()=>
-                  navigate("/scheduledappjobinterviews")}>
+                  navigate(`/scheduledappjobinterviews/${id}`)}>
               <ShowInterview/>
               </Col>
               <Col  onClick={()=>

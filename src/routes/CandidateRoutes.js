@@ -37,12 +37,12 @@ export default function CandidateRoutes() {
           <Route path="/profile" element={<CandidateProfile/>}/>
           <Route path="/resume" element={<ViewResume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
-          <Route path="/appliedjob" element={<AppliedJob/>}/>
+          <Route path="/appliedjob/:id" element={<AppliedJob/>}/>
           <Route  path="scheduledinterviews" element={<ScheduledInterviews/>}/> 
 
           <Route element={<AppliedJobInterview/>}>
-            <Route path="/pendingappjobinterviews" element={<Pending/>}/>
-            <Route path="/scheduledappjobinterviews" element={<Sheduled/>}/>
+            <Route path="/pendingappjobinterviews/:id" element={<Pending/>}/>
+            <Route path="/scheduledappjobinterviews/:id" element={<Sheduled/>}/>
           </Route>
 
           <Route path="/interviewdetails" element={<InterviewDetails/>}/>
