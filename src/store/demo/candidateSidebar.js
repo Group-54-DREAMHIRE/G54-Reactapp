@@ -51,7 +51,7 @@ import {
       },
       {
         id: 6,
-        label: "Interviews",
+        label: "Scheduled Interviews",
         key: "scheduledinterviews",
         icon: <FiSlack />,
       },

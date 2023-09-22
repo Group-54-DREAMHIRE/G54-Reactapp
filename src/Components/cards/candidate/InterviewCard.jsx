@@ -28,34 +28,28 @@ export default function InterviewCard({item}) {
         <Col span={24} style={{ padding: " 0 2%" }}>
           <Card hoverable style={{ boxShadow: "0 0 8px rgba(0,0,0,.1)",cursor:'pointer' }}>
             <Row>
-              {/* <Col span={3}>
-                        <Space direction="vertical">
-                        <Image preview={false} src={db2} />
-                        <Image preview={false} src={db6} />
-                        </Space>
-                      </Col> */}
               <Col span={24}>
                 <Row>
                   <Col span={24}>
                     <Row align="bottom" gutter={[0, 10]}>
+
                       <Col span={24}>
                         <Row justify="space-between" align="bottom">
-                          <Text style={{ fontSize: "20px", fontWeight: "500" }}>
-                            {item.type}
+                          <Text style={{ fontSize: "22px", fontWeight: "500",textTransform:'capitalize' }}>
+                           {item.company}
                           </Text>
-                          <Text style={{ fontWeight: "500", fontSize: "18px" }}>
-                            {item.date}
-                          </Text>
-                          <Text style={{ fontWeight: "500", fontSize: "18px" }}>
-                           {item.time}
-                          </Text>
-                          <Col span={24}></Col>
                         </Row>
                       </Col>
-                      <Col>
-                        <Text style={{ fontWeight: "400", fontSize: "16px" }}>
-                          {item.company}
-                        </Text>
+                      <Col span={24}>
+                        <Row justify='space-between'>
+                        <Text style={{ fontWeight: "500", fontSize: "18px" }}>
+                            {item.date}
+                          </Text>
+                        <Text style={{ fontWeight: "500", fontSize: "18px" }}>
+                           {item.time}
+                          </Text>
+                        </Row>
+                        
                       </Col>
                     </Row>
                     <Row
@@ -92,6 +86,7 @@ export default function InterviewCard({item}) {
 
                         <Text
                           style={{
+                            textTransform:'capitalize',
                             color: "rgba(255,255,255,.7)",
                             marginBottom: "0",
                             position: "absolute",
@@ -100,7 +95,7 @@ export default function InterviewCard({item}) {
                             fontSize: "16px",
                           }}
                         >
-                          {item.company}
+                          {item.type} Interview
                         </Text>
                       </Col>
                     </Row>
