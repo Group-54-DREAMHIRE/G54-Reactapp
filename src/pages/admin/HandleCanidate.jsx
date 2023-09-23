@@ -126,7 +126,7 @@ const UsersDetailsPage = () => {
   return (
     <Layout>
       <Content className="L_Haddle_Candidates_content">
-        <h1 className="L_Haddle_Candidates_title">Users Details</h1>
+        <h1 className="L_Haddle_Candidates_title">Candidate Details</h1>
         <div className="L_Haddle_Candidates_table-container">
           <Table
             columns={columns}

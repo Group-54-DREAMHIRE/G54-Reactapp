@@ -49,6 +49,15 @@ const columns = [
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
   },
+  {
+    title: "Package",
+    dataIndex: "package",
+    key: "package",
+    width: "15%",
+    render: (text) => (
+      <div className="L_Payments_Details_table-cell">{text}</div>
+    ),
+  },
 ];
 
 const data = [
@@ -59,6 +68,7 @@ const data = [
     date: "2023-08-08",
     time: "09:00 AM",
     status: "Paid",
+    package:"Yearly"
   },
   {
     key: "2",
@@ -66,7 +76,8 @@ const data = [
     paymentNumber: "456",
     date: "2023-08-09",
     time: "02:30 PM",
-    status: "Panding",
+    status: "pending",
+    package:"pending"
   },
   {
     key: "3",
@@ -75,6 +86,7 @@ const data = [
     date: "2023-08-10",
     time: "11:15 AM",
     status: "Paid",
+    package:"Yearly"
   },
   {
     key: "4",
@@ -82,7 +94,8 @@ const data = [
     paymentNumber: "987",
     date: "2023-08-11",
     time: "04:45 PM",
-    status: "Panding",
+    status: "pending",
+    package:"pending"
   },
   {
     key: "5",
@@ -91,6 +104,7 @@ const data = [
     date: "2023-08-12",
     time: "09:30 AM",
     status: "Paid",
+    package:"Monthly"
   },
   {
     key: "6",
@@ -98,7 +112,8 @@ const data = [
     paymentNumber: "321",
     date: "2023-08-13",
     time: "01:00 PM",
-    status: "Panding",
+    status: "pending",
+    package:"pending"
   },
   {
     key: "7",
@@ -107,6 +122,7 @@ const data = [
     date: "2023-08-14",
     time: "10:45 AM",
     status: "Paid",
+    package:"Yearly"
   },
   {
     key: "8",
@@ -114,7 +130,8 @@ const data = [
     paymentNumber: "222",
     date: "2023-08-15",
     time: "03:20 PM",
-    status: "Panding",
+    status: "pending",
+    package:"pending"
   },
   {
     key: "9",
@@ -123,6 +140,7 @@ const data = [
     date: "2023-08-16",
     time: "11:00 AM",
     status: "Paid",
+    package:"Monthly"
   },
   {
     key: "10",
@@ -130,7 +148,8 @@ const data = [
     paymentNumber: "444",
     date: "2023-08-17",
     time: "05:00 PM",
-    status: "Panding",
+    status: "pending",
+    package:"pending"
   },
 ];
 

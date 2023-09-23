@@ -18,7 +18,7 @@ const ApprovalsCard = () => {
                 <Button type='primary'>View Business Registration Certificate</Button>
                 <Button type='primary'>Approve</Button>
                 <Button type='primary' danger>Reject</Button>
-                <Button type='primary' >BR Button</Button>
+                
               </div>
             </div>
           </Col>

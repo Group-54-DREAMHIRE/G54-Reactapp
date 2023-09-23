@@ -4,6 +4,7 @@ import { UserOutlined ,EditOutlined,UploadOutlined  } from '@ant-design/icons';
 import ProfileImage from "../../../src/assets/images/user1.png";
 import { motion } from "framer-motion";
 import { pageanimation } from "../../../src/assets/animations/pageanimation";
+import { Content } from 'antd/es/layout/layout';
 
 
 export default function AdminProfile() {
@@ -20,7 +21,8 @@ export default function AdminProfile() {
         exit="exit"
         transition={{ duration: 0.5 }}
       >
-
+<Row gutter={[20,16]} style={{justifyContent:'center',width:'auto',height:'auto'}}>
+<Col span ={16} style={{boxShadow:'2',width:'60%'}}>
     <div className="D_Admin_Profile_edit-profile-form">
       <div className="D_Admin_Profile_form-header">
         <div className="D_Admin_Profile_title">Edit Profile</div>
@@ -41,7 +43,7 @@ export default function AdminProfile() {
 
       </div>
       <Form onFinish={onFinish} layout="vertical">
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16,16]}>
           <Col span={12}>
             <Form.Item label="First Name" name="firstName">
               <Input className='D_Admin_Profile_input-field' suffix={<EditOutlined />}/>
@@ -89,6 +91,8 @@ export default function AdminProfile() {
         </Row>
       </Form>
     </div>
+</Col>
+</Row>  
     </motion.div>
     </>
   )
