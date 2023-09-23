@@ -7,18 +7,21 @@ import {
   Input,
   Button,
   Alert,
+  message,
+  Spin
 } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePasswordUser, getUser, success } from "../store/auth/userSlice";
+import { changePasswordUser, success } from "../store/auth/userSlice";
 import { useNavigate } from "react-router-dom";
+import { userChangePassword } from "../api/authenticationService";
 
 const { Title } = Typography;
 
 export default function () {
   const dispatch = useDispatch();
-  const { error, messageChange } = useSelector((state) => state.user);
-  const user = JSON.parse(useSelector(getUser));
+  const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("USER"));
 
   const navigate = useNavigate();
   const [oldp, setOldp] = useState("");
@@ -26,31 +29,33 @@ export default function () {
   const [confirmp, setConfirmp] = useState("");
 
   const handleChangePassword = async () => {
+    setLoading(true);
     let change = {
-      email: user.email,
+      email: user.systemUser.email,
       oldPassword: oldp,
       newPassword: newp,
     };
-    console.log(user.email);
-    dispatch(changePasswordUser(change)).then((result) => {
-      if (result.payload) {
+     try{
+      const response = await userChangePassword(change);
+      if (response.status == 200) {
         setOldp("");
         setNewp("");
         setConfirmp("");
-        setTimeout(
-          () => {
-            dispatch(success());
-            clearTimeout();
-          },
-          500,
-          1000
-        );
+        setLoading(false);
       }
-    });
+     }catch(e){
+      console.log(e.message);
+      message.error("Invalid password! try again!");
+      setOldp("");
+      setNewp("");
+      setConfirmp("");
+      setLoading(false);
+     }
   };
 
   return (
     <>
+      <Spin spinning={loading}>
       <Row style={{ padding: "3%", height: "75vh" }}>
         <Col span={24}>
           <Row justify="center">
@@ -63,7 +68,6 @@ export default function () {
                   </Col>
                   <Col span={24}>
                     <Title level={4} style={{ marginTop: "5px" }}>
-                      {" "}
                       Old Password
                     </Title>
                     <Input
@@ -71,7 +75,8 @@ export default function () {
                       value={oldp}
                       onChange={(e) => setOldp(e.target.value)}
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: "0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "40px",
                       }}
                     />
@@ -85,7 +90,8 @@ export default function () {
                       value={newp}
                       onChange={(e) => setNewp(e.target.value)}
                       style={{
-                        boxShadow: "0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: "0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "40px",
                       }}
                     />
@@ -97,7 +103,8 @@ export default function () {
                       value={confirmp}
                       onChange={(e) => setConfirmp(e.target.value)}
                       style={{
-                        boxShadow: " 0 0 10px 0 rgba(30,136,229,.4)",
+                        boxShadow: "0 0 10px 0 rgba(0,0,0,.1)",
+                        borderRadius: '0',
                         height: "40px",
                       }}
                     />
@@ -107,7 +114,7 @@ export default function () {
                   <Col>
                     <Button
                       htmlType="submit"
-                      style={{ marginTop: "40%" }}
+                      style={{ marginTop: "40%", borderRadius:'0' }}
                       type="primary"
                       size="large"
                     >
@@ -116,14 +123,11 @@ export default function () {
                   </Col>
                 </Row>
               </Form>
-              {messageChange && (
-                <Alert message={messageChange} type="success" showIcon />
-              )}
-              {error && <Alert message={error} type="error" showIcon />}
             </Col>
           </Row>
         </Col>
       </Row>
+      </Spin>
     </>
   );
 }

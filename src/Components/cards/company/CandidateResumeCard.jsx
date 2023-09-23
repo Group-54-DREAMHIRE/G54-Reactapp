@@ -6,11 +6,22 @@ import {
   CheckCircleFilled,
 } from "@ant-design/icons";
 import { Card, Col, Row, Typography, Button, Image, Modal } from "antd";
+import { useState,  useEffect } from "react";
 
 const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 export default function CandidateResumeCard({ items, status }) {
+  const [tagList, setTaglist] = useState([]);
+  useEffect(() => {
+    if (typeof items.tags === "string") {
+      const val = items.tags.split(", ");
+      setTaglist(val);
+      console.log(tagList);
+    } else {
+      setTaglist([]);
+    }
+  }, []);
   const showPendingConfirm = () => {
     confirm({
       title: 'Are you sure?',
@@ -66,14 +77,13 @@ export default function CandidateResumeCard({ items, status }) {
       <Card
         className="resume-card-w"
         style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }}
-        hoverable
       >
         <Row justify="space-between">
           <Col span={16}>
             <Title level={4} style={{ marginBottom: "18px", marginTop: "0" }}>
-              {items.name}
+              {items.candidateName}
             </Title>
-            <Text style={{ color: "rgb(30,136,229)" }}>{items.title}</Text>
+            <Text style={{ color: "rgb(30,136,229)" }}>{items.jobTitle}</Text>
             <Title level={5} style={{ marginTop: "8px" }}>
               <Text
                 style={{
@@ -82,14 +92,14 @@ export default function CandidateResumeCard({ items, status }) {
                   color: "rgb(30,136,229)",
                 }}
               >
-                <FaMapMarkerAlt /> {items.address}.{" "}
+                <FaMapMarkerAlt /> {items.candidateCity}.{" "}
               </Text>
-              <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
+              {/* <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
                 <FaMoneyBillAlt /> {items.salary}
-              </Text>
+              </Text> */}
             </Title>
             <Col style={{marginTop: '25px'}}>
-            {items.tags.slice(0, 4).map((tag) => {
+            {tagList.slice(0, 4).map((tag, index) => {
             return (
               <Button
                 style={{
@@ -98,9 +108,9 @@ export default function CandidateResumeCard({ items, status }) {
                   color: "rgba(30,136,229,1)",
                   margin: "2px",
                 }}
-                key={tag.id}
+                key={index}
               >
-                {tag.label}
+                {tag}
               </Button>
             );
           })}
@@ -108,7 +118,7 @@ export default function CandidateResumeCard({ items, status }) {
           </Col>
           <Col span={8}>
             <Image
-              src={items.image}
+              src={items.candidate.profilePicture}
               style={{ borderRadius: "10px", height: "100%", width: "100%" }}
             />
           </Col>

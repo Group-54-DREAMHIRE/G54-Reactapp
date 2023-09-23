@@ -29,6 +29,32 @@ export const updateProfileData = (authRequest) => {
     });
   }}
 
+  export const getProfileData = (url) => {
+
+      return axios.get(`${url}`, {
+        headers: {
+          Authorization: "Bearer " + getToken(),
+        },
+      });
+    }
+
+    export const getData = (url) =>{
+      return axios.get(url, {
+        headers: {
+          Authorization: "Bearer " + getToken(),
+        },
+    })
+};
+
+export const getAction = (url) =>{
+  return axios.post(url, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+})
+};
+
+
 export const fetchUserData = (authRequest) => {
   if (authRequest.method === "post") {
     return axios.post(`${authRequest.url}`, authRequest.data, {
@@ -44,6 +70,13 @@ export const fetchUserData = (authRequest) => {
     });
   } else if (authRequest.method === "get") {
     return axios.get(authRequest.url, authRequest.data, {
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    });
+  }
+  else if (authRequest.method === "delete") {
+    return axios.delete(authRequest.url, {
       headers: {
         Authorization: "Bearer " + getToken(),
       },

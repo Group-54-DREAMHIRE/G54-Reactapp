@@ -1,29 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Select, Radio, Checkbox, DatePicker } from 'antd';
-import '../../assets/styles/AddQuestions.scss';
+import { Button, Modal, Form, Input, Select, Radio, Checkbox, DatePicker, InputNumber, Row, Col, Divider, Typography } from 'antd';
+import { Link } from 'react-router-dom'
+
+const { Title } = Typography;
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-function AddQuestions() {
-    const [questions, setQuestions] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
+function AddTestDetails() {
     const [form] = Form.useForm();
-    const [questionNumber, setQuestionNumber] = useState(1);
 
-    const onFinish = (values) => {
-        const newQuestion = {
-            questionType: values.questionType,
-            question: values.question,
-            options: values.questionType === 'Multiple Choice' ? values.options : null,
-            answer: values.answer,
-            number: questionNumber
-        };
-        setQuestions([...questions, newQuestion]);
-        setQuestionNumber(questionNumber + 1);
-        form.resetFields();
-        setModalVisible(false);
-    };
 
     const [quizDetails, setQuizDetails] = useState({
         title: '',
@@ -41,158 +27,94 @@ function AddQuestions() {
         })
     }
 
-    return (
-        <>
-            <div class="add-questions">
-                <h1>Add Quiz Details</h1>
-                <Form layout='vertical'>
-                    <Form.Item>
-                        <label>
-                            Quiz title:
-                            <input type="text" name='title' value={quizDetails.title} onChange={handleInputChange} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <label>
-                            Date:
-                            <DatePicker onChange={(date, dateString) => setQuizDetails({ ...quizDetails, date: dateString })} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <label>
-                            Number of Questions:
-                            <input type="number" name='numberOfQuestions' value={quizDetails.numberOfQuestions} onChange={handleInputChange} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <label>
-                            Duration:
-                            <input type="text" name='duration' value={quizDetails.duration} onChange={handleInputChange} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <label>
-                            Passing Mark:
-                            <input type="number" name='passingMark' value={quizDetails.passingMark} onChange={handleInputChange} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <label>
-                            Instructions:
-                            <textarea name='instructions' value={quizDetails.instructions} onChange={handleInputChange} />
-                        </label>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" onClick={() => setModalVisible(true)}>
-                            Add New Question
-                        </Button>
-                    </Form.Item>
-                </Form>
-                <Modal
-                    title="Add New Question"
-                    visible={modalVisible}
-                    onCancel={() => setModalVisible(false)}
-                    footer={null}
-                >
-                    <Form form={form} onFinish={onFinish}>
-                        <Form.Item
-                            label="Question"
-                            name="question"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your question!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item name="questionType" label="Question Type" rules={[{ required: true }]}>
-                            <Radio.Group>
-                                <Radio value="Multiple Choice">Multiple Choice</Radio>
-                                <Radio value="Short Answer">Short Answer</Radio>
-                            </Radio.Group>
-                        </Form.Item>
-                        <Form.Item
-                            noStyle
-                            shouldUpdate={(prevValues, currentValues) => prevValues.questionType !== currentValues.questionType}
-                        >
-                            {({ getFieldValue }) =>
-                                getFieldValue('questionType') === 'Multiple Choice' ? (
-                                    <Form.Item
-                                        name="options"
-                                        label="Options"
-                                        rules={[{ required: true, message: 'Please add options!', type: 'array' }]}
-                                    >
-                                        <Select mode="tags" style={{ width: '100%' }} placeholder="Options" />
-                                    </Form.Item>
-                                ) : null
-                            }
-                        </Form.Item>
-                        {/* <Form.Item
-                            label="Answer"
-                            name="answer"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input the answer!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> */}
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-                <TakeQuiz questions={questions} quizDetails={quizDetails} />
-            </div>
-        </>
-    );
-}
-
-function TakeQuiz({ questions, quizDetails }) {
-    const [answers, setAnswers] = useState([]);
-
-    const onAnswerChange = (questionIndex, answer) => {
-        const newAnswers = [...answers];
-        newAnswers[questionIndex] = answer;
-        setAnswers(newAnswers);
+    const handleDurationChange = (value) => {
+        setQuizDetails({ ...quizDetails, interviewDuration: value });
     };
 
     return (
-        <div>
-            <h1>{quizDetails.title}</h1>
-            <p>{quizDetails.instructions}</p>
-            <Form>
-                {questions.map((question, i) => (
-                    <Form.Item key={i}>
-                        <h3>Q{question.number}: {question.question}</h3> {/* Display question number here */}
-                        {question.questionType === 'Multiple Choice' ? (
-                            <Checkbox.Group
-                                options={question.options}
-                                onChange={(checkedValues) => onAnswerChange(i, checkedValues)}
-                            />
-                        ) : (
-                            <TextArea rows={4} onChange={(e) => onAnswerChange(i, e.target.value)} />
-                        )}
-                    </Form.Item>
-                ))}
-                <Form.Item>
-                    <Button type="primary" onClick={() => evaluateQuiz(answers)}>
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+        <div className="create-test-n">
+            <Row>
+                <Col span={24}>
+                    <Form className="selection-test-form" layout="vertical">
+                        <Row>
+                            <Col span={12} style={{
+                                display: 'flex',
+                                justifyContent: 'left',
+                                alignItems: 'center',
+                            }}>
+                                <Title style={{
+                                    fontSize: '25px',
+                                    fontWeight: 600,
+                                }}>
+                                    SELECTION TEST DETAILS
+                                </Title>
+                            </Col>
+                            <Col span={6}>
+                            </Col>
+                            <Col span={6}>
+                            </Col>
+
+                        </Row>
+
+                        <Divider />
+                        <Row>
+                            <Col span={24}>
+                                <Form.Item label="Quiz Title" style={{ width: '100%' }}>
+                                    <Input name='title' value={quizDetails.title} onChange={handleInputChange} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col span={12}>
+                                <Form.Item label="Date">
+                                    <DatePicker style={{ width: '100%' }} onChange={(date, dateString) => setQuizDetails({ ...quizDetails, date: dateString })} />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item label="Passing Mark">
+                                    <InputNumber name="passingMark" value={quizDetails.passingMark} style={{ width: '100%' }} onChange={handleInputChange} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col span={12}>
+                                <Form.Item label="Number of Questions">
+                                    <InputNumber name='numberOfQuestions' value={quizDetails.numberOfQuestions} style={{ width: '100%' }} onChange={handleInputChange} />
+
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item label="Duration">
+                                    <Select value={quizDetails.interviewDuration} style={{ width: '100%' }} onChange={handleDurationChange}>
+                                        <Select.Option value={20}>20 minutes</Select.Option>
+                                        <Select.Option value={30}>30 minutes</Select.Option>
+                                        <Select.Option value={40}>40 minutes</Select.Option>
+                                        <Select.Option value={50}>50 minutes</Select.Option>
+                                        <Select.Option value={60}>1 hour</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Form.Item label="Instructions">
+                                    <Input.TextArea name='instructions' value={quizDetails.instructions} style={{ width: '100%' }} onChange={handleInputChange} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Form.Item>
+                                <Button type="primary">
+                                    <Link to={`/scheduleTests/addquestions`}>Next</Link>
+                                </Button>
+                            </Form.Item>
+                        </Row>
+                    </Form>
+                </Col>
+            </Row>
         </div>
+
     );
 }
 
-function evaluateQuiz(answers) {
-    // Implement your quiz evaluation logic here
-}
-
-export default AddQuestions;
+export default AddTestDetails;

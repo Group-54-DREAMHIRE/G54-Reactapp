@@ -112,7 +112,7 @@ const Navbar = () => {
                       <Avatar size={45} icon={<UserOutlined />} />
                     </Col>
                     <Col>
-                      <Dropdown
+                      {/* <Dropdown
                         menu={{
                           items,
                           onClick,
@@ -122,7 +122,7 @@ const Navbar = () => {
                           Dulanjana
                           <DownOutlined />
                         </Space>
-                      </Dropdown>
+                      </Dropdown> */}
                     </Col>
                   </Row>
                 </Col>

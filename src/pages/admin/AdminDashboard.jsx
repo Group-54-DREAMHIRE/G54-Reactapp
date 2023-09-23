@@ -30,7 +30,7 @@ export default function AdminDashboard() {
 
   return (
     <>
-    <div className="D_Admin_Dashboard_dashboard">
+    <div className="D_Admin_Dashboard_dashboard" style={{padding: '5%'}}> 
       <div className="D_Admin_Dashboard_greeting">
         <Title level={2}>Hello Dhanuka!</Title>
         <Text>It's good to see you again</Text>

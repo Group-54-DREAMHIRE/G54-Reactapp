@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import { Form, Input, DatePicker, TimePicker, Button, Table, Col, Row } from 'antd';
-import '../../assets/styles/InterviewScheduling.scss';
+import { Form, DatePicker, Button, Select, List, Col, Row, TimePicker, InputNumber, Input, Typography, Divider } from 'antd';
+
+
+const { Title } = Typography;
 
 const InterviewScheduling = () => {
-  const [interviewDetails, setInterviewDetails] = useState([]);
+  const [interviewSlots, setInterviewSlots] = useState([]);
   const [formData, setFormData] = useState({
+    interviewId: 0,
     date: null,
-    startTime: null,
-    endTime: null,
+    candidateCount: 0,
     location: '',
     instructions: '',
+    interviewDuration: 30,
+    interviewStartTime: null,
+    interviewEndTime: null,
+    intervalStartTime: null,
+    intervalEndTime: null,
   });
 
-  const handleDateChange = (date, dateString) => {
+  const handleDateChange = (date) => {
     setFormData({ ...formData, date });
-  };
-
-  const handleStartTimeChange = (time, timeString) => {
-    setFormData({ ...formData, startTime: time });
-  };
-
-  const handleEndTimeChange = (time, timeString) => {
-    setFormData({ ...formData, endTime: time });
   };
 
   const handleInputChange = (event) => {
@@ -29,99 +28,189 @@ const InterviewScheduling = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleScheduling = () => {
-    const newInterview = {
-      id: interviewDetails.length + 1,
-      date: formData.date.format('YYYY-MM-DD'),
-      startTime: formData.startTime.format('HH:mm'),
-      endTime: formData.endTime.format('HH:mm'),
-      location: formData.location,
-      instructions: formData.instructions,
-    };
-    setInterviewDetails([...interviewDetails, newInterview]);
-    setFormData({
-      date: null,
-      startTime: null,
-      endTime: null,
-      location: '',
-      instructions: '',
-    });
+  const handleDurationChange = (value) => {
+    setFormData({ ...formData, interviewDuration: value });
   };
-  
-  const columns = [
-    {
-      title: 'Slot ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Location',
-      dataIndex: 'location',
-      key: 'location'
-    },
-    {
-      title: 'instructions',
-      dataIndex: 'instructions',
-      key: 'instructions'
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date'
-    },
-    {
-      title: 'Start Time',
-      dataIndex: 'startTime',
-      key: 'startTime'
-    },
-    {
-      title: 'End Time',
-      dataIndex: 'endTime',
-      key: 'endTime'
-    },
-  ];
+
+  const handleStartTimeChange = (time) => {
+    setFormData({ ...formData, interviewStartTime: time });
+  };
+
+  const handleEndTimeChange = (time) => {
+    setFormData({ ...formData, interviewEndTime: time });
+  };
+
+  const handleIntervalStartChange = (time) => {
+    setFormData({ ...formData, intervalStartTime: time });
+  };
+
+  const handleIntervalEndChange = (time) => {
+    setFormData({ ...formData, intervalEndTime: time });
+  };
+
+  const handleCandidateCountChange = (value) => {
+    setFormData({ ...formData, candidateCount: value });
+  };
+
+  const handleInterviewIdChange = (value) => {
+    setFormData({ ...formData, interviewId: value });
+  };
+
+  // const handleScheduling = () => {
+  //   const interviewStartTime = formData.interviewStartTime.toDate();
+  //  // const interviewEndTime = formData.interviewEndTime.toDate();
+  //  // const intervalStartTime = formData.intervalStartTime.toDate();
+  //   //const intervalEndTime = formData.intervalEndTime.toDate();
+  //   const interviewDurationMs = formData.interviewDuration * 60000;
+
+  //   const maxSlots = formData.candidateCount;
+
+  //   const slots = [];
+  //   let slotId = 1;
+
+  //   while (interviewStartTime < interviewEndTime && slots.length < maxSlots) {
+  //     if (interviewStartTime >= intervalEndTime || interviewStartTime < intervalStartTime) {
+  //       slots.push({
+  //         id: slotId,
+  //         startTime: interviewStartTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  //         endTime: (new Date(interviewStartTime.getTime() + interviewDurationMs)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  //       });
+  //       slotId++;
+  //     }
+
+  //     interviewStartTime.setTime(interviewStartTime.getTime() + interviewDurationMs);
+
+  //     if (interviewStartTime >= intervalStartTime && interviewStartTime < intervalEndTime) {
+  //       interviewStartTime.setTime(intervalEndTime.getTime());
+  //     }
+  //   }
+
+  //   setInterviewSlots(slots);
+  //   setFormData({
+  //     InterviewId: 0,
+  //     date: null,
+  //     location: '',
+  //     instructions: '',
+  //     candidateCount: 0,
+  //     interviewDuration: 30,
+  //     interviewStartTime: null,
+  //     interviewEndTime: null,
+  //     intervalStartTime: null,
+  //     intervalEndTime: null,
+  //   });
+  // };
 
   return (
     <div className="interview-scheduling-n">
-      <h2>Interview Scheduling</h2>
+      <Row>
+        <Col span={24}>
+          <Form className="interview-form" layout="vertical">
+            <Row gutter={20}>
+             
+              <Col span={12}>
+                <Form.Item label="No. of Candidates">
+                  <InputNumber name="candidateCount" value={formData.candidateCount} style={{ width: '100%' }} onChange={handleCandidateCountChange} min={0} />
+                </Form.Item>
+              </Col>
+            </Row>
 
-      <Form className="interview-form" layout='vertical'>
-        <Col span={12}>
-          <Form.Item label="location">
-            <Input name="location" value={formData.location} onChange={handleInputChange} />
-          </Form.Item>
-          <Form.Item label="Instructions">
-            <Input name="instructions" value={formData.instructions} onChange={handleInputChange} />
-          </Form.Item>
+            {/* <Row>
+              <Col span={24}>
+                <Form.Item label="Instructions">
+                  <Input.TextArea name="instructions" value={formData.instructions} style={{ width: '100%' }} onChange={handleInputChange} />
+                </Form.Item>
+              </Col>
+            </Row> */}
+
+            <Row gutter={20}>
+              <Col span={12}>
+                <Form.Item label="Date">
+                  <DatePicker style={{ width: '100%' }} onChange={handleDateChange} />
+                </Form.Item>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item label="Interview Duration">
+                  <Select value={formData.interviewDuration} style={{ width: '100%' }} onChange={handleDurationChange}>
+                    <Select.Option value={20}>20 minutes</Select.Option>
+                    <Select.Option value={30}>30 minutes</Select.Option>
+                    <Select.Option value={40}>40 minutes</Select.Option>
+                    <Select.Option value={50}>50 minutes</Select.Option>
+                    <Select.Option value={60}>1 hour</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Interview Start Time">
+                  <TimePicker
+                    style={{ width: '100%' }}
+                    value={formData.interviewStartTime}
+                    onChange={handleStartTimeChange}
+                    format="HH:mm"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={20}>
+             
+              {/* <Col span={12}>
+                <Form.Item label="Interview End Time">
+                  <TimePicker
+                    style={{ width: '100%' }}
+                    value={formData.interviewEndTime}
+                    onChange={handleEndTimeChange}
+                    format="HH:mm"
+                  />
+                </Form.Item>
+              </Col> */}
+            </Row>
+
+            {/* <Row gutter={20}>
+              <Col span={12}>
+                <Form.Item label="Interval Start Time">
+                  <TimePicker
+                    style={{ width: '100%' }}
+                    value={formData.intervalStartTime}
+                    onChange={handleIntervalStartChange}
+                    format="HH:mm"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Interval End Time">
+                  <TimePicker
+                    style={{ width: '100%' }}
+                    value={formData.intervalEndTime}
+                    onChange={handleIntervalEndChange}
+                    format="HH:mm"
+                  />
+                </Form.Item>
+              </Col>
+            </Row> */}
+
+          </Form >
         </Col>
-        <Row>
-          <Col span={8}>
-            <Form.Item label="Date">
-              <DatePicker onChange={handleDateChange} />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Start Time">
-              <TimePicker onChange={handleStartTimeChange} format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="End Time">
-              <TimePicker onChange={handleEndTimeChange} format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Form.Item>
-            <Button type="primary" onClick={handleScheduling}>Schedule Interview</Button>
-          </Form.Item>
-        </Row>
-      </Form>
+      </Row>
 
 
-      <h2>Scheduled Time Slots</h2>
-      <Table className="interview-table" dataSource={interviewDetails} columns={columns} />
-    </div>
+
+      <Button type="primary">Generate Interview Slots</Button>
+
+
+      <h2>Interview Time Slots</h2>
+      <List
+        dataSource={interviewSlots}
+        renderItem={(slot) => (
+          <List.Item>
+            {`${slot.id}. ${slot.startTime} - ${slot.endTime}`}
+          </List.Item>
+        )}
+      />
+    </div >
+
+
   );
 };
 
 export default InterviewScheduling;
-

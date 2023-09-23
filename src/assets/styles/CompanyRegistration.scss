@@ -1,204 +1,203 @@
 .company-registration-n {
-    max-width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
 
-    .pricing-cards {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .ant-form-item-label {
-      font-size: 16px;
-      font-weight: bold;
-      color: black;
-    }
-
-    .ant-row {
-      min-width: 450px;
-    }
-
-    .ant-form-item-explain {
-      color: #ff4d4f;
-    }
-    
-    .ant-input,
-    .ant-input-number,
-    .ant-select-selector,
-    .ant-picker-input,
-    .ant-radio-wrapper {
-      border-color: #1890ff;
-    }
-    
-    .ant-input:focus,
-    .ant-input-number:focus,
-    .ant-select-selector:focus,
-    .ant-picker-input:focus,
-    .ant-radio-wrapper:focus {
-      box-shadow: 0 0 10px rgba(30,136, 2229,.4);
-    }
-    
-    .ant-form-item {
-      margin-bottom: 20px;
-    }
-    
-    .ant-form-vertical .ant-form-item-control {
-      flex-direction: column;
-    }
-    
-    .ant-radio-wrapper {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-    }
-    
-    .ant-radio-wrapper:hover {
-      background-color: #f0f5ff;
-    }
-    
-    .ant-radio-checked .ant-radio-inner {
-      border-color: #1890ff;
-      background-color: #1890ff;
-    }
-    
-    .ant-radio-checked .ant-radio-inner::after {
-      background-color: #ffffff;
-    }
-    
-    .ant-card {
-      border: 1px solid #f0f0f0;
-      border-radius: 6px;
-      box-shadow: 0 0 10px rgba(30,136, 2229,.4);
-    }
-    
-    .ant-card-head {
-      background-color: #1890ff;
-      color: #ffffff;
-      border-radius: 6px 6px 0 0;
-    }
-
-    .ant-card-body {
-      padding: 16px;
-    }
-    
-    .ant-card-head-title {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    
-    .ant-card-body p {
-      margin: 8px 0;
-    }
-    
-    .ant-card-body p:first-child {
-      margin-top: 0;
-    }
-    
-    .ant-card-body p:last-child {
-      margin-bottom: 0;
-    }
-    
-    .ant-card-body p span {
-      font-weight: bold;
-      color: #1890ff;
-    }
-    
-    .ant-card-head-extra {
-      display: none;
-    }
-    
-    .ant-card-bordered {
-      border: none;
-    }
-    
-    .ant-btn-primary {
-      background-color: #1890ff;
-      border-color: #1890ff;
-    }
-    
-    .ant-btn-primary:hover,
-    .ant-btn-primary:focus {
-      background-color: #001a33;
-      border-color: #001a33;
-    }
-    
-    .ant-btn-primary span {
-      color: #ffffff !important;
-    }
-
-    .pricing-cards {
-      display: flex;
-      justify-content: space-between;
-    }
-    
-    .plan-card {
-      width: 100%;
-      padding: 16px;
-      border: 1px solid #f0f0f0;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease;
-    }
-    
-    .plan-card:hover {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    .plan-card .ant-card-head {
-      background-color: #1890ff;
-      color: #ffffff;
-      border-radius: 6px 6px 0 0;
-    }
-    
-    .plan-card .ant-card-body {
-      padding: 0;
-    }
-    
-    .plan-card .ant-card-head-title {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    
-    .plan-card .plan-price {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1890ff;
-    }
-    
-    .plan-card .plan-features {
-      list-style: none;
-      padding: 0;
-      margin: 16px 0 0 0;
-    }
-    
-    .plan-card .plan-features li {
-      padding: 8px 0;
-      color: #333333;
-    }
-    
-    .plan-card .plan-features li:first-child {
-      padding-top: 0;
-    }
-    
-    .plan-card .plan-features li:last-child {
-      padding-bottom: 0;
-    }
-    
-    .plan-card .plan-features li::before {
-      content: "\2022";
-      color: #1890ff;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
-    }
-    
+  .ant-divider-horizontal {
+    margin: 12px 0;
   }
-  
-  
-  
-  
+
+  .pricing-cards {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .ant-form-item-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }
+
+  .ant-form-item-explain {
+    color: #ff4d4f;
+  }
+
+  .ant-input,
+  .ant-input-number,
+  .ant-select-selector,
+  .ant-picker-input,
+  .ant-radio-wrapper {
+    box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+  }
+
+  .ant-input:focus,
+  .ant-input-number:focus,
+  .ant-select-selector:focus,
+  .ant-picker-input:focus,
+  .ant-radio-wrapper:focus {
+    box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+  }
+
+  .ant-upload-btn {
+    display: table;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    box-shadow: 4px 4px rgba(30, 136, 2229, .2);
+  }
+
+  .ant-form-item {
+    margin-bottom: 20px;
+  }
+
+  .ant-form-vertical .ant-form-item-control {
+    flex-direction: column;
+  }
+
+  .ant-radio-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+
+  .ant-radio-wrapper:hover {
+    background-color: #f0f5ff;
+  }
+
+  .ant-radio-checked .ant-radio-inner {
+    border-color: #1890ff;
+    background-color: #1890ff;
+  }
+
+  .ant-radio-checked .ant-radio-inner::after {
+    background-color: #ffffff;
+  }
+
+  .ant-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(30, 136, 2229, .4);
+  }
+
+  .ant-card-head {
+    background-color: #1890ff;
+    color: #ffffff;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .ant-card-body {
+    padding: 16px;
+  }
+
+  .ant-card-head-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .ant-card-body p {
+    margin: 8px 0;
+  }
+
+  .ant-card-body p:first-child {
+    margin-top: 0;
+  }
+
+  .ant-card-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ant-card-body p span {
+    font-weight: bold;
+    color: #1890ff;
+  }
+
+  .ant-card-head-extra {
+    display: none;
+  }
+
+  .ant-card-bordered {
+    border: none;
+  }
+
+  .ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+
+  .ant-btn-primary:hover,
+  .ant-btn-primary:focus {
+    background-color: #001a33;
+    border-color: #001a33;
+  }
+
+  .ant-btn-primary span {
+    color: #ffffff !important;
+  }
+
+  .pricing-cards {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .plan-card {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .plan-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .plan-card .ant-card-head {
+    background-color: #1890ff;
+    color: #ffffff;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .plan-card .ant-card-body {
+    padding: 0;
+  }
+
+  .plan-card .ant-card-head-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .plan-card .plan-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1890ff;
+  }
+
+  .plan-card .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0 0;
+  }
+
+  .plan-card .plan-features li {
+    padding: 8px 0;
+    color: #333333;
+  }
+
+  .plan-card .plan-features li:first-child {
+    padding-top: 0;
+  }
+
+  .plan-card .plan-features li:last-child {
+    padding-bottom: 0;
+  }
+
+  .plan-card .plan-features li::before {
+    content: "\2022";
+    color: #1890ff;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+
+}

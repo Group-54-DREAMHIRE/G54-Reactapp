@@ -1,9 +1,11 @@
 import React from "react";
 import { Card, Tag, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const OneFullCard = () => {
+  const navigate = useNavigate();
   return (
-    <Card style={{ width: "900px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
+    <Card>
       <a href="your_link_url">Creative Software</a>
       <h3>Career Fair - UCSC</h3>
       <p >Date: September 15, 2023</p><br></br>
@@ -26,9 +28,9 @@ const OneFullCard = () => {
       </p>
 
       {/* Card Cover */}
-      <div style={{ height: "200px", overflow: "hidden" }}>
+      <div style={{ height: "300px", overflow: "hidden" }}>
         <img
-          src="https://images.unsplash.com/photo-1516882058351-3601a7f420cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lkZSUyMGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+          src="https://img.freepik.com/premium-photo/man-sits-desk-front-night-cityscape_897419-115.jpg?w=1060"
           alt="Card Cover"
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
@@ -48,7 +50,11 @@ const OneFullCard = () => {
       {/* Add space after the tags */}
       <div style={{ marginBottom: "12px" }} />
 
-      <Button type="primary" style={{ marginTop: "8px" }}>
+      <Button 
+        type="primary"
+        onClick={()=> navigate("/registerevent")}
+        style={{ marginTop: "8px",borderRadius: '0' }}>
+        
         Register
       </Button>
     </Card>

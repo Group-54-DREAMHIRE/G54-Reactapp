@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { pageanimation } from "../../assets/animations/pageanimation";
+import { format, startOfDay } from "date-fns";
+import moment from "moment/moment";
+import { storage, put } from "../../api/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
+  CameraOutlined,
+  UserOutlined,
   MailOutlined,
   PhoneOutlined,
   PlusOutlined,
   EditOutlined,
   UploadOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import { FiMapPin } from "react-icons/fi";
 import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import ImgCrop from "antd-img-crop";
-import { candidateDetails } from "../../store/demo/candidateProfile";
+
 import {
   Row,
   Col,
@@ -26,458 +33,643 @@ import {
   Button,
   Alert,
   Image,
+  Checkbox,
+  Avatar,
+  message,
+  Spin,
 } from "antd";
 import { currencies, salary } from "../../store/demo/profile";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../store/auth/userSlice";
 import {
-  fetchUserData,
+  getProfileData,
   updateProfileData,
 } from "../../api/authenticationService";
 const { TextArea } = Input;
 const { Title, Link, Text } = Typography;
 
 export default function Profile() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState(candidateDetails.name);
-  const [file, setFile] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [title, setTitle] = useState(candidateDetails.title);
-  const [birthday, setBirthday] = useState();
-  const [currency, setCuurency] = useState("USD$");
-  const [minSalary, setMinSalary] = useState(candidateDetails.minSalary);
-  const [maxSalary, setMaxSalary] = useState(candidateDetails.maxSalary);
-  const [description, setDiscription] = useState(candidateDetails.description);
-  const [phone, setPhone] = useState(candidateDetails.phone);
-  const [email, setEmail] = useState(candidateDetails.email);
-  const [city, setCity] = useState(candidateDetails.city);
-  const [address, setAddress] = useState(candidateDetails.address);
-  const [facebook, setFacebook] = useState(candidateDetails.facebook);
-  const [twitter, setTwitter] = useState(candidateDetails.twitter);
-  const [linkedIn, setLinkedIn] = useState(candidateDetails.linkedIn);
-  const [message, setMessage] = useState(null);
-
-  const hasPicture = profilePicture===null? false: true;
-
-  const user = JSON.parse(useSelector(getUser));
+  const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
+
+  const dispatch = useDispatch();
+  const [profileData, setProfileData] = useState([]);
+
+  const [imageUpload, setImageUpload] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const [name, setName] = useState(null);
+  const [file, setFile] = useState(null);
+  const [visible, setVisible] = useState(true);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [birthday, setBirthday] = useState(null);
+  const [currency, setCuurency] = useState(null);
+  const [minSalary, setMinSalary] = useState(null);
+  const [maxSalary, setMaxSalary] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [city, setCity] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [facebook, setFacebook] = useState(null);
+  const [twitter, setTwitter] = useState(null);
+  const [linkedIn, setLinkedIn] = useState(null);
+  const [formatbday, setFormatbDay] = useState(null);
+
+  const [tempV, setTempV] = useState(true);
+  const [change, setChange] = useState(false);
+  const [editingbd, setEditing] = useState(false);
+  const [editingc, setEdittingC] = useState(false);
+  const [editingMin, setEdittingMin] = useState(false);
+  const [editingMax, setEdittingMax] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setProfileData(user);
+  }, [id]);
+
+  useEffect(() => {
+    if (profileData) {
+      setName(profileData.name);
+      setTitle(profileData.title);
+      const dateObj = moment(profileData.birthday);
+      setBirthday(dateObj.format("YYYY MM DD"));
+      setFormatbDay(profileData.birthday);
+      setCuurency(profileData.currency);
+      setMinSalary(profileData.minSalary);
+      setMaxSalary(profileData.maxSalary);
+      setDescription(profileData.description);
+      setVisible(profileData.visible);
+      setEmail(profileData.email);
+      setPhone(profileData.phone);
+      setAddress(profileData.address);
+      setCity(profileData.city);
+      setFacebook(profileData.facebook);
+      setTwitter(profileData.twitter);
+      setLinkedIn(profileData.linkedIn);
+      setProfilePicture(profileData.profilePicture);
+      setTempV(profileData.visible);
+      console.log(profilePicture);
+    }
+  }, [profileData]);
 
   const handleName = (value) => {
     setName(value);
+    setChange(true);
   };
   const handleTitle = (value) => {
     setTitle(value);
+    setChange(true);
   };
   const handleDescription = (value) => {
-    setDiscription(value);
+    setDescription(value);
+    setChange(true);
     console.log(value);
   };
   const handlePhone = (value) => {
     setPhone(value);
+    setChange(true);
   };
   const handleEmail = (value) => {
     setEmail(value);
+    setChange(true);
   };
   const handleAddress = (value) => {
     setAddress(value);
+    setChange(true);
+    console.log(value);
   };
   const handleCity = (value) => {
     setCity(value);
+    setChange(true);
   };
   const handleFacebook = (value) => {
     setFacebook(value);
+    setChange(true);
   };
   const handleTwitter = (value) => {
     setTwitter(value);
+    setChange(true);
   };
   const handleLinkedIn = (value) => {
     setLinkedIn(value);
+    setChange(true);
   };
-
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  };
-
-  
 
   const handleFileChange = (info) => {
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-      setFile(info.file.originFileObj);
 
-
-      // Display image preview
-      setProfilePicture(URL.createObjectURL(info.file.originFileObj));
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
+    console.log(info.file.originFileObj);
+    setImageUpload(info.file.originFileObj);
+    if (imageUpload) {
+      info.file.status = "done";
+      setProfilePicture(URL.createObjectURL(imageUpload));
     }
+    console.log(info.file.originFileObj);
+    setChange(true);
   };
 
   const handleSubmit = async () => {
-    let candidateData = {
-      userId: id,
-      name,
-      profilePicture,
-      title,
-      birthday,
-      description,
-      phone,
-      email,
-      city,
-      address,
-      facebook,
-      twitter,
-      linkedIn,
-    };
-    const formData = new FormData();
-    formData.append("data", candidateData);
-    
-    if (file) {
-      formData.append("profilePicture", file);
-    }
-    let data = {
-      url: `/api/v1/candidate/save/${id}`,
-      data: candidateData,
-      method: "post",
-    };
-    const response = await updateProfileData(data);
-    console.log(response.data);
-    if (response.status === 200) {
-      setMessage(response.data);
-      setTimeout(
-        () => {
-          setMessage(null);
-          clearTimeout();
-        },
-        500,
-        2000
-      );
+    setLoading(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    if (name && (imageUpload || profilePicture)) {
+      let temp = profilePicture;
+      if (imageUpload) {
+        const imageRef = ref(storage, `dreamhire/candidates/${id}`);
+        await uploadBytes(imageRef, imageUpload)
+          .then(() => {
+            console.log(imageUpload);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+
+        await getDownloadURL(imageRef)
+          .then((url) => {
+            temp = url;
+            console.log(temp);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+      let candidateData = {
+        name,
+        profilePicture: temp,
+        currency,
+        minSalary,
+        maxSalary,
+        visible,
+        title,
+        birthday: formatbday,
+        description,
+        phone,
+        email,
+        city,
+        address,
+        facebook,
+        twitter,
+        linkedIn,
+      };
+      let data = {
+        url: `/api/v1/candidate/save/${id}`,
+        data: candidateData,
+        method: "post",
+      };
+      try {
+        const response = await updateProfileData(data);
+        console.log(response.data);
+        if (response.status === 200) {
+          localStorage.setItem("USER", JSON.stringify(response.data));
+          setLoading(false);
+          message.success("Successfully Updated");
+        } else {
+          setLoading(false);
+          message.error("Data is invalid!");
+        }
+      } catch (e) {
+        setLoading(false);
+        console.log(e.error);
+      }
+    }else{
+      setLoading(false);
+      setErrorMsg("You must fill name and upload profile picture! Try again!");
     }
   };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
   return (
     <>
-      <motion.div
-        variants={pageanimation}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ duration: 0.5 }}
-      >
-        <Row style={{ padding: "3%" }} className="profile-main-w">
-          <Col span={24}>
-            <Row>
-              <ImgCrop rotationSlider>
-                <Upload
-                  onChange={handleFileChange}
-                  beforeUpload={() => false}
-                  accept="image/*"
-                  listType="picture"
-                  // showUploadList={false}
-                >
-                  {!hasPicture &&
-                    (<Button icon={<UploadOutlined />}>
-                    Upload Profile Picture
-                  </Button>)}
-                  {hasPicture&& (
-                  <Image
-                    src={profilePicture}
-                    alt="Profile Preview"
-                    style={{ maxWidth: "200px", marginTop: "10px" }}
+      <Spin spinning={loading}>
+        <motion.div
+          variants={pageanimation}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+        >
+          <Row>
+            <Col span={24}>
+              <Row style={{ padding: "0 2%" }}>
+               {errorMsg &&
+               ( <Col span={24}>
+                  <Alert
+                    closable
+                    message="Error"
+                    description={errorMsg}
+                    type="error"
+                    showIcon
                   />
-                )}
+                </Col>)}
+                <Col>
+                  {profilePicture === null ? (
+                    <ImgCrop action="" rotationSlider>
+                      <Upload
+                        showUploadList={profilePicture === null ? true : false}
+                        accept=".jpg,.jpeg,.png"
+                        action=""
+                        name="avatar"
+                        listType="picture-card"
+                        onChange={handleFileChange}
+                      >
+                        {uploadButton}
+                      </Upload>
+                    </ImgCrop>
+                  ) : (
+                    <Row align="bottom" gutter={10}>
+                      <Col>
+                        <Image
+                          preview={false}
+                          width={125}
+                          src={profilePicture}
+                        />
+                      </Col>
+                      <Col>
+                        <ImgCrop action="" rotationSlider>
+                          <Upload
+                            showUploadList={
+                              profilePicture === null ? true : false
+                            }
+                            onChange={handleFileChange}
+                          >
+                            <span style={{ cursor: "pointer" }}>
+                              <CameraOutlined />
+                            </span>
+                          </Upload>
+                        </ImgCrop>
+                      </Col>
+                    </Row>
+                  )}
+                </Col>
+              </Row>
 
-                </Upload>
-
-                
-              </ImgCrop>
-            </Row>
-
-            <Row justify="center">
-              <Col span={23}>
-                <Form layout="vertical" onFinish={handleSubmit}>
-                  <Row justify="start">
-                    <Title level={2} style={{ margin: "30px 0" }}>
-                      Basic Information
-                    </Title>
-                    <Divider style={{ margin: "0" }} />
-                  </Row>
-                  <Row>
-                    <Col span={24}>
-                      <Row justify="space-between" gutter={[0, 35]}>
-                        <Col span={11}>
-                          <Title level={4} style={{ marginBottom: "0" }}>
-                            Your Name:
-                          </Title>
-                          <Title
-                            level={5}
-                            editable={{ onChange: handleName }}
-                            style={{ marginTop: "6px" }}
-                          >
-                            {name}
-                          </Title>
-                        </Col>
-                        <Col span={11}>
-                          <Title level={4} style={{ marginBottom: "0" }}>
-                            Professional title:
-                          </Title>
-                          <Title
-                            level={5}
-                            editable={{ onChange: handleTitle }}
-                            style={{ marginTop: "6px" }}
-                          >
-                            {title}
-                          </Title>
-                        </Col>
-
-                        <Col span={11}>
-                          <Title level={4} style={{}}>
-                            Birthday:
-                          </Title>
-                          <DatePicker
-                            value={birthday}
-                            style={{
-                              boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                              height: "40px",
-                            }}
-                            onChange={(date) => {
-                              setBirthday(date);
-                              console.log(date);
-                            }}
-                          />
-                        </Col>
-
-                        <Col span={24}>
-                          <Row justify="space-between">
-                            <Col span={3}>
-                              <Title level={4} style={{}}>
-                                Currency:
-                              </Title>
-                              <Select
-                                defaultValue={"USD$"}
-                                value={currency}
-                                onChange={(value) => setCuurency(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  fontFamily: "arial",
-                                }}
-                                options={currencies}
-                              />
-                            </Col>
-                            <Col span={9}>
-                              <Title level={4} style={{}}>
-                                Minimum Salary:
-                              </Title>
-                              <Select
-                                value={minSalary}
-                                onChange={(value) => setMinSalary(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  borderRadius: "0 !important",
-                                  fontFamily: "arial",
-                                }}
-                                options={salary}
-                              />
-                            </Col>
-                            <Col span={9}>
-                              <Title level={4} style={{}}>
-                                Maximum Salary:
-                              </Title>
-                              <Select
-                                value={maxSalary}
-                                onChange={(value) => setMaxSalary(value)}
-                                style={{
-                                  width: "100%",
-                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
-                                  borderRadius: "0",
-                                  fontSize: "medium",
-                                  borderRadius: "0 !important",
-                                  fontFamily: "arial",
-                                }}
-                                options={salary}
-                              />
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row style={{ marginTop: "30px", marginBottom: "30px" }}>
-                    <Title level={4}>Descreption:</Title>
-                    <Title
-                      level={5}
-                      editable={{ onChange: handleDescription }}
-                      style={{ marginTop: "6px" }}
-                    >
-                      {description}
-                    </Title>
-                  </Row>
-                  <Row
-                    style={{ marginTop: "20px", padding: "2%" }}
-                    justify="space-between"
-                  >
-                    <Col span={10}>
-                      <Title level={3} style={{ margin: "0" }}>
-                        CONTACT
-                      </Title>
-                      <Divider style={{ margin: "8px" }} />
-                      <Row>
-                        <Col span={24}>
-                          <Title
-                            level={3}
-                            style={{
-                              display: "inline-block",
-                              marginRight: "10px",
-                            }}
-                          >
-                            <MailOutlined />
-                          </Title>
-                          <Text
-                            editable={{ onChange: handleEmail }}
-                            style={{ fontSize: "18px" }}
-                          >
-                            {email}
-                          </Text>
-                        </Col>
-                        <Col span={24}>
-                          <Title
-                            level={3}
-                            style={{
-                              display: "inline-block",
-                              marginRight: "10px",
-                            }}
-                          >
-                            <PhoneOutlined />
-                          </Title>
-                          <Text
-                            editable={{ onChange: handlePhone }}
-                            style={{ fontSize: "18px" }}
-                          >
-                            {phone}
-                          </Text>
-                        </Col>
-                        <Col span={24}>
-                          <Title
-                            level={3}
-                            style={{
-                              display: "inline-block",
-                              marginRight: "10px",
-                            }}
-                          >
-                            <FiMapPin />
-                          </Title>
-                          <Text
-                            editable={{ onChange: handleAddress }}
-                            style={{ fontSize: "18px" }}
-                          >
-                            {address}
-                          </Text>
-                        </Col>
-                        <Col span={24}>
-                          <Title
-                            level={3}
-                            style={{
-                              display: "inline-block",
-                              marginRight: "10px",
-                            }}
-                          >
-                            <FiMapPin />
-                          </Title>
-                          <Text
-                            editable={{ onChange: handleCity }}
-                            style={{ fontSize: "18px" }}
-                          >
-                            {city}
-                          </Text>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span={10}>
-                      <Row gutter={20}>
-                        <Col span={24}>
-                          <Title level={3} style={{ margin: "0" }}>
-                            FOLLOW
-                          </Title>
-                          <Divider style={{ margin: "8px" }} />
-                        </Col>
-                        <Col>
-                          <Link target="_blabk" href={facebook}>
+              <Row justify="center">
+                <Col span={23}>
+                  <Form layout="vertical" onFinish={handleSubmit}>
+                    <Row justify="start">
+                      <Col span={22}>
+                        <Title level={2} style={{ margin: "30px 0 5px 0" }}>
+                          BASIC INFORMATION
+                        </Title>
+                        <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={24}>
+                        <Row justify="space-between" gutter={[0, 35]}>
+                          <Col span={11}>
+                            <Title level={4} style={{ marginBottom: "0" }}>
+                              Your Name:
+                            </Title>
                             <Title
-                              editable={{ onChange: handleFacebook }}
+                              level={5}
+                              editable={{ onChange: handleName }}
+                              style={{ marginTop: "6px" }}
+                            >
+                              {name === null ? "Name" : name}
+                            </Title>
+                          </Col>
+                          <Col span={11}>
+                            <Title level={4} style={{ marginBottom: "0" }}>
+                              Professional title:
+                            </Title>
+                            <Title
+                              level={5}
+                              editable={{ onChange: handleTitle }}
+                              style={{ marginTop: "6px" }}
+                            >
+                              {title === null ? "Title" : title}
+                            </Title>
+                          </Col>
+
+                          <Col span={11}>
+                            <Title level={4} style={{}}>
+                              Birthday:
+                            </Title>
+
+                            {editingbd || formatbday === null ? (
+                              <DatePicker
+                                style={{
+                                  boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                  height: "40px",
+                                }}
+                                onChange={(date) => {
+                                  const dateObj = moment(date);
+                                  setFormatbDay(date);
+                                  setBirthday(dateObj.format("YYYY MM DD"));
+                                  setChange(true);
+                                  console.log(date);
+                                }}
+                              />
+                            ) : (
+                              <label
+                                onClick={(e) => {
+                                  setEditing(true);
+                                  console.log(e);
+                                }}
+                              >
+                                {birthday}
+                                <EditOutlined />
+                              </label>
+                            )}
+                          </Col>
+                          <Col span={24}>
+                            <Row justify="space-between">
+                              <Col span={3}>
+                                <Title level={4} style={{}}>
+                                  Currency:
+                                </Title>
+                                {editingc || currency === null ? (
+                                  <Select
+                                    defaultValue={currency}
+                                    value={currency}
+                                    onChange={(value) => {
+                                      setCuurency(value);
+                                      setChange(true);
+                                      setEdittingC(false);
+                                    }}
+                                    style={{
+                                      width: "100%",
+                                      boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                      borderRadius: "0",
+                                      fontSize: "medium",
+                                      fontFamily: "arial",
+                                    }}
+                                    options={currencies}
+                                  />
+                                ) : (
+                                  <label
+                                    onClick={() => {
+                                      setEdittingC(true);
+                                    }}
+                                  >
+                                    {currency}
+                                    <EditOutlined />
+                                  </label>
+                                )}
+                              </Col>
+                              <Col span={9}>
+                                <Title level={4} style={{}}>
+                                  Minimum Salary:
+                                </Title>
+                                {editingMin || minSalary === null ? (
+                                  <Select
+                                    value={minSalary}
+                                    defaultValue={minSalary}
+                                    onChange={(value) => {
+                                      setMinSalary(value);
+                                      setEdittingMin(false);
+                                      setChange(true);
+                                    }}
+                                    style={{
+                                      width: "100%",
+                                      boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                      borderRadius: "0",
+                                      fontSize: "medium",
+                                      borderRadius: "0 !important",
+                                      fontFamily: "arial",
+                                    }}
+                                    options={salary}
+                                  />
+                                ) : (
+                                  <label onClick={() => setEdittingMin(true)}>
+                                    {minSalary}
+                                    <EditOutlined />
+                                  </label>
+                                )}
+                              </Col>
+                              <Col span={9}>
+                                <Title level={4} style={{}}>
+                                  Maximum Salary:
+                                </Title>
+                                {editingMax || maxSalary === null ? (
+                                  <Select
+                                    onChange={(value) => {
+                                      setMaxSalary(value);
+                                      setEdittingMax(false);
+                                      setChange(true);
+                                    }}
+                                    style={{
+                                      width: "100%",
+                                      boxShadow: "0px 0px 5px  rgba(0,0,0,.1)",
+                                      borderRadius: "0",
+                                      fontSize: "medium",
+                                      borderRadius: "0 !important",
+                                      fontFamily: "arial",
+                                    }}
+                                    options={salary}
+                                  />
+                                ) : (
+                                  <label onClick={() => setEdittingMax(true)}>
+                                    {maxSalary}
+                                    <EditOutlined />
+                                  </label>
+                                )}
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                    <Row style={{ marginTop: "30px", marginBottom: "30px" }}>
+                      <Col span={24}>
+                        <Title level={4}>Descreption:</Title>
+                        <Title
+                          level={5}
+                          editable={{ onChange: handleDescription }}
+                          style={{ marginTop: "6px" }}
+                        >
+                          {" "}
+                          {description}
+                        </Title>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={12}>
+                        <Title level={3} style={{ marginTop: "0" }}>
+                          SECURITY
+                        </Title>
+                        <Checkbox
+                          checked={!tempV}
+                          onChange={() => {
+                            setTempV(!tempV);
+                            setVisible(visible ? false : true);
+                            console.log(visible, "DUla");
+                            setChange(true);
+                          }}
+                        >
+                          <Text style={{ fontSize: "16px" }}>
+                            Account Invisible
+                          </Text>
+                        </Checkbox>
+                      </Col>
+                    </Row>
+                    <Row style={{ marginTop: "20px" }} justify="space-between">
+                      <Col span={12}>
+                        <Title level={3} style={{ margin: "0" }}>
+                          CONTACT
+                        </Title>
+                        <Row>
+                          <Col span={24}>
+                            <Title
                               level={3}
                               style={{
                                 display: "inline-block",
                                 marginRight: "10px",
                               }}
                             >
-                              <FaFacebook />
+                              <MailOutlined />
                             </Title>
-                          </Link>
-                        </Col>
-                        <Col>
-                          <Link target="_blabk" href={twitter}>
+                            <Text
+                              editable={{ onChange: handleEmail }}
+                              style={{ fontSize: "16px" }}
+                            >
+                              {email === null ? "Email" : email}
+                            </Text>
+                          </Col>
+                          <Col span={24}>
                             <Title
-                              editable={{ onChange: handleTwitter }}
-                              value={twitter}
                               level={3}
                               style={{
                                 display: "inline-block",
                                 marginRight: "10px",
                               }}
                             >
-                              <FaTwitterSquare />
+                              <PhoneOutlined />
                             </Title>
-                          </Link>
-                        </Col>
-                        <Col>
-                          <Link target="_blabk" href={linkedIn}>
+                            <Text
+                              editable={{ onChange: handlePhone }}
+                              style={{ fontSize: "16px" }}
+                            >
+                              {phone === null ? "Phone" : phone}
+                            </Text>
+                          </Col>
+                          <Col span={24}>
                             <Title
-                              editable={{ onChange: handleLinkedIn }}
                               level={3}
                               style={{
                                 display: "inline-block",
                                 marginRight: "10px",
                               }}
                             >
-                              <AiFillLinkedin />
+                              <FiMapPin />
                             </Title>
-                          </Link>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row style={{ padding: "0 2%" }}>
-                    <Button
-                      htmlType="submit"
-                      size="large"
-                      type="primary"
-                      style={{ borderRadius: "0" }}
-                    >
-                      Save
-                    </Button>
-                    {message && (
-                      <Alert message="Success Tips" type="success" showIcon />
-                    )}
-                  </Row>
-                </Form>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </motion.div>
+                            <Text
+                              editable={{ onChange: handleAddress }}
+                              style={{ fontSize: "16px" }}
+                            >
+                              {address === null ? "Address" : address}
+                            </Text>
+                          </Col>
+                          <Col span={24}>
+                            <Title
+                              level={3}
+                              style={{
+                                display: "inline-block",
+                                marginRight: "10px",
+                              }}
+                            >
+                              <FiMapPin />
+                            </Title>
+                            <Text
+                              editable={{ onChange: handleCity }}
+                              style={{ fontSize: "16px" }}
+                            >
+                              {city === null ? "City" : city}
+                            </Text>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={10}>
+                        <Row gutter={20}>
+                          <Col span={24}>
+                            <Title level={3} style={{ margin: "0" }}>
+                              FOLLOW
+                            </Title>
+                          </Col>
+                          <Col>
+                            <Link target="_blabk" href={facebook}>
+                              <Title
+                                editable={{ onChange: handleFacebook }}
+                                level={3}
+                                style={{
+                                  display: "inline-block",
+                                  marginRight: "10px",
+                                }}
+                              >
+                                <FaFacebook />
+                              </Title>
+                            </Link>
+                          </Col>
+                          <Col>
+                            <Link target="_blabk" href={twitter}>
+                              <Title
+                                editable={{ onChange: handleTwitter }}
+                                value={twitter}
+                                level={3}
+                                style={{
+                                  display: "inline-block",
+                                  marginRight: "10px",
+                                }}
+                              >
+                                <FaTwitterSquare />
+                              </Title>
+                            </Link>
+                          </Col>
+                          <Col>
+                            <Link target="_blabk" href={linkedIn}>
+                              <Title
+                                editable={{ onChange: handleLinkedIn }}
+                                level={3}
+                                style={{
+                                  display: "inline-block",
+                                  marginRight: "10px",
+                                }}
+                              >
+                                <AiFillLinkedin />
+                              </Title>
+                            </Link>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                    <Row style={{ padding: "0 2%", marginTop: "20px" }}>
+                      <Button
+                        disabled={
+                          !change && imageUpload === null ? true : false
+                        }
+                        htmlType="submit"
+                        size="large"
+                        type="primary"
+                        style={{ borderRadius: "0" }}
+                      >
+                        Save
+                      </Button>
+                    </Row>
+                  </Form>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </motion.div>
+      </Spin>
     </>
   );
 }
