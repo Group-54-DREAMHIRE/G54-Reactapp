@@ -23,7 +23,8 @@ import Link from "antd/es/typography/Link";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setActiveJobId } from "../../../store/company/applyJobSlice";
+import { setActiveJobId, setAppliedActJob } from "../../../store/company/applyJobSlice";
+import moment from "moment";
 
 const { Title, Text } = Typography;
 
@@ -40,6 +41,7 @@ export default function AppliedJobCard({ items }) {
      setCompany(items.jobPost.company);
      setJobId(items.jobPost.id);
      dispatch(setActiveJobId(items.jobPost.id));
+     dispatch(setAppliedActJob(items));
    }, []);
   return (
     <>
@@ -69,9 +71,9 @@ export default function AppliedJobCard({ items }) {
               >
                 <FaMapMarkerAlt /> {company.address}.
               </Text>
-              <Text style={{ marginTop: "0px", color: "rgb(31,31,51)" }}>
+              {/* <Text style={{ marginTop: "0px", color: "rgb(31,31,51)" }}>
                 <FaMoneyBillAlt /> {post.currency} {post.minSalary} - {post.maxSalary}
-              </Text>
+              </Text> */}
             </Title>
             <Space style={{ marginTop: "15px" }}>
               {tags.slice(0, 4).map((tag) => {
@@ -85,11 +87,11 @@ export default function AppliedJobCard({ items }) {
             <Image preview={false} width={150} height={100} src={post.cover} />
           </Col>
         </Row>
-        <Row style={{ marginTop: "0px" }} align="bottom" gutter={40} justify="end">
-          <Col>
-           { items.candidateType && handleStatus(items.candidateType)}
+        <Row style={{ marginTop: "0px" }} align="bottom"  justify="end">
+          <Col span={20}>
+           { items.candidateType && handleStatus(items.candidateType, items.appliedDate)}
           </Col>
-          <Col>
+          <Col span={4}>
             <Button
             onClick={()=>navigate(`/appliedjob/${jobId}`)}
               className="view-w"
@@ -109,29 +111,29 @@ const statusStyles = {
   fontSize: '16px',
 }
 
-const handleStatus = (value) =>{
+const handleStatus = (value,date) =>{
   if(value === "pending"){
     return (
-      <Link style={statusStyles}>
-        Application is in the pending list July 25
-      </Link>
+      <Text style={statusStyles}>
+        Application is in the pending list {moment(date).format("YYYY MMMM DD")}
+      </Text>
     )}
     if(value === "shortlist"){
       return (
           <Text type="success" style={statusStyles}>
-            Application is in the shortlist August 10
+            Application is in the shortlist {moment(date).format("YYYY MMMM DD")}
           </Text>
       )}
       if(value === "reject"){
         return (
             <Text type="danger" style={statusStyles}>
-              Application is rejected August 02
+              Application is rejected {moment(date).format("YYYY MMMM DD")}
             </Text>
         )}
       if(value === "close"){
           return (
               <Text type="danger" style={statusStyles}>
-                Positions are  July 25
+                Positions are  {moment(date).format("YYYY MMMM DD")}
               </Text>
         )}
   }
