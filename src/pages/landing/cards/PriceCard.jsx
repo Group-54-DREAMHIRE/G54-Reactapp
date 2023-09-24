@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, List, Button } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import StripeCheckout from 'react-stripe-checkout';
 
 const PriceCard = () => {
   const features1 = [
@@ -37,6 +38,9 @@ const PriceCard = () => {
   const handleLeave2 = () => {
     setHovered2(false);
   };
+  const onToken = (token) =>{
+    console.log(token);
+  }
 
   return (
     <div style={containerStyles}>
@@ -107,7 +111,14 @@ const PriceCard = () => {
             )}
           />
           <div style={buttonsContainerStyles}>
-            <Button type="primary">Subscribe Now</Button>
+            
+                  <StripeCheckout
+                    token={onToken}
+                    name = "Payment"
+                    currency="lkr"
+                    amount="90000.00"
+                    stripeKey="pk_test_51NtjygF11OuUiVZCu3pbo1UcmVQflm4jMnE2Hv2AfjFY7yF9SR6QfAAMVNk4Rq46X6nDy0cCuN500fdrTGwaEclW00bloMQvLj"
+                  />
           </div>
         </Card>
       </div>
