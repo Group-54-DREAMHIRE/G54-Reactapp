@@ -9,6 +9,7 @@ import {
   Typography,
   Radio,
   Modal,
+  message,
   Form,
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
@@ -28,6 +29,7 @@ export default function InterviewDetails() {
   const user = JSON.parse(localStorage.getItem("USER"));
   const useId =user.id;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const timeList = useSelector((state) => state.applyJob.activeList);
   const [time, setTime] = useState(null);
   const [method, setMethod] = useState(null);
@@ -45,10 +47,13 @@ export default function InterviewDetails() {
         };
         try{
           await fetchUserData(data).then((response)=>{
-
+            if(response.status===200){
+              message.success("Succesfully Applied");
+              navigate(-2);
+            }
           })
         }catch(e){
-
+          message.error("Error! Try again");
         }
       }
     }

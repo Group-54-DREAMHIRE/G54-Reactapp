@@ -28,6 +28,8 @@ import ViewResume from "../Components/candidate/ViewResume";
 import Pending from "../pages/candidate/interviews/Pending";
 import AppliedJobInterview from '../pages/candidate/AppliedJobInterview';
 import ScheduledInterviews from "../pages/candidate/ScheduledInterviews";
+import ShowResume from "../pages/candidate/ShowResume";
+import ResumeViewPage from '../pages/candidate/ResumeViewPage';
 export default function CandidateRoutes() {
   return (
     <>
@@ -35,7 +37,10 @@ export default function CandidateRoutes() {
         <Route path="/" element={<RootLayout/>}>
           <Route path="/dashboard" index element={<CandidateDashboard/>}/>
           <Route path="/profile" element={<CandidateProfile/>}/>
-          <Route path="/resume" element={<ViewResume/>}/>
+          <Route path="/resume" element={<ShowResume/>}/>
+          <Route path="/createresume" element={<ViewResume/>}/>
+          <Route path="/viewresume" element={<ResumeViewPage/>}/>
+          <Route path="/showresume" element={<Resume/>}/>
           <Route path="/appliedjobs" element={<AppliedJobs/>}/>
           <Route path="/appliedjob/:id" element={<AppliedJob/>}/>
           <Route  path="scheduledinterviews" element={<ScheduledInterviews/>}/> 

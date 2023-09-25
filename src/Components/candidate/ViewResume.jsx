@@ -18,7 +18,8 @@ const { Title, Text } = Typography;
 
 export default function ViewResume() {
   const dispatch = useDispatch();
-
+  const cvPersonalData = useSelector((state) => state.resume.personalData);
+  const cvContentData = useSelector((state) => state.resume.contentData);
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
   const loading = useSelector((state)=>state.models.loading);
@@ -291,8 +292,8 @@ export default function ViewResume() {
   const [activeContent, setActiveContent] = useState({});
 
   useEffect(() => {
-
-      getData(`/api/v1/resume/getResume/${id}`)
+    if((cvPersonalData===null) && (cvContentData===null) ){
+        getData(`/api/v1/resume/getResume/${id}`)
         .then((response) => {
           setCvData(response.data);
           console.log(response.data);
@@ -301,9 +302,11 @@ export default function ViewResume() {
         .catch((error) => {
           console.error("Error fetching user profile:", error);
         });
+    }
+    
   }, []);
   useEffect(() => {
-    if(cvData !== null){
+    if((cvData !== null) && ((cvPersonalData===null) && (cvContentData===null)) ){
       let tempCvData = [];
       setName(cvData.name || name);
       setProfilePicture(cvData.profilePicture || profilePicture);
@@ -332,10 +335,35 @@ export default function ViewResume() {
       tempCvData.push(JSON.parse(cvData.otherQualification || 'null') || contentData[7]);
       tempCvData.push(JSON.parse(cvData.reference || 'null') || contentData[8]);
       setContentData(tempCvData);
-
-    }
-      
+    }    
 }, [cvData]);
+useEffect(() => {
+  if((cvPersonalData!==null)){
+    setName(cvPersonalData. name);
+    setProfilePicture(cvPersonalData.profilePicture);
+    setLinkedIn(cvPersonalData.linkedIn);
+    setTwitter(cvPersonalData.twitter);
+    setGithub(cvPersonalData.github);
+    setWebsite(cvPersonalData.website);
+    setDiscode(cvPersonalData.discode);
+    setLinkedInLabel(cvPersonalData.linkedInLabel);
+    setTwitterLabel(cvPersonalData.twitterLabel);
+    setGithubLabel(cvPersonalData.githubLabel);
+    setWebsiteLabel(cvPersonalData.websiteLabel);
+    setDiscodeLabel(cvPersonalData.discodeLabel);
+    setTitle(cvPersonalData.title);
+    setPhone(cvPersonalData.phone);
+    setEmail(cvPersonalData.email);
+    setAddress(cvPersonalData.address);
+  }
+    
+}, [cvPersonalData]);
+useEffect(() => {
+  if(cvContentData!==null){
+   
+    setContentData(cvContentData);
+  } 
+}, [cvContentData]);
   const editPersonalData = {
     name,
     setName,

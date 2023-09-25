@@ -5,7 +5,8 @@ const initialState = {
    techList:null,
    hrList:null,
    activeList:null,
-   appliedActJob:null
+   appliedActJob:null,
+   appliedJobs:null
 }
 
 const applyJobSlice = createSlice({
@@ -30,10 +31,13 @@ const applyJobSlice = createSlice({
     },
     setAppliedActJob: (state, action)=>{
       state.appliedActJob = action.payload;
+    },
+    setAppliedJobs: (state, action)=>{
+      state.appliedJobs = action.payload;
     }
   }  
 });
 
-export const {setActiveJobId, setTechList, setHrList, setTimeList, setAppliedActJob} = applyJobSlice.actions;
+export const {setActiveJobId, setTechList, setHrList, setTimeList, setAppliedActJob,setAppliedJobs} = applyJobSlice.actions;
 export const getActiveJobPostId = (state) => state.applyjob.activeJobId;
 export default applyJobSlice.reducer;
