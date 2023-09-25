@@ -54,6 +54,7 @@ export default function ApplyJob({ jobID }) {
         candidateCity: city,
         tags: tagList,
         jobTitle: title,
+        appliedDate: new Date()
       };
       let data = {
         url: `/api/v1/applyjobcandidate/save/${id}`,
