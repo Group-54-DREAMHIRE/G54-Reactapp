@@ -83,7 +83,7 @@ const Candidates = () => {
                   fontSize: '25px',
                   fontWeight: 600,
                 }}>
-                  Registered Candidates
+                  REGISTERED CANDIDATES
                 </Title>
               </Col>
               <Col span={6}>

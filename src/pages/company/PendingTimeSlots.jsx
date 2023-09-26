@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, List, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/PendingTimeSlots.scss';
+// import '../../assets/styles/PendingTimeSlots.scss';
 
 const { Title } = Typography;
 
@@ -16,7 +16,7 @@ function PendingTimeSlots() {
   return (
     <>
       <div className='pending-time-slots-n'>
-        <Title className='title'>Pending Time Slots</Title>
+        <Title className='title'>PENDING TIME SLOTS</Title>
         <List
           itemLayout='horizontal'
           dataSource={pendingTimeSlots}

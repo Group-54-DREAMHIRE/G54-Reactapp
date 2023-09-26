@@ -17,7 +17,6 @@ const CompanyCard = ({ company }) => {
       >
         <Row justify='space-between'>
           <Col span={15}>
-            {company.id}
             <Meta
               title={
                 <Title level={2} style={{ marginBottom: '10px', marginTop: '0' }}>
@@ -29,7 +28,7 @@ const CompanyCard = ({ company }) => {
            
           </Col>
           <Col span={8}>
-            <Image alt="Card" src={company.cover} />
+            <Image alt="Card" src={company.logo} />
             <Row justify='end'>
             <Button
             onClick={()=>navigate(`/company/${id}`)}

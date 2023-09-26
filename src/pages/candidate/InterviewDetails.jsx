@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -9,28 +9,70 @@ import {
   Typography,
   Radio,
   Modal,
+  message,
+  Form,
 } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import { fetchUserData } from "../../api/authenticationService";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { getTimeList } from "../../store/company/applyJobSlice";
+import { lastDayOfDecade } from "date-fns";
 const { Title, Text } = Typography;
 
 const textStyle = {
   fontSize: "16px",
+  textTransform: "capitalize",
 };
 export default function InterviewDetails() {
-  const [time, setTime] = useState(1);
+  const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const useId =user.id;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const timeList = useSelector((state) => state.applyJob.activeList);
+  const [time, setTime] = useState(null);
+  const [method, setMethod] = useState(null);
+
+  const handleSubmit = async() => {
+    if(method==="confirm"){
+      if(time){
+        const sendData = {
+          intId:time,
+        };
+        let data = {
+          url: `/api/v1/interviewCan/confirmInterview/${useId}`,
+          data: sendData,
+          method: "post",
+        };
+        try{
+          await fetchUserData(data).then((response)=>{
+            if(response.status===200){
+              message.success("Succesfully Applied");
+              navigate(-2);
+            }
+          })
+        }catch(e){
+          message.error("Error! Try again");
+        }
+      }
+    }
+  }
   return (
     <>
-      <Row>
+      <Row className="interview-details-w">
+      <Form onFinish={handleSubmit}>
         <Col style={{ padding: "2% 3%", minHeight: "75vh" }} span={24}>
-          <Row gutter={[0, 20]} justify="space-between">
+          <Row gutter={[0, 20]}>
             <Col span={24}>
               <Title level={3} style={{ marginTop: "0", marginBottom: "10px" }}>
                 Interview Details
               </Title>
               <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
             </Col>
-            <Col span={11}>
+            <Col span={8}>
               <Row align="bottom" gutter={[0, 15]}>
-                <Col span={14}>
+                <Col span={24}>
                   <Text
                     style={{
                       marginRight: "6px",
@@ -40,9 +82,9 @@ export default function InterviewDetails() {
                   >
                     Company:
                   </Text>
-                  <Text style={textStyle}>Creative Software</Text>
+                  <Text style={textStyle}>{timeList[0].companyName}</Text>
                 </Col>
-                <Col span={10}>
+                {/* <Col span={24}>
                   <Text
                     style={{
                       marginRight: "6px",
@@ -53,7 +95,7 @@ export default function InterviewDetails() {
                     Date:
                   </Text>
                   <Text style={textStyle}>2023.08.28</Text>
-                </Col>
+                </Col> */}
                 <Col span={24}>
                   <Text
                     style={{
@@ -64,7 +106,7 @@ export default function InterviewDetails() {
                   >
                     Type:
                   </Text>
-                  <Text style={textStyle}>HR Interview</Text>
+                  <Text style={textStyle}>{timeList[0].type} Interview</Text>
                 </Col>
                 <Col span={24}>
                   <Text
@@ -76,9 +118,9 @@ export default function InterviewDetails() {
                   >
                     With:
                   </Text>
-                  <Text style={textStyle}>Mrs. Vishmi</Text>
+                  <Text style={textStyle}>{timeList[0].withInt}</Text>
                 </Col>
-                <Col span={24}>
+                {/* <Col span={24}>
                   <Button
                     style={{
                       borderRadius: "0",
@@ -90,17 +132,17 @@ export default function InterviewDetails() {
                   >
                     Interview Report
                   </Button>
-                </Col>
+                </Col> */}
               </Row>
             </Col>
-            <Col span={11}>
+            <Col span={16}>
               <Row>
                 <Col span={24}>
                   <Title style={{ margin: "0" }} level={4}>
                     Select a time slot and confirm
                   </Title>
                 </Col>
-                <Col>
+                <Col span={24}>
                   <Card
                     style={{
                       borderRadius: "0",
@@ -109,21 +151,44 @@ export default function InterviewDetails() {
                     }}
                   >
                     <Row gutter={[10, 10]}>
-                      <Col span={24}>
-                        <Radio.Group
-                          onChange={(e) => setTime(e.target.value)}
-                          value={time}
-                        >
-                          <Space direction="vertical">
-                            <Radio value={1}>9.00 AM - 9.30 AM</Radio>
-                            <Radio value={2}>9.30 AM - 10.00 AM</Radio>
-                            <Radio value={3}>10.00 AM - 10.30 AM</Radio>
-                            <Radio value={4}>10.30 AM - 11.00 AM</Radio>
-                          </Space>
-                        </Radio.Group>
+                     
+                     <Col span={24}>
+                      <Row justify='space-between'>
+                        {timeList.map((item) => {
+                          return (
+                           <Col span={12}  >
+                            <Radio.Group
+                           
+                              onChange={(e) => setTime(e.target.value)}
+                              value={time}
+                            >
+                              <Space direction="vertical">
+                              <Title level={5} style={{margin:'0'}}>
+                                {moment(item.date).format("YYYY MMMM DD")}
+                              </Title>
+                                {item.times.map((time) => {
+                                  return (
+                                    <Radio  buttonStyle="solid" value={time.intId}>
+                                      {moment(time.startTime).format("hh:mm A")} - 
+                                      {moment(time.startTime).add(time.duration, "minutes").format("hh:mm A")}
+                                    </Radio>
+                                  );
+                                })}
+                              </Space>
+                            </Radio.Group>
+                            <br/> <br/>
+                           </Col>
+                          );
+                        })}
+                      </Row>
+                       
                       </Col>
+                     <Col span={24}>
+                      <Row gutter={10}>
                       <Col>
                         <Button
+                          onClick={()=>setMethod("confirm")}
+                          htmlType="submit"
                           style={{
                             borderRadius: "0",
                             boxShadow: "0 0 8px rgba(0,0,0,.2)",
@@ -137,6 +202,9 @@ export default function InterviewDetails() {
                       </Col>
                       <Col>
                         <Button
+                          disabled={true}
+                          htmlType="submit"
+                          onClick={()=>setMethod("reject")}
                           style={{
                             borderRadius: "0",
                             boxShadow: "0 0 8px rgba(0,0,0,.2)",
@@ -148,6 +216,9 @@ export default function InterviewDetails() {
                           Reject
                         </Button>
                       </Col>
+                      </Row>
+                     </Col>
+                     
                     </Row>
                   </Card>
                 </Col>
@@ -155,6 +226,7 @@ export default function InterviewDetails() {
             </Col>
           </Row>
         </Col>
+        </Form>
       </Row>
     </>
   );

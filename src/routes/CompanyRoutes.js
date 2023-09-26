@@ -26,12 +26,13 @@ import AssignedCandidates from "../pages/company/AssignedCandidates";
 
 import ScheduleTests from '../pages/company/ScheduleTest';
 import CreateTest from '../pages/company/CreateTest';
-import DispalyTest from '../pages/company/DisplayTest';
+import AddQuestions from "../pages/company/AddQuestions";
 
 import SendNotifications from '../pages/company/SendNotification';
 import CandidateResumes from '../pages/company/CandidatResumes';
 import PendingResume from '../pages/company/resume/PendingResume';
 import RejectResume from '../pages/company/resume/RejectResume';
+import CanceledResume from "../pages/company/resume/CanceledResume";
 import ShortListResume from '../pages/company/resume/ShortListResume';
 import Registration from '../pages/company/Registration';
 import Users from "../pages/company/Users";
@@ -40,12 +41,14 @@ import AddJobPost from "../pages/company/AddJobPost";
 import OneFullCard from "../pages/OneFullEvent";
 import EventForm from "../Components/cards/company/EventForm";
 import CompanyPage from '../pages/CompanyPage';
-export default function CandidateRoutes() {
+import CandidatePage from "../pages/CandidatePage";
+import GenarateInterviews from "../pages/company/GenarateInterviews";
+export default function CompanyRoutes() {
   return (
     <>
         <Routes>
         <Route path="/" element={<RootLayout/>}>
-          <Route path="/dashboard" index element={<CompanyDashboard/>}/>
+          <Route path="/dashboard" element={<CompanyDashboard/>}/>
           <Route path="/profile" element={<CompanyProfile/>}/>
           <Route path="/registration" element={<Registration/>}/>
 
@@ -54,9 +57,10 @@ export default function CandidateRoutes() {
           <Route path='/jobpost/:id' element={<JobPost/>}/>
 
           <Route element={<CandidateResumes/>}>
-            <Route path="/pendingresumes" index element={<PendingResume/>} />
-            <Route path="/rejectresumes" element={<RejectResume/>} />
-            <Route path="/shortlistresumes" element={<ShortListResume/>} />
+            <Route path="/pendingresumes/:id" index element={<PendingResume/>} />
+            <Route path="/rejectresumes/:id" element={<RejectResume/>} />
+            <Route path="/shortlistresumes/:id" element={<ShortListResume/>} />
+            <Route path="/canceledresumes/:id" element={<CanceledResume/>} />
           </Route>
 
           <Route path="/postedevents" element={<PostedEvents/>}/>
@@ -67,7 +71,8 @@ export default function CandidateRoutes() {
           <Route path="/addevent" element={<EventForm/>}/>
           <Route path="/event" element={<OneFullCard/>}/>
           <Route path="/interviews" element={<Interviews/>}/>
-          <Route path="/interviews/scheduleinterviews" element={<ScheduleInterviews/>} />
+          <Route path="/interviews/scheduleinterviews" element={<GenarateInterviews/>} />
+          <Route path="/genarateinterviews" element={<ScheduleInterviews/>}/>
 
           <Route path="/scheduledinterviews" element={<ScheduledInterviews/>} />
           <Route path="/scheduledinterviews/selectedtimeslots" element={<SelectedTimeSlots/>} />
@@ -78,13 +83,15 @@ export default function CandidateRoutes() {
 
           <Route path="/scheduletests" element={<ScheduleTests/>}/>
           <Route path="/scheduletests/createtest" element={<CreateTest/>}/>
-          <Route path="/scheduletests/displaytest" element={<DispalyTest/>} />
+          <Route path="/scheduletests/addquestions" element={<AddQuestions/>} />
 
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
           <Route path="/companies" element={<Companies/>}/>
           <Route path="/company" element={<CompanyPage/>}/>
+          <Route path="/company/:id" element={<CompanyPage/>}/>
           <Route path="/candidates" element={<Candidates/>}/>
+          <Route path="/candidate/:id" element={<CandidatePage/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
           <Route path="/users" element={<Users/>}/>
           <Route path="/changepassword" element={<ChangePassword/>}/>

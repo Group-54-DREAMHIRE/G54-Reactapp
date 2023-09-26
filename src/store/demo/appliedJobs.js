@@ -9,13 +9,7 @@ export const items = [
       salary: "$1200",
       image: "https://images.pexels.com/photos/5686105/pexels-photo-5686105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       status: "pending",
-      tags: [
-        "react",
-        "angular",
-        "java",
-        "python"
-       
-    ]
+      tags: "react,angular,java,python"
     },
     {
         id: 2,

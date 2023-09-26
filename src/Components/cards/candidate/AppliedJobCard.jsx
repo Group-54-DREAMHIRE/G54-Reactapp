@@ -20,13 +20,29 @@ import {
   Space,
 } from "antd";
 import Link from "antd/es/typography/Link";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setActiveJobId, setAppliedActJob } from "../../../store/company/applyJobSlice";
+import moment from "moment";
 
 const { Title, Text } = Typography;
 
 export default function AppliedJobCard({ items }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [tags, setTags] = useState([]);
+  const [post, setPost] = useState([]);
+  const [company, setCompany] = useState([]);
+  const [jobId, setJobId] = useState();
+  useEffect(() => {
+     setTags(items.tags.split(", "));
+     setPost(items.jobPost);
+     setCompany(items.jobPost.company);
+     setJobId(items.jobPost.id);
+     dispatch(setActiveJobId(items.jobPost.id));
+     dispatch(setAppliedActJob(items));
+   }, []);
   return (
     <>
       <Card
@@ -37,13 +53,13 @@ export default function AppliedJobCard({ items }) {
         <Row justify="space-between">
           <Col>
             <Title level={4} style={{ marginBottom: "18px", marginTop: "0" }}>
-              {items.title}
+              {post.jobTitle}
             </Title>
             <Title
               level={5}
               style={{ color: "rgb(31,31,51)", marginTop: "8px" }}
             >
-              @ {items.name}
+              @ {company.name}
             </Title>
             <Title level={5} style={{ marginTop: "8px" }}>
               <Text
@@ -53,14 +69,14 @@ export default function AppliedJobCard({ items }) {
                   color: "rgb(31,31,51)",
                 }}
               >
-                <FaMapMarkerAlt /> {items.address}.
+                <FaMapMarkerAlt /> {company.address}.
               </Text>
-              <Text style={{ marginTop: "0px", color: "rgb(31,31,51)" }}>
-                <FaMoneyBillAlt /> {items.salary}
-              </Text>
+              {/* <Text style={{ marginTop: "0px", color: "rgb(31,31,51)" }}>
+                <FaMoneyBillAlt /> {post.currency} {post.minSalary} - {post.maxSalary}
+              </Text> */}
             </Title>
             <Space style={{ marginTop: "15px" }}>
-              {items.tags.slice(0, 4).map((tag) => {
+              {tags.slice(0, 4).map((tag) => {
                 return (
                  handleTags(tag)
                 );
@@ -68,16 +84,16 @@ export default function AppliedJobCard({ items }) {
             </Space>
           </Col>
           <Col span={8}>
-            <Image preview={false} width={150} height={100} src={items.image} />
+            <Image preview={false} width={150} height={100} src={post.cover} />
           </Col>
         </Row>
-        <Row style={{ marginTop: "0px" }} align="bottom" gutter={40} justify="end">
-          <Col>
-           { items.status && handleStatus(items.status)}
+        <Row style={{ marginTop: "0px" }} align="bottom"  justify="end">
+          <Col span={20}>
+           { items.candidateType && handleStatus(items.candidateType, items.appliedDate)}
           </Col>
-          <Col>
+          <Col span={4}>
             <Button
-            onClick={()=>navigate("/appliedjob")}
+            onClick={()=>navigate(`/appliedjob/${jobId}`)}
               className="view-w"
               type="primary"
               style={{
@@ -95,29 +111,29 @@ const statusStyles = {
   fontSize: '16px',
 }
 
-const handleStatus = (value) =>{
+const handleStatus = (value,date) =>{
   if(value === "pending"){
     return (
-      <Link style={statusStyles}>
-        Application is in the pending list July 25
-      </Link>
+      <Text style={statusStyles}>
+        Application is in the pending list {moment(date).format("YYYY MMMM DD")}
+      </Text>
     )}
-    if(value === "shortList"){
+    if(value === "shortlist"){
       return (
           <Text type="success" style={statusStyles}>
-            Application is in the shortlist August 10
+            Application is in the shortlist {moment(date).format("YYYY MMMM DD")}
           </Text>
       )}
       if(value === "reject"){
         return (
             <Text type="danger" style={statusStyles}>
-              Application is rejected August 02
+              Application is rejected {moment(date).format("YYYY MMMM DD")}
             </Text>
         )}
       if(value === "close"){
           return (
               <Text type="danger" style={statusStyles}>
-                Positions are  July 25
+                Positions are  {moment(date).format("YYYY MMMM DD")}
               </Text>
         )}
   }

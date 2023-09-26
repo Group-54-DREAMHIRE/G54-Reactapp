@@ -1,3 +1,4 @@
+
 import {
   Calendar,
   Card,
@@ -8,16 +9,8 @@ import {
   Image,
   Avatar,
 } from "antd";
-import db1 from "../../assets/images/db1.png";
-import db2 from "../../assets/images/db2.png";
-import db3 from "../../assets/images/db3.png";
-import db4 from "../../assets/images/db4.png";
-import db6 from "../../assets/images/db6.png";
-import user1 from "../../assets/images/user1.png";
-import user2 from "../../assets/images/user2.png";
-import user3 from "../../assets/images/user3.png";
-import user4 from "../../assets/images/user4.png";
 import InterviewCard from "../../Components/cards/candidate/InterviewCard";
+import { useState,useEffect } from "react";
 
 const { Title, Text } = Typography;
 
@@ -38,6 +31,15 @@ const items = [
   },
 ];
 export default function CandidateDashboard() {
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const [name, setName] = useState("");
+  useEffect(() => {
+    setName(user.name);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [user]);
   return (
     <>
       <Row gutter={20} style={{ padding: "2%" }}>
@@ -46,7 +48,7 @@ export default function CandidateDashboard() {
             <Col span={24}>
               <Space direction="vertical">
                 <Title style={{ marginTop: "0", marginBottom: "0" }}>
-                  Hello Dulanjana !
+                 HI {name===null?"User !": name}
                 </Title>
                 <Text>It's good to see you again.</Text>
               </Space>

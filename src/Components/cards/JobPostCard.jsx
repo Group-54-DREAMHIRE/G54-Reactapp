@@ -1,4 +1,5 @@
 import { FaMapMarkerAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { BsFillBookmarkCheckFill, BsBookmark } from "react-icons/bs";
 import { format } from "date-fns";
 import moment from "moment/moment";
 import { IoMdAddCircle } from "react-icons/io";
@@ -8,17 +9,21 @@ import {
   CloseCircleFilled,
   CheckCircleFilled,
 } from "@ant-design/icons";
-import { Card, Col, Row, Typography, Button, Image, Modal, Tag } from "antd";
+import { Card, Col, Row, Typography, Button, Image, Modal, Tag, Space, message } from "antd";
 import Item from "antd/es/list/Item";
 import { useNavigate } from "react-router-dom";
 import { color } from "framer-motion";
 import { useState, useEffect } from "react";
+import { fetchUserData } from "../../api/authenticationService";
 
 const { Title, Text } = Typography;
 
 export default function JobPostCard({ items, status }) {
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
   const [taglist, setTagList] = useState([]);
   const [postDate, setPostDate] = useState();
+  const [save, setSave] = useState(false);
   useEffect(() => {
     const date = moment(items.deadline);
     setPostDate(date.format("YYYY MMM DD"));
@@ -29,6 +34,35 @@ export default function JobPostCard({ items, status }) {
   }, []);
 
   const navigate = useNavigate();
+  const handleSave = async() =>{
+    setSave(true);
+    const sendData = {
+      jobId:items.id
+    }
+    let data = {
+      url: `/api/v1/savedJobs/save/${id}`,
+      data:sendData, 
+      method: "post",
+    };
+    try {
+      const response = await fetchUserData(data);
+      if (response.status === 200) {
+        message.success("Job is saved successfully");
+        
+      }else{
+        message.error("Saved error! Try again!");
+        setSave(false);
+      }
+    } catch (e) {
+      console.log(e);
+      setSave(false);
+      message.error("Saved error! Try again!");
+    }
+
+  }
+  const handleDelete = async() =>{
+    setSave(false);
+  }
   return (
     <>
       <Card
@@ -36,7 +70,7 @@ export default function JobPostCard({ items, status }) {
         hoverable
         cover={<Image preview={false} src={items.cover} style={{height: '200px', width: '100%'}}/>}
       >
-        <Row style={{ marginTop: "10px" }} gutter={20}>
+        <Row style={{ marginTop: "10px" }} gutter={[20,20]}>
           <Col>
             <Text strong>{items.companyName}</Text>
           </Col>
@@ -51,37 +85,36 @@ export default function JobPostCard({ items, status }) {
               {postDate}
             </Text>
           </Col>
+          <Col span={24}>
+          <Row justify='space-between' align='bottom'>
+          <Col span={18}>
+          <Title style={{margin:'0'}} level={3}> {items.jobTitle}</Title>
+          </Col>
+         <Col>
+         {save?<BsFillBookmarkCheckFill onClick={handleDelete}/>:<BsBookmark onClick={handleSave} />}
+         </Col>
         </Row>
-        <Row>
-          <Title level={3}> {items.jobTitle}</Title>
-        </Row>
-        <Row>
-          <Text style={{ fontSize: "16px" }}>{items.description}</Text>
-        </Row>
-        <Row style={{ marginTop: "13px" }} justify="start">
-          {taglist.map((tag) => {
+          </Col>
+          <Col span={24}>
+          {taglist.slice(0,5).map((tag) => {
             return handleTags(tag);
           })}
-        </Row>
-        <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
-          {status.save && (
-            <Col>
-              <Button style={{ borderRadius: "0" }} type="primary">
-                Save
-              </Button>
-            </Col>
-          )}
-          {status.more && (
+          </Col>
+          <Col span={24}>
+          <Text style={{ fontSize: "16px" }}>{items.description.substring(0,120)} ...</Text>
+          </Col>
+          <Col span={24}>
+          <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
             <Col>
               <Button
                 style={{ borderRadius: "0" }}
                 onClick={() => navigate(`/jobpost/${items.id}`)}
-                type="primary"
-              >
-                View Job
+                type="primary">
+                See more...
               </Button>
             </Col>
-          )}
+        </Row>
+          </Col>
         </Row>
       </Card>
     </>

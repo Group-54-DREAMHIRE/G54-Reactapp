@@ -1,4 +1,3 @@
-import company from "../assets/images/company.png";
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { FiMapPin } from "react-icons/fi";
 import { FaFacebook,FaTwitterSquare } from "react-icons/fa";
@@ -10,7 +9,7 @@ import { companyDetails } from "../store/demo/companyProfile";
 import { getProfileData } from "../api/authenticationService";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCompanies, getCompany } from "../store/company/companySlice";
+import { Instagram  } from 'react-content-loader';
 const { Title, Text, Link } = Typography;
 
 const textStyle = {
@@ -18,6 +17,7 @@ const textStyle = {
   lineHeight: "27px",
 };
 export default function CompanyPage() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
 
@@ -32,23 +32,22 @@ export default function CompanyPage() {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
+  const [logo, setLogo] = useState();
 
   const [listServiceKeys, setListServiceKeys] = useState("");
 
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
-
-  const companies = useSelector(getAllCompanies);
-  const { id } = useParams();
-  const company = dispatch(getCompany(companies,id));
   const [profileData, setProfileData] = useState([]);
+  const [loading, setLoading]= useState(false);
   useEffect(() => {
-
+    setLoading(true);
     getProfileData(`/api/v1/company/get/${id}`)
     .then((response) => {
       console.log(response.data);
       setProfileData(response.data);
       console.log(response.data);
+      setLoading(false);
     })
     .catch((error) => {
       setError("Invalid data");
@@ -64,9 +63,10 @@ export default function CompanyPage() {
       setAbout(profileData.about);
       setServices(profileData.services);
       setListServiceKeys(profileData.serviceKeys);
+      setLogo(profileData.logo)
       
     if (typeof profileData.serviceKeys === 'string') {
-      const val = profileData.serviceKeys.split(', ');
+      const val = profileData.serviceKeys.split('/ ');
       setServiceKeys(val);
     } else {
       setServiceKeys([]); // Set default value if serviceKeys is not a string
@@ -83,16 +83,15 @@ export default function CompanyPage() {
  
   return (
     <>
-      <Row>
-        {companies[0].name}
+      {loading? <Instagram  />:(<Row>
         <Col span={24}>
           <Row gutter={[30, 40]} justify="center" style={{ padding: "1% 2%" }}>
             <Col span={10}>
-              <Title style={{ margin: "0" }}>Creative Software</Title>
+              <Title style={{ margin: "0" }}>{name}</Title>
               <Divider style={{ margin: "8px" }} />
             </Col>
             <Col span={8}>
-              <Image src={company} preview={false} />
+              <Image src={logo} preview={false} />
             </Col>
             <Col span={24}>
               <Text
@@ -231,7 +230,7 @@ export default function CompanyPage() {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row>)}
     </>
   );
 }

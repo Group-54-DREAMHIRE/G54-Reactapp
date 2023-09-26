@@ -21,3 +21,25 @@ body{
     margin: 0;
    
 }
+
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Customize the scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 25px;
+  }
+  
+  /* Customize the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(25,103,210,.8);
+  }
+  
+  .no-star .ant-form-item-label > label::before {
+    content: none !important;
+  }
+  

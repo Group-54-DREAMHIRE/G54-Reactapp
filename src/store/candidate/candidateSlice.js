@@ -1,50 +1,23 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { async } from "q";
-import { fetchUserData } from "../../api/authenticationService";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const saveCandidate = createAsyncThunk(
-    'user/saveCandidate',
-    async(data) => {
-        const response = await fetchUserData(data);
-        return response.status;
-    }
-)
+const initialState = {
+    candidates:null,
+    
+}
 
 const candidateSlice = createSlice({
-    name: 'candidate',
-    initialState: {
-        succes:null,
-        error: null,
+  name: "candidate",
+  initialState,
+  reducers: {
+    setCandidates: (state,action) => {
+      state.candidates = action.payload;
     },
-    reducers:{
-        
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(saveCandidate.pending, (state)=>{
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(saveCandidate.fulfilled, (state, action)=>{
-            
-                state.loading = false;
-                state.error = null;
-                state.succes = "Saved Succesfully!"
-            })
-            .addCase(saveCandidate.rejected, (state, action)=>{
-                state.loading = false;
-                if(action.error.message === 'Request failed with status code 401'){
-                    state.error = 'Invalid Details'  
-                }else{
-                    state.error = action.error.message;
-                }
-            })
-
-           
-
-           
-        }
+    getCandidate: (state,action) => {
+      state.candidates.find((candidate) => candidate.id === action.payload);
+    }
+  },
 });
 
-
+export const { setCandidates, getCandidate } = candidateSlice.actions;
+export const getAllCandidates = (state) => state.candidate.candidates;
 export default candidateSlice.reducer;
