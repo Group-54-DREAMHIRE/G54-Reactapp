@@ -7,11 +7,13 @@ import {
 } from "@ant-design/icons";
 import { Card, Col, Row, Typography, Button, Image, Modal } from "antd";
 import { useState,  useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 export default function CandidateResumeCard({ items, status }) {
+  const navigate = useNavigate();
   const [tagList, setTaglist] = useState([]);
   useEffect(() => {
     if (typeof items.tags === "string") {
@@ -128,7 +130,7 @@ export default function CandidateResumeCard({ items, status }) {
         </Row>
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
           <Col>
-            <Button 
+            <Button  onClick={()=>navigate(`/viewcanresume/${items.candidate.id}`)}
             className="view-w"
             style={{border: '1px solid rgba(30,136,229,1)',
                             color: 'rgba(30,136,229,1)',

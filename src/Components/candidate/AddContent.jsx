@@ -42,6 +42,7 @@ import {
   openLoading,
 } from "../../store/models/modelsSlice";
 import { months } from "../../store/demo/months";
+import { setContentData } from "../../store/candidate/resumeSclice";
 const { TextArea } = Input;
 const { Title, Text } = Typography;
 
@@ -225,11 +226,12 @@ export default function AddContent({ addContentData }) {
       if (response.status === 200) {
         message.success("Succesfully updated");
         dispatch(closeLoading());
-        dispatch(closeAddContent())
+        dispatch(closeAddContent());
+        dispatch(setContentData(addContentData.contentData));
       } else {
         message.error("Invalid Data!Try Again!");
         dispatch(closeLoading());
-        dispatch(closeAddContent())
+        dispatch(closeAddContent());
       }
     } catch (e) {
       console.log(e);

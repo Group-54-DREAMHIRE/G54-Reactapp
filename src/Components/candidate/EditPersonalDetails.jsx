@@ -34,6 +34,7 @@ import ImgCrop from "antd-img-crop";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddLink, closeLoading, closeViewEditDetails, openAddLink, openLoading } from "../../store/models/modelsSlice";
 import { fetchUserData } from "../../api/authenticationService";
+import { setPersonalData } from "../../store/candidate/resumeSclice";
 const { Title, Text, Link } = Typography;
 export default function EditPersonalDetails({editPersonalData}) {
   const dispatch = useDispatch();
@@ -181,6 +182,7 @@ export default function EditPersonalDetails({editPersonalData}) {
       if (response.status === 200) {
         dispatch(closeLoading());
         dispatch(closeViewEditDetails());
+        dispatch(setPersonalData(sendData));
         message.success("Successfully Updated");
       } else {
         dispatch(closeLoading());
