@@ -45,11 +45,8 @@ import EventForm from "../Components/cards/company/EventForm";
 import CompanyPage from '../pages/CompanyPage';
 import CandidatePage from "../pages/CandidatePage";
 import GenarateInterviews from "../pages/company/GenarateInterviews";
-<<<<<<< HEAD
 import EditJobPost from "../pages/company/EditJobPost"
-=======
 import ViewCanResume from "../pages/company/ViewCanResume";
->>>>>>> dulanjana
 export default function CompanyRoutes() {
   return (
     <>
@@ -63,11 +60,8 @@ export default function CompanyRoutes() {
           <Route path="/addjobpost" element={<AddJobPost/>}/>
           <Route path='/jobpost/:id' element={<JobPost/>}/>
 
-<<<<<<< HEAD
           <Route path="/postedjobs/editjobpost/:id" element={<EditJobPost/>} />
-=======
           <Route path="/viewcanresume/:id" element={<ViewCanResume/>}/>
->>>>>>> dulanjana
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes/:id" index element={<PendingResume/>} />
