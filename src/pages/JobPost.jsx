@@ -23,19 +23,15 @@ export default function JobPost() {
   const [listRequirements, setListRequirements] = useState([""]);
 
   useEffect(() => {
-    if (job === null) {
-      getData(`/api/v1/jobpost/getjobpost/${id}`)
-        .then((response) => {
-          console.log(response.data);
-          setJobPost(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user profile:", error);
-        });
-      console.log(jobPost);
-    } else {
-      setJobPost(job);
-    }
+    getData(`/api/v1/jobpost/getjobpost/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setJobPost(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+      });
+    console.log(jobPost);
   }, []);
 
   useEffect(() => {
