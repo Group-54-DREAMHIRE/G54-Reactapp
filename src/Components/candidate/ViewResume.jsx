@@ -13,11 +13,14 @@ import {
 import CustomContentModel from "./CustomContentModel";
 import AddContent from "./AddContent";
 import { getData } from "../../api/authenticationService";
+import { useNavigate } from "react-router-dom";
+
 
 const { Title, Text } = Typography;
 
 export default function ViewResume() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cvPersonalData = useSelector((state) => state.resume.personalData);
   const cvContentData = useSelector((state) => state.resume.contentData);
   const user = JSON.parse(localStorage.getItem("USER"));
@@ -458,6 +461,7 @@ useEffect(() => {
     setContentData(newData);
     handleContent(data);
   };
+
   return (
     <>
       <Spin spinning={loading}>
@@ -478,6 +482,20 @@ useEffect(() => {
           }}
         >
           <Row gutter={[20, 20]}>
+            <Col span={22}>
+              <Row justify='end' gutter={20}>
+                <Col>
+                <Button 
+                onClick={()=>navigate("/viewresume")}
+                type="primary"
+                size="large"
+                style={{borderRadius: '0'}}>
+                View Resume
+              </Button>
+                </Col>
+              </Row>
+              
+            </Col>
             {!addContent && (
               <Col span={22}>
                 {!viewEdit && (

@@ -43,6 +43,7 @@ import EventForm from "../Components/cards/company/EventForm";
 import CompanyPage from '../pages/CompanyPage';
 import CandidatePage from "../pages/CandidatePage";
 import GenarateInterviews from "../pages/company/GenarateInterviews";
+import ViewCanResume from "../pages/company/ViewCanResume";
 export default function CompanyRoutes() {
   return (
     <>
@@ -55,6 +56,8 @@ export default function CompanyRoutes() {
           <Route path="/postedjobs" element={<PostedJobs/>}/>
           <Route path="/addjobpost" element={<AddJobPost/>}/>
           <Route path='/jobpost/:id' element={<JobPost/>}/>
+
+          <Route path="/viewcanresume/:id" element={<ViewCanResume/>}/>
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes/:id" index element={<PendingResume/>} />
