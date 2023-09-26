@@ -26,6 +26,8 @@ import AssignedCandidates from "../pages/company/AssignedCandidates";
 
 import ScheduleTests from '../pages/company/ScheduleTest';
 import CreateTest from '../pages/company/CreateTest';
+import ScheduledTests from '../pages/company/ScheduledTests';
+import QuestionPaper from "../Components/QuestionPaper";
 import AddQuestions from "../pages/company/AddQuestions";
 
 import SendNotifications from '../pages/company/SendNotification';
@@ -43,6 +45,7 @@ import EventForm from "../Components/cards/company/EventForm";
 import CompanyPage from '../pages/CompanyPage';
 import CandidatePage from "../pages/CandidatePage";
 import GenarateInterviews from "../pages/company/GenarateInterviews";
+import EditJobPost from "../pages/company/EditJobPost"
 export default function CompanyRoutes() {
   return (
     <>
@@ -55,6 +58,8 @@ export default function CompanyRoutes() {
           <Route path="/postedjobs" element={<PostedJobs/>}/>
           <Route path="/addjobpost" element={<AddJobPost/>}/>
           <Route path='/jobpost/:id' element={<JobPost/>}/>
+
+          <Route path="/postedjobs/editjobpost/:id" element={<EditJobPost/>} />
 
           <Route element={<CandidateResumes/>}>
             <Route path="/pendingresumes/:id" index element={<PendingResume/>} />
@@ -70,6 +75,7 @@ export default function CompanyRoutes() {
           <Route path="/events" element={<Events/>}/>
           <Route path="/addevent" element={<EventForm/>}/>
           <Route path="/event" element={<OneFullCard/>}/>
+
           <Route path="/interviews" element={<Interviews/>}/>
           <Route path="/interviews/scheduleinterviews" element={<GenarateInterviews/>} />
           <Route path="/genarateinterviews" element={<ScheduleInterviews/>}/>
@@ -82,7 +88,9 @@ export default function CompanyRoutes() {
 
 
           <Route path="/scheduletests" element={<ScheduleTests/>}/>
-          <Route path="/scheduletests/createtest" element={<CreateTest/>}/>
+          <Route path="/scheduledtests" element={<ScheduledTests/>}/>
+          <Route path="/scheduledtests/questionpaper" element={<QuestionPaper/>}/>
+          <Route path="/scheduletests/createtest" element={<CreateTest />}/>
           <Route path="/scheduletests/addquestions" element={<AddQuestions/>} />
 
           <Route path="/sendnotifications" element={<SendNotifications/>}/>

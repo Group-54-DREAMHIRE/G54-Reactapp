@@ -114,6 +114,7 @@ function AdvertisementList() {
       render: () => {
         return (
           <>
+          <Link to={`/postedjobs/editjobpost/${id}`}>
             <EditOutlined
               style={{
                 backgroundColor: "rgba(30,136,229,.5)",
@@ -121,7 +122,7 @@ function AdvertisementList() {
                 marginLeft: 10,
                 padding: "5px",
                 borderRadius: "5px"
-              }} />
+              }} /></Link>
             <DeleteOutlined
               style={{
                 backgroundColor: "red",

@@ -10,26 +10,12 @@ const { TextArea } = Input;
 function AddTestDetails() {
     const [form] = Form.useForm();
 
-
-    const [quizDetails, setQuizDetails] = useState({
-        title: '',
-        date: '',
-        numberOfQuestions: '',
-        duration: '',
-        passingMark: '',
-        instructions: ''
-    });
-
-    const handleInputChange = (e) => {
-        setQuizDetails({
-            ...quizDetails,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleDurationChange = (value) => {
-        setQuizDetails({ ...quizDetails, interviewDuration: value });
-    };
+    const [title, setTitle] = useState("");
+    const [date, setDate] = useState(null);
+    const [numberOfQuestions, setNumberOfQuestions] = useState(20);
+    const [duration, setDuration] = useState();
+    const [passingMark, setPassingMark] = useState();
+    const [instructions, setInstructions] = useState("");
 
     return (
         <div className="create-test-n">
@@ -60,32 +46,43 @@ function AddTestDetails() {
                         <Row>
                             <Col span={24}>
                                 <Form.Item label="Quiz Title" style={{ width: '100%' }}>
-                                    <Input name='title' value={quizDetails.title} onChange={handleInputChange} />
+                                    <Input name='title' value={title} onChange={(value) => setTitle(value)} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col span={12}>
                                 <Form.Item label="Date">
-                                    <DatePicker style={{ width: '100%' }} onChange={(date, dateString) => setQuizDetails({ ...quizDetails, date: dateString })} />
+                                    <DatePicker style={{ width: '100%' }} onChange={(date) => setDate(date)} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item label="Passing Mark">
-                                    <InputNumber name="passingMark" value={quizDetails.passingMark} style={{ width: '100%' }} onChange={handleInputChange} />
+                                    <Select value={passingMark} style={{ width: '100%' }} onChange={(value) => setPassingMark(value)} >
+                                    <Select.Option value={60}>60</Select.Option>
+                                    <Select.Option value={70}>70</Select.Option>
+                                    <Select.Option value={80}>80</Select.Option>
+                                    <Select.Option value={90}>90</Select.Option>
+                                    </Select>
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col span={12}>
                                 <Form.Item label="Number of Questions">
-                                    <InputNumber name='numberOfQuestions' value={quizDetails.numberOfQuestions} style={{ width: '100%' }} onChange={handleInputChange} />
+                                    <Select value={numberOfQuestions} style={{ width: '100%' }} onChange={(value) => setNumberOfQuestions(value)} >
+                                        <Select.Option value={10}>10</Select.Option>
+                                        <Select.Option value={20}>20</Select.Option>
+                                        <Select.Option value={30}>30</Select.Option>
+                                        <Select.Option value={40}>40</Select.Option>
+                                        <Select.Option value={50}>50</Select.Option>
+                                    </Select>
 
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item label="Duration">
-                                    <Select value={quizDetails.interviewDuration} style={{ width: '100%' }} onChange={handleDurationChange}>
+                                    <Select value={duration} style={{ width: '100%' }} onChange={(value) => setDuration(value)}>
                                         <Select.Option value={20}>20 minutes</Select.Option>
                                         <Select.Option value={30}>30 minutes</Select.Option>
                                         <Select.Option value={40}>40 minutes</Select.Option>
@@ -98,7 +95,7 @@ function AddTestDetails() {
                         <Row>
                             <Col span={24}>
                                 <Form.Item label="Instructions">
-                                    <Input.TextArea name='instructions' value={quizDetails.instructions} style={{ width: '100%' }} onChange={handleInputChange} />
+                                    <Input.TextArea name='instructions' value={instructions} style={{ width: '100%' }} onChange={(value) => setInstructions(value)} />
                                 </Form.Item>
                             </Col>
                         </Row>

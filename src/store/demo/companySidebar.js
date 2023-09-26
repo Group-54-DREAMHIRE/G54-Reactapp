@@ -69,9 +69,21 @@ import {
       },
       {
         id: 7,
-        label: "Schedule Test",
+        label: "Selection Test",
         key: "/scheduletests",
         icon: <FaEnvelopeOpenText />,
+        children: [
+          {
+          label: "Schedule Test",
+          key: "/scheduletests",
+          icon: <FaEnvelopeOpenText />
+          },
+          {
+            label: "Scheduled Tests",
+            key: "/scheduledtests",
+            icon: <FaEnvelopeOpenText />
+          }
+        ]
       },
       {
         id: 8,
