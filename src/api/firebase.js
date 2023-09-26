@@ -6,7 +6,7 @@ import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyDnbMRrh2cD6MuDSO7dUfL6-jOCBC3MiLw",
   authDomain: "dreamhire-393307.firebaseapp.com",
-  databaseURL: "https://dreamhire-393307-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "http://localhost:8080",
   projectId: "dreamhire-393307",
   storageBucket: "dreamhire-393307.appspot.com",
   messagingSenderId: "1017891805750",

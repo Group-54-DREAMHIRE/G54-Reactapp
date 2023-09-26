@@ -197,40 +197,40 @@ export default function CompanyProfile() {
             console.log(error.message);
           });
       }
-        let companyData = {
-          name,
-          logo: temp,
-          images,
-          description,
-          about,
-          services,
-          serviceKeys: listServiceKeys,
-          visible,
-          phone,
-          email,
-          address,
-          facebook,
-          twitter,
-          linkedIn,
-        };
-        let data = {
-          url: `/api/v1/company/save/${id}`,
-          data: companyData,
-          method: "post",
-        };
-        const response = await updateProfileData(data);
-        console.log(response.data);
-        if (response.status === 200) {
-          localStorage.setItem("USER", JSON.stringify(response.data));
-          setProfileData(null);
-          setLoading(false);
+      let companyData = {
+        name,
+        logo: temp,
+        images,
+        description,
+        about,
+        services,
+        serviceKeys: listServiceKeys,
+        visible,
+        phone,
+        email,
+        address,
+        facebook,
+        twitter,
+        linkedIn,
+      };
+      let data = {
+        url: `/api/v1/company/save/${id}`,
+        data: companyData,
+        method: "post",
+      };
+      const response = await updateProfileData(data);
+      console.log(response.data);
+      if (response.status === 200) {
+        localStorage.setItem("USER", JSON.stringify(response.data));
+        setProfileData(null);
+        setLoading(false);
 
-          message.success("Successfully Updated");
-        } else {
-          setLoading(false);
-          message.error("Data is invalid!");
-        }
-      
+        message.success("Successfully Updated");
+      } else {
+        setLoading(false);
+        message.error("Data is invalid!");
+      }
+
     } else {
       setErrorMsg("You must fill name and upload logo! Try again!");
       setLoading(false);
@@ -253,16 +253,16 @@ export default function CompanyProfile() {
     <>
       <Spin spinning={loading}>
         <Row>
-          { errorMsg &&
-           ( <Col span={24}>
-            <Alert
-              message="Error"
-              description={errorMsg}
-              type="error"
-              showIcon
-              closable
-            />
-          </Col>)}
+          {errorMsg &&
+            (<Col span={24}>
+              <Alert
+                message="Error"
+                description={errorMsg}
+                type="error"
+                showIcon
+                closable
+              />
+            </Col>)}
           <Col span={24}>
             <Form onFinish={handleSubmit}>
               <Row

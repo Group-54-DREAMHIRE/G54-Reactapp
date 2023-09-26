@@ -114,7 +114,7 @@ function AdvertisementList() {
       render: () => {
         return (
           <>
-          <Link to={`/postedjobs/editjobpost`}>
+          <Link to={`/postedjobs/editjobpost/${id}`}>
             <EditOutlined
               style={{
                 backgroundColor: "rgba(30,136,229,.5)",
