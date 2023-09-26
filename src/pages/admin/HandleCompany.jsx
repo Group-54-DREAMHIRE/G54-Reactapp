@@ -10,7 +10,7 @@ const columns = [
     key: "companyName",
     width: "20%",
     render: (text) => (
-      <div className="L_Company_Details_table-cell">{text}</div>
+      <div className="L_Company_Details_table-cell">{text}</div> //table cell
     ),
   },
   {
@@ -19,7 +19,7 @@ const columns = [
     key: "registerNumber",
     width: "20%",
     render: (text) => (
-      <div className="L_Company_Details_table-cell">{text}</div>
+      <div className="L_Company_Details_table-cell">{text}</div> //table cell
     ),
   },
   {
@@ -28,7 +28,7 @@ const columns = [
     key: "registerDate",
     width: "15%",
     render: (text) => (
-      <div className="L_Company_Details_table-cell">{text}</div>
+      <div className="L_Company_Details_table-cell">{text}</div> //table cell
     ),
   },
   {
@@ -37,7 +37,7 @@ const columns = [
     key: "package",
     width: "15%",
     render: (text) => (
-      <div className="L_Company_Details_table-cell">{text}</div>
+      <div className="L_Company_Details_table-cell">{text}</div> //table cell
     ),
   },
   {
