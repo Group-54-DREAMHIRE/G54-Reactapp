@@ -114,20 +114,20 @@ const statusStyles = {
 const handleStatus = (value,date) =>{
   if(value === "pending"){
     return (
-      <Text style={statusStyles}>
-        Application is in the pending list {moment(date).format("YYYY MMMM DD")}
+      <Text type="warning" style={statusStyles}>
+        Application is added to the pending list {moment(date).format("YYYY MMMM DD")}
       </Text>
     )}
     if(value === "shortlist"){
       return (
           <Text type="success" style={statusStyles}>
-            Application is in the shortlist {moment(date).format("YYYY MMMM DD")}
+            Application is added to the shortlist {moment(date).format("YYYY MMMM DD")}
           </Text>
       )}
       if(value === "reject"){
         return (
             <Text type="danger" style={statusStyles}>
-              Application is rejected {moment(date).format("YYYY MMMM DD")}
+              Application added to rejected {moment(date).format("YYYY MMMM DD")}
             </Text>
         )}
       if(value === "close"){

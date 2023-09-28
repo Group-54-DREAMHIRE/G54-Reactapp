@@ -93,7 +93,7 @@ export default function CompanyRoutes() {
           <Route path="/scheduledtests" element={<ScheduledTests/>}/>
           <Route path="/scheduledtests/questionpaper" element={<QuestionPaper/>}/>
           <Route path="/scheduletests/createtest" element={<CreateTest />}/>
-          <Route path="/scheduletests/addquestions" element={<AddQuestions/>} />
+          <Route path="/addquestions" element={<AddQuestions/>} />
 
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>
