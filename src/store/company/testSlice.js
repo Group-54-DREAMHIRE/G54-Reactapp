@@ -8,12 +8,20 @@ const initialState = {
         time: null,
         duration: null,
         passingMark:null,
-        numOfQue:null,
+        numOfQue:2,
         instructions:null,
         questionCount:0,
-        
    },
-   questions:[]
+   questions:[
+    {
+        question: "",
+        answ1: "",
+        answ2:  "",
+        answ3: "",
+        answ4: "",
+        answers: [],
+    }
+   ]
 }
 
 const testSlice = createSlice({
@@ -54,6 +62,9 @@ const testSlice = createSlice({
         const updatedQuestions = [...state.questions];
       updatedQuestions[state.testDetails.questionCount] = action.payload;
       state.questions = updatedQuestions;
+    },
+    resetCount: (state)=>{
+        state.testDetails.questionCount = 0;
     }
     
   }  
@@ -70,6 +81,7 @@ export const {
     setInstructions,
     increaseQuestionCount,
     decreaseQuestionCount,
-    addQuestion
+    addQuestion,
+    resetCount
 } = testSlice.actions;
 export default testSlice.reducer;

@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addQuestion,
   increaseQuestionCount,
+  resetCount,
   setDutation,
   setNumOfQuetions,
   setPassingMark,
@@ -114,7 +115,7 @@ function AddMcq() {
           className="addmcq-w"
           justify="end"
         >
-          {quesCount === numQues -1 ? null : (
+          {quesCount < numQues ? (
             <>
               <Col span={24}>
                 <Text strong>Check The answer after defining</Text>
@@ -274,10 +275,10 @@ function AddMcq() {
                 </Row>
               </Col>
             </>
-          )}
+          ):null}
           <Col span={24}>
             <Row gutter={15}>
-              {quesCount === numQues -1 ? null : (
+              {quesCount < numQues ?  (
                 <Col>
                   <Button
                     style={{ borderRadius: 0 }}
@@ -288,14 +289,14 @@ function AddMcq() {
                     Add Question
                   </Button>
                 </Col>
-              )}
+              ):null}
               <Col>
                 <Button
-                  disabled={quesCount === numQues-1 ? false:true}
+                  disabled={quesCount === numQues ? false:true}
                   style={{ borderRadius: 0 }}
                   size="large"
                   type="primary"
-                  onClick={handleAdd}
+                  onClick={()=>dispatch(resetCount())}
                 >
                   Submit
                 </Button>
