@@ -30,7 +30,7 @@ function AddTestDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
   const testDetailsImpl = useSelector((state)=>state.test.testDetails);
-  return (
+  return ( 
     <>
       <Spin spinning={false}>
         <Row gutter={[0, 30]} style={{ padding: "2%" }}>

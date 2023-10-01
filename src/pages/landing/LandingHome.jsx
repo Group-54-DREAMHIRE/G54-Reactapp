@@ -77,7 +77,6 @@ const LandingHome = () => {
                         }}
                       />
                     </Col>
-
                     <Col>
                       <Input
                         placeholder="search from title"
