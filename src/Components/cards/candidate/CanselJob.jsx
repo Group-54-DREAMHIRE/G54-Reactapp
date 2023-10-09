@@ -12,7 +12,7 @@ import {
   Radio,
   Form,
   message,
-  Spin
+  Spin,
 } from "antd";
 import { useNavigate, useParams, Outlet } from "react-router-dom";
 import { fetchUserData, getData } from "../../../api/authenticationService";
@@ -23,7 +23,7 @@ import { async } from "q";
 import { setAppliedJobs } from "../../../store/company/applyJobSlice";
 const { Title, Text } = Typography;
 export default function CanselJob() {
-    const {id} = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [reson, setReason] = useState([]);
@@ -99,14 +99,14 @@ export default function CanselJob() {
       let sendData = {
         reason: sendReasons,
         jobId: id,
-        canselDate: new Date()
+        canselDate: new Date(),
       };
       let data = {
         url: `/api/v1/applyjobcandidate/cansel/${userId}`,
         data: sendData,
         method: "post",
       };
-       await fetchUserData(data)
+      await fetchUserData(data)
         .then((response) => {
           if (response.status === 200) {
             setLoading(false);
@@ -121,77 +121,84 @@ export default function CanselJob() {
           }
         })
         .catch((error) => {
-            setLoading(false);
+          setLoading(false);
           console.log(error.message);
         });
-    }else{
-        setLoading(false);
-        message.error("Select at least one reson!");
+    } else {
+      setLoading(false);
+      message.error("Select at least one reson!");
     }
   };
   return (
     <>
-    <Spin spinning={loading}>
-      <Row>
-        <Col span={24}>
-          <Form onFinish={handleSend}>
-            <Row gutter={[0, 20]}>
-              <Col span={24}>
-                <Title
-                  level={2}
-                  style={{ marginTop: "0", marginBottom: "10px" }}
-                >
-                  CANSEL JOB
-                </Title>
-                <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
-              </Col>
-              <Col span={24}>
-                <Title
-                  level={3}
-                  style={{ marginTop: "0", marginBottom: "10px" }}
-                >
-                  Give Resons for cansel this job
-                </Title>
-              </Col>
-              <Col span={20}>
-                <Row gutter={[0, 20]} justify="end">
-                  <Col span={22}>
-                    <Row gutter={[0, 20]}>
-                      {options.map((item) => {
-                        return (
-                          <Col span={24}>
-                            <Checkbox onChange={(e) => onChange(e, item.value)}>
-                              <Title
-                                level={4}
-                                style={{ margin: "0", marginBottom: "10px" }}
+      <Spin spinning={loading}>
+        <Row>
+          <Col span={24}>
+            <Form onFinish={handleSend}>
+              <Row gutter={[0, 20]}>
+                <Col span={24}>
+                  <Title
+                    level={2}
+                    style={{ marginTop: "0", marginBottom: "10px" }}
+                  >
+                    CANSEL JOB
+                  </Title>
+                  <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
+                </Col>
+                <Col span={24}>
+                  <Title
+                    level={3}
+                    style={{ marginTop: "0", marginBottom: "10px" }}
+                  >
+                    Give Resons for cansel this job
+                  </Title>
+                </Col>
+                <Col span={20}>
+                  <Row gutter={[0, 20]} justify="end">
+                    <Col span={22}>
+                      <Row gutter={[0, 20]}>
+                        {options.map((item) => {
+                          return (
+                            <Col span={24}>
+                              <Checkbox
+                                onChange={(e) => onChange(e, item.value)}
                               >
-                                {item.value}
-                              </Title>
-                            </Checkbox>
-                            <br />
-                            <Space style={{ marginLeft: "5%" }}>
-                              <Text style={{ fontSize: "16px" }}>
-                                {item.label}
-                              </Text>
-                            </Space>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </Col>
-                  <Col>
-                    <Button 
-                    htmlType="submit"
-                    style={{ borderRadius: "0" }} type="primary">
-                      Send
-                    </Button>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Form>
-        </Col>
-      </Row>
+                                <Title
+                                  level={4}
+                                  style={{ margin: "0", marginBottom: "10px" }}
+                                >
+                                  {item.value}
+                                </Title>
+                              </Checkbox>
+                              <br />
+                              <Space style={{ marginLeft: "5%" }}>
+                                <Text style={{ fontSize: "16px" }}>
+                                  {item.label}
+                                </Text>
+                              </Space>
+                            </Col>
+                          );
+                        })}
+                        <Col span={24}>
+                          <Row justify='end'>
+                          <Button
+                            htmlType="submit"
+                            style={{ borderRadius: "0" }}
+                            type="primary"
+                          >
+                            Send
+                          </Button>
+                          </Row>
+                          
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
       </Spin>
     </>
   );
