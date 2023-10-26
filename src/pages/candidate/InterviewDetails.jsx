@@ -158,7 +158,6 @@ export default function InterviewDetails() {
                           return (
                            <Col span={12}  >
                             <Radio.Group
-                           
                               onChange={(e) => setTime(e.target.value)}
                               value={time}
                             >
@@ -195,7 +194,7 @@ export default function InterviewDetails() {
                             marginTop: "20px",
                           }}
                           type="primary"
-                          disabled={false}
+                          disabled={time===null?true:false}
                         >
                           Confirm
                         </Button>
