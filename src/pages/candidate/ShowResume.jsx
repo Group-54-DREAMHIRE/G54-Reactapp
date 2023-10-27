@@ -87,7 +87,7 @@ export default function ShowResume() {
               </Title>
               <hr style={{ border: "2px solid rgba(0,0,0,.4)" }} />
             </Col>
-            {!hasCv ?( <Col span={24}>
+            {!hasCv ?(<Col span={24}>
               <CreateResumeCard/>
             </Col>):(<Col span={24}>
               <ViewResumeCard/>

@@ -26,7 +26,7 @@ export default function JobPostCard({ items, status }) {
   const [save, setSave] = useState(false);
   useEffect(() => {
     const date = moment(items.deadline);
-    setPostDate(date.format("YYYY MMM DD"));
+    setPostDate(date.format("YYYY MMMM DD"));
 
     const tag = items.tags.split(" ,");
     setTagList(tag);
@@ -82,7 +82,7 @@ export default function JobPostCard({ items, status }) {
                 color: "rgb(30,136,229)",
               }}
             >
-              {postDate}
+             Posted {postDate}
             </Text>
           </Col>
           <Col span={24}>
@@ -90,9 +90,11 @@ export default function JobPostCard({ items, status }) {
           <Col span={18}>
           <Title style={{margin:'0'}} level={3}> {items.jobTitle}</Title>
           </Col>
-         <Col>
-         {save?<BsFillBookmarkCheckFill onClick={handleDelete}/>:<BsBookmark onClick={handleSave} />}
-         </Col>
+         {user.systemUser.userType === "company"?null:
+          <Col>
+          {save?<BsFillBookmarkCheckFill onClick={handleDelete}/>:<BsBookmark onClick={handleSave} />}
+          </Col>
+         }
         </Row>
           </Col>
           <Col span={24}>

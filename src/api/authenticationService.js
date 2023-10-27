@@ -5,14 +5,14 @@ export const getToken = () => {
 };
 
 export const userRegister = (authRequest) => {
-  return  axios.post("api/v1/auth/register", authRequest);
+  return axios.post("api/v1/auth/register", authRequest);
 };
 
 export const userLogin = (authRequest) => {
   return axios.post("api/v1/auth/login", authRequest);
-  };
+};
 
-export const userChangePassword = (change) =>{
+export const userChangePassword = (change) => {
   return axios.put("api/v1/systemUser/changePassword", change, {
     headers: {
       Authorization: "Bearer " + getToken(),
@@ -27,31 +27,43 @@ export const updateProfileData = (authRequest) => {
         Authorization: "Bearer " + getToken(),
       },
     });
-  }}
+  }
+}
 
-  export const getProfileData = (url) => {
+export const getProfileData = (url) => {
 
-      return axios.get(`${url}`, {
-        headers: {
-          Authorization: "Bearer " + getToken(),
-        },
-      });
-    }
-
-    export const getData = (url) =>{
-      return axios.get(url, {
-        headers: {
-          Authorization: "Bearer " + getToken(),
-        },
-    })
-};
-
-export const getAction = (url) =>{
-  return axios.post(url, {
+  return axios.get(`${url}`, {
     headers: {
       Authorization: "Bearer " + getToken(),
     },
-})
+  });
+}
+
+export const getData = (url) => {
+  return axios.get(url, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+  })
+};
+
+export const updateData = (authRequest) => {
+  if (authRequest.method === "post") {
+    return axios.post(`${authRequest.url}`, authRequest.data, {
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    });
+  }
+}
+
+
+export const getAction = (url, data) => {
+  return axios.post(`${url}`, data, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+  })
 };
 
 

@@ -20,25 +20,14 @@ import { FiMapPin, FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import ShowContent from "../../Components/candidate/ShowContent";
 import { getData } from "../../api/authenticationService";
-import { setPersonalData } from "../../store/candidate/resumeSclice";
-import { useNavigate } from "react-router-dom";
-
-const { Content } = Layout;
+import { useNavigate, useParams } from "react-router-dom";
 const { Title, Text, Link } = Typography;
-
-const ResumeViewPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const pdfRef = useRef();
-  const user = JSON.parse(localStorage.getItem("USER"));
-  const id = user.id;
+const ViewCanResume = () => {
+  const {id} = useParams();
   const [cvData, setCvData] = useState({});
   const [personalDataCv, setPersonalDataCv] = useState({});
   const [contentDataCv, setContentDataCv] = useState([]);
-  const cvPersonalData = useSelector((state) => state.resume.personalData);
-  const cvContentData = useSelector((state) => state.resume.contentData);
   useEffect(() => {
-    if (cvPersonalData === null && cvContentData === null) {
       getData(`/api/v1/resume/getResume/${id}`)
         .then((response) => {
           setCvData(response.data);
@@ -48,13 +37,9 @@ const ResumeViewPage = () => {
         .catch((error) => {
           console.error("Error fetching user profile:", error);
         });
-    } else {
-      setPersonalDataCv(cvPersonalData);
-      setContentDataCv(cvContentData);
-    }
   }, []);
   useEffect(() => {
-    if (cvData !== null && cvPersonalData === null && cvContentData === null) {
+    if (cvData !== null) {
       let tempCvData = [];
       const personData = {
         name: cvData.name || "",
@@ -89,17 +74,6 @@ const ResumeViewPage = () => {
       setContentDataCv(tempCvData);
     }
   }, [cvData]);
-
-  useEffect(() => {
-    if (cvPersonalData !== null) {
-      setPersonalDataCv(cvPersonalData);
-    }
-  }, [cvPersonalData]);
-  useEffect(() => {
-    if (cvContentData !== null) {
-      setContentDataCv(cvContentData);
-    }
-  }, [cvContentData]);
   return (
     <>
       <Row justify="center" align="middle" style={{ padding: "5% 0" }}>
@@ -193,4 +167,4 @@ const ResumeViewPage = () => {
   );
 };
 
-export default ResumeViewPage;
+export default ViewCanResume;

@@ -1,4 +1,4 @@
-import { Col, Row, Steps, Typography,Divider,Tabs } from "antd";
+import { Col, Row, Steps, Typography,Divider,Tabs, Button } from "antd";
 import AppliedJobCard from "../../Components/cards/candidate/AppliedJobCard";
 import InterviewCard from "../../Components/cards/candidate/InterviewCard";
 import { useNavigate, useParams,Outlet } from "react-router-dom";
@@ -7,7 +7,9 @@ import { fetchUserData, getData } from "../../api/authenticationService";
 import moment from "moment";
 import ShowInterview from "../../Components/cards/candidate/ShowInterview";
 import ShowTest from "../../Components/cards/candidate/ShowTest";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import CanselJob from "../../Components/cards/candidate/CanselJob";
+import { openCanselJob } from "../../store/models/modelsSlice";
 const { Title, Text } = Typography;
 const description = "This is a description";
 const items = [
@@ -28,6 +30,7 @@ const items = [
 ];
 export default function AppliedJob() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("USER"));
   const canId = user.id;
   const { id } = useParams();
@@ -137,18 +140,33 @@ export default function AppliedJob() {
               />
             </Col>
             <Col span={24}>
-             <Row gutter={20}>
-              <Col span={6} 
-                onClick={()=>
-                  navigate(`/scheduledappjobinterviews/${id}`)}>
-              <ShowInterview/>
-              </Col>
-              <Col  onClick={()=>
-                  navigate("/scheduledtest")}
-                   span={6}>
-              <ShowTest/>
-              </Col>
-             </Row>
+            {job.candidateType === "shortlist"?
+               (<Row gutter={20}>
+               <Col span={6} 
+                 onClick={()=>
+                   navigate(`/scheduledappjobinterviews/${id}`)}>
+               <ShowInterview/>
+               </Col>
+               <Col  onClick={()=>
+                   navigate("/scheduledtest")}
+                    span={6}>
+               <ShowTest/>
+               </Col>
+              </Row>):null
+            }
+            </Col>
+            <Col span={24}>
+              <Button
+              onClick={()=>navigate(`/canseljob/${id}`)}
+              style={{
+              border: "1px solid red",
+              color:'red',
+              fontWeight: '600',
+              borderRadius:'0'
+
+              }}>
+                Cansel This Job
+              </Button>
             </Col>
           </Row>
         </Col>

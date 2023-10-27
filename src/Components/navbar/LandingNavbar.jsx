@@ -48,7 +48,7 @@ const LandingNavbar = () => {
         }}
       >
         <Col
-          span={20}
+          xxl={20} md={23}
           style={{
             padding: "7px 0px 7px 20px",
             borderRadius: "45px",
@@ -58,7 +58,7 @@ const LandingNavbar = () => {
           }}
         >
           <Row justify="space-between" align="middle">
-            <Col span={4}>
+            <Col lg={4} md={3} sm={0}>
               <img
                 src={logo}
                 alt="logo"
@@ -67,9 +67,9 @@ const LandingNavbar = () => {
                 }}
               />
             </Col>
-            <Col span={20}>
-              <Row justify="space-around" align="middle">
-                <Col span={14}>
+            <Col  lg={18} md={21}>
+              <Row justify="space-between" align="middle">
+                <Col  xxl={16} md={18}>
                   <Row justify="center" className="nav-menu-w">
                     {navitems.map((item) => {
                       return (
@@ -91,8 +91,8 @@ const LandingNavbar = () => {
                     })}
                   </Row>
                 </Col>
-                <Col span={6}>
-                  <Row align="middle" gutter={20}>
+                <Col lg={6}>
+                  <Row align="middle" gutter={[{xxl:20,md:0 },0]}>
                     <Col>
                       <Button  shape="round" className="signIn-w" onClick={()=> navigete("/login")}>
                         Sign In

@@ -85,7 +85,6 @@ function AddJobPost() {
     if(imageUpload){
       info.file.status = "done";
     }
-   
   };
 
   const handleSubmit = async () => {

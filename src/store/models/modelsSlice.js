@@ -8,6 +8,7 @@ const initialState = {
     viewEditDetails:false,
     addContent:false,
     loading:false,
+    canselJob:false,
 }
 
 const modelsSlice = createSlice({
@@ -53,6 +54,12 @@ const modelsSlice = createSlice({
         closeLoading:(state)=>{
             state.loading = false;
         },
+        openCanselJob:(state)=>{
+            state.canselJob= true;
+        },
+        closeCanselJob:(state)=>{
+            state.canselJob = false;
+        },
     }
 })
 
@@ -69,7 +76,9 @@ export const {
     openAddContent,
     closeAddContent,
     openLoading,
-    closeLoading
+    closeLoading,
+    openCanselJob,
+    closeCanselJob
 } = modelsSlice.actions;
 
 export const getLoading = (state) => state.models.loading;

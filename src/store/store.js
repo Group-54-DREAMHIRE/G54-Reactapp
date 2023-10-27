@@ -6,6 +6,7 @@ import companyReducer from "./company/companySlice";
 import jobReducer from "./jobpost/jobSlice";
 import applyJobReducer from "./company/applyJobSlice";
 import resumeReducer from "./candidate/resumeSclice";
+import testReducer from "./company/testSlice";
 export const store = configureStore({
     reducer: {
         user: userReducere,
@@ -15,5 +16,6 @@ export const store = configureStore({
         jobPost: jobReducer,
         applyJob: applyJobReducer,
         resume: resumeReducer,
+        test: testReducer,
     }
 })

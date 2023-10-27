@@ -1,16 +1,50 @@
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import EventCard from '../Components/cards/EventCard';
+import { List } from "react-content-loader";
 import EventForm from "../Components/cards/company/EventForm"
 import PriceCard from "../pages/landing/cards/PriceCard"
 import OneFullCard from "./OneFullEvent"
 import { events } from "../store/demo/events"
-import { Col, Divider, Row, Typography, Button } from "antd"
+import { Col, Divider, Row, Typography, Button, Empty } from "antd"
 import { useNavigate } from "react-router-dom";
+import { fetchUserData, getData } from "../api/authenticationService";
+import { useDispatch, useSelector } from "react-redux";
+// import { getAllEvents, setEvents} from "../store/event/eventSlice"
+import { useEffect, useState } from "react";
 const {Title} = Typography;
 
 export default function Events() {
-  const userType = localStorage.getItem("USERTYPE");
+  const dispatch = useDispatch();
+  const [allEventList, setAllEventList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  //const eventState = useSelector(getAllEvents);
+  // const collapsed = useSelector((state) => state.model.collapsed);
+const eventState = null;
+  useEffect(() => {
+    setLoading(true);
+    
+      console.log("Fetching events data...")
+      getData("/api/v1/event/getallevents")
+      .then((response) => {
+        console.log("data recieved",response.data);
+        setAllEventList(response.data);
+        // dispatch(setEvents(response.data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching event details:", error);
+      });
+      console.log(allEventList);
+   
+  }, []);
+
   const navigate = useNavigate();
+  const handleChange = (value) => {
+    console.log(`selected ${value}`)
+  };
+
+  const userType = localStorage.getItem("USERTYPE");
+
   let status = {
     save: userType === "candidate"? true:false,
     more: true,
@@ -18,6 +52,9 @@ export default function Events() {
 const auth = userType === "company"? true:false;
   return (
     <>
+    {/* {
+      JSON.stringify(allEventList)
+    } */}
         <Row  style={{padding: "2%"}} justify='space-between'>
           <Col>
             <Title style={{marginTop: '0'}}>Events</Title>
@@ -37,13 +74,20 @@ const auth = userType === "company"? true:false;
                 )}
           <Col span={24}>
             <Row gutter={[10,40]} justify='center'>
-              {events.map((event)=>{
-                return(
-                  <Col span={20}>
-                    <EventCard event={event} status={status} />
-                  </Col>
-                )
-              })}
+              {JSON.stringify(allEventList) === "[]" ? (
+                <Col span={24}>
+                  <Empty />
+                </Col>
+              ) : (
+                allEventList.map((item, index) => {
+                  return(
+                    <Col span={20}>
+                      <EventCard item={item} status={status} />
+                    </Col>
+                  );
+                })
+              )}
+              
             </Row>
           </Col>
         </Row>

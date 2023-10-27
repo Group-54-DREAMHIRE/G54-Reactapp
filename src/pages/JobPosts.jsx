@@ -198,7 +198,7 @@ export default function JobPosts() {
               ) : (
                 allJobList.map((item, index) => {
                   return (
-                    <Col lg={collapsed ? 8 : 10} md={10} sm={12} xs={24}>
+                    <Col lg={collapsed ? 6 : 8}>
                       <JobPostCard key={index} items={item} status={status} />
                     </Col>
                   );
