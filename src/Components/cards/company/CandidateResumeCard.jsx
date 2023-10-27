@@ -3,10 +3,13 @@ import { IoMdAddCircle } from "react-icons/io";
 import {
   ExclamationCircleFilled,
   CloseCircleFilled,
+  QuestionCircleOutlined,
   CheckCircleFilled,
+  CheckOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Row, Typography, Button, Image, Modal } from "antd";
-import { useState,  useEffect } from "react";
+import { Popconfirm, message } from "antd";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
@@ -24,54 +27,52 @@ export default function CandidateResumeCard({ items, status }) {
       setTaglist([]);
     }
   }, []);
+  const confirm = (e) => {
+    console.log(e);
+    message.success("Click on Yes");
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Click on No");
+  };
   const showPendingConfirm = () => {
     confirm({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       icon: <ExclamationCircleFilled />,
-      content: '',
+      content: "",
       onOk() {
-        console.log('OK');
+        console.log("OK");
       },
       onCancel() {
-        console.log('Cancel');
+        console.log("Cancel");
       },
     });
   };
-  
+
   const showApproveConfirm = () => {
     confirm({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       icon: <ExclamationCircleFilled />,
-      content: '',
+      content: "",
       onOk() {
-        console.log('OK');
+        console.log("OK");
       },
       onCancel() {
-        console.log('Cancel');
+        console.log("Cancel");
       },
     });
   };
   const showRejectConfirm = () => {
-    confirm({
-      title: 'Are you sure reject this resume?',
-      icon: <ExclamationCircleFilled />,
-      content: '',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        setTimeout(
-          () => {
-            console.log("yhrhy");
-          },
-          500,
-          4000
-        );
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
+    <Popconfirm
+      title="Reject the resume"
+      description="Are you sure to reject this resume?"
+      onConfirm={confirm}
+      onCancel={cancel}
+      okText="Yes"
+      cancelText="No"
+    >
+      <Button danger>Delete</Button>
+    </Popconfirm>;
   };
 
   return (
@@ -100,22 +101,22 @@ export default function CandidateResumeCard({ items, status }) {
                 <FaMoneyBillAlt /> {items.salary}
               </Text> */}
             </Title>
-            <Col style={{marginTop: '25px'}}>
-            {tagList.slice(0, 4).map((tag, index) => {
-            return (
-              <Button
-                style={{
-                  backgroundColor: "rgba(30,136,229,.25)",
-                  fontWeight: '600',
-                  color: "rgba(30,136,229,1)",
-                  margin: "2px",
-                }}
-                key={index}
-              >
-                {tag}
-              </Button>
-            );
-          })}
+            <Col style={{ marginTop: "25px" }}>
+              {tagList.slice(0, 4).map((tag, index) => {
+                return (
+                  <Button
+                    style={{
+                      backgroundColor: "rgba(30,136,229,.25)",
+                      fontWeight: "600",
+                      color: "rgba(30,136,229,1)",
+                      margin: "2px",
+                    }}
+                    key={index}
+                  >
+                    {tag}
+                  </Button>
+                );
+              })}
             </Col>
           </Col>
           <Col span={8}>
@@ -125,65 +126,111 @@ export default function CandidateResumeCard({ items, status }) {
             />
           </Col>
         </Row>
-        <Row style={{ marginTop: "13px" }}>
-          
-        </Row>
+        <Row style={{ marginTop: "13px" }}></Row>
         <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
           <Col>
-            <Button  onClick={()=>navigate(`/viewcanresume/${items.candidate.id}`)}
-            className="view-w"
-            style={{border: '1px solid rgba(30,136,229,1)',
-                            color: 'rgba(30,136,229,1)',
-                            fontWeight: '600'}}> View </Button>
-          </Col>
-         {status.approve && <Col>
             <Button
-              icon={
-                <CheckCircleFilled style={{ width: "100%", height: "100%" }} />
-              }
-              onClick={showApproveConfirm}
-              className="approve-w"
+              onClick={() => navigate(`/viewcanresume/${items.candidate.id}`)}
+              className="view-w"
               style={{
-               
-                border: "1px solid green",
-                color: 'green',
-                fontWeight: '600',
+                border: "1px solid rgba(30,136,229,1)",
+                color: "rgba(30,136,229,1)",
+                fontWeight: "600",
               }}
             >
-              Approve
+              {" "}
+              View{" "}
             </Button>
-          </Col>}
-          {status.pending && <Col>
-            <Button
-              icon={<IoMdAddCircle />}
-              className="addtopending-w"
-              onClick={showPendingConfirm}
-              style={{
-                
-                border: "1px solid rgb(250,173,20)",
-                color: 'rgb(250,173,20)',
-                fontWeight: '600',
-              }}
-            >
-              Add to Pending
-            </Button> 
-          </Col>}
+          </Col>
+          {status.approve && (
+            <Col>
+              <Popconfirm
+                Popconfirm
+                title="Shortlist the resume"
+                description="Are you sure to Shortlist this resume?"
+                icon={
+                  <  CheckCircleFilled
 
-         {status.reject && <Col>
-            <Button
-              icon={<CloseCircleFilled />}
-              className="reject-w"
-              onClick={showRejectConfirm}
-              style={{
-                
-                border: "1px solid red",
-                color:'red',
-                fontWeight: '600',
-              }}
-            >
-              Reject
-            </Button> 
-          </Col>}
+                    style={{
+                      color: "green",
+                    }}
+                  />
+                }
+              >
+                <Button
+                  icon={
+                    <CheckCircleFilled
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  }
+                  onClick={showApproveConfirm}
+                  className="approve-w"
+                  style={{
+                    border: "1px solid green",
+                    color: "green",
+                    fontWeight: "600",
+                  }}
+                >
+                  Approve
+                </Button>
+              </Popconfirm>
+            </Col>
+          )}
+          {status.pending && (
+            <Col>
+              <Popconfirm
+                title="Add this resume to pendinglist"
+                description="Are you sure to add resume to the pendinglist?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  icon={<IoMdAddCircle />}
+                  className="addtopending-w"
+                  onClick={showPendingConfirm}
+                  style={{
+                    border: "1px solid rgb(250,173,20)",
+                    color: "rgb(250,173,20)",
+                    fontWeight: "600",
+                  }}
+                >
+                  Add to Pending
+                </Button>
+              </Popconfirm>
+            </Col>
+          )}
+
+          {status.reject && (
+            <Col>
+              <Popconfirm
+                Popconfirm
+                title="Reject this resume"
+                description="Are you sure to reject this resume?"
+                icon={
+                  <QuestionCircleOutlined
+                    style={{
+                      color: "red",
+                    }}
+                  />
+                }
+              >
+                <Button
+                  icon={<CloseCircleFilled />}
+                  className="reject-w"
+                  onClick={showRejectConfirm}
+                  style={{
+                    border: "1px solid red",
+                    color: "red",
+                    fontWeight: "600",
+                  }}
+                >
+                  Reject
+                </Button>
+              </Popconfirm>
+            </Col>
+          )}
         </Row>
       </Card>
     </>
