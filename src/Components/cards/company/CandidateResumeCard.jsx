@@ -7,17 +7,18 @@ import {
   CheckCircleFilled,
   CheckOutlined,
 } from "@ant-design/icons";
-import { Card, Col, Row, Typography, Button, Image, Modal } from "antd";
+import { Card, Col, Row, Typography, Button, Image, Modal,Spin,Form } from "antd";
 import { Popconfirm, message } from "antd";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAction } from "../../../api/authenticationService";
 
-const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 export default function CandidateResumeCard({ items, status }) {
   const navigate = useNavigate();
   const [tagList, setTaglist] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (typeof items.tags === "string") {
       const val = items.tags.split(", ");
@@ -33,54 +34,40 @@ export default function CandidateResumeCard({ items, status }) {
   };
   const cancel = (e) => {
     console.log(e);
-    message.error("Click on No");
-  };
-  const showPendingConfirm = () => {
-    confirm({
-      title: "Are you sure?",
-      icon: <ExclamationCircleFilled />,
-      content: "",
-      onOk() {
-        console.log("OK");
-      },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
   };
 
-  const showApproveConfirm = () => {
-    confirm({
-      title: "Are you sure?",
-      icon: <ExclamationCircleFilled />,
-      content: "",
-      onOk() {
-        console.log("OK");
-      },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
-  };
-  const showRejectConfirm = () => {
-    <Popconfirm
-      title="Reject the resume"
-      description="Are you sure to reject this resume?"
-      onConfirm={confirm}
-      onCancel={cancel}
-      okText="Yes"
-      cancelText="No"
-    >
-      <Button danger>Delete</Button>
-    </Popconfirm>;
-  };
+  const handleReject = async() =>{
+    setLoading(true);
+    try{
+      const url = "api/v1/applyjobcandidate/reject"
+      const data = {
+        jobId:items.jobPost.id,
+        canId:items.candidate.id
+      }
+      const response = await getAction(url,data);
+      if(response.status == 200){
+        setLoading(false);
+        message.success("Successfully Rejected");
+      }else{
+        setLoading(false);
+        message.error("Try again!");
+      }
+    }catch(e){
+      console.log(e.message);
+      setLoading(false);
+      message.error("Try again!");
+
+    }
+  }
 
   return (
     <>
+    <Spin spinning={loading}>
       <Card
         className="resume-card-w"
         style={{ boxShadow: "0 0 8px 0 rgba(0,0,0,.1)" }}
       >
+        <Form>
         <Row justify="space-between">
           <Col span={16}>
             <Title level={4} style={{ marginBottom: "18px", marginTop: "0" }}>
@@ -163,7 +150,6 @@ export default function CandidateResumeCard({ items, status }) {
                       style={{ width: "100%", height: "100%" }}
                     />
                   }
-                  onClick={showApproveConfirm}
                   className="approve-w"
                   style={{
                     border: "1px solid green",
@@ -189,7 +175,6 @@ export default function CandidateResumeCard({ items, status }) {
                 <Button
                   icon={<IoMdAddCircle />}
                   className="addtopending-w"
-                  onClick={showPendingConfirm}
                   style={{
                     border: "1px solid rgb(250,173,20)",
                     color: "rgb(250,173,20)",
@@ -206,6 +191,7 @@ export default function CandidateResumeCard({ items, status }) {
             <Col>
               <Popconfirm
                 Popconfirm
+                onConfirm={handleReject}
                 title="Reject this resume"
                 description="Are you sure to reject this resume?"
                 icon={
@@ -217,9 +203,9 @@ export default function CandidateResumeCard({ items, status }) {
                 }
               >
                 <Button
+                htmlType="submit"
                   icon={<CloseCircleFilled />}
-                  className="reject-w"
-                  onClick={showRejectConfirm}
+                  className="reject-w"  
                   style={{
                     border: "1px solid red",
                     color: "red",
@@ -232,7 +218,9 @@ export default function CandidateResumeCard({ items, status }) {
             </Col>
           )}
         </Row>
+        </Form>
       </Card>
+      </Spin>
     </>
   );
 }

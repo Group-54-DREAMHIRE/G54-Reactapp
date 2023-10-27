@@ -58,8 +58,8 @@ export const updateData = (authRequest) => {
 }
 
 
-export const getAction = (url) => {
-  return axios.post(url, {
+export const getAction = (url, data) => {
+  return axios.post(`${url}`, data, {
     headers: {
       Authorization: "Bearer " + getToken(),
     },
