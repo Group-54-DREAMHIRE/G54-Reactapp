@@ -1,22 +1,17 @@
-import jobpost1 from "../../assets/images/jobpost1.jpg";
 import { FiMapPin } from "react-icons/fi";
 import { BsCurrencyDollar } from "react-icons/bs";
 import ApplyJob from "../../pages/candidate/ApplyJob";
 import moment from "moment/moment";
 import { useParams } from "react-router-dom";
 import { Button, Col, Image, Row, Space, Typography, message, Form } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { openApplyJob } from "../../store/models/modelsSlice";
-import { format, set } from "date-fns";
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getData, updateData } from "../../api/authenticationService";
-import { getJobPost } from "../../store/jobpost/jobSlice";
-import { getUser } from "../../store/auth/userSlice";
+import { fetchUserData, getData, updateUserData } from "../../api/authenticationService";
 import { List } from 'react-content-loader';
 import axios from "axios";
 
 const { Title, Text } = Typography;
-export default function JobPost() {
+export default function EditJobPost() {
   const userType = localStorage.getItem("USERTYPE");
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -98,21 +93,21 @@ export default function JobPost() {
       top: 0,
       behavior: "smooth",
     });
+    try {
       let jobPostData = {
         description,
         howToApply,
       };
 
       // let data = {
-      //   url: `/api/v1/jobPost/save/${id}`,
+      //   url: `/api/v1/jobPost/updateJobPost/${id}`,
       //   data: jobPostData,
       //   method: "post",
       // };
 
-      const response = await axios.post(`http://localhost:8080/api/v1/jobPost/save/${id}`, jobPostData);
-      console.log(response.data);
+      const response = await axios.post(`/api/v1/jobPost/updateJobPost/${id}`,jobPostData) 
+      console.log(response.jobPostData);
       if (response.status === 200) {
-        localStorage.setItem("USER", JSON.stringify(response.data));
         setJobPost(null);
         setLoading(false);
 
@@ -121,7 +116,10 @@ export default function JobPost() {
         setLoading(false);
         message.error("Data is invalid");
       }
-    };
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }}
 
   return (
     <>

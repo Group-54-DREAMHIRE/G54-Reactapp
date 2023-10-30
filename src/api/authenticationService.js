@@ -47,7 +47,7 @@ export const getData = (url) => {
   })
 };
 
-export const updateData = (authRequest) => {
+export const updateUserData = (authRequest) => {
   if (authRequest.method === "post") {
     return axios.post(`${authRequest.url}`, authRequest.data, {
       headers: {

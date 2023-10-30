@@ -2,8 +2,9 @@ import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch
 import { useState, useEffect } from 'react';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getData } from '../../api/authenticationService';
+import  EditJobPost  from './EditJobPost'
 import moment from "moment";
 import { useDispatch } from 'react-redux';
 import { setActiveId } from '../../store/jobpost/jobSlice';
@@ -12,7 +13,9 @@ import { setActiveId } from '../../store/jobpost/jobSlice';
 const { Title } = Typography;
 const { Search } = Input;
 
+
 function AdvertisementList() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("USER"));
   const id = user.id;
@@ -36,14 +39,16 @@ function AdvertisementList() {
   }, [id]);
   useEffect(() => {
     setLoading(true);
+    let temp = [];
     for(let i=0; i<jobPosts.length; i++){
       const data = jobPosts[i];
       console.log(data);
-      if (typeof data.tags === "string") {
-        const val = data.tags.split(" ,");
-        setSkillList(val)
+      let val = null;
+      if (typeof data.tags === "string" && data.tags !== null)  {
+         val = data.tags.split(" ,") || [];
+        
       } else {
-        setSkillList([]);
+        val = [];
       }
       const listData ={
         id:data.jobPostId,
@@ -51,14 +56,13 @@ function AdvertisementList() {
         vacancies: data.numberOfVacancies,
         closingDate:moment(data.deadline).format("YYYY-MM-DD") ,
         status: !data.validate,
-        skills: skillList,
+        skills: val,
         applications: data.numberOfApplicants,
       }
-     const dataItem = [...dataSource]
-     dataItem[i]=listData;
-     setDataSource(dataItem);
-     }
-  }, [jobPosts]);
+      temp.push(listData);
+      
+     } setDataSource(temp);
+  },[jobPosts]);
   const columns = [
     {
       title: 'Job Title',
@@ -111,18 +115,18 @@ function AdvertisementList() {
     {
       key: 'jobPostId',
       title: 'Action',
-      render: () => {
+      render: (record) => {
         return (
           <>
-          <Link to={`/postedjobs/editjobpost/${id}`}>
-            <EditOutlined
+          
+            <EditOutlined onClick={() => navigate(`./editjobpost/${record.id}`)}
               style={{
                 backgroundColor: "rgba(30,136,229,.5)",
                 color: "white",
                 marginLeft: 10,
                 padding: "5px",
                 borderRadius: "5px"
-              }} /></Link>
+              }} />
             <DeleteOutlined
               style={{
                 backgroundColor: "red",

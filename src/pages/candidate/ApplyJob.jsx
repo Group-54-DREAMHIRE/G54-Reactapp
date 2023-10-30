@@ -106,7 +106,7 @@ export default function ApplyJob({ jobID }) {
           <Col>
             <Row block justify="center">
               <Title level={3} style={{ margin: "0" }}>
-                Apply Job
+                Apply Job{jobID}
               </Title>
               {errorMsg &&
                ( <Col span={24}>
