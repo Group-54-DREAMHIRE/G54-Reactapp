@@ -56,7 +56,7 @@ export default function EventCard ({item,status}) {
         marginTop: "8px", 
         borderRadius: '0' 
         }}
-      onClick={()=> navigate("/event")}>
+      onClick={()=> navigate(`/event/${item.id}`)}>
         View More..
       </Button>}
     </Card>
