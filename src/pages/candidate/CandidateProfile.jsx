@@ -161,7 +161,6 @@ export default function Profile() {
   };
 
   const handleFileChange = (info) => {
-
     console.log(info.file.originFileObj);
     setImageUpload(info.file.originFileObj);
     if (imageUpload) {
@@ -237,7 +236,7 @@ export default function Profile() {
         setLoading(false);
         console.log(e.error);
       }
-    }else{
+    } else {
       setLoading(false);
       setErrorMsg("You must fill name and upload profile picture! Try again!");
     }
@@ -268,16 +267,17 @@ export default function Profile() {
           <Row>
             <Col span={24}>
               <Row style={{ padding: "0 2%" }}>
-               {errorMsg &&
-               ( <Col span={24}>
-                  <Alert
-                    closable
-                    message="Error"
-                    description={errorMsg}
-                    type="error"
-                    showIcon
-                  />
-                </Col>)}
+                {errorMsg && (
+                  <Col span={24}>
+                    <Alert
+                      closable
+                      message="Error"
+                      description={errorMsg}
+                      type="error"
+                      showIcon
+                    />
+                  </Col>
+                )}
                 <Col>
                   {profilePicture === null ? (
                     <ImgCrop action="" rotationSlider>
@@ -652,9 +652,7 @@ export default function Profile() {
                     </Row>
                     <Row style={{ padding: "0 2%", marginTop: "20px" }}>
                       <Button
-                        disabled={
-                          !change && imageUpload === null ? true : false
-                        }
+                        disabled={!change}
                         htmlType="submit"
                         size="large"
                         type="primary"
