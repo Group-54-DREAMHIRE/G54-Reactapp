@@ -6,12 +6,15 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getData } from "../api/authenticationService";
 import moment from "moment/moment";
+import { openApplyEvent } from "../store/models/modelsSlice";
+import ApplyEvent from "./candidate/ApplyEvent";
  
 const OneFullCard = () => {
   const userType = localStorage.getItem("USERTYPE");
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [event, setEvent] = useState([]);
   const [eventDate, setEventDate] = useState();
   const [loading, setLoading] = useState(false);
@@ -93,11 +96,11 @@ useEffect(() => {
 
       <Button 
         type="primary"
-        onClick={()=> navigate("/registerevent")}
-        style={{ marginTop: "8px",borderRadius: '0' }}>
-        
+        style={{ marginTop: "8px",borderRadius: '0' }}
+        onClick={() => dispatch(openApplyEvent())}>
         Register
       </Button>
+      <ApplyEvent eventID={id} />
     </Card>
   );
 };

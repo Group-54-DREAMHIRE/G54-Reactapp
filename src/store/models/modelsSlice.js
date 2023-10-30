@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     applyJob: false,
+    applyEvent: false,
     collapsed:false,
     customContent:false,
     addLink:false,
@@ -19,6 +20,12 @@ const modelsSlice = createSlice({
         },
         closeApplyJob:(state)=>{
             state.applyJob = false;
+        },
+        openApplyEvent:(state)=>{
+            state.applyEvent = true;
+        },
+        closeApplyEvent:(state)=>{
+            state.applyEvent = false;
         },
         setCollapsed:(state, action)=>{
             state.collapsed= !action.payload;
@@ -58,7 +65,9 @@ const modelsSlice = createSlice({
 
 export const { 
     openApplyJob, 
-    closeApplyJob, 
+    closeApplyJob,
+    openApplyEvent,
+    closeApplyEvent,
     setCollapsed,
     openCustomContent, 
     closeCustomContent,
