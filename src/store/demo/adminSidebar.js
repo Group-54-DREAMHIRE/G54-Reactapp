@@ -57,12 +57,12 @@ export const adminSidebar = [
       key: "/handlecandidates",
       icon: <FiUsers />,
     },
-    {
-      id: 7,
-      label: "Edit Landing Page",
-      key: "/editlanding",
-      icon: <FiEdit />,
-    },
+    // {
+    //   id: 7,
+    //   label: "Edit Landing Page",
+    //   key: "/editlanding",
+    //   icon: <FiEdit />,
+    // },
     {
       id: 8,
       label: "Complaints",

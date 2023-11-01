@@ -69,7 +69,7 @@ const columns = [
 const data = [
   {
     key: "1",
-    companyName: "Company A",
+    companyName: "BELVANTAGE",
     paymentNumber: "123",
     date: "2023-08-08",
     time: "09:00 AM",
@@ -78,7 +78,7 @@ const data = [
   },
   {
     key: "2",
-    companyName: "Company B",
+    companyName: "ITECHRO",
     paymentNumber: "456",
     date: "2023-08-09",
     time: "02:30 PM",
@@ -87,7 +87,7 @@ const data = [
   },
   {
     key: "3",
-    companyName: "Company C",
+    companyName: "Q4US",
     paymentNumber: "789",
     date: "2023-08-10",
     time: "11:15 AM",
@@ -96,7 +96,7 @@ const data = [
   },
   {
     key: "4",
-    companyName: "Company D",
+    companyName: "CREATIVE SOFTWARE",
     paymentNumber: "987",
     date: "2023-08-11",
     time: "04:45 PM",
@@ -105,7 +105,7 @@ const data = [
   },
   {
     key: "5",
-    companyName: "Company E",
+    companyName: "DIRECT FN",
     paymentNumber: "654",
     date: "2023-08-12",
     time: "09:30 AM",
@@ -114,7 +114,7 @@ const data = [
   },
   {
     key: "6",
-    companyName: "Company F",
+    companyName: "99X",
     paymentNumber: "321",
     date: "2023-08-13",
     time: "01:00 PM",
@@ -123,7 +123,7 @@ const data = [
   },
   {
     key: "7",
-    companyName: "Company G",
+    companyName: "LSEG",
     paymentNumber: "111",
     date: "2023-08-14",
     time: "10:45 AM",
@@ -132,7 +132,7 @@ const data = [
   },
   {
     key: "8",
-    companyName: "Company H",
+    companyName: "MOBITEL",
     paymentNumber: "222",
     date: "2023-08-15",
     time: "03:20 PM",
@@ -141,7 +141,7 @@ const data = [
   },
   {
     key: "9",
-    companyName: "Company I",
+    companyName: "DIALOG AXIATA",
     paymentNumber: "333",
     date: "2023-08-16",
     time: "11:00 AM",
@@ -150,7 +150,7 @@ const data = [
   },
   {
     key: "10",
-    companyName: "Company J",
+    companyName: "CAMBIO",
     paymentNumber: "444",
     date: "2023-08-17",
     time: "05:00 PM",
