@@ -27,7 +27,7 @@ import AssignedCandidates from "../pages/company/AssignedCandidates";
 import ScheduleTests from '../pages/company/ScheduleTest';
 import CreateTest from '../pages/company/CreateTest';
 import ScheduledTests from '../pages/company/ScheduledTests';
-import QuestionPaper from "../Components/QuestionPaper";
+import QuestionPaper from "../pages/company/QuestionPaper";
 import AddQuestions from "../pages/company/AddQuestions";
 
 import SendNotifications from '../pages/company/SendNotification';
@@ -79,7 +79,7 @@ export default function CompanyRoutes() {
           <Route path="/event" element={<OneFullCard/>}/>
 
           <Route path="/interviews" element={<Interviews/>}/>
-          <Route path="/interviews/scheduleinterviews" element={<GenarateInterviews/>} />
+          <Route path="/interviews/scheduleinterviews/:jobId" element={<GenarateInterviews/>} />
           <Route path="/genarateinterviews" element={<ScheduleInterviews/>}/>
 
           <Route path="/scheduledinterviews" element={<ScheduledInterviews/>} />
@@ -88,12 +88,11 @@ export default function CompanyRoutes() {
           <Route path="/scheduledinterviews/rejectedcandidates" element={<RejectedCandidates/>} />
           <Route path="/scheduledinterviews/assignedcandidates" element={<AssignedCandidates/>} />
 
-
           <Route path="/scheduletests" element={<ScheduleTests/>}/>
           <Route path="/scheduledtests" element={<ScheduledTests/>}/>
-          <Route path="/scheduledtests/questionpaper" element={<QuestionPaper/>}/>
-          <Route path="/scheduletests/createtest" element={<CreateTest />}/>
-          <Route path="/addquestions" element={<AddQuestions/>} />
+          <Route path="/scheduledtests/questionpaper/:id" element={<QuestionPaper/>}/>
+          <Route path="/scheduletests/createtest/:id" element={<CreateTest />}/>
+          <Route path="/addquestions" element={<AddQuestions/>}/>
 
           <Route path="/sendnotifications" element={<SendNotifications/>}/>
           <Route path="/jobposts" element={<JobPosts/>}/>

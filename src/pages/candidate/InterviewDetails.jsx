@@ -27,7 +27,7 @@ const textStyle = {
 export default function InterviewDetails() {
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("USER"));
-  const useId =user.id;
+  const userId =user.id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const timeList = useSelector((state) => state.applyJob.activeList);
@@ -41,7 +41,7 @@ export default function InterviewDetails() {
           intId:time,
         };
         let data = {
-          url: `/api/v1/interviewCan/confirmInterview/${useId}`,
+          url: `/api/v1/interviewCan/confirmInterview/${userId}`,
           data: sendData,
           method: "post",
         };

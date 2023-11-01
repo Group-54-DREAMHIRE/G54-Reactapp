@@ -14,6 +14,7 @@ import CustomContentModel from "./CustomContentModel";
 import AddContent from "./AddContent";
 import { getData } from "../../api/authenticationService";
 import { useNavigate } from "react-router-dom";
+import { setHasCv, setPersonalData } from "../../store/candidate/resumeSclice";
 
 
 const { Title, Text } = Typography;
@@ -41,22 +42,22 @@ export default function ViewResume() {
   const [githubLabel, setGithubLabel] = useState(null);
   const [websiteLabel, setWebsiteLabel] = useState(null);
   const [discodeLabel, setDiscodeLabel] = useState(null);
-  const [name, setName] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [address, setAddress] = useState(null);
+  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
 
   const [contentData, setContentData] = useState([
     {
       key: 0,
-      has: false,
+      isAval: false,
       title: "Profile",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -77,13 +78,13 @@ export default function ViewResume() {
     },
     {
       key: 1,
-      has: false,
+      isAval: false,
       title: "Education",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -104,13 +105,13 @@ export default function ViewResume() {
     },
     {
       key: 2,
-      has: false,
+      isAval: false,
       title: "Professional Experience",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -131,13 +132,13 @@ export default function ViewResume() {
     },
     {
       key: 3,
-      has: false,
+      isAval: false,
       title: "Projects",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -158,13 +159,13 @@ export default function ViewResume() {
     },
     {
       key: 4,
-      has: false,
+      isAval: false,
       title: "Courses And Certifications",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -185,13 +186,13 @@ export default function ViewResume() {
     },
     {
       key: 5,
-      has: false,
+      isAval: false,
       title: "Skills",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -212,13 +213,13 @@ export default function ViewResume() {
     },
     {
       key: 6,
-      has: false,
+      isAval: false,
       title: "Volunteer Experience",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -239,13 +240,13 @@ export default function ViewResume() {
     },
     {
       key: 7,
-      has: false,
+      isAval: false,
       title: "Other Qualifications",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -266,13 +267,13 @@ export default function ViewResume() {
     },
     {
       key: 8,
-      has: false,
+      isAval: false,
       title: "Reference",
       description:null,
       children: [
         {
           key: 0,
-          has:true,
+          isAval:true,
           title: null,
           link: null,
           subTitle: null,
@@ -292,81 +293,87 @@ export default function ViewResume() {
       ],
     },
   ]);
-  const [activeContent, setActiveContent] = useState({});
+  const [activeContent, setActiveContent] = useState(0);
+  const hasCV = useSelector((state)=>state.resume.hasCv);
 
   useEffect(() => {
-    if((cvPersonalData===null) && (cvContentData===null) ){
-        getData(`/api/v1/resume/getResume/${id}`)
-        .then((response) => {
-          setCvData(response.data);
-          console.log(response.data);
-          console.log(cvData === null);
-        })
-        .catch((error) => {
-          console.error("Error fetching user profile:", error);
-        });
-    }
-    
+    getData(`/api/v1/resume/getResume/${id}`)
+      .then((response) => {
+        setCvData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+      });
   }, []);
   useEffect(() => {
-    if((cvData !== null) && ((cvPersonalData===null) && (cvContentData===null)) ){
-      let tempCvData = [];
-      setName(cvData.name || name);
-      setProfilePicture(cvData.profilePicture || profilePicture);
-      setLinkedIn(cvData.linkedIn || linkedIn);
-      setTwitter(cvData.twitter || twitter);
-      setGithub(cvData.github || github);
-      setWebsite(cvData.website || website);
-      setDiscode(cvData.discode || discode);
-      setLinkedInLabel(cvData.linkedInLabel || linkedInLabel);
-      setTwitterLabel(cvData.twitterLabel || twitterLabel);
-      setGithubLabel(cvData.githubLabel || githubLabel);
-      setWebsiteLabel(cvData.websiteLabel || websiteLabel);
-      setDiscodeLabel(cvData.discodeLabel || discodeLabel);
-      setTitle(cvData.jobTitle || title);
-      setPhone(cvData.phone || phone);
-      setEmail(cvData.email || email);
-      setAddress(cvData.address || address);
-  
-      tempCvData.push(JSON.parse(cvData.profile || 'null' ) || contentData[0]);
-      tempCvData.push(JSON.parse(cvData.education || 'null' )|| contentData[1]);
-      tempCvData.push(JSON.parse(cvData.professionalExperience || 'null' )|| contentData[2]);
-      tempCvData.push(JSON.parse(cvData.projects || 'null')  || contentData[3]);
-      tempCvData.push(JSON.parse(cvData.coursesCertifications || 'null') || contentData[4]);
-      tempCvData.push(JSON.parse(cvData.skills || 'null') || contentData[5]);
-      tempCvData.push(JSON.parse(cvData.volunteerExperience || 'null') || contentData[6]);
-      tempCvData.push(JSON.parse(cvData.otherQualification || 'null') || contentData[7]);
-      tempCvData.push(JSON.parse(cvData.reference || 'null') || contentData[8]);
-      setContentData(tempCvData);
-    }    
-}, [cvData]);
-useEffect(() => {
-  if((cvPersonalData!==null)){
-    setName(cvPersonalData. name);
-    setProfilePicture(cvPersonalData.profilePicture);
-    setLinkedIn(cvPersonalData.linkedIn);
-    setTwitter(cvPersonalData.twitter);
-    setGithub(cvPersonalData.github);
-    setWebsite(cvPersonalData.website);
-    setDiscode(cvPersonalData.discode);
-    setLinkedInLabel(cvPersonalData.linkedInLabel);
-    setTwitterLabel(cvPersonalData.twitterLabel);
-    setGithubLabel(cvPersonalData.githubLabel);
-    setWebsiteLabel(cvPersonalData.websiteLabel);
-    setDiscodeLabel(cvPersonalData.discodeLabel);
-    setTitle(cvPersonalData.title);
-    setPhone(cvPersonalData.phone);
-    setEmail(cvPersonalData.email);
-    setAddress(cvPersonalData.address);
-  }
+    const fetchData = async () => {
+      if (cvData !== null) {
+        try {
+          let tempCvData = [];
+          setName(cvData.name || name);
+          setProfilePicture(cvData.profilePicture || profilePicture);
+          setLinkedIn(cvData.linkedIn || linkedIn);
+          setTwitter(cvData.twitter || twitter);
+          setGithub(cvData.github || github);
+          setWebsite(cvData.website || website);
+          setDiscode(cvData.discode || discode);
+          setLinkedInLabel(cvData.linkedInLabel || linkedInLabel);
+          setTwitterLabel(cvData.twitterLabel || twitterLabel);
+          setGithubLabel(cvData.githubLabel || githubLabel);
+          setWebsiteLabel(cvData.websiteLabel || websiteLabel);
+          setDiscodeLabel(cvData.discodeLabel || discodeLabel);
+          setTitle(cvData.jobTitle || title);
+          setPhone(cvData.phone || phone);
+          setEmail(cvData.email || email);
+          setAddress(cvData.address || address);
+      
+          tempCvData.push(JSON.parse(cvData.profile || 'null' ) || contentData[0]);
+          tempCvData.push(JSON.parse(cvData.education || 'null' )|| contentData[1]);
+          tempCvData.push(JSON.parse(cvData.professionalExperience || 'null' )|| contentData[2]);
+          tempCvData.push(JSON.parse(cvData.projects || 'null')  || contentData[3]);
+          tempCvData.push(JSON.parse(cvData.coursesCertifications || 'null') || contentData[4]);
+          tempCvData.push(JSON.parse(cvData.skills || 'null') || contentData[5]);
+          tempCvData.push(JSON.parse(cvData.volunteerExperience || 'null') || contentData[6]);
+          tempCvData.push(JSON.parse(cvData.otherQualification || 'null') || contentData[7]);
+          tempCvData.push(JSON.parse(cvData.reference || 'null') || contentData[8]);
+          setContentData(tempCvData);
+          // Dispatching "has CV" action
+          dispatch(setHasCv());
+        } catch (error) {
+          console.error('Error parsing CV data:', error);
+          // Handle the error, e.g., show an error message to the user
+        }
+      }
+    };
+
+    fetchData();
+  }, [cvData]);
+  //   useEffect(() => {
+  //     if(hasCV){
+  //       setName(cvPersonalData.name || "");
+  //       setTitle(cvPersonalData.title || "");
+  //       setPhone(cvPersonalData.phone || "");
+  //       setEmail(cvPersonalData.email|| "");
+  //       setAddress(cvPersonalData.address || "");
+  //       setProfilePicture(cvPersonalData.profilePicture || "");
+  //       setLinkedIn(cvPersonalData.linkedIn || "");
+  //       setTwitter(cvPersonalData.twitter || "");
+  //       setGithub(cvPersonalData.github || "");
+  //       setWebsite(cvPersonalData.website || "");
+  //       setDiscode(cvPersonalData.discode || "");
+  //       setLinkedInLabel(cvPersonalData.linkedInLabel || "");
+  //       setTwitterLabel(cvPersonalData.twitterLabel || "");
+  //       setGithubLabel(cvPersonalData.githubLabel || "");
+  //       setWebsiteLabel(cvPersonalData.websiteLabel || "");
+  //       setDiscodeLabel(cvPersonalData.discodeLabel || "");
+  //     }else{
+  //       navigate("/resume");
+  //     }
     
-}, [cvPersonalData]);
-useEffect(() => {
-  if(cvContentData!==null){
-   
-    setContentData(cvContentData);
-  } 
-}, [cvContentData]);
+  // }, []);
+
+
   const editPersonalData = {
     name,
     setName,
@@ -442,7 +449,7 @@ useEffect(() => {
   const addSubContent = (data) => {
     let children = {
       key: data.key,
-      has:true,
+      isAval:true,
       title: null,
       subTitle: null,
       city: null,
@@ -473,6 +480,7 @@ useEffect(() => {
           height: "80vh",
         }}
       >
+
         <Col
           span={12}
           style={{
@@ -519,7 +527,7 @@ useEffect(() => {
                   {contentData.map((mainItem, index) => {
                     let subTitle = mainItem.title;
                     let mainData = null;
-                    if(mainItem.has){
+                    if(mainItem.isAval){
                       return (
                         <Col span={24}>
                           <Row justify="center">
@@ -570,7 +578,7 @@ useEffect(() => {
                                             };
                                             return (
                                               <>
-                                                {items.has &&
+                                                {items.isAval &&
                                                   <Col
                                                   span={24}
                                                   onClick={()=>
@@ -584,7 +592,6 @@ useEffect(() => {
                                                       fontWeight: "700",
                                                     }}
                                                   >
-                                                    {data.key}
                                                     {items.title === null
                                                       ? subTitle
                                                       : items.title}
@@ -593,7 +600,7 @@ useEffect(() => {
                                               </>
                                             );
                                           })}
-                                          <Col span={24}>
+                                         {index === 0 ? null: (<Col span={24}>
                                             <Row justify="center">
                                               <Button
                                                 onClick={() =>
@@ -612,7 +619,7 @@ useEffect(() => {
                                                 + Add {mainItem.title}
                                               </Button>
                                             </Row>
-                                          </Col>
+                                          </Col>)}
                                         </Row>
                                       </>
                                     ),
@@ -652,8 +659,7 @@ useEffect(() => {
             overflowY: "auto",
             height: "80vh",
             flex: 1,
-          }}
-        >
+          }}>
           <Resume viewPersonalData={viewPersonalData} />
         </Col>
       </Row>

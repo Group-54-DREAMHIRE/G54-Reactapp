@@ -34,13 +34,18 @@ export default function AppliedJobCard({ items }) {
   const [tags, setTags] = useState([]);
   const [post, setPost] = useState([]);
   const [company, setCompany] = useState([]);
-  const [jobId, setJobId] = useState();
+  const [jobId, setJobId] = useState(0);
   useEffect(() => {
-     setTags(items.tags.split(", "));
+     let temp = [];
+     if (typeof items.tags === "string" && items.tags) {
+      temp = items.tags.split(" ,");
+   } else {
+    temp = [];
+   }
+     setTags(temp);
      setPost(items.jobPost);
      setCompany(items.jobPost.company);
      setJobId(items.jobPost.id);
-     dispatch(setActiveJobId(items.jobPost.id));
      dispatch(setAppliedActJob(items));
    }, []);
   return (
@@ -93,7 +98,7 @@ export default function AppliedJobCard({ items }) {
           </Col>
           <Col span={4}>
             <Button
-            onClick={()=>navigate(`/appliedjob/${jobId}`)}
+            onClick={()=>{navigate(`/appliedjob/${jobId}`); dispatch(setActiveJobId(jobId))}}
               className="view-w"
               type="primary"
               style={{

@@ -36,14 +36,15 @@ function AdvertisementList() {
   }, [id]);
   useEffect(() => {
     setLoading(true);
+    const tempArray = [];
     for(let i=0; i<jobPosts.length; i++){
       const data = jobPosts[i];
+      let tempskills = [];
       console.log(data);
-      if (typeof data.tags === "string") {
-        const val = data.tags.split(" ,");
-        setSkillList(val)
+      if (typeof data.tags === "string" && data.tags) {
+         tempskills = data.tags.split(" ,");
       } else {
-        setSkillList([]);
+        tempskills = [];
       }
       const listData ={
         id:data.jobPostId,
@@ -51,13 +52,15 @@ function AdvertisementList() {
         vacancies: data.numberOfVacancies,
         closingDate:moment(data.deadline).format("YYYY-MM-DD") ,
         status: !data.validate,
-        skills: skillList,
+        skills: tempskills,
         applications: data.numberOfApplicants,
       }
-     const dataItem = [...dataSource]
-     dataItem[i]=listData;
-     setDataSource(dataItem);
+      tempArray.push(listData);
+    //  const dataItem = [...dataSource]
+    //  dataItem[i]=listData;
+    
      }
+     setDataSource(tempArray);
   }, [jobPosts]);
   const columns = [
     {

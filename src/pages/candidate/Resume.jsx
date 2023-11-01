@@ -114,7 +114,7 @@ const Resume = ({ viewPersonalData }) => {
               viewPersonalData.contentData.map((item)=>{
                 const data = viewPersonalData.contentData;
                 return(
-                  <ShowContent item={item} contentData={data}/>
+                  <ShowContent item={item} contentData={viewPersonalData.contentData}/>
                 )
               })
             )}

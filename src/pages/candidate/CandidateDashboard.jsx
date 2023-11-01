@@ -11,8 +11,10 @@ import {
 } from "antd";
 import InterviewCard from "../../Components/cards/candidate/InterviewCard";
 import { useState,useEffect } from "react";
-
+import { getData } from "../../api/authenticationService";
+import moment from "moment";
 const { Title, Text } = Typography;
+
 
 const items = [
   {
@@ -30,9 +32,38 @@ const items = [
     with: "MR. Sampath"
   },
 ];
+
 export default function CandidateDashboard() {
   const user = JSON.parse(localStorage.getItem("USER"));
   const [name, setName] = useState("");
+  const [interviewList, setInterviewList] = useState([]);
+const [convertIntList, setConvertIntList] = useState([]);
+useEffect(() => {
+  // setLoading(true);
+  getData(`/api/v1/interviewCan/getAllScheduledInterviews/${user.id}`)
+    .then((response) => {
+      console.log(response);
+      setInterviewList(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}, []);
+
+useEffect(() => {
+  let tempArr = [];
+  for (let i = 0; i < interviewList.length; i++) {
+    const newData = {
+      company: interviewList[i].interview.jobPost.companyName,
+      date: moment(interviewList[i].interview.startTime).format("YYYY MMMM DD"),
+      time: moment(interviewList[i].interview.startTime).format("hh.mm A"),
+      type: interviewList[i].interview.type,
+      with: interviewList[i].interview.withInt,
+    };
+    tempArr.push(newData);
+  }
+  setConvertIntList(tempArr.sort((a,b)=>a.date-b.date));
+}, [interviewList]);
   useEffect(() => {
     setName(user.name);
     window.scrollTo({
@@ -122,7 +153,12 @@ export default function CandidateDashboard() {
         </Col>
         <Col span={9}>
           <Row gutter={[30, 30]}>
-            {items.map((item) => {
+            <Col span={24}>
+              <Title level={3} style={{marginBottom:0}}>
+                Upcoming Scheduled Interviews
+              </Title>
+            </Col>
+            {convertIntList.slice(0,2).map((item) => {
               return (
                 <Col span={24}>
                   <InterviewCard item={item} />

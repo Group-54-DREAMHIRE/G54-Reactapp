@@ -46,6 +46,13 @@ export const getData = (url) => {
     },
   })
 };
+export const getDataByParam = (url) => {
+  return axios.get(`${url}`,{params: { jobTitle: "Software Developer"}}, {
+    headers: {
+      Authorization: "Bearer " + getToken(),
+    },
+  })
+};
 
 export const updateData = (authRequest) => {
   if (authRequest.method === "post") {

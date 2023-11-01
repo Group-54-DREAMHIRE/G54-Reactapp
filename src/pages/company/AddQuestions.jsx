@@ -84,59 +84,65 @@ function AddQuestions() {
           <Row>
             <Col span={24}>
               <Row gutter={[20, 20]}>
-                <Col span={12}>
+                <Col span={24}>
                   <Title level={3} style={{ margin: "0" }}>
                     {testDetails.title}
                   </Title>
                 </Col>
-                {testDetails.date &&
-                  <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {moment(testDetails.date).format("YYYY MMMM DD")}
-                  </Title>
-                </Col>}
                 <Col span={12}>
-                  <Title level={3} style={{ margin: "0" }}>
+                  <Title level={4} style={{ margin: "0" }}>
                     {testDetails.instructions}
                   </Title>
                 </Col>
-                <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {testDetails.type}
+                <Col span={12}>
+                  <Row gutter={[0,10]}>
+                  {testDetails.date &&
+                  <Col span={24}>
+                  <Title level={5} style={{ margin: 0 }}>
+                  Date:  {moment(testDetails.date).format("YYYY MMMM DD")}
+                  </Title>
+                </Col>}
+               
+                <Col span={24}>
+                  <Title level={5} style={{ margin: "0" }}>
+                   Type: {testDetails.type}
                   </Title>
                 </Col>
                 
                 {testDetails.time &&
-                  <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {moment(new Date(testDetails.time)).format("HH:mm A")}
+                  <Col span={24}>
+                  <Title level={5} style={{ margin: "0" }}>
+                   Time: {moment(new Date(testDetails.time)).format("HH:mm A")}
                   </Title>
                 </Col>}
                 {testDetails.duration &&
-                  <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {testDetails.duration} Min
+                  <Col span={24}>
+                  <Title level={5} style={{ margin: "0" }}>
+                   Duration: {testDetails.duration} Min
                   </Title>
                 </Col>}
                 {testDetails.passingMark &&
-                <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {testDetails.passingMark}
+                <Col span={24}>
+                  <Title level={5} style={{ margin: "0" }}>
+                   Passing Mark: {testDetails.passingMark}
                   </Title>
                 </Col>}
                 {testDetails.numOfQue &&
-                  <Col>
-                  <Title level={4} style={{ margin: "0" }}>
-                    {testDetails.numOfQue}
+                  <Col span={24}>
+                  <Title level={5} style={{ margin: "0" }}>
+                   Questions:  {testDetails.numOfQue}
                   </Title>
                 </Col>}
+                  </Row>
+                </Col>
+               
               </Row>
             </Col>
             <Col span={24}>
               <ShowQuestions/>
             </Col>
             <Col span={18}>
-              <AddMcq />
+              <AddMcq/>
             </Col>
           </Row>
         </Col>

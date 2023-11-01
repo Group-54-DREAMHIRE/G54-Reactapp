@@ -31,6 +31,7 @@ import ScheduledInterviews from "../pages/candidate/ScheduledInterviews";
 import ShowResume from "../pages/candidate/ShowResume";
 import ResumeViewPage from '../pages/candidate/ResumeViewPage';
 import CanselJob from "../Components/cards/candidate/CanselJob";
+import ScheduledInterview from "../pages/candidate/ScheduledInterview";
 export default function CandidateRoutes() {
   return (
     <>
@@ -46,6 +47,7 @@ export default function CandidateRoutes() {
           <Route path="/appliedjob/:id" element={<AppliedJob/>}/>
           <Route path="/canseljob/:id" element={<CanselJob/>}/>
           <Route  path="scheduledinterviews" element={<ScheduledInterviews/>}/> 
+          <Route  path="scheduledinterview/:id" element={<ScheduledInterview/>}/> 
 
           <Route element={<AppliedJobInterview/>}>
             <Route path="/pendingappjobinterviews/:id" element={<Pending/>}/>

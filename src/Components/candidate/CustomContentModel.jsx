@@ -92,16 +92,21 @@ const customList = [
 export default function CustomContentModel({addContentData}) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.models.customContent);
-  const handleClick =(value)=>{
-        const conData = [...addContentData.contentData];
-        conData[value.key].has=true;
+  const handleClick =(item, index)=>{
+    console.log(index);
+        let conData = [...addContentData.contentData];
+        // if (Object.isExtensible(conData[index])) {
+        //   conData[index].isAval = true;
+        // }
+      console.log(conData[index]);
+        conData[index].isAval=true;
         addContentData.setContentData(conData);
         dispatch(closeCustomContent());
         dispatch(openAddContent());
         let activeCon = {
-          index:value.key,
+          index:item.key,
           key:0,
-          title:value.title
+          title:item.title
         }
         addContentData.setActiveContent(activeCon);
   }
@@ -120,11 +125,11 @@ export default function CustomContentModel({addContentData}) {
           </Col>
           <Col span={24}>
             <Row gutter={[10, 10]}>
-              {customList.map((item) => {
+              {customList.map((item, index) => {
                 return (
                   <Col span={6}>
                     <Card
-                    onClick={()=>{handleClick(item)}}
+                    onClick={()=>{handleClick(item,index)}}
                       style={{ backgroundColor: "rgba(243,244,246,255)" }}
                       hoverable>
                       <Title level={5}>

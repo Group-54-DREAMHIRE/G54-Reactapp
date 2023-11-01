@@ -16,6 +16,7 @@ import {
   Spin,
   Space,
   TimePicker,
+  message
 } from "antd";
 import {
   MailOutlined,
@@ -43,6 +44,8 @@ import {
   setType,
 } from "../../store/company/testSlice";
 import { scrollUp } from "../../api/handleWindowEvents";
+import { fetchUserData } from "../../api/authenticationService";
+import moment from "moment";
 
 const { Title, Text } = Typography;
 
@@ -52,6 +55,10 @@ const { TextArea } = Input;
 function AddMcq() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+
   const [ans1, setAns1] = useState(false);
   const [ans2, setAns2] = useState(false);
   const [ans3, setAns3] = useState(false);
@@ -62,10 +69,12 @@ function AddMcq() {
   const [ansVa3, setAnsVal3] = useState(null);
   const [ansVa4, setAnsVal4] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const quesCount = useSelector(
-    (state) => state.test.testDetails.questionCount
-  );
+
+  const quesCount = useSelector((state) => state.test.testDetails.questionCount);
   const numQues = useSelector((state) => state.test.testDetails.numOfQue);
+  const testDetails = useSelector((state) => state.test.testDetails);
+  const questions = useSelector((state) => state.test.questions);
+  const jobId = useSelector((state)=>state.test.actJobId);
 
   const handleAnsw = (e, value) => {
     let ansList = [...answers];
@@ -106,7 +115,43 @@ function AddMcq() {
     dispatch(increaseQuestionCount());
     scrollUp();
   };
-  return (
+  const handleSubmit = async () =>{
+    const currentDateTime = moment(testDetails.date).set({
+      hour: testDetails.time.hour(),
+      minute: testDetails.time.minute(),
+      second: 0,
+      date: testDetails.date.date()
+    });
+    let testData = {
+      title:testDetails.title,
+      instructions: testDetails.instructions,
+      type: testDetails.type,
+      date:currentDateTime,
+      duration: testDetails.duration,
+      passMark: testDetails.passingMark,
+      numOfQuestions:testDetails.numOfQue,
+      questions,
+      jobId
+    };
+    let data = {
+      url: `/api/v1/test/save/${id}`,
+      data: testData,
+      method: "post",
+    };
+    try {
+      const response = await fetchUserData(data);
+      if (response.status === 200) {
+        message.success("Succesfully updated");
+        dispatch(resetCount())
+      } else {
+        message.error("Invalid Data!");
+      }
+    } catch (e) {
+      message.error("Try Again!");
+      console.log(e);
+    }
+  }
+   return (
     <>
       <Spin spinning={false}>
         <Row
@@ -115,10 +160,11 @@ function AddMcq() {
           className="addmcq-w"
           justify="end"
         >
+          <Form onFinish={handleSubmit}>
           {quesCount < numQues ? (
             <>
               <Col span={24}>
-                <Text strong>Check The answer after defining</Text>
+                <Text strong>Check The answers after defining</Text>
               </Col>
               <Col span={24}>
                 <Title level={4} style={{ marginTop: 0 }}>
@@ -276,6 +322,7 @@ function AddMcq() {
               </Col>
             </>
           ):null}
+          <br/>
           <Col span={24}>
             <Row gutter={15}>
               {quesCount < numQues ?  (
@@ -296,13 +343,14 @@ function AddMcq() {
                   style={{ borderRadius: 0 }}
                   size="large"
                   type="primary"
-                  onClick={()=>dispatch(resetCount())}
+                  htmlType="submit"
                 >
                   Submit
                 </Button>
               </Col>
             </Row>
           </Col>
+          </Form>
         </Row>
       </Spin>
     </>

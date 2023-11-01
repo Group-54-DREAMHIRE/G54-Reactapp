@@ -21,7 +21,10 @@ const initialState = {
         answ4: "",
         answers: [],
     }
-   ]
+   ],
+   actJobId:0,
+
+   disDetails:null,
 }
 
 const testSlice = createSlice({
@@ -39,6 +42,9 @@ const testSlice = createSlice({
     }, 
     setTime: (state, action)=>{
         state.testDetails.time = action.payload;
+    }, 
+    setDisDetails:(state, action)=>{
+        state.disDetails.time = action.payload;
     }, 
     setDutation: (state, action)=>{
         state.testDetails.duration = action.payload;
@@ -65,7 +71,10 @@ const testSlice = createSlice({
     },
     resetCount: (state)=>{
         state.testDetails.questionCount = 0;
-    }
+    },
+    setActJobId: (state, action)=>{
+        state.actJobId = action.payload;
+    },
     
   }  
 });
@@ -82,6 +91,8 @@ export const {
     increaseQuestionCount,
     decreaseQuestionCount,
     addQuestion,
-    resetCount
+    resetCount,
+    setActJobId,
+    setDisDetails
 } = testSlice.actions;
 export default testSlice.reducer;

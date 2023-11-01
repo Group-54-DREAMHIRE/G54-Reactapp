@@ -2,14 +2,63 @@ import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { getData } from '../../api/authenticationService';
+import moment from 'moment';
+import { setActJobId } from '../../store/company/testSlice';
+import { useDispatch, useSelector } from 'react-redux';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 function AdvertisementList() {
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+  const [jobPosts, setJobPosts] =useState ([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+
+  
+  useEffect(() => {
+
+      getData(`/api/v1/jobpost/getjobs/${id}`)
+        .then((response) => {
+         setJobPosts(response.data);
+          
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, [id]);
+  useEffect(() => {
+    const tempArray = [];
+    for(let i=0; i<jobPosts.length; i++){
+      const data = jobPosts[i];
+      let tempskills = [];
+      console.log(data);
+      if (typeof data.tags === "string" && data.tags) {
+         tempskills = data.tags.split(" ,");
+      } else {
+        tempskills = [];
+      }
+      const listData ={
+        id:data.jobPostId,
+        jobTitle: data.jobTitle,
+        vacancies: data.numberOfVacancies,
+        closingDate:moment(data.deadline).format("YYYY-MM-DD") ,
+        status: !data.validate,
+        skills: tempskills,
+        applications: data.numberOfApplicants,
+        createTest:data.jobPostId
+      }
+      tempArray.push(listData);
+    //  const dataItem = [...dataSource]
+    //  dataItem[i]=listData;
+    
+     }
+     setDataSource(tempArray);
+  }, [jobPosts]);
   const columns = [
     {
       title: 'Job Title',
@@ -37,68 +86,17 @@ function AdvertisementList() {
       dataIndex: 'applications',
       key: 'applications',
     },
-    // {
-    //   title: "View",
-    //   key: "view",
-    //   render: (text, record) => (
-    //     <Button type="primary" onClick={() => handleViewAdvertisement(record.id)}>
-    //       View
-    //     </Button>
-    //   ),
-    // },
     {
       title: "Selection Test",
-      key: "selectionTest",
+      key: "createTest",
       render: (text, record) => (
-        <Button type="primary">
-          <Link to={`/scheduletests/createtest`}>Create</Link>
+        <Button type="primary" onClick={()=>dispatch(setActJobId(record.createTest))}>
+          <Link to={`/scheduletests/createtest/${record.createTest}`}>Create</Link>
         </Button>
       ),
     },
     ];
-
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '1',
-      jobTitle: 'Software Engineer',
-      vacancies: 20,
-      applications: 15,
-      skills: ["Java", "Python", "PHP"],
-    },
-    {
-      key: '2',
-      jobTitle: 'Software Engineer',
-      vacancies: 13,
-      applications: 10,
-      skills: ["Java", "Python", "PHP"],
-    },
-    {
-      key: '3',
-      jobTitle: 'Web Developer',
-      vacancies: 8,
-      applications: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
-    },
-    {
-      key: '4',
-      jobTitle: 'Software Engineer',
-      vacancies: 5,
-      applications: 3,
-      skills: ["Java", "Python", "PHP"],
-    },
-    {
-      key: '5',
-      jobTitle: 'Web Developer',
-      vacancies: 10,
-      applications: 4,
-      skills: ["HTML", "CSS", "JavaScript"],
-    },
-  ]);
-
-  const handleViewAdvertisement = (id) => {
-    console.log("View advertisement with ID:", id);
-  };
-
+  const [dataSource, setDataSource] = useState([]);
   return (
     <>
       <motion.div
@@ -110,6 +108,7 @@ function AdvertisementList() {
           <Row style={{
             marginTop: "10px",
           }}>
+            {}
             <Col span={12} style={{
               display: 'flex',
               justifyContent: 'left',

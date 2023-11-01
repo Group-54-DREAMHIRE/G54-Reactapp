@@ -28,14 +28,56 @@ export default function CandidateResumeCard({ items, status }) {
       setTaglist([]);
     }
   }, []);
-  const confirm = (e) => {
-    console.log(e);
-    message.success("Click on Yes");
-  };
   const cancel = (e) => {
     console.log(e);
   };
 
+  const handleApprove = async() =>{
+    setLoading(true);
+    try{
+      const url = "api/v1/applyjobcandidate/shortlist"
+      const data = {
+        jobId:items.jobPost.id,
+        canId:items.candidate.id
+      }
+      const response = await getAction(url,data);
+      if(response.status == 200){
+        setLoading(false);
+        message.success("Successfull");
+      }else{
+        setLoading(false);
+        message.error("Try again!");
+      }
+    }catch(e){
+      console.log(e.message);
+      setLoading(false);
+      message.error("Try again!");
+
+    }
+  }
+  const handlePending = async() =>{
+    setLoading(true);
+    try{
+      const url = "api/v1/applyjobcandidate/pending"
+      const data = {
+        jobId:items.jobPost.id,
+        canId:items.candidate.id
+      }
+      const response = await getAction(url,data);
+      if(response.status == 200){
+        setLoading(false);
+        message.success("Successfull");
+      }else{
+        setLoading(false);
+        message.error("Try again!");
+      }
+    }catch(e){
+      console.log(e.message);
+      setLoading(false);
+      message.error("Try again!");
+
+    }
+  }
   const handleReject = async() =>{
     setLoading(true);
     try{
@@ -59,6 +101,7 @@ export default function CandidateResumeCard({ items, status }) {
 
     }
   }
+
 
   return (
     <>
@@ -118,8 +161,8 @@ export default function CandidateResumeCard({ items, status }) {
           <Col>
             <Button
               onClick={() => navigate(`/viewcanresume/${items.candidate.id}`)}
-              className="view-w"
-              style={{
+                className="view-w"
+                style={{
                 border: "1px solid rgba(30,136,229,1)",
                 color: "rgba(30,136,229,1)",
                 fontWeight: "600",
@@ -132,6 +175,8 @@ export default function CandidateResumeCard({ items, status }) {
           {status.approve && (
             <Col>
               <Popconfirm
+                onConfirm={handleApprove}
+                htmlType="submit"
                 Popconfirm
                 title="Shortlist the resume"
                 description="Are you sure to Shortlist this resume?"
@@ -167,12 +212,13 @@ export default function CandidateResumeCard({ items, status }) {
               <Popconfirm
                 title="Add this resume to pendinglist"
                 description="Are you sure to add resume to the pendinglist?"
-                onConfirm={confirm}
+                onConfirm={handlePending}
                 onCancel={cancel}
                 okText="Yes"
                 cancelText="No"
               >
                 <Button
+                  htmlType="submit"
                   icon={<IoMdAddCircle />}
                   className="addtopending-w"
                   style={{
@@ -203,7 +249,7 @@ export default function CandidateResumeCard({ items, status }) {
                 }
               >
                 <Button
-                htmlType="submit"
+                  htmlType="submit"
                   icon={<CloseCircleFilled />}
                   className="reject-w"  
                   style={{

@@ -73,6 +73,7 @@ function ShowQuestions() {
                         <span>{item.answ2}</span><br/>
                         <span>{item.answ3}</span><br/>
                         <span>{item.answ4}</span><br/>
+                        <br/> <br/>
                         </>
                     )
                 })}
