@@ -15,6 +15,12 @@ const modelsSlice = createSlice({
     name: 'models',
     initialState,
     reducers:{
+        openApplyEvent:(state)=>{
+            state.applyEvent = true;
+        },
+        closeApplyEvent:(state)=>{
+            state.applyEvent = false;
+        },
         openApplyJob:(state)=>{
             state.applyJob = true;
         },
@@ -65,6 +71,8 @@ const modelsSlice = createSlice({
 
 export const { 
     openApplyJob, 
+    openApplyEvent,
+    closeApplyEvent,
     closeApplyJob, 
     setCollapsed,
     openCustomContent, 

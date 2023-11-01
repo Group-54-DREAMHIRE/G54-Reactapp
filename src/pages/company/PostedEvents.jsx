@@ -3,12 +3,58 @@ import { useState, useEffect } from 'react';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { getData } from '../../api/authenticationService';
+import moment from 'moment';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 function AdvertisementList() {
+  
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+      getData(`/api/v1/event/getScheduledEvents/${id}`)
+        .then((response) => {
+          console.log(response.data)
+          setEventList(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, [id]);
+  useEffect(() => {
+    const tempArray = [];
+    for(let i=0; i<eventList.length; i++){
+      const data = eventList[i];
+      let tempskills = [];
+      console.log(data);
+      if (typeof data.tags === "string" && data.tags) {
+         tempskills = data.tags.split(" ,");
+      } else {
+        tempskills = [];
+      }
+      const listData ={
+        eventId:data.id,
+        eventName: data.title,
+        vacancies: data.numberOfVacancies,
+        date:moment(data.deadline).format("YYYY-MM-DD") ,
+        time:moment(data.deadline).format("HH:mm A"),
+        status: !data.validate,
+        skills: tempskills,
+        applications: data.numberOfApplicants,
+      }
+      tempArray.push(listData);
+    //  const dataItem = [...dataSource]
+    //  dataItem[i]=listData;
+    
+     }
+     setDataSource(tempArray);
+  }, [eventList]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const columns = [
@@ -17,11 +63,11 @@ function AdvertisementList() {
       dataIndex: 'eventName',
       key: 'eventName',
     },
-    {
-      title: 'Venue',
-      dataIndex: 'venue',
-      key: 'venue'
-    },
+    // {
+    //   title: 'Venue',
+    //   dataIndex: 'venue',
+    //   key: 'venue'
+    // },
     {
       title: 'Date',
       dataIndex: 'date',
@@ -34,19 +80,19 @@ function AdvertisementList() {
     },
     {
       title: "Registered Candidates",
-      key: "egisteredCandidates",
+      key: "eventId",
       render: (text, record) => (
         <Button type="primary" >
-          <Link to={`/postedevents/registeredcandidates`}>{record.registeredCandidates}</Link>
+          <Link to={`/postedevents/registeredcandidates/${record.eventId}`}>view</Link>
         </Button>
       ),
     },
     {
-      title: "View",
-      key: "view",
+      title: "View Event",
+      key: "eventId",
       render: (text, record) => (
         <Button type="primary">
-          <Link to={`/postedevents/registeredcandidates`}>View</Link>
+          <Link to={`/viewevent/${record.eventId}`}>View</Link>
         </Button>
       ),
     },

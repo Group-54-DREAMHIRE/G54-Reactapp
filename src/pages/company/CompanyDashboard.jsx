@@ -138,7 +138,6 @@ function CompanyDashboard() {
                 />
               </div>
             </Row>
-
             <Row>
               <div className='pending-time-slots-n' style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <Row justify={"space-between"} style={{display: 'flex', alignItems: 'baseline'}}>

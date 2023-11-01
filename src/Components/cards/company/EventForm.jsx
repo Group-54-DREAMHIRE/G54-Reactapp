@@ -23,8 +23,7 @@ function EventForm() {
 
   const [companyName, setCompanyName] = useState("");
   const [title, setTitle] = useState("");
-  const [imageUpload, setImageUpload] = useState();
-  const [cover, setCover] = useState(null);
+  const [imageUpload, setImageUpload] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [email, setEmail] = useState("");
@@ -72,42 +71,45 @@ function EventForm() {
           console.log(error.message);
         });
 
-      let eventData = {
-        systemUserID: user.systemUser.id,
-        companyName,
-        title,
-        cover: coverURL,
-        startTime,
-        endTime,
-        date,
-        email,
-        contactNumber
-      };
-
-
-      let data = {
-        url: `/api/v1/event/save/${id}`,
-        data: eventData,
-        method: "post",
-      };
-      try {
-        const response = await fetchUserData(data);
-        if (response.status === 200) {
-          message.success("Successfully Updated");
-          setLoading(false);
-          console.log("before");
-          navigate("/events");
-          console.log("after");
-          // dispatch(saveEvent(response.data));
-        } else {
-          message.error("Invalid Data!");
-          navigate("/events");
-          setLoading(false);
+        if(coverURL){
+          let eventData = {
+            systemUserID: user.systemUser.id,
+            companyName,
+            title,
+            cover: coverURL,
+            startTime,
+            endTime,
+            date,
+            email,
+            contactNumber
+          };
+    
+    
+          let data = {
+            url: `/api/v1/event/save/${id}`,
+            data: eventData,
+            method: "post",
+          };
+          try {
+            const response = await fetchUserData(data);
+            if (response.status === 200) {
+              message.success("Successfully Updated");
+              setLoading(false);
+              console.log("before");
+              navigate("/events");
+              console.log("after");
+              // dispatch(saveEvent(response.data));
+            } else {
+              message.error("Invalid Data!");
+              navigate("/events");
+              setLoading(false);
+            }
+          } catch (e) {
+            console.log(e);
+            setLoading(false);
+          }
         }
-      } catch (e) {
-        console.log(e);
-        setLoading(false);
-      }
+      
     }
   }
   
@@ -119,7 +121,6 @@ function EventForm() {
 
   return (
     <>
-    {user.systemUser.id}
       <Card
         style={{
           width: 900,
@@ -181,6 +182,32 @@ function EventForm() {
                 rules={[{ required: true, message: "Please select a date" }]}
               >
                 <DatePicker style={{ width: "100%" }} onChange={(date) => setDate(date)} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+
+            <Col span={6}>
+
+              <Form.Item
+                name="startTime"
+                label="Start Time"
+                rules={[{ required: true, message: "Please select start time" }]}
+              >
+                <TimePicker style={{ width: "100%" }} onChange={(time) => setStartTime(time) }
+                  picker="startTime"/>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              
+              <Form.Item
+                name="endTime"
+                label="End Time"
+                rules={[{ required: true, message: "Please select end time" }]}
+              >
+                <TimePicker style={{ width: "100%" }} onChange={(time) => setEndTime(time)}
+                  
+                  picker="endTime" />
               </Form.Item>
             </Col>
           </Row>

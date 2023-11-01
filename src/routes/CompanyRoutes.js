@@ -72,11 +72,12 @@ export default function CompanyRoutes() {
 
           <Route path="/postedevents" element={<PostedEvents/>}/>
           <Route path="/postedevents/:id/details" element={<EventDetails/>}/>
-          <Route path="/postedevents/registeredcandidates" element={<RegisteredCandidates/>} />
+          <Route path="/postedevents/registeredcandidates/:id" element={<RegisteredCandidates/>} />
 
           <Route path="/events" element={<Events/>}/>
           <Route path="/addevent" element={<EventForm/>}/>
-          <Route path="/event" element={<OneFullCard/>}/>
+          <Route path="/event/:id" element={<OneFullCard/>}/>
+          <Route path="/viewevent/:id" element={<OneFullCard/>}/>
 
           <Route path="/interviews" element={<Interviews/>}/>
           <Route path="/interviews/scheduleinterviews/:jobId" element={<GenarateInterviews/>} />

@@ -22,7 +22,6 @@ export default function Events() {
 const eventState = null;
   useEffect(() => {
     setLoading(true);
-    
       console.log("Fetching events data...")
       getData("/api/v1/event/getallevents")
       .then((response) => {
