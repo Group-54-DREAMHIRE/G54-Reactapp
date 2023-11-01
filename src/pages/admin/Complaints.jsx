@@ -60,7 +60,7 @@ const Complaints = () => {
   return (
     <Layout>
       <Content className="D_complaints_content">
-        <h1 className="D_complaints_title">Payment Details</h1>
+        <h1 className="D_complaints_title">Complaints</h1>
         <div className="D_complaints_table-container">
           <Table columns={columns} dataSource={data} pagination={false} />
         </div>

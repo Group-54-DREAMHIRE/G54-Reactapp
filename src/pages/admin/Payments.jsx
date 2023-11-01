@@ -9,6 +9,7 @@ const columns = [
     dataIndex: "companyName",
     key: "companyName",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
@@ -18,6 +19,7 @@ const columns = [
     dataIndex: "paymentNumber",
     key: "paymentNumber",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
@@ -27,6 +29,7 @@ const columns = [
     dataIndex: "date",
     key: "date",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
@@ -36,6 +39,7 @@ const columns = [
     dataIndex: "time",
     key: "time",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
@@ -45,6 +49,7 @@ const columns = [
     dataIndex: "status",
     key: "status",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),
@@ -54,6 +59,7 @@ const columns = [
     dataIndex: "package",
     key: "package",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Payments_Details_table-cell">{text}</div>
     ),

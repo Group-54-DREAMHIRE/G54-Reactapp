@@ -1,9 +1,49 @@
 import React, { useState } from "react";
 import { Card, List, Button } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import StripeCheckout from 'react-stripe-checkout';
+
+
+// const CheckoutForm = () => {
+//   const stripe = useStripe();
+//   const elements = useElements();
+
+//   const handleSubmit = async (event) => {
+//     // We don't want to let default form submission happen here,
+//     // which would refresh the page.
+//     event.preventDefault();
+
+//     if (!stripe || !elements) {
+//       // Stripe.js hasn't yet loaded.
+//       // Make sure to disable form submission until Stripe.js has loaded.
+//       return;
+//     }
+
+//     const result = await stripe.confirmPayment({
+//       //`Elements` instance that was used to create the Payment Element
+//       elements,
+//       confirmParams: {
+//         return_url: "https://example.com/order/123/complete",
+//       },
+//     });
+
+//     if (result.error) {
+//       // Show error to your customer (for example, payment details incomplete)
+//       console.log(result.error.message);
+//     } else {
+//       // Your customer will be redirected to your `return_url`. For some payment
+//       // methods like iDEAL, your customer will be redirected to an intermediate
+//       // site first to authorize the payment, then redirected to the `return_url`.
+//     }
+//   };
+
+// const onToken = (token) => {
+//   console.log(token); 
+// }
+
 
 const PriceCard = () => {
+
+
   const features1 = [
     { feature: "Registration", available: true },
     { feature: "Post advertisement (2 per month)", available: true },
@@ -39,8 +79,7 @@ const PriceCard = () => {
     setHovered2(false);
   };
   const onToken = (token) =>{
-    console.log(token);
-  }
+    console.log(token);}
 
   return (
     <div style={containerStyles}>
@@ -111,14 +150,8 @@ const PriceCard = () => {
             )}
           />
           <div style={buttonsContainerStyles}>
-            
-                  <StripeCheckout
-                    token={onToken}
-                    name = "Payment"
-                    currency="lkr"
-                    amount="90000.00"
-                    stripeKey="pk_test_51NtjygF11OuUiVZCu3pbo1UcmVQflm4jMnE2Hv2AfjFY7yF9SR6QfAAMVNk4Rq46X6nDy0cCuN500fdrTGwaEclW00bloMQvLj"
-                  />
+
+            <Button type="primary">Subcribe now</Button>                  
           </div>
         </Card>
       </div>

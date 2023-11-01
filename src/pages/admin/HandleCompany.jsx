@@ -9,6 +9,7 @@ const columns = [
     dataIndex: "companyName",
     key: "companyName",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Company_Details_table-cell">{text}</div>
     ),
@@ -18,6 +19,7 @@ const columns = [
     dataIndex: "registerNumber",
     key: "registerNumber",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Company_Details_table-cell">{text}</div>
     ),
@@ -27,6 +29,7 @@ const columns = [
     dataIndex: "registerDate",
     key: "registerDate",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Company_Details_table-cell">{text}</div>
     ),
@@ -36,6 +39,7 @@ const columns = [
     dataIndex: "package",
     key: "package",
     width: "15%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Company_Details_table-cell">{text}</div>
     ),
@@ -45,6 +49,7 @@ const columns = [
     dataIndex: "view",
     key: "view",
     width: "15%",
+    align: "center", // Center-align the title
     render: () => (
       <div className="L_Company_Details_table-cell">
         <Button type="primary" className="L_Company_Details_view-button">
@@ -58,6 +63,7 @@ const columns = [
     dataIndex: "action",
     key: "action",
     width: "15%",
+    align: "center", // Center-align the title
     render: () => (
       <div className="L_Company_Details_table-cell">
         <Button type="danger" className="L_Company_Details_remove-button">
@@ -71,72 +77,72 @@ const columns = [
 const data = [
   {
     key: "1",
-    companyName: "Company X",
+    companyName: "XDOTO CONCEPT",
     registerNumber: "BR12345",
-    registerDate: "2023-08-01",
+    registerDate: "2023-11-01",
     package: "Monthly",
   },
   {
     key: "2",
-    companyName: "Company Y",
+    companyName: "ZOROSIGN",
     registerNumber: "BR67890",
-    registerDate: "2023-08-02",
+    registerDate: "2023-11-01",
     package: "Yearly",
   },
   {
     key: "3",
-    companyName: "Company Z",
+    companyName: "ZONE 24*7",
     registerNumber: "BR24680",
-    registerDate: "2023-08-03",
+    registerDate: "2023-10-30",
     package: "Monthly",
   },
   {
     key: "4",
-    companyName: "Company A",
+    companyName: "PROMISQ",
     registerNumber: "BR13579",
-    registerDate: "2023-08-04",
+    registerDate: "2023-10-29",
     package: "Yearly",
   },
   {
     key: "5",
-    companyName: "Company B",
+    companyName: "TARGET",
     registerNumber: "BR86420",
-    registerDate: "2023-08-05",
+    registerDate: "2023-10-28",
     package: "Monthly",
   },
   {
     key: "6",
-    companyName: "Company C",
+    companyName: "PICK ME",
     registerNumber: "BR97531",
-    registerDate: "2023-08-06",
+    registerDate: "2023-10-27",
     package: "Yearly",
   },
   {
     key: "7",
-    companyName: "Company D",
+    companyName: "WONDER SOLUTION",
     registerNumber: "BR12346",
-    registerDate: "2023-08-07",
+    registerDate: "2023-10-25",
     package: "Monthly",
   },
   {
     key: "8",
-    companyName: "Company E",
+    companyName: "BOFFO LABS",
     registerNumber: "BR67891",
-    registerDate: "2023-08-08",
+    registerDate: "2023-10-25",
     package: "Yearly",
   },
   {
     key: "9",
-    companyName: "Company F",
+    companyName: "STRETCHLINE",
     registerNumber: "BR24681",
-    registerDate: "2023-08-09",
+    registerDate: "2023-10-25",
     package: "Monthly",
   },
   {
     key: "10",
-    companyName: "Company G",
+    companyName: "ALTRIUM",
     registerNumber: "BR13580",
-    registerDate: "2023-08-10",
+    registerDate: "2023-10-21",
     package: "Yearly",
   },
 ];

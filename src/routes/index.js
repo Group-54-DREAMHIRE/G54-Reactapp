@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import { useState,useEffect } from "react";
 
+
 export default function MainRoutes() {
  const userType = localStorage.getItem("USERTYPE");
 
@@ -24,6 +25,8 @@ export default function MainRoutes() {
         <Route path="/" index element={<DefaultMainLayout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        
+
       </Routes>
     );
   }

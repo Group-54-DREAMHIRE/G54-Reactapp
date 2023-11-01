@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Row,
   Col,
@@ -27,6 +28,7 @@ import {
   fetchUserData,
   updateProfileData,
 } from "../../api/authenticationService";
+import StripeCheckout from "react-stripe-checkout";
 
 const { Link, Title } = Typography;
 
@@ -153,6 +155,9 @@ const CompanyRegistration = () => {
   const handleLeave2 = () => {
     setHovered2(false);
   };
+
+  const onToken = (token) => {
+    console.log(token);}
 
   return (
     <>
@@ -406,7 +411,15 @@ const CompanyRegistration = () => {
                         )}
                       />
                       <div style={buttonsContainerStyles}>
-                        <Button type="primary">Subscribe Now</Button>
+                         <StripeCheckout
+                            token={onToken}
+                            name = "PAYMENT"
+                            currency="USD"
+                            amount="500"
+                            stripeKey="pk_test_51NtjygF11OuUiVZCu3pbo1UcmVQflm4jMnE2Hv2AfjFY7yF9SR6QfAAMVNk4Rq46X6nDy0cCuN500fdrTGwaEclW00bloMQvLj"
+                          /> 
+                  
+                        {/* <Button type="primary">Subscribe Now</Button> */}
                       </div>
                     </Card>
                   </div>

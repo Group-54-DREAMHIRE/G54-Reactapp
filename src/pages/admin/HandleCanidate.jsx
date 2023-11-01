@@ -9,6 +9,7 @@ const columns = [
     dataIndex: "userId",
     key: "userId",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Haddle_Candidates_table-cell">{text}</div>
     ),
@@ -18,6 +19,7 @@ const columns = [
     dataIndex: "userName",
     key: "userName",
     width: "20%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Haddle_Candidates_table-cell">{text}</div>
     ),
@@ -27,6 +29,7 @@ const columns = [
     dataIndex: "registerDate",
     key: "registerDate",
     width: "25%",
+    align: "center", // Center-align the title
     render: (text) => (
       <div className="L_Haddle_Candidates_table-cell">{text}</div>
     ),
@@ -36,6 +39,7 @@ const columns = [
     dataIndex: "view",
     key: "view",
     width: "15%",
+    align: "center", // Center-align the title
     render: () => (
       <div className="L_Haddle_Candidates_table-cell">
         <Button type="primary" className="L_Haddle_Candidates_view-button">
@@ -49,6 +53,7 @@ const columns = [
     dataIndex: "action",
     key: "action",
     width: "20%",
+    align: "center", // Center-align the title
     render: () => (
       <div className="L_Haddle_Candidates_table-cell">
         <Button type="danger" className="L_Haddle_Candidates_remove-button">

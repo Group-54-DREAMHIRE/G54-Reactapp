@@ -62,9 +62,12 @@ export default function RegistrationRequest() {
         (
         pendingList.map((item) => {
           return (
+            <>
             <Col span={14}>
               <ApprovalsCard  item={item} handleData={handleData}/>
             </Col>
+             
+           </>
           );
         }) 
        )}
