@@ -23,7 +23,6 @@ const initialState = {
     }
    ],
    actJobId:0,
-
    disDetails:null,
 }
 
@@ -58,6 +57,12 @@ const testSlice = createSlice({
     setInstructions: (state, action)=>{
         state.testDetails.instructions = action.payload;
     },
+    setTestDetails: (state, action)=>{
+        state.testDetails = action.payload;
+    },
+    setQuestions: (state, action)=>{
+        state.questions = action.payload;
+    },
     increaseQuestionCount: (state)=>{
         state.testDetails.questionCount = state.testDetails.questionCount +1;
     },
@@ -81,6 +86,7 @@ const testSlice = createSlice({
 
 export const {
     setTestDetails,
+    setQuestions,
     setTitle,
     setType,
     setTestDate,
@@ -93,6 +99,6 @@ export const {
     addQuestion,
     resetCount,
     setActJobId,
-    setDisDetails
+    setDisDetails,
 } = testSlice.actions;
 export default testSlice.reducer;

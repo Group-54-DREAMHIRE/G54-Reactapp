@@ -59,7 +59,10 @@ function QuestionPaper() {
       numOfQuestions:testDetailsData.numOfQuestionsv,
     }
     setTestDetails(temp);
-    setQuestions(JSON.parse(testDetailsData.questions));
+    if(testDetailsData.questions){
+      setQuestions(JSON.parse(testDetailsData.questions));
+    }
+    
    }
 }, [testDetailsData]);
 

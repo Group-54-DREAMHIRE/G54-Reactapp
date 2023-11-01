@@ -12,11 +12,11 @@ function ScheduledInterviews() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const columns = [
-    {
-      title: 'Interview ID',
-      dataIndex: 'interviewId',
-      key: 'interviewId',
-    },
+    // {
+    //   title: 'Interview ID',
+    //   dataIndex: 'interviewId',
+    //   key: 'interviewId',
+    // },
     {
       title: 'Job Title',
       dataIndex: 'jobTitle',
@@ -35,7 +35,7 @@ function ScheduledInterviews() {
       ),
     },
     {
-      title: "Designated Candidates",
+      title: "Shortlisted Candidates",
       key: "designatedCandidates",
       render: (record) => (
         <Button type="primary">
@@ -44,7 +44,7 @@ function ScheduledInterviews() {
       ),
     },
     {
-      title: "Reserved Slot Candidates",
+      title: "Comfirmed Interviews",
       key: "reservedSlotCandidates",
       render: (record) => (
         <Button type="primary">

@@ -1,21 +1,34 @@
-import { Col, Row, Typography } from 'antd'
+import { Col, Row,Card,Image, Typography } from 'antd'
 import { useNavigate } from 'react-router-dom';
-const {Title} = Typography;
+import interview from '../../../assets/images/interview.png';
+const {Title,Text} = Typography;
 
 export default function ShowInterview() {
     const navigate = useNavigate();
     
   return (
     <>
-    <Row 
-        
-        style={{backgroundColor:'rgba(25,103,210,.4)',cursor:'pointer'}}>
+   <Row
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <Col span={24}>
-            <Title>
+        <Card style={{boxShadow:"0 0 8px rgba(0,0,0,.2)"}}>
+         <Row justify='center'>
+         <Col span={24}>
+            <Image preview={false} src={interview} />
+          </Col>
+          <Col>
+            <Text style={{fontSize:18}} strong >
                 Interviews
-            </Title>
+            </Text>
+          </Col>
+         </Row>
+        </Card>
         </Col>
-    </Row>
+        
+      </Row>
     </>
   )
 }

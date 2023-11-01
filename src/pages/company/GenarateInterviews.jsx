@@ -532,6 +532,18 @@ export default function GenarateInterviews() {
                             />
                             </Space>
                           </Col>
+                          <Col span={24}>
+                      <Space size="large">
+                            <span>Meeting Link:</span>
+                            <Input
+                              disabled={!value}
+                              onChange={(e) => setMeetingLink(e.target.value)}
+                              placeholder="Link"
+                             value={meetingLink}
+                              style={{borderRadius: '0 !important', width: '100'}}
+                            />
+                          </Space>
+                      </Col>
                           {JSON.stringify(timeSlots) === "[]" ? null :
                     (  <>
                           <Col span={24} style={{

@@ -16,6 +16,17 @@ export default function ViewOneQues() {
   const [ans4, setAns4] = useState(false);
   const handleNext=()=>{
     dispatch(increaseQuestionCount());
+    setAns1(false);
+    setAns2(false);
+    setAns3(false);
+    setAns4(false);
+  }
+  const handlePre=()=>{
+    dispatch(decreaseQuestionCount());
+    setAns1(false);
+    setAns2(false);
+    setAns3(false);
+    setAns4(false);
   }
   return (
     <>
@@ -161,7 +172,7 @@ export default function ViewOneQues() {
                       <Col>
                            <Button 
                            disabled={(activQues===0)?true:false}
-                            onClick={()=>dispatch(decreaseQuestionCount())}
+                            onClick={handlePre}
                               size="large"
                               type="primary" 
                               style={{borderRadius:0}}>
@@ -171,7 +182,7 @@ export default function ViewOneQues() {
                       {(numOfQues < activQues || numOfQues -1 === activQues)?null:
                         <Col>
                         <Button 
-                          onClick={()=>dispatch(increaseQuestionCount())}
+                          onClick={handleNext}
                           size="large"
                           type="primary" 
                           style={{borderRadius:0, width:100}} >
