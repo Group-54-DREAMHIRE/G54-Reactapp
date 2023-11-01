@@ -2,14 +2,58 @@ import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { getData } from '../../api/authenticationService';
+import moment from 'moment';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 function AdvertisementList() {
+
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+  const [tests, setTests] =useState ([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  useEffect(() => {
+      getData(`/api/v1/test/getTests/${id}`)
+        .then((response) => {
+          setTests(response.data);
+          
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, [id]);
+  useEffect(() => {
+    const tempArray = [];
+    for(let i=0; i<tests.length; i++){
+      const data = tests[i];
+      let tempskills = [];
+      console.log(data);
+      if (typeof data.tags === "string" && data.tags) {
+         tempskills = data.tags.split(" ,");
+      } else {
+        tempskills = [];
+      }
+      const listData ={
+        id:data.jobPostId,
+        jobTitle: data.jobPost.jobTitle,
+        vacancies: data.numberOfVacancies,
+        date:moment(data.date).format("YYYY-MM-DD") ,
+        time:moment(data.date).format("HH:mm A"),
+        status: !data.validate,
+        skills: tempskills,
+        applications: data.numberOfApplicants,
+        duration: data.duration,
+        testId:data.id
+      }
+      tempArray.push(listData);
+    
+     }
+     setDataSource(tempArray);
+  }, [tests]);
   const columns = [
     {
       title: 'Job Title',
@@ -38,11 +82,16 @@ function AdvertisementList() {
       key: 'time',
     },
     {
+      title: 'Duration',
+      dataIndex: 'duration',
+      key: 'duration',
+    },
+    {
       title: "Question Paper",
-      key: "view",
+      key: "testId",
       render: (text, record) => (
         <Button type="primary">
-          <Link to={`questionpaper`}>View</Link>        
+          <Link to={`questionpaper/${record.testId}`}>View</Link>        
           </Button>
       ),
     },

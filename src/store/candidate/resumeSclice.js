@@ -16,8 +16,8 @@ const resumeSlice = createSlice({
     setContentData: (state,action) => {
         state.contentData = action.payload;
       },
-      setHasCv: (state,action) => {
-        state.hasCv = action.payload;
+      setHasCv: (state) => {
+        state.hasCv = true;
       },
   },
 });

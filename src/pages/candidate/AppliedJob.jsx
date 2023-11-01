@@ -142,14 +142,14 @@ export default function AppliedJob() {
             <Col span={24}>
             {job.candidateType === "shortlist"?
                (<Row gutter={20}>
-               <Col span={6} 
+               <Col span={5} 
                  onClick={()=>
                    navigate(`/scheduledappjobinterviews/${id}`)}>
                <ShowInterview/>
                </Col>
                <Col  onClick={()=>
-                   navigate("/scheduledtest")}
-                    span={6}>
+                   navigate(`/scheduledappjobtest/${id}`)}
+                    span={5}>
                <ShowTest/>
                </Col>
               </Row>):null

@@ -36,6 +36,7 @@ export default function ScheduledInterviews() {
     let tempArr = [];
     for (let i = 0; i < interviewList.length; i++) {
       const newData = {
+        id:interviewList[i].interview.id,
         company: interviewList[i].interview.jobPost.companyName,
         date: moment(interviewList[i].interview.startTime).format("YYYY MMMM DD"),
         time: moment(interviewList[i].interview.startTime).format("hh.mm A"),
@@ -45,6 +46,7 @@ export default function ScheduledInterviews() {
       tempArr.push(newData);
     }
     setConvertIntList(tempArr);
+    console.log(convertIntList);
   }, [interviewList]);
 
   const items = [
@@ -67,8 +69,8 @@ export default function ScheduledInterviews() {
       <Row>
         {convertIntList.map((item) => {
           return(
-            <Col span={8}>
-            <InterviewCard item={item} />
+            <Col span={8} onClick={()=>{navigate(`/scheduledinterview/${item.id}`)}}>
+            <InterviewCard  item={item} />
           </Col>
           )
         })}

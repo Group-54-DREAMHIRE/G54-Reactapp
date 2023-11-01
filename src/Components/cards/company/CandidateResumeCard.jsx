@@ -38,15 +38,61 @@ export default function CandidateResumeCard({ items, status }) {
       setTaglist([]);
     }
   }, []);
-  const confirm = (e) => {
-    console.log(e);
-    message.success("Click on Yes");
-  };
   const cancel = (e) => {
     console.log(e);
   };
 
+<<<<<<< HEAD
   const handleReject = async () => {
+=======
+  const handleApprove = async() =>{
+    setLoading(true);
+    try{
+      const url = "api/v1/applyjobcandidate/shortlist"
+      const data = {
+        jobId:items.jobPost.id,
+        canId:items.candidate.id
+      }
+      const response = await getAction(url,data);
+      if(response.status == 200){
+        setLoading(false);
+        message.success("Successfull");
+      }else{
+        setLoading(false);
+        message.error("Try again!");
+      }
+    }catch(e){
+      console.log(e.message);
+      setLoading(false);
+      message.error("Try again!");
+
+    }
+  }
+  const handlePending = async() =>{
+    setLoading(true);
+    try{
+      const url = "api/v1/applyjobcandidate/pending"
+      const data = {
+        jobId:items.jobPost.id,
+        canId:items.candidate.id
+      }
+      const response = await getAction(url,data);
+      if(response.status == 200){
+        setLoading(false);
+        message.success("Successfull");
+      }else{
+        setLoading(false);
+        message.error("Try again!");
+      }
+    }catch(e){
+      console.log(e.message);
+      setLoading(false);
+      message.error("Try again!");
+
+    }
+  }
+  const handleReject = async() =>{
+>>>>>>> dulanjana
     setLoading(true);
     try {
       const url = "api/v1/applyjobcandidate/reject";
@@ -68,6 +114,7 @@ export default function CandidateResumeCard({ items, status }) {
       message.error("Try again!");
     }
   };
+
 
   return (
     <>
@@ -96,6 +143,7 @@ export default function CandidateResumeCard({ items, status }) {
                       color: "rgb(30,136,229)",
                     }}
                   >
+<<<<<<< HEAD
                     <FaMapMarkerAlt /> {items.candidateCity}.{" "}
                   </Text>
                   {/* <Text style={{ marginTop: "0px", color: "rgb(30,136,229)" }}>
@@ -123,11 +171,67 @@ export default function CandidateResumeCard({ items, status }) {
               <Col span={8}>
                 <Image
                   src={items.candidate.profilePicture}
+=======
+                    {tag}
+                  </Button>
+                );
+              })}
+            </Col>
+          </Col>
+          <Col span={8}>
+            <Image
+              src={items.candidate.profilePicture}
+              style={{ borderRadius: "10px", height: "100%", width: "100%" }}
+            />
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "13px" }}></Row>
+        <Row style={{ marginTop: "15px" }} gutter={10} justify="end">
+          <Col>
+            <Button
+              onClick={() => navigate(`/viewcanresume/${items.candidate.id}`)}
+                className="view-w"
+                style={{
+                border: "1px solid rgba(30,136,229,1)",
+                color: "rgba(30,136,229,1)",
+                fontWeight: "600",
+              }}
+            >
+              {" "}
+              View{" "}
+            </Button>
+          </Col>
+          {status.approve && (
+            <Col>
+              <Popconfirm
+                onConfirm={handleApprove}
+                htmlType="submit"
+                Popconfirm
+                title="Shortlist the resume"
+                description="Are you sure to Shortlist this resume?"
+                icon={
+                  <  CheckCircleFilled
+
+                    style={{
+                      color: "green",
+                    }}
+                  />
+                }
+              >
+                <Button
+                  icon={
+                    <CheckCircleFilled
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  }
+                  className="approve-w"
+>>>>>>> dulanjana
                   style={{
                     borderRadius: "10px",
                     height: "100%",
                     width: "100%",
                   }}
+<<<<<<< HEAD
                 />
               </Col>
             </Row>
@@ -139,6 +243,28 @@ export default function CandidateResumeCard({ items, status }) {
                     navigate(`/viewcanresume/${items.candidate.id}`)
                   }
                   className="view-w"
+=======
+                >
+                  Approve
+                </Button>
+              </Popconfirm>
+            </Col>
+          )}
+          {status.pending && (
+            <Col>
+              <Popconfirm
+                title="Add this resume to pendinglist"
+                description="Are you sure to add resume to the pendinglist?"
+                onConfirm={handlePending}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  htmlType="submit"
+                  icon={<IoMdAddCircle />}
+                  className="addtopending-w"
+>>>>>>> dulanjana
                   style={{
                     border: "1px solid rgba(30,136,229,1)",
                     color: "rgba(30,136,229,1)",
@@ -206,6 +332,7 @@ export default function CandidateResumeCard({ items, status }) {
                 </Col>
               )}
 
+<<<<<<< HEAD
               {status.reject && (
                 <Col>
                   <Popconfirm
@@ -239,6 +366,41 @@ export default function CandidateResumeCard({ items, status }) {
             </Row>
           </Form>
         </Card>
+=======
+          {status.reject && (
+            <Col>
+              <Popconfirm
+                Popconfirm
+                onConfirm={handleReject}
+                title="Reject this resume"
+                description="Are you sure to reject this resume?"
+                icon={
+                  <QuestionCircleOutlined
+                    style={{
+                      color: "red",
+                    }}
+                  />
+                }
+              >
+                <Button
+                  htmlType="submit"
+                  icon={<CloseCircleFilled />}
+                  className="reject-w"  
+                  style={{
+                    border: "1px solid red",
+                    color: "red",
+                    fontWeight: "600",
+                  }}
+                >
+                  Reject
+                </Button>
+              </Popconfirm>
+            </Col>
+          )}
+        </Row>
+        </Form>
+      </Card>
+>>>>>>> dulanjana
       </Spin>
     </>
   );

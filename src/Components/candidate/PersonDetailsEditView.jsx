@@ -30,9 +30,9 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               <Col span={24}>
                 <Row justify="space-between">
                   <Text
-                    className={viewEditPersonalData.name===null?"hasnot-name-w":"has-name-w"} 
+                    className={viewEditPersonalData.name === ""?"hasnot-name-w":"has-name-w"} 
                   >
-                    {viewEditPersonalData.name === null
+                    {viewEditPersonalData.name === ""
                       ? "Your Name"
                       : viewEditPersonalData.name}
                   </Text>
@@ -47,11 +47,11 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  className={viewEditPersonalData.email===null?"hasnot-content-w":"has-content-w"} 
+                  className={viewEditPersonalData.email==""?"hasnot-content-w":"has-content-w"} 
                 >
                   <Space>
                     <MailOutlined />
-                    {viewEditPersonalData.email === null
+                    {viewEditPersonalData.email === ""
                       ? "Email"
                       : viewEditPersonalData.email}
                   </Space>
@@ -59,11 +59,11 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  className={viewEditPersonalData.phone===null?"hasnot-content-w":"has-content-w"}
+                  className={viewEditPersonalData.phone===""?"hasnot-content-w":"has-content-w"}
                 >
                   <Space>
                     <PhoneOutlined />
-                    {viewEditPersonalData.phone === null
+                    {viewEditPersonalData.phone === ""
                       ? "Phone"
                       : viewEditPersonalData.phone}
                   </Space>
@@ -71,11 +71,11 @@ export default function PersonDetailsEditView({ viewEditPersonalData }) {
               </Col>
               <Col span={24}>
                 <Text
-                  className={viewEditPersonalData.address===null?"hasnot-content-w":"has-content-w"}
+                  className={viewEditPersonalData.address===""?"hasnot-content-w":"has-content-w"}
                 >
                   <Space>
                     <FiMapPin />
-                    {viewEditPersonalData.address === null
+                    {viewEditPersonalData.address === ""
                       ? "Address"
                       : viewEditPersonalData.address}
                   </Space>

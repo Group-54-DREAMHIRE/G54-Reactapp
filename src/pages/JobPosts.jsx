@@ -1,5 +1,6 @@
 import JobPostCard from "../Components/cards/JobPostCard";
 import { List } from "react-content-loader";
+import axios from "axios";
 import {
   Row,
   Col,
@@ -9,7 +10,8 @@ import {
   Space,
   Button,
   Image,
-  Empty
+  Empty,
+  Form,
 } from "antd";
 import { DollarOutlined, PlusOutlined } from "@ant-design/icons";
 import { salary } from "../store/demo/profile";
@@ -18,7 +20,12 @@ import { jobTitles } from "../store/demo/jobTitles";
 import { jobTypes } from "../store/demo/jobTypes";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchUserData, getData } from "../api/authenticationService";
+import {
+  fetchUserData,
+  getData,
+  getDataByParam,
+  getToken,
+} from "../api/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobPosts, setJobPosts } from "../store/jobpost/jobSlice";
 import { qualifications } from "../store/demo/quqlifications";
@@ -32,6 +39,11 @@ export default function JobPosts() {
   const [loading, setLoading] = useState(false);
   const jobs = useSelector(getAllJobPosts);
   const collapsed = useSelector((state) => state.models.collapsed);
+  const [jobTitle, setJobTitle] = useState(null);
+  const [jobType, setJobType] = useState(null);
+  const [experience, setExperience] = useState(null);
+  const [salary, setSalary] = useState(null);
+  const [paramList, setParamList] = useState([]);
   useEffect(() => {
     setLoading(true);
     if (jobs === null) {
@@ -52,13 +64,37 @@ export default function JobPosts() {
     }
   }, []);
 
-  const navigate = useNavigate();
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleSearchJobs = async () => {
+  
+    // const objectFromList = paramList.reduce((acc, item) => {
+    //   acc[item.key] = item.value;
+    //   return acc;
+    // }, {});
+
+   
+    // console.log(objectFromList);
+    // setLoading(true);
+    // let data = {
+    //   url: "/api/v1/jobpost/getSearchJob",
+    //   data:objectFromList,
+    //   method:"post"
+    // }
+    // fetchUserData(data)
+    // .then((response) => {
+    //     console.log(response.data,"Dulaaa");
+    //     setAllJobList(response.data);
+    //     dispatch(setJobPosts(response.data));
+    //     setLoading(false);
+    //     console.log(allJobList);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching user profile:", error);
+    //     setLoading(false);
+    //   });
   };
 
+  const navigate = useNavigate();
   const userType = localStorage.getItem("USERTYPE");
-
   let status = {
     save: userType === "candidate" ? true : false,
     more: true,
@@ -116,6 +152,7 @@ export default function JobPosts() {
             </Row>
             {filter && (
               <Row justify="end" style={{ margin: "20px 0 30px" }}>
+                <Form onFinish={handleSearchJobs}>
                 <Space size="large" wrap>
                   <Select
                     style={{
@@ -125,15 +162,28 @@ export default function JobPosts() {
                     }}
                     allowClear
                     showSearch
+                    onChange={(num) => {
+                      setJobTitle(num);
+                      let temp = [...paramList];
+                      let data = {key:jobTitle,value:`${num}`}
+                      setParamList(...paramList,data);
+                    }}
+                    value={jobTitle}
                     size="large"
                     placeholder="Job Title"
-                    onChange={handleChange}
                     options={jobTitles}
                     maxTagCount={10}
                   />
                   <Select
                     size="large"
                     placeholder="Job Type"
+                    onChange={(num) => {
+                      setJobType(num);
+                      let temp = [...paramList];
+                      let data = {key:jobType,value:`${num}`}
+                      setParamList(...paramList,data);
+                    }}
+                    value={jobType}
                     style={{
                       width: 150,
                       boxShadow: "0 0 8px rgba(0,0,0,.1)",
@@ -150,6 +200,13 @@ export default function JobPosts() {
                     }
                     size="large"
                     placeholder="Salary"
+                    onChange={(num) => {
+                      setSalary(num);
+                      let temp = [...paramList];
+                      let data = {key:salary,value:`${num}`}
+                      setParamList(...paramList,data);
+                    }}
+                    value={salary}
                     style={{
                       width: 150,
                       boxShadow: "0 0 8px rgba(0,0,0,.1)",
@@ -158,7 +215,7 @@ export default function JobPosts() {
                     maxTagCount={5}
                     options={salary}
                   />
-                  <Select
+                  {/* <Select
                     size="large"
                     placeholder="Qualifications"
                     options={qualifications}
@@ -168,10 +225,17 @@ export default function JobPosts() {
                       borderRadius: "0 !important",
                     }}
                     maxTagCount={5}
-                  />
+                  /> */}
                   <Select
                     size="large"
                     placeholder="Experience"
+                    onChange={(num) => {
+                      setExperience(num);
+                      let temp = [...paramList];
+                      let data = {key:experience,value:`${num}`}
+                      setParamList(...paramList,data);
+                    }}
+                    value={experience}
                     options={jobExperience}
                     style={{
                       width: 150,
@@ -181,6 +245,7 @@ export default function JobPosts() {
                     maxTagCount={5}
                   />
                   <Button
+                    htmlType="submit"
                     style={{ borderRadius: "0" }}
                     size="large"
                     type="primary"
@@ -188,10 +253,11 @@ export default function JobPosts() {
                     Search
                   </Button>
                 </Space>
+                </Form>
               </Row>
             )}
             <Row style={{ marginTop: "20px" }} gutter={[25, 25]}>
-              {JSON.stringify(allJobList) === "[]" ? (
+              {allJobList.length === 0 ? (
                 <Col span={24}>
                   <Empty />
                 </Col>

@@ -161,7 +161,6 @@ export default function Profile() {
   };
 
   const handleFileChange = (info) => {
-
     console.log(info.file.originFileObj);
     setImageUpload(info.file.originFileObj);
     if (imageUpload) {
@@ -653,7 +652,7 @@ export default function Profile() {
                     <Row style={{ padding: "0 2%", marginTop: "20px" }}>
                       <Button
                         disabled={
-                          !change && imageUpload === null ? true : false
+                          !change
                         }
                         htmlType="submit"
                         size="large"

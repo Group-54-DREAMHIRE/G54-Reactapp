@@ -17,9 +17,9 @@ import {
   Space,
   TimePicker,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDutation, setInstructions, setNumOfQuetions, setPassingMark, setTestDate, setTestDetails, setTime, setTitle, setType } from "../../store/company/testSlice";
+import { setActJobId, setDutation, setInstructions, setNumOfQuetions, setPassingMark, setTestDate, setTestDetails, setTime, setTitle, setType } from "../../store/company/testSlice";
 
 const { Title } = Typography;
 
@@ -27,12 +27,15 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 function AddTestDetails() {
+  const {id} =useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
   const testDetailsImpl = useSelector((state)=>state.test.testDetails);
+  const jobId = useSelector((state)=>state.test.setActJobId);
   return ( 
     <>
       <Spin spinning={false}>
+        {jobId}
         <Row gutter={[0, 30]} style={{ padding: "2%" }}>
           <Col span={24}>
             <Title level={2} style={{ margin: "0" }}>
@@ -241,7 +244,7 @@ function AddTestDetails() {
                         />
                     </Col>
                     <Col span={5}>
-                    <Button 
+                    <Button
                         size="large"
                         style={{borderRadius:0}}
                         type="primary">

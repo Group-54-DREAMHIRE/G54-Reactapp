@@ -85,12 +85,12 @@ import {
           }
         ]
       },
-      {
-        id: 8,
-        label: "Send Annoucements",
-        key: "/sendnotifications",
-        icon: <BellOutlined />,
-      },
+      // {
+      //   id: 8,
+      //   label: "Send Annoucements",
+      //   key: "/sendnotifications",
+      //   icon: <BellOutlined />,
+      // },
       {
         id: 9,
         label: "Users",

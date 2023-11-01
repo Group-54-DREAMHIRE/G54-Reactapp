@@ -243,11 +243,11 @@ export default function AddContent({ addContentData }) {
   const handleDelete = ( ) =>{
     let  conData = [...addContentData.contentData];
     if(addContentData.activeContent.key===0){
-      conData[addContentData.activeContent.index].has=false;
+      conData[addContentData.activeContent.index].isAval=false;
     }
     const data = {
       key: 0,
-      has:false,
+      isAval:false,
       title: null,
       link: null,
       subTitle: null,

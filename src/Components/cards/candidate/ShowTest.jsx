@@ -1,20 +1,33 @@
-import { Col, Row, Typography } from 'antd'
-import { useNavigate } from 'react-router-dom';
-const {Title} = Typography;
+import { Card, Col, Image, Row, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
+import test from "../../../assets/images/test.png";
+const { Title,Text } = Typography;
 
 export default function ShowTest() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <>
-    <Row 
+      <Row
         style={{
-            backgroundColor:'rgba(25,103,210,.4)', cursor:'pointer'}}>
+          cursor: "pointer",
+        }}
+      >
         <Col span={24}>
-            <Title>
+        <Card style={{boxShadow:"0 0 8px rgba(0,0,0,.2)"}}>
+         <Row justify='center'>
+         <Col span={24}>
+            <Image preview={false} src={test} />
+          </Col>
+          <Col>
+            <Text style={{fontSize:18}} strong >
                 Test
-            </Title>
+            </Text>
+          </Col>
+         </Row>
+        </Card>
         </Col>
-    </Row>
+        
+      </Row>
     </>
-  )
+  );
 }

@@ -12,7 +12,7 @@ import ShowSubContent from "./ShowSubContent";
 const { Title, Text, Link } = Typography;
 export default function ShowContent({ item, contentData }) {
   if (item.title === "Profile") {
-    if (item.has) {
+    if (item.isAval) {
       return (
         <>
           <Row justify="space-between" gutter={[15, 15]}>
@@ -27,7 +27,7 @@ export default function ShowContent({ item, contentData }) {
     }
   } else {
     {
-      if (item.has) {
+      if (item.isAval) {
         return (
           <>
             <Row>

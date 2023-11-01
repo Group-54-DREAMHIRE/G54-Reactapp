@@ -2,6 +2,8 @@ import { Table, Typography, Button, Row, Col, Divider, Input, Space, Tag, Switch
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { getData } from '../../api/authenticationService';
+import moment from 'moment';
 // import { pageanimation } from '../assets/animations/pageanimation';
 
 const { Title } = Typography;
@@ -10,6 +12,47 @@ const { Search } = Input;
 function AdvertisementList() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [jobPosts, setJobPosts] =useState ([]);
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const id = user.id;
+  useEffect(() => {
+      getData(`/api/v1/jobpost/getjobs/${id}`)
+        .then((response) => {
+         setJobPosts(response.data);
+          
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+  }, [id]);
+  useEffect(() => {
+    const tempArray = [];
+    for(let i=0; i<jobPosts.length; i++){
+      const data = jobPosts[i];
+      let tempskills = [];
+      console.log(data);
+      if (typeof data.tags === "string" && data.tags) {
+         tempskills = data.tags.split(" ,");
+      } else {
+        tempskills = [];
+      }
+      const listData ={
+        jobTitle: data.jobTitle,
+        vacancies: data.numberOfVacancies,
+        closingDate:moment(data.deadline).format("YYYY-MM-DD") ,
+        status: !data.validate,
+        skills: tempskills,
+        applications: data.numberOfApplicants,
+        jobId:data.jobPostId
+      }
+      tempArray.push(listData);
+    //  const dataItem = [...dataSource]
+    //  dataItem[i]=listData;
+    
+     }
+     setDataSource(tempArray);
+     console.log(tempArray, "Dulaaaa");
+  }, [jobPosts]);
   const columns = [
     {
       title: 'Job Title',
@@ -20,7 +63,7 @@ function AdvertisementList() {
         <>
           {text}
           <br />
-          {record.skills.map((skill) => (
+          {record.skills.slice(0,3).map((skill) => (
             <Tag color="blue" key={skill}>
               {skill}
             </Tag>
@@ -40,57 +83,19 @@ function AdvertisementList() {
     },
     {
       title: "Schedule Interview",
-      key: "scheduleInterview",
+      key: "jobId",
       render: (text, record) => (
         <Button 
           type="primary"
           style={{borderRadius: '0'}}
         >
-          <Link to={`/interviews/scheduleinterviews`}>Shedule</Link>
+          <Link to={`/interviews/scheduleinterviews/${record.jobId}`}>Shedule</Link>
         </Button>
       ),
     },
   ];
 
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '1',
-      jobTitle: 'Software Engineer',
-      vacancies: 20,
-      applications: 15,
-      skills: ["Java", "Python", "PHP"],
-      scheduleInterview:1,
-    },
-    {
-      key: '2',
-      jobTitle: 'Web Developer',
-      vacancies: 13,
-      applications: 10,
-      skills: ["HTML", "CSS", "JavaScript","Node.js"],
-    },
-    {
-      key: '3',
-      jobTitle: 'Database Administrator',
-      vacancies: 8,
-      applications: 4,
-      skills: ["PostgreSQL", "Oracle"],
-    },
-    {
-      key: '4',
-      jobTitle: 'Cybersecurity Analyst',
-      vacancies: 5,
-      applications: 3,
-      skills: ["Wireshark", "Nessus"],
-    },
-    {
-      key: '5',
-      jobTitle: 'Network Engineer',
-      vacancies: 20,
-      applications: 4,
-      skills: [""],
-    },
-  ]);
-
+  const [dataSource, setDataSource] = useState([]);
   return (
     <>
       <div className='container-n'>

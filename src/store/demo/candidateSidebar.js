@@ -55,12 +55,12 @@ import {
         key: "scheduledinterviews",
         icon: <FiSlack />,
       },
-      {
-        id: 7,
-        label: "Selection Test",
-        key: "/selectiontest",
-        icon: <FaEnvelopeOpenText />,
-      },
+      // {
+      //   id: 7,
+      //   label: "Scheduled Test",
+      //   key: "/selectiontest",
+      //   icon: <FaEnvelopeOpenText />,
+      // },
       {
         id: 8,
         label: "Appled Events",
@@ -73,12 +73,12 @@ import {
         key: "/savedevents",
         icon: <SketchSquareFilled />,
       },
-      {
-        id: 9,
-        label: "Annoucements",
-        key: "/announcements",
-        icon: <SketchSquareFilled />,
-      },
+      // {
+      //   id: 9,
+      //   label: "Annoucements",
+      //   key: "/announcements",
+      //   icon: <SketchSquareFilled />,
+      // },
       {
         id: 10,
         label: "Settings",

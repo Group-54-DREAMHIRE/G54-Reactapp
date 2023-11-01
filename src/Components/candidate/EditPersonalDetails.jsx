@@ -132,7 +132,7 @@ export default function EditPersonalDetails({editPersonalData}) {
   }
   const handleSubmit =async()=>{
     dispatch(openLoading());
-    let temp = null;
+    let temp = editPersonalData.profilePicture;
     if (imageUpload) {
       const imageRef = ref(storage, `dreamhire/candidates/resumes/${id}`);
       await uploadBytes(imageRef, imageUpload)

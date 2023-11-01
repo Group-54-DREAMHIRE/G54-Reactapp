@@ -38,6 +38,7 @@ function SavedJobs() {
   }, []);
   useEffect(() => {
     setLoading(true);
+    const jobs = [];
     for (let i = 0; i < jobList.length; i++) {
       const data = jobList[i];
       const action = {
@@ -52,10 +53,10 @@ function SavedJobs() {
         deadline: moment(data.jobPost.deadline).format("YYYY-MM-DD"),
         company: data.jobPost.companyName,
       };
-      const dataItem = [...dataSource];
-      dataItem[i] = listData;
-      setDataSource(dataItem);
+     jobs.push(listData);
+     
     }
+    setDataSource(jobs);
   }, [jobList]);
   const handleDelete = async (id, index) => {
     let data = {

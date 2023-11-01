@@ -26,13 +26,13 @@ export default function ApplyJob({ jobID }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isOpen = useSelector((state) => state.models.applyJob);
-  const [name, setName] = useState(null);
-  const [title, setTitle] = useState(null)
-  const [city, setCity] = useState(null);
+  const [name, setName] = useState(user.name);
+  const [title, setTitle] = useState(user.title)
+  const [city, setCity] = useState(user.city);
   const [tags, setTags] = useState([]);
   const [tagList, setTaglist] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(user.phone);
+  const [email, setEmail] = useState(user.email);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);

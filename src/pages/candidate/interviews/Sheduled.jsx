@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import InterviewCard from "../../../Components/cards/candidate/InterviewCard";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {setApplyJobId} from '../../../store/company/applyJobSlice';
 import { useEffect, useState } from "react";
@@ -10,16 +10,17 @@ export default function Interviews() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("USER"));
-  const id = user.id;
+  const userId = user.id;
   const [interviewList, setInterviewList] = useState([]);
-  const jobId = useSelector((state)=>state.applyJob.activeJobId);
+  const {id} = useParams();
+
   const [convertIntList, setConvertIntList] = useState([]);
   useEffect(() => {
     const sendData = {
-      jobId
+      jobId:id
     }
     let data ={
-      url:`/api/v1/interviewCan/getAppliedJobScheduledInterviews/${id}`,
+      url:`/api/v1/interviewCan/getAppliedJobScheduledInterviews/${userId}`,
       data:sendData,
       method: 'post'
     }
@@ -37,6 +38,7 @@ export default function Interviews() {
     let tempArr = [];
     for (let i = 0; i < interviewList.length; i++) {
       const newData = {
+        id:interviewList[i].intId,
         company: interviewList[i].companyName,
         date: moment(interviewList[i].startTime).format("YYYY MMMM DD"),
         time: moment(interviewList[i].startTime).format("hh.mm A"),
@@ -52,8 +54,7 @@ export default function Interviews() {
       <Row gutter={[30, 30]}>
             {convertIntList.map((item) => {
               return (
-                <Col span={9}
-                  onClick={()=>navigate(`/interviewdetails/${jobId}`)}>
+                <Col span={9} onClick={()=>{navigate(`/scheduledinterview/${item.id}`)}}>
                  <InterviewCard
                  item={item} />
                 </Col>

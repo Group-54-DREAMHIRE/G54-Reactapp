@@ -20,9 +20,11 @@ import { useState } from "react";
 import moment from "moment";
 import { spaceChildren } from "antd/es/button";
 import { fetchUserData } from "../../api/authenticationService";
+import { useParams } from "react-router-dom";
 const { Title } = Typography;
 
 export default function GenarateInterviews() {
+  const { jobId } = useParams();
   const CheckboxGroup = Checkbox.Group;
   const [checkedList, setCheckedList] = useState([]);
   const [defaultList, setDefaultList] = useState(false);
@@ -44,9 +46,11 @@ export default function GenarateInterviews() {
   const [endTime, setEndTime] = useState(0);
   const [timeSlots, setTimeSlots] = useState([]);
   const [value, setValue] = useState(true);
-  const [type, setType] = useState();
+  const [type, setType] = useState(null);
   const [timeList, setTimeList] = useState([]);
-  const [withInt, setWithInt] = useState();
+  const [withInt, setWithInt] = useState(null);
+  const [meetingLink, setMeetingLink] = useState(null);
+  
 
   const [loading, setLoading] = useState(false);
 
@@ -106,7 +110,8 @@ export default function GenarateInterviews() {
         startTime:new Date(currentDateTime),
         duration:duration,
         with: withInt,
-        jobId:1,
+        jobId,
+        meetingLink
       }
       interviewData.push(dataObj);
       slots.push(currentDateTime.format("HH:mm"));
@@ -149,7 +154,8 @@ export default function GenarateInterviews() {
           startTime: new Date(currentDateTime),
           duration,
           withInt,
-          jobId:1
+          jobId,
+          meetingLink
         }
         interviewData.push(times);
       }
@@ -337,6 +343,18 @@ export default function GenarateInterviews() {
                             />
                           </Space>
                       </Col>
+                      <Col span={24}>
+                      <Space size="large">
+                            <span>Meeting Link:</span>
+                            <Input
+                              disabled={!value}
+                              onChange={(e) => setMeetingLink(e.target.value)}
+                              placeholder="Link"
+                             value={meetingLink}
+                              style={{borderRadius: '0 !important', width: '100'}}
+                            />
+                          </Space>
+                      </Col>
                       {JSON.stringify(timeSlots) === "[]" ? null : ( <>
                        <Col span={18} style={{
                       border: "1px solid rgba(0,0,0,.2)",
@@ -514,6 +532,18 @@ export default function GenarateInterviews() {
                             />
                             </Space>
                           </Col>
+                          <Col span={24}>
+                      <Space size="large">
+                            <span>Meeting Link:</span>
+                            <Input
+                              disabled={!value}
+                              onChange={(e) => setMeetingLink(e.target.value)}
+                              placeholder="Link"
+                             value={meetingLink}
+                              style={{borderRadius: '0 !important', width: '100'}}
+                            />
+                          </Space>
+                      </Col>
                           {JSON.stringify(timeSlots) === "[]" ? null :
                     (  <>
                           <Col span={24} style={{
